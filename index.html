@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-213656"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-214043"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -517,10 +517,13 @@ window.EZ=(function(){
     wraith:{name:'Dread Wraith',icon:'👻',at:'dragon',col:0x3a2a55,fly:1.5,lvl:13,hp:500,atk:43,xp:62,speed:3.0,r:0.8,h:3.0,aoe:2.0,wind:.9,rest:1.5,reach:1.8,aggro:8},
     dragon:{name:'Elder Dragon',icon:'🐉',at:'dragon',anim:'walk',wspd:3,bob:.06,col:0x8a2a3a,big:1,rs:300,lvl:15,hp:2600,atk:58,xp:600,speed:2.2,r:2.3,h:6.2,aoe:4.8,wind:1.2,rest:2.4,reach:4.0,aggro:11}
   };
-  /* balance: monster stats follow a level curve so a hero can solo up to ~3 levels above but not beyond */
-  (function(){const A=L=>.05*(100+30*L)*(35+3*L)/30,hh=L=>(14+6*L)*(1+.1*L),hits=L=>3+(L-1)*.15,fitH=L=>40*Math.pow(1.25,L-1),fitA=L=>6+(L-1)*2.4;
-    for(const k in MON){const d=MON[k],L=d.lvl,cl=(v,a,b)=>Math.min(b,Math.max(a,v)),j=cl(d.hp/fitH(L),.8,1.25),ja=cl(d.atk/fitA(L),.85,1.2),boss=d.rs>=300;
-      d.hp=Math.round(hits(L)*hh(L)*(d.big?(boss?7:4.5):j)/5)*5;d.atk=Math.max(1,Math.round(A(L)*(d.big?(boss?1.6:1.35):ja)));d.xp=Math.round(d.xp*(L>=11?1.5:L>=6?1.6:1));}})();
+  /* balance: monster HP is tied to the strongest basic hit a hero with a level-appropriate weapon can land,
+     so even the best weapon needs >=5 basic attacks on a same-level monster (bosses far more). Numbers are guesses: tune after play. */
+  (function(){const M=[1,1.12,1.26,1.42,1.62,1.85,2.12,2.45,2.85,3.3],PA={warrior:1.3,ranger:1.6,mage:1.06},tier=L=>Math.min(9,Math.round((L-1)*.6)),
+      top=L=>Math.max(baseAtk('warrior',L)*PA.warrior,baseAtk('ranger',L)*PA.ranger,baseAtk('mage',L)*PA.mage)*M[tier(L)],
+      A=L=>.05*(100+30*L)*(35+3*L)/30,fitH=L=>40*Math.pow(1.25,L-1),fitA=L=>6+(L-1)*2.4;
+    for(const k in MON){const d=MON[k],L=d.lvl,cl=(v,a,b)=>Math.min(b,Math.max(a,v)),j=cl(d.hp/fitH(L),1,1.3),ja=cl(d.atk/fitA(L),.85,1.2),boss=d.rs>=300;
+      d.hp=Math.round(5.2*top(L)*(d.big?(boss?7:4.5):j)/5)*5;d.atk=Math.max(1,Math.round(A(L)*(d.big?(boss?1.6:1.35):ja)));d.xp=Math.round(d.xp*(L>=11?1.5:L>=6?1.6:1)*1.3);}})();
   const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5},{t:'emberling',n:6},{t:'scorpion',n:5},{t:'salamander',n:5},{t:'firebat',n:5},{t:'obsidian',n:2},{t:'toad',n:6},{t:'mosquito',n:5},{t:'croc',n:4},{t:'wisp',n:5},{t:'treant',n:2},{t:'icewolf',n:5},{t:'snowman',n:5},{t:'frostbat',n:5},{t:'yeti',n:2},{t:'whelp',n:5},{t:'boneknight',n:4},{t:'wraith',n:4},{t:'dragon',n:1}];
 
   function lvOf(xp){for(let L=MAXLV;L>=1;L--)if(xp>=TOTAL[L])return L;return 1;}
@@ -1079,6 +1082,8 @@ function buildHero(cls,look){
   // armor tiers: 0 basic · 1 iron · 2 gold · 3 crystal
   const aura=[];
   const mkB=(par,w,h,d,c,x,y,z,em)=>vb(par,w,h,d,c,x,y,z,em?{emissive:em}:undefined);
+  if(cls==='warrior'){
+  if(fem&&ea>0)mkB(body,.92,.12,.58,['','#aeb7c4','#ffd84a','#7ae8ff'][ea],0,-.2,0,ea===3?'#38b8e8':undefined);
   if(ea===1){
     [1,-1].forEach(s=>{mkB(body,.34,.16,.42,'#aeb7c4',s*.45,.66,0);mkB(body,.3,.08,.38,'#8d97a6',s*.45,.76,0);});
     mkB(body,.56,.46,.06,'#aeb7c4',0,.36,.21);mkB(body,.5,.06,.07,'#8d97a6',0,.36,.22);mkB(body,.06,.46,.07,'#8d97a6',0,.36,.22);
@@ -1106,6 +1111,32 @@ function buildHero(cls,look){
     [legL,legR].forEach(g=>{mkB(g,.32,.1,.32,C1,0,-.28,0,E1);mkB(g,.32,.14,.38,C1,0,-.5,.02,E1);});
     [armL,armR].forEach(a=>mkB(a,.27,.14,.27,C1,0,-.55,0,E1));
     for(let i=0;i<5;i++){const m=vb(root,.2,.2,.2,i%2?C2:C1,0,1,0,{emissive:C1,own:true});aura.push(m);}
+  }
+  }
+  else if(cls==='ranger'&&ea>0){
+    const P=[0,['#9a6a3a','#6f4a26','#c9d1dc'],['#2f9a52','#1f6e38','#ffd84a'],['#5ae0d0','#2aa8b8','#c8f6ff']][ea],c1=P[0],c2=P[1],c3=P[2],em=ea===3?'#38b8e8':undefined,sx=fem?.4:.45;
+    [1,-1].forEach(x=>{mkB(body,.3,.14,.4,c1,x*sx,.66,0,em);mkB(body,.3,.05,.42,c3,x*sx,.74,0);});
+    mkB(body,fem?.54:.62,.46,.06,c1,0,.36,.21,em);const st=mkB(body,.1,.7,.07,c2,0,.34,.24);st.rotation.z=.7;mkB(body,.14,.14,.08,c3,0,.34,.28,ea===3?'#7ae8ff':undefined);
+    mkB(body,.7,.12,.46,c2,0,.05,0);mkB(body,.16,.14,.48,c3,0,.05,0);
+    if(ea>=2){mkB(body,.7,.72,.05,c2,0,.18,-.3);mkB(body,.7,.06,.06,c3,0,.54,-.3);}
+    [armL,armR].forEach(a=>{mkB(a,.25,.16,.25,c1,0,-.52,0,em);mkB(a,.27,.05,.27,c3,0,-.44,0);});
+    [legL,legR].forEach(g=>{mkB(g,.31,.18,.35,c2,0,-.5,.02,em);if(ea>=2)mkB(g,.3,.08,.3,c3,0,-.3,0);});
+    if(fem){mkB(body,.92,.12,.58,c1,0,-.2,0,em);mkB(body,.96,.05,.6,c3,0,-.27,0);}
+    mkB(head,.84,.1,.84,c2,0,.62,0,em);
+    if(ea===2){const f=mkB(head,.08,.46,.1,c3,.3,.95,-.05);f.rotation.z=-.4;mkB(head,.1,.1,.1,c3,0,.64,.42);}
+    if(ea===3){[-.3,-.1,.1,.3].forEach((x,i)=>{const l=mkB(head,.12,.3+(i%2)*.1,.08,c3,x,.82,.36,'#38b8e8');l.rotation.z=-x*1.2;});for(let i=0;i<4;i++){const m=vb(root,.16,.16,.16,i%2?c3:c1,0,1,0,{emissive:c1,own:true});aura.push(m);}}
+  }
+  else if(cls==='mage'&&ea>0){
+    const P=[0,['#c9d1dc','#8d97a6','#7ab0ff'],['#ffd84a','#e0a010','#ff3b4a'],['#7ae8ff','#5a3fd0','#c8f6ff']][ea],c1=P[0],c2=P[1],c3=P[2],em=ea===3?'#38b8e8':undefined;
+    mkB(body,.92,.16,.56,c1,0,.68,0,em);mkB(body,.7,.06,.6,c3,0,.78,0);
+    mkB(body,.2,.9,.06,c1,0,-.02,.26,em);mkB(body,.16,.16,.08,c3,0,.5,.3,ea>1?c3:undefined);
+    mkB(body,.78,.07,.5,c2,0,fem?-.1:-.28,0);
+    mkB(body,fem?1.0:.82,.08,fem?.66:.52,c1,0,fem?-.57:-.3,0,em);
+    [armL,armR].forEach(a=>{mkB(a,.32,.2,.32,c1,0,-.5,0,em);mkB(a,.34,.05,.34,c3,0,-.4,0);});
+    if(ea>=2)mkB(body,.7,.9,.05,c2,0,.1,-.27,ea===3?'#4a2ab0':undefined);
+    mkB(head,.84,.07,.84,c1,0,.62,0,em);mkB(head,.12,.14,.1,c3,0,.66,.42,c3);
+    if(ea>=2)[-.28,0,.28].forEach((x,i)=>mkB(head,.1,i===1?.3:.2,.1,c1,x,.8,.4,em));
+    if(ea===3){for(let i=0;i<5;i++){const m=vb(root,.2,.2,.2,i%2?c3:c1,0,1,0,{emissive:c1,own:true});aura.push(m);}}
   }
   // weapons: 10 tiers x 2 paths per class
   const ep=look.ep||0,wk=WPATHS[cls][ep]||WPATHS[cls][0];
