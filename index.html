@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-062302"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-064415"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -74,7 +74,7 @@ button{font-family:inherit;color:inherit;touch-action:none}
 #bS2{--sz:var(--btn);--bg:#1fae92;right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(30px + var(--sb) + var(--btn)*1.3)}
 #bS3{--sz:var(--btn);--bg:#e8843a;right:calc(36px + var(--btn)*2.45 + var(--sr));bottom:calc(34px + var(--sb) + var(--btn)*.55)}
 @media (orientation:portrait){#bS3{right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(40px + var(--sb) + var(--btn)*2.3)}}
-#bUse{--sz:calc(var(--btn)*1.05);--bg:#ff8fc2;left:50%;margin-left:calc(var(--btn)*-.52);bottom:calc(30px + var(--sb) + var(--btn)*1.4);animation:bob 1s ease-in-out infinite}
+#bUse{--sz:calc(var(--btn)*1);--bg:#ff8fc2;left:calc(34px + var(--sl));bottom:calc(26px + var(--sb) + 132px + 16px);animation:bob 1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
 
 /* Banner, fade, faint */
@@ -147,9 +147,6 @@ h3{font-size:17px;margin:12px 0 6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 #ioText{width:100%;box-sizing:border-box;height:110px;font:600 12px/1.3 ui-monospace,Menlo,monospace;border:3px solid var(--ink);border-radius:12px;padding:8px;resize:none;background:#fff;color:var(--ink);touch-action:manipulation}
 .note{font:700 13px/1.35 var(--f-body);opacity:.8;margin:6px 0 0}
-@media (max-width:640px) and (orientation:portrait){
-  #bUse{bottom:calc(40px + var(--sb) + var(--btn)*2.4)}
-}
 
 /* ===== v4: HUD layout (mobile first), map, profile, name tags ===== */
 :root{--mm:clamp(78px,20vmin,108px)}
@@ -731,6 +728,20 @@ Object.assign(TX.en,{parentT:'Advanced settings',parentHold:'Advanced settings (
  g1:n=>'Hello, '+n+'! Welcome to the Adventurer Training Camp.',g2:'Move with the left joystick. Walk up to someone and press the talk button that appears at the bottom.',g3:'Grab your free gear from Gus, then defeat 3 slimes with the attack button. The defend button protects you.',g4:'Then try the portal to Sunny Meadow and come back, and meet the Portal Keeper to travel to your town. It is free!',gOk:'Ready!',gAgain:'Keep it up! Your task now:',gDone:'You are a true adventurer now. See you on the road!',
  ctNo:'Finish your training first, then I will send you to town.',ctYes:c=>'Ready for '+c+'? This first trip is free!',ctGo:'Teleport (free)',
  chatV:['Lovely day, isn\'t it?','Be careful out there, monsters get tougher far away.','I like watching adventurers pass by.','Have you tried resting? It restores health fast.','I heard there is treasure behind the hills.','Don\'t forget to buy new gear at the shop!','Monsters are different at night, you know.','Good luck on your adventure!','I am enjoying the evening breeze.','New headgear can make you stronger!']});
+Object.assign(TX.id,{introQ:'Kenalan dengan NPC penting di kota',introDone:'Kenalan selesai! +80 koin',
+ in_shop:'Halo! Aku penjaga toko perlengkapan. Di sini kamu bisa beli dan upgrade senjata serta armor. Toko tutup kalau malam ya.',
+ in_mission:'Selamat datang di Pusat Misi! Ambil sampai 3 misi, selesaikan untuk dapat koin dan bonus bintang. Misi direset tiap tengah malam.',
+ in_style:'Aku penata gaya kota ini. Mau ganti rambut, warna kulit, baju, atau headgear yang sudah kamu beli? Datang aja ke sini, gratis.',
+ in_hgear:'Selamat datang di toko headgear! Coba dulu di ruang ganti, tiap headgear punya bonus berbeda. Aku tutup kalau malam.',
+ in_clinic:'Aku Mira, perawat kota. Kalau nyawamu tinggal sedikit, datang ke klinik dan aku pulihkan.',
+ in_tele:'Aku penjaga kristal teleport. x'});
+Object.assign(TX.en,{introQ:'Meet the important NPCs in town',introDone:'All introductions done! +80 coins',
+ in_shop:'Hello! I run the gear shop. Buy and upgrade weapons and armor here. We close at night.',
+ in_mission:'Welcome to the Mission Center! Take up to 3 missions and finish them for coins and bonus stars. Missions reset every midnight.',
+ in_style:'I\'m the town stylist. Change your hair, skin, outfit, or any headgear you own. Come by anytime, it\'s free.',
+ in_hgear:'Welcome to the headgear stall! Try them in the fitting room first, each one gives a different bonus. Closed at night.',
+ in_clinic:'I\'m Mira, the town nurse. If your health runs low, come to the clinic and I\'ll patch you up.',
+ in_tele:'I keep the teleport crystal. Use it to travel quickly between towns and areas.'});
 function t(k,a,b,c){let v=TX[LANG][k];if(v===undefined)v=TX.id[k];if(v===undefined)return k;return typeof v==='function'?v(a,b,c):v;}
 const cn=c=>t('cls_'+c),tnm=c=>t('town_'+c),skn=s=>t('sk_'+s.id),mn=k=>t('mon_'+k);
 const eqName=(kind,cls,i,p)=>{const item=kind==='w'?t('wp_'+WPATHS[cls][p|0]):t('an_'+cls),tier=t((kind==='w'?'tw':'ta')+i);return LANG==='id'?item+' '+tier:tier+' '+item;};
@@ -899,7 +910,7 @@ function sanitize(o){
     look:(()=>{const g=li(L.g,2),h=li(L.hs,12);return {hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g,hs:HSG[g].indexOf(h)>=0?h:(g?2:0)};})(),gch:o.gch?1:0,
     slots:Array.isArray(o.slots)&&o.slots.length===2?[li(o.slots[0],3),li(o.slots[1],3)]:[0,1],
     qs:(Array.isArray(o.qs)?o.qs:[]).filter((x,k,a)=>x&&typeof x==='object'&&a.findIndex(y=>y&&(y.i|0)===(x.i|0))===k).slice(0,3).map(x=>({i:clamp(x.i|0,0,E.QUESTS.length-1),p:Math.max(0,x.p|0)})),
-    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,4),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|town:(warrior|mage|ranger))$/.test(o.zone)?o.zone:'town'};
+    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,4),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),intro:o.intro===undefined?63:li(o.intro,64),tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|town:(warrior|mage|ranger))$/.test(o.zone)?o.zone:'town'};
 }
 function encodeDB(){return 'EZV1:'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,slots:DB.slots}))));}
 function decodeDB(s){s=String(s||'').trim();if(s.indexOf('EZV1:')!==0)throw new Error('format');const j=JSON.parse(decodeURIComponent(escape(atob(s.slice(5)))));if(!j||!Array.isArray(j.slots))throw new Error('format');return j.slots.map(sanitize);}
@@ -2386,10 +2397,16 @@ function marker(z,x,zz,color,glow){const m=grp(z.group,x,3.6,zz);vb(m,.3,.9,.3,c
 function villagers(z,defs,nk){
   const list=defs.map((d,i)=>{const h=buildHero(d.cls,d.look);h.weapon.visible=false;h.root.scale.setScalar(d.sc||1);z.group.add(h.root);
     const a=Math.random()*6.28,r=d.r0+Math.random()*(d.r1-d.r0);const v={h,d,x:d.cx+Math.cos(a)*r,z:d.cz+Math.sin(a)*r,tx:0,tz:0,wait:Math.random()*3,face:Math.random()*6,spd:1.5+Math.random()*.5,walkT:0};v.tx=v.x;v.tz=v.z;return v;});
-  z.npcs=z.npcs||[];list.forEach(v=>z.npcs.push({id:'chat',v,get x(){return v.x;},get z(){return v.z;},r:3,closed:()=>!!(nk&&TOD.night&&nk.indexOf(list.indexOf(v))<0)}));
-  list.forEach((v,i)=>z.tags.push({o:v,y:2.95*(v.d.sc||1)+.15,cls:'npc vil',nf:()=>v.d.name||t('vil'),sf:()=>t(v.d.sk||'vil'),R:10,hide:()=>!!(nk&&TOD.night&&nk.indexOf(i)<0)}));
+  z.npcs=z.npcs||[];list.forEach(v=>z.npcs.push({id:'chat',v,get x(){return v.x;},get z(){return v.z;},r:3,closed:()=>!!(v.inside||(!v.d.home&&nk&&TOD.night&&nk.indexOf(list.indexOf(v))<0))}));
+  list.forEach((v,i)=>z.tags.push({o:v,y:2.95*(v.d.sc||1)+.15,cls:'npc vil',nf:()=>v.d.name||t('vil'),sf:()=>t(v.d.sk||'vil'),R:10,hide:()=>!!(v.inside||(!v.d.home&&nk&&TOD.night&&nk.indexOf(i)<0))}));
   z.anim.push((dt,t)=>list.forEach((v,i)=>{
-    const off=!!(nk&&TOD.night&&nk.indexOf(i)<0);if(v.h.root.visible===off)v.h.root.visible=!off;if(off)return;
+    const hm=v.d.home,late=!!(nk&&nk.indexOf(i)>=0),goHome=!!(hm&&TOD.night&&!late);
+    if(!goHome&&v.inside){v.inside=false;v.x=hm[0];v.z=hm[1];v.wait=.6+Math.random()*3;v.walkT=0;v.tx=v.x;v.tz=v.z;}
+    const off=v.inside||!!(!hm&&nk&&TOD.night&&nk.indexOf(i)<0);if(v.h.root.visible===off)v.h.root.visible=!off;if(off)return;
+    if(goHome){const hx=hm[0]-v.x,hz=hm[1]-v.z,hd=Math.hypot(hx,hz);
+      if(hd<.45){v.inside=true;v.h.root.visible=false;return;}
+      const sp2=v.spd*1.25;v.x+=hx/hd*sp2*dt;v.z+=hz/hd*sp2*dt;v.face+=angDiff(v.face,Math.atan2(hx,hz))*(1-Math.exp(-dt*8));
+      addCol(v,.5);v.h.root.position.set(v.x,0,v.z);v.h.root.rotation.y=v.face;animHero(v.h,{moving:true,spd:sp2*2.7,atk:-1,dodge:-1,wave:0},dt,t+i*1.7);return;}
     if(v.wait>0){v.wait-=dt;if(v.wait<=0){const a=Math.random()*6.28,r=v.d.r0+Math.random()*(v.d.r1-v.d.r0);v.tx=v.d.cx+Math.cos(a)*r;v.tz=v.d.cz+Math.sin(a)*r;v.walkT=0;}}
     let mv=false;const dx=v.tx-v.x,dz=v.tz-v.z,dd=Math.hypot(dx,dz);
     if(v.wait<=0){v.walkT+=dt;if(dd>.3&&v.walkT<9){v.x+=dx/dd*v.spd*dt;v.z+=dz/dd*v.spd*dt;v.face+=angDiff(v.face,Math.atan2(dx,dz))*(1-Math.exp(-dt*8));mv=true;}else v.wait=1.5+Math.random()*4;}
@@ -2432,6 +2449,7 @@ function townExtra(z,cls,N){
   z.npcs.push({id:'tele',x:tx+1.3,z:tz+.3,r:5});
   z.pois.push({x:tx,z:tz,i:'tele',tf:()=>t('nTele'),sf:()=>t('teleS'),mini:true});
 }
+function townHome(L,defs){defs.forEach((d,i)=>{const h=L.houses[i];if(h){const k=2.9;d.home=[h[0]+Math.sin(h[2])*k,h[1]+Math.cos(h[2])*k];}});return defs;}
 function townFolk(z,cls,L,N){
   const b=z.b;
   // shop stall
@@ -2455,7 +2473,7 @@ function townFolk(z,cls,L,N){
   // villagers wandering around the plaza
   const Lk=(h,s,o,ht,g,hs)=>({hair:h,skin:s,outfit:o,hat:ht,g:g|0,hs:hs|0});
   const V=N.vill;
-  villagers(z,[{cls:'mage',look:Lk(1,0,1,0,1,3),cx:0,cz:2,r0:4,r1:11,sc:.8,name:V[0],sk:'kid'},{cls:'ranger',look:Lk(2,3,4,3,1,2),cx:0,cz:2,r0:4,r1:13,sc:1,name:V[1]},{cls:'mage',look:Lk(3,2,2,4,0,5),cx:0,cz:3,r0:3.6,r1:11,sc:.78,name:V[2],sk:'kid'},{cls:'ranger',look:Lk(0,1,0,1,0,6),cx:0,cz:2,r0:5,r1:14,sc:1,name:V[3]}],[1]);
+  villagers(z,townHome(L,[{cls:'mage',look:Lk(1,0,1,0,1,3),cx:0,cz:2,r0:4,r1:11,sc:.8,name:V[0],sk:'kid'},{cls:'ranger',look:Lk(2,3,4,3,1,2),cx:0,cz:2,r0:4,r1:13,sc:1,name:V[1]},{cls:'mage',look:Lk(3,2,2,4,0,5),cx:0,cz:3,r0:3.6,r1:11,sc:.78,name:V[2],sk:'kid'},{cls:'ranger',look:Lk(0,1,0,1,0,6),cx:0,cz:2,r0:5,r1:14,sc:1,name:V[3]}]),[1]);
 }
 const TOWN_PORTAL={x:16.2,z:0};
 const MPORT=[[-24.4*FS,0],[0,-24.4*FS],[24.4*FS,0],[0,24.4*FS]];
@@ -2541,6 +2559,8 @@ function updateZoneChip(){if(!zone||!C)return;$('#mmName').textContent=zone.id==
 /* ---------- Monsters ---------- */
 function ringCol(m){const d=m.d.lvl-level();return d<=0?0x44d46f:d<=2?0xffc83a:0xff4a5a;}
 function refreshRings(){if(!zone)return;zone.mons.forEach(m=>m.ring.material.color.setHex(ringCol(m)));}
+/* aggression by monster level: Lv1-5 never start fights, Lv6-10 a minority, then more and more */
+function aggP(l){return l<=5?0:l<=10?.12+(l-6)*.05:Math.min(.95,.5+(l-11)*.12);}
 function spawnMon(type){
   const d=E.MON[type];let x=0,zz=0;
   for(let i=0;i<20;i++){x=rnd(-28,28);zz=rnd(-28,26);if(Math.hypot(x-S.x,zz-S.z)>10&&(zone.portals||[]).every(p=>Math.hypot(x-p.x,zz-p.z)>9))break;}
@@ -2554,7 +2574,7 @@ function spawnMon(type){
   const bg=new THREE.Mesh(new THREE.PlaneGeometry(1.4,.22),new THREE.MeshBasicMaterial({color:0x2b2350,depthTest:false,transparent:true}));bg.renderOrder=10;bar.add(bg);
   const fgG=new THREE.PlaneGeometry(1,1);fgG.translate(.5,0,0);const fg=new THREE.Mesh(fgG,new THREE.MeshBasicMaterial({color:0x58e08a,depthTest:false,transparent:true}));fg.renderOrder=11;fg.position.set(-.65,0,.01);fg.scale.set(1.3,.13,1);bar.add(fg);
   const mats=[];model.traverse(o=>{if(o.material&&o.material.emissive)mats.push(o.material);});
-  const m={type,id:++monSeq,d,root,model,ring,tele,disc,bar,fg,mats,x,z:zz,hp:d.hp,maxHp:d.hp,state:'idle',t:rnd(.5,2.5),wx:x,wz:zz,face:rnd(0,6.28),dead:false,spawnT:0,stun:0,slow:0,flash:0,kx:0,kz:0,age:rnd(0,9),wind:0,pulse:0};
+  const m={type,id:++monSeq,d,root,model,ring,tele,disc,bar,fg,mats,x,z:zz,hp:d.hp,maxHp:d.hp,state:'idle',t:rnd(.5,2.5),wx:x,wz:zz,face:rnd(0,6.28),dead:false,spawnT:0,stun:0,slow:0,flash:0,kx:0,kz:0,age:rnd(0,9),wind:0,pulse:0,prov:false,agg:Math.random()<aggP(d.lvl)};
   root.scale.setScalar(.01);zone.group.add(root);zone.mons.push(m);m.ring.material.color.setHex(ringCol(m));
   return m;
 }
@@ -2576,9 +2596,9 @@ function updMon(m,dt){
     if(m.t<=0){m.wx=clamp(m.x+rnd(-5,5),-22,22);m.wz=clamp(m.z+rnd(-5,5),-22,22);m.t=rnd(2,4);}
     const wx=m.wx-m.x,wz=m.wz-m.z,wd=Math.hypot(wx,wz);
     if(wd>.4){m.x+=wx/wd*sp*.4*dt;m.z+=wz/wd*sp*.4*dt;m.face=Math.atan2(wx,wz);}
-    if(alive&&dist<d.aggro)m.state='chase';
+    if(alive&&dist<d.aggro&&(m.agg||m.prov))m.state='chase';
   }else if(m.state==='chase'){
-    if(!alive||dist>17){m.state='idle';}
+    if(!alive||dist>17){m.state='idle';m.prov=false;}
     else if(dist>d.reach){m.x+=dx/dist*sp*dt;m.z+=dz/dist*sp*dt;m.face=Math.atan2(dx,dz);}
     else{m.state='windup';m.wind=d.wind;m.tele.visible=true;m.face=Math.atan2(dx,dz);}
   }else if(m.state==='windup'){
@@ -2628,7 +2648,7 @@ function hitMon(m,dmg,o){
   if(m.pup){coopSend({t:'hit',id:m.id,d:dmg.d,c:dmg.crit?1:0,dx:+kx.toFixed(3),dz:+kz.toFixed(3),st:o.stun||0,sl:o.slow||0});if(m.hp<1)m.hp=1;return;}
   const kb=m.d.big?1.5:4.5;m.kx+=kx*kb;m.kz+=kz*kb;
   if(o.stun)m.stun=Math.max(m.stun,o.stun);if(o.slow)m.slow=Math.max(m.slow,o.slow);
-  if(m.state==='idle')m.state='chase';
+  m.prov=true;if(m.state==='idle')m.state='chase';
   if(m.hp<=0)killMon(m);
 }
 function killMon(m){
@@ -2790,7 +2810,7 @@ function renderTalk(){const o=talkS.o,last=talkS.i>=o.lines.length-1;$('#talkNam
 let talkS=null;
 function closeTalk(){show('talk',false);talkS=null;if(mode==='play')paused=false;}
 $('#talkClose').addEventListener('click',()=>{SFX.click();closeTalk();});
-function chatWith(n){const v=n.v,arr=TX[LANG].chatV||TX.id.chatV;let k=0;for(let q=0;q<8;q++){k=(Math.random()*arr.length)|0;if(k!==v._lk)break;}v._lk=k;v.wait=Math.max(v.wait,4.5);sayBubble(v,arr[k],2.95*(v.d.sc||1)+.35,4800);SFX.click();}
+function chatWith(n,quiet){const v=n.v,arr=TX[LANG].chatV||TX.id.chatV;let k=0;for(let q=0;q<8;q++){k=(Math.random()*arr.length)|0;if(k!==v._lk)break;}v._lk=k;v.wait=Math.max(v.wait,4.5);sayBubble(v,arr[k],2.95*(v.d.sc||1)+.35,4800);if(!quiet)SFX.click();}
 function openKit(){paused=true;S.defDown=false;S.blocking=false;$('#kitName').textContent=t('nQuarter');renderKit();show('kit',true);}
 function renderKit(){const box=$('#kitBody');box.innerHTML='<p class="tk">'+t('kitIntro')+'</p>';
   [[1,'⚔️',eqName('w',C.cls,0,C.eq.p)],[2,'🛡️',eqName('a',C.cls,0)]].forEach(q=>{const own=!!((C.kit|0)&q[0]),row=document.createElement('div');row.className='shopRow';row.innerHTML='<div class="si">'+q[1]+'</div><div class="st"><b>'+q[2]+'</b><small>'+t('free')+'</small></div>';
@@ -2804,7 +2824,7 @@ function cteleTalk(){const N=t('nCtele');
   if(C.tut>=7){openTele();return;}
   if(C.tut<6){openTalk({name:N,lines:[t('ctNo')]});return;}
   openTalk({name:N,lines:[t('ctYes',tnm(C.cls))],act:{label:t('ctGo'),fn:()=>{C.tut=7;saveDB();SFX.portal();transition(()=>{setZone('town',{x:0,z:6,face:Math.PI},false,C.cls);banner(t('tutDone'));});}}});}
-function npcExtra(id){if(id==='chat'){chatWith(S.near);return true;}if(id==='guide'){guideTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}return false;}
+function npcExtra(id){if(id==='chat')return true;if(id==='guide'){guideTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}return false;}
 function tutTick(){if(!C||C.tut>=7||S.state!=='play'||!zone)return;
   if(C.tut===0){const k=readInput();if(k.m>.1)S.tutD=(S.tutD||0)+S.dtl*6;if(S.tutD>=8)tutNext();}
   else if(C.tut===1&&C.tutT)tutNext();
@@ -2813,7 +2833,14 @@ function tutTick(){if(!C||C.tut>=7||S.state!=='play'||!zone)return;
   else if(C.tut===4&&zone.id==='meadow')tutNext();
   else if(C.tut===5&&zone.id==='camp')tutNext();}
 function tutNext(){C.tut++;S.tutD=0;saveDB();banner(t('tutOk'));SFX.level();burst(S.x,1.2,S.z,0xffd84a,20,5,5);}
-function doNpc(){if(mode!=='play'||paused||!S.near)return;const id=S.near.id;if(npcExtra(id))return;if(id==='style')openCreate('edit');else if(id==='clinic')useClinic();else if(id==='tele'){openTele();}else if(id==='shop'||id==='hgear'||id==='mission'){talkPos={x:S.near.x,z:S.near.z};talkOn=true;if(id==='shop')openShop('eq');else if(id==='hgear')openShop('hg');else openMissions();}}
+const INTRO={shop:1,mission:2,style:4,hgear:8,clinic:16,tele:32};
+function introName(id){const c=zone.cls,N=NM[c]||{},X=NMX[c]||{};return{shop:N.shop,mission:N.mis,style:N.style,hgear:X.hg,clinic:'Mira',tele:X.tele}[id]||'';}
+function introCount(){let n=0,v=C.intro|0;for(let i=0;i<6;i++)if(v&(1<<i))n++;return n;}
+function doNpc(){if(mode!=='play'||paused||!S.near)return;const id=S.near.id;if(npcExtra(id))return;const near=S.near,bit=zone.id==='town'&&C.tut>=7?INTRO[id]:0;
+  if(bit&&!((C.intro|0)&bit)){C.intro=(C.intro|0)|bit;saveDB();
+    openTalk({name:introName(id),lines:[t('in_'+id)],act:{label:t('tNext'),fn:()=>{if((C.intro|0)>=63){C.coins+=80;saveDB();SFX.level();banner(t('introDone'));}doNpcAct(id,near);}}});return;}
+  doNpcAct(id,near);}
+function doNpcAct(id,near){if(id==='style')openCreate('edit');else if(id==='clinic')useClinic();else if(id==='tele'){openTele();}else if(id==='shop'||id==='hgear'||id==='mission'){talkPos={x:near.x,z:near.z};talkOn=true;if(id==='shop')openShop('eq');else if(id==='hgear')openShop('hg');else openMissions();}}
 bindBtn($('#bUse'),doNpc);bindBtn($('#bRest'),()=>{if(S.rest)stopRest();else startRest();});
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(e.target&&e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(keys[k])return;keys[k]=true;if(mode!=='play')return;
   if(hotkeys(k,e))return;
@@ -2833,14 +2860,14 @@ function hud(){
   setC('hpf',Math.round(hf*100),v=>{$('#hpF').style.width=v+'%';});setC('hpt',Math.ceil(S.hp)+'/'+S.maxHp,v=>{$('#hpT').textContent=v;});setC('hplow',hf<=.3?1:0,v=>$('#hpBar').classList.toggle('low',!!v));
   setC('xpf',Math.round(pr*100),v=>{$('#xpF').style.width=v+'%';});
   setC('rest',(S.state==='play'&&S.hp<S.maxHp-.5)?(S.rest?2:1):0,v=>{const b=$('#bRest');b.hidden=!v;b.textContent=v===2?'☀️ '+t('wake'):'😴 '+t('rest');});
-  setC('q',JSON.stringify(C.qs)+'|'+C.tut+'|'+(C.tutK|0)+LANG,()=>{if(C.tut<7){$('#quest').innerHTML='<span>🎓</span><span style="font-size:15px;line-height:1.15;text-align:left">'+t('tut'+C.tut)+(C.tut===3?' '+Math.min(C.tutK|0,3)+'/3':'')+'</span>';return;}$('#quest').innerHTML=C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i];return '<span class="qi"><span>'+E.MON[q.t].icon+'</span><span>'+Math.min(a.p,q.n)+'/'+q.n+'</span></span>';}).join(''):'<span>📋</span><small style="font-size:13px;font-weight:800">'+t('qNone')+'</small>';});
+  setC('q',JSON.stringify(C.qs)+'|'+C.tut+'|'+(C.tutK|0)+'|'+(C.intro|0)+LANG,()=>{if(C.tut>=7&&(C.intro|0)<63){$('#quest').innerHTML='<span>🎓</span><span style="font-size:15px;line-height:1.15;text-align:left">'+t('introQ')+' '+introCount()+'/6</span>';return;}if(C.tut<7){$('#quest').innerHTML='<span>🎓</span><span style="font-size:15px;line-height:1.15;text-align:left">'+t('tut'+C.tut)+(C.tut===3?' '+Math.min(C.tutK|0,3)+'/3':'')+'</span>';return;}$('#quest').innerHTML=C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i];return '<span class="qi"><span>'+E.MON[q.t].icon+'</span><span>'+Math.min(a.p,q.n)+'/'+q.n+'</span></span>';}).join(''):'<span>📋</span><small style="font-size:13px;font-weight:800">'+t('qNone')+'</small>';});
   setC('tod',(TOD.night?'n':'d')+Math.ceil(TOD.left),()=>{$('#tod').textContent=(TOD.night?'🌙 ':'☀️ ')+Math.floor(Math.ceil(TOD.left)/60)+':'+('0'+Math.ceil(TOD.left)%60).slice(-2);});
   setC('coins',C.coins,v=>{$('#coins').innerHTML=ic('coin',20)+'<span>'+v+'</span>';});
   const sks=mySkills();setBtn(els.def,'def'+C.cls,'<span>'+({warrior:'🛡️',mage:'🔮',ranger:'💨'}[C.cls])+'</span>',0);
   [0,1,2].forEach(i=>{const sk=sks[i],lock=sk.lv>L;setBtn(els.s[i],'sb'+i+sk.id,lock?'🔒<small>'+sk.lv+'</small>':sk.icon,lock?1:0);els.s[i].style.setProperty('--p',lock?0:clamp(S.cd[i]/S.cdMax[i],0,1));});
   els.atk.style.setProperty('--p',clamp(S.atkCd/S.atkMax,0,1));
   els.def.style.setProperty('--p',clamp(S.dodgeCd/S.dodgeMax,0,1));
-  let nearN=null;if(zone&&zone.npcs&&S.state==='play'){let bd=1e9;for(const n of zone.npcs){if(n.closed&&n.closed())continue;const d=Math.hypot(S.x-n.x,S.z-n.z);if(d<n.r&&d<bd){bd=d;nearN=n;}}}
+  let nearN=null;if(zone&&zone.npcs&&S.state==='play'){let bd=1e9;const nowT=performance.now();for(const n of zone.npcs){if(n.closed&&n.closed())continue;const d=Math.hypot(S.x-n.x,S.z-n.z);if(n.id==='chat'){if(d<4.2&&!paused&&!(n.v._bt>nowT)){n.v._bt=nowT+11000;chatWith(n,true);}continue;}if(d<n.r&&d<bd){bd=d;nearN=n;}}}
   S.near=nearN;setC('use',nearN?nearN.id:'',v=>{els.use.hidden=!v;if(v)els.use.innerHTML='<span class="ico">'+icSvg(nearN.id)+'</span>';});
 }
 
@@ -3007,7 +3034,7 @@ $('#cBack').addEventListener('click',()=>{SFX.click();if(!cm)return;if(cm.kind==
 $('#cOk').addEventListener('click',()=>{
   if(!cm)return;SFX.click();const d=cm.d;const name=(d.name||'').trim()||'Hero';
   if(cm.kind==='edit'){C.name=name;C.look=Object.assign({},d.look);closeEdit(true);}
-  else{const ch={name,cls:d.cls,gch:0,look:Object.assign({},d.look),xp:0,coins:0,slots:[0,1],qs:[],qx:[],qday:todayStr(),eq:{v:2,w:0,a:0,p:0,h:0},hg:[],qd:E.QUESTS.map(()=>0),kit:0,tut:0,tutK:0,tutT:0,zone:'camp'};DB.slots[cm.slot]=ch;saveDB();show('create',false);startPlay(cm.slot);}
+  else{const ch={name,cls:d.cls,gch:0,look:Object.assign({},d.look),xp:0,coins:0,slots:[0,1],qs:[],qx:[],qday:todayStr(),eq:{v:2,w:0,a:0,p:0,h:0},hg:[],qd:E.QUESTS.map(()=>0),kit:0,intro:0,tut:0,tutK:0,tutT:0,zone:'camp'};DB.slots[cm.slot]=ch;saveDB();show('create',false);startPlay(cm.slot);}
 });
 function closeEdit(saved){
   const ret=cm.ret;cm=null;show('create',false);mode='play';paused=false;$('#hud').hidden=false;$('#ctl').hidden=false;
@@ -3344,7 +3371,7 @@ function hotkeys(k,e){
 $('#bProf').addEventListener('click',()=>{ac();SFX.click();openProf();});
 $('#bMis').addEventListener('click',()=>{ac();SFX.click();if(!paused&&S.state==='play')openMissions();});
 $('#mmWrap').addEventListener('click',()=>{ac();SFX.click();openMap();});
-$('#quest').addEventListener('click',()=>{ac();SFX.click();if(C&&C.tut<7)return;if(!paused&&S.state==='play')openMissions();});
+$('#quest').addEventListener('click',()=>{ac();SFX.click();if(C&&(C.tut<7||(C.intro|0)<63))return;if(!paused&&S.state==='play')openMissions();});
 $('#mapClose').addEventListener('click',()=>{SFX.click();closeMap();});
 $('#profClose').addEventListener('click',()=>{SFX.click();closeProf();});
 $('#profMis').addEventListener('click',()=>{SFX.click();closeProf();openMissions();});
