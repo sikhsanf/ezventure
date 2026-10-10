@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-214043"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-215224"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -107,6 +107,9 @@ h3{font-size:17px;margin:12px 0 6px}
 #create{align-items:stretch;justify-content:flex-start}
 #create .panel{width:min(440px,100%);border-radius:0 26px 26px 0;border-left:0;display:flex;flex-direction:column;gap:2px}
 .cards{display:flex;gap:8px}
+.hsb{padding:4px 6px!important;line-height:0}.hsb img{width:44px;height:44px;image-rendering:pixelated;display:block}
+@media (orientation:landscape){#create .panel{width:min(420px,46%)}}
+@media (orientation:landscape) and (max-height:520px){#create .panel{padding:10px 12px}#create h3{margin:4px 0 2px;font-size:14px}.ccard{padding:4px 2px}.ccard .e{font-size:22px}.hsb img{width:36px;height:36px}}
 .ccard{flex:1;padding:8px 4px;border-radius:16px;border:3px solid var(--ink);background:#fff;text-align:center;cursor:pointer;font:800 15px/1.2 var(--f-display);touch-action:manipulation}
 .ccard .e{font-size:30px;display:block}
 .ccard small{display:block;font:700 12px var(--f-body);opacity:.75}
@@ -254,10 +257,12 @@ h3{font-size:17px;margin:12px 0 6px}
 #mapClose{position:absolute;top:10px;right:10px;z-index:4}
 #bUse .ico{width:62%;height:62%}
 .chip{display:inline-flex;align-items:center;gap:6px}
-.langSw{display:inline-flex;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--paper);box-shadow:0 3px 0 var(--ink)}
-.langSw button{font:800 15px/1 var(--f-display);padding:7px 15px;border:0;background:transparent;cursor:pointer;color:var(--ink);touch-action:manipulation}
-.langSw button.on{background:var(--sun)}
+.langSw,.orSw{display:inline-flex;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--paper);box-shadow:0 3px 0 var(--ink)}
+.langSw button,.orSw button{font:800 15px/1 var(--f-display);padding:7px 15px;border:0;background:transparent;cursor:pointer;color:var(--ink);touch-action:manipulation}
+.langSw button.on,.orSw button.on{background:var(--sun)}
 @media (max-width:620px){#tHead{margin-top:46px}}
+#orSw0{position:absolute;top:calc(max(10px,env(safe-area-inset-top,0px)) + 52px);right:calc(12px + var(--sr));z-index:3}
+.desk #orSw0{display:none}
 #langSw0{position:absolute;top:max(10px,env(safe-area-inset-top,0px));right:calc(12px + var(--sr));z-index:3}
 #langOv{z-index:40;align-items:center;justify-content:center;background:rgba(43,35,80,.6)}
 #langOv .panel{width:min(520px,calc(100% - 32px));text-align:center}
@@ -316,6 +321,7 @@ h3{font-size:17px;margin:12px 0 6px}
 
   <div class="ov show" id="start">
     <div class="langSw" id="langSw0"></div>
+    <div class="orSw" id="orSw0"></div>
     <div id="tHead"><div id="tag" data-i="tag"></div><h1 id="logo"></h1></div>
     <div id="tBottom">
       <div id="tapHint" data-i="tap" hidden></div>
@@ -588,9 +594,9 @@ const ICIMG={};Object.keys(IC).forEach(n=>{const im=new Image();im.src='data:ima
 /* ---------- Language (Indonesian / English, everything literal) ---------- */
 const TX={
 id:{
- tag:'Petualangan seru berdua!',tap:'🎵 Ketuk layar untuk menyalakan musik',play:'▶ Mulai petualangan!',pick:'Pilih petualang',back:'Kembali',code:'Kode save',newHero:'Petualang baru',
+ tag:'Petualangan seru bersama!',tap:'🎵 Ketuk layar untuk menyalakan musik',play:'▶ Mulai petualangan!',pick:'Pilih petualang',back:'Kembali',code:'Kode save',newHero:'Petualang baru',
  noteOk:'Progres tersimpan di perangkat ini.',noteBad:'Penyimpanan browser tidak tersedia di sini. Pakai Kode save untuk cadangan.',
- createT:'Buat karakter',lblGender:'Gender',lblHStyle:'Model rambut',gM:'Cowok',gF:'Cewek',gender:'Gender',gOnce:'Bisa diganti sekali saja',gDone:'Sudah pernah diganti',gChange:'Ganti gender (sekali)',gSure:'Yakin? Cuma bisa sekali!',hs0:'Pendek',hs1:'Bob',hs2:'Panjang',hs3:'Kuncir Kuda',hs4:'Kuncir Dua',hs5:'Jabrik',hs6:'Cepak',hs7:'Sanggul',styler:'Butik & Barbershop',save:'Simpan',start:'Mulai',lblClass:'Kelas',lblName:'Nama',phName:'Nama petualang',lblHair:'Warna rambut',lblSkin:'Kulit',lblOutfit:'Baju',lblHat:'Topi',
+ createT:'Buat karakter',lblGender:'Gender',lblHStyle:'Model rambut',gM:'Cowok',gF:'Cewek',gender:'Gender',gOnce:'Bisa diganti sekali saja',gDone:'Sudah pernah diganti',gChange:'Ganti gender (sekali)',gSure:'Yakin? Cuma bisa sekali!',hs0:'Pendek',hs1:'Bob',hs2:'Panjang',hs3:'Kuncir Kuda',hs4:'Kuncir Dua',hs5:'Jabrik',hs6:'Cepak',hs7:'Sanggul',hs8:'Mohawk',hs9:'Rapi',hs10:'Gondrong',hs11:'Pixie',styler:'Butik & Barbershop',save:'Simpan',start:'Mulai',lblClass:'Kelas',lblName:'Nama',phName:'Nama petualang',lblHair:'Warna rambut',lblSkin:'Kulit',lblOutfit:'Baju',lblHat:'Topi',
  parentT:'Pengaturan orang tua',skillBtns:'Tombol skill',storage:'Penyimpanan',lblChar:'Karakter',switchHero:'Ganti karakter',delHero:'Hapus karakter',sure:'Yakin? Tekan lagi',keep:'Lanjut main',btnN:n=>'Tombol '+n,
  saveNoteOk:'Tersimpan otomatis di perangkat ini. Buat cadangan lewat Kode save.',saveNoteBad:'Penyimpanan browser tidak tersedia di sini, jadi progres hilang saat halaman ditutup. Simpan Kode save.',
  ioT:'Kode save',ioNote:'Salin kode ini untuk cadangan atau pindah device. Tempel kode dari device lain lalu tekan Muat.',copy:'Salin',load:'Muat',close:'Tutup',copied:'Kode tersalin.',copyManual:'Pilih semua teks lalu salin manual.',loaded:n=>n+' karakter dimuat.',noSlot:'Tidak ada slot kosong atau kode kosong. Hapus karakter dulu.',badCode:'Kode tidak valid.',
@@ -618,9 +624,9 @@ id:{
  tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Perisai kuat · damage diterima −10%',ps_great:'Serangan +30%, ayunan agak lambat',ps_bow:'Tembak cepat, damage kecil',ps_xbow:'Tembak lambat, damage besar',ps_staff:'Sihir elemen · serangan +6%',ps_book:'Sihir gelap/cahaya · jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Headgear',hgS:'Topi & mahkota lucu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Headgear',hgNote:'Headgear lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Headgear menggantikan topi dari Penata Gaya.',hgNone:'Tanpa headgear',hgNoneS:'Lepas headgear',hgOwned:'Sudah dimiliki',hgPrice:'Headgear spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Penyihir Bintang',hg10:'Topi Jerami',hg11:'Tanduk Iblis Mini',hg12:'Halo Malaikat',hg13:'Topi Sinterklas',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
 },
 en:{
- tag:'A fun adventure for two!',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
+ tag:'A fun adventure together!',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
  noteOk:'Progress is saved on this device.',noteBad:'Browser storage is not available here. Use a Save code as backup.',
- createT:'Create hero',lblGender:'Gender',lblHStyle:'Hairstyle',gM:'Boy',gF:'Girl',gender:'Gender',gOnce:'Can be changed once only',gDone:'Already changed once',gChange:'Change gender (once)',gSure:'Sure? Only once!',hs0:'Short',hs1:'Bob',hs2:'Long',hs3:'Ponytail',hs4:'Twin Tails',hs5:'Spiky',hs6:'Buzz',hs7:'Bun',styler:'Boutique & Barbershop',save:'Save',start:'Start',lblClass:'Class',lblName:'Name',phName:'Hero name',lblHair:'Hair color',lblSkin:'Skin',lblOutfit:'Outfit',lblHat:'Hat',
+ createT:'Create hero',lblGender:'Gender',lblHStyle:'Hairstyle',gM:'Boy',gF:'Girl',gender:'Gender',gOnce:'Can be changed once only',gDone:'Already changed once',gChange:'Change gender (once)',gSure:'Sure? Only once!',hs0:'Short',hs1:'Bob',hs2:'Long',hs3:'Ponytail',hs4:'Twin Tails',hs5:'Spiky',hs6:'Buzz',hs7:'Bun',hs8:'Mohawk',hs9:'Neat',hs10:'Shaggy',hs11:'Pixie',styler:'Boutique & Barbershop',save:'Save',start:'Start',lblClass:'Class',lblName:'Name',phName:'Hero name',lblHair:'Hair color',lblSkin:'Skin',lblOutfit:'Outfit',lblHat:'Hat',
  parentT:'Parent settings',skillBtns:'Skill buttons',storage:'Storage',lblChar:'Hero',switchHero:'Switch hero',delHero:'Delete hero',sure:'Sure? Tap again',keep:'Keep playing',btnN:n=>'Button '+n,
  saveNoteOk:'Saved automatically on this device. Make a backup with Save code.',saveNoteBad:'Browser storage is not available here, so progress is lost when the page closes. Keep a Save code.',
  ioT:'Save code',ioNote:'Copy this code to back up or move to another device. Paste a code from another device and press Load.',copy:'Copy',load:'Load',close:'Close',copied:'Code copied.',copyManual:'Select all the text and copy it manually.',loaded:n=>n+(n===1?' hero loaded.':' heroes loaded.'),noSlot:'No empty slot, or the code is empty. Delete a hero first.',badCode:'Invalid code.',
@@ -730,9 +736,9 @@ const TRACKS={
     chords:['C','G','Am','F','C','G','F','G','F','C','G','Am','F','C','G','G'],
     mel:['E5 _ G5 _ C6 _ G5 E5','D5 _ G5 _ B5 _ A5 G5','A5 _ C6 _ E6 _ C6 A5','A5 _ G5 F5 A5 _ C6 _','E5 _ G5 _ C6 _ D6 E6','D6 _ B5 _ G5 _ B5 D6','C6 _ A5 _ F5 _ A5 C6','B5 _ A5 G5 B5 _ _ .',
          'F5 _ A5 _ C6 _ A5 F5','G5 _ E5 _ C5 E5 G5 _','D5 _ G5 _ B5 _ D6 _','C6 _ B5 A5 E5 _ A5 _','A5 _ C6 _ F6 _ E6 D6','E6 _ C6 _ G5 _ E5 G5','B5 _ D6 _ G6 _ F6 D6','D6 _ B5 _ G5 _ . .']}),
-  title:mkTrack({bpm:124,leadType:'sawtooth',leadVol:.03,lp:3400,drums:2,stab:true,arp:true,timp:true,bass:'bounce',tr:0,
-    chords:['Am','F','C','G','Am','F','G','C'],
-    mel:['E6 _ _ D6 C6 _ A5 _','A5 _ C6 _ F6 _ E6 D6','E6 _ _ G6 E6 _ C6 _','D6 _ B5 _ D6 _ G6 _','A6 _ _ G6 E6 _ C6 E6','F6 _ E6 D6 C6 _ A5 C6','B5 _ D6 _ G6 _ F6 D6','E6 _ _ _ G6 _ C7 _']})
+  title:mkTrack({bpm:150,leadType:'square',leadVol:.034,lp:3800,drums:2,stab:true,arp:true,timp:true,bass:'bounce',tr:0,
+    chords:['C','G','Am','F','C','G','F','G'],
+    mel:['G5 _ C6 _ E6 _ G6 E6','D6 _ G6 _ B6 _ A6 G6','E6 _ A6 _ C7 _ B6 A6','F6 _ A6 _ C7 _ A6 F6','G6 _ E6 G6 C7 _ G6 E6','D7 _ B6 _ G6 B6 D7 _','C7 _ A6 _ F6 A6 C7 A6','B6 _ D7 _ G7 _ . .']})
 };
 TRACKS.town_warrior=mkTrack({bpm:112,leadType:'square',leadVol:.03,lp:2600,drums:1,stab:true,bass:'bounce',tr:0,
   chords:['Am','Am','F','G','Am','Dm','Em','Am'],
@@ -803,6 +809,7 @@ setInterval(()=>{const h=$('#tapHint');if(h)h.hidden=!!(AC&&AC.state==='running'
 
 /* ---------- Persistence (local) ---------- */
 const KEY='ezventure.save.v1';
+const HSG=[[0,6,5,8,9,10],[1,2,3,4,7,11]];
 let DB={slots:[null,null,null],last:0},storageOK=true;
 try{localStorage.setItem('ezventure.probe','1');localStorage.removeItem('ezventure.probe');}catch(e){storageOK=false;}
 function loadDB(){try{const r=localStorage.getItem(KEY);if(r){const j=JSON.parse(r);if(j&&Array.isArray(j.slots)){DB.slots=[0,1,2].map(i=>sanitize(j.slots[i]));DB.last=j.last|0;}}}catch(e){}}
@@ -813,7 +820,7 @@ function sanitize(o){
   const L=o.look||{};const li=(v,n)=>clamp(v|0,0,n-1);
   const q=o.quest||{};
   return {name:String(o.name||'Hero').slice(0,12),cls:o.cls,xp:clamp(+o.xp||0,0,E.TOTAL[E.MAXLV]),coins:Math.max(0,+o.coins||0),
-    look:{hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g:li(L.g,2),hs:li(L.hs,8)},gch:o.gch?1:0,
+    look:(()=>{const g=li(L.g,2),h=li(L.hs,12);return {hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g,hs:HSG[g].indexOf(h)>=0?h:(g?2:0)};})(),gch:o.gch?1:0,
     slots:Array.isArray(o.slots)&&o.slots.length===2?[li(o.slots[0],3),li(o.slots[1],3)]:[0,1],
     qs:(Array.isArray(o.qs)?o.qs:[]).filter((x,k,a)=>x&&typeof x==='object'&&a.findIndex(y=>y&&(y.i|0)===(x.i|0))===k).slice(0,3).map(x=>({i:clamp(x.i|0,0,E.QUESTS.length-1),p:Math.max(0,x.p|0)})),
     qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,4),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),zone:/^(meadow|stone|glade|vale|crater|bog|frost|dragon|town:(warrior|mage|ranger))$/.test(o.zone)?o.zone:'town'};
@@ -1039,6 +1046,10 @@ function hairStyle(h,c,s){
   else if(s===5){vb(h,.8,.14,.8,c,0,.7,0);vb(h,.8,.5,.2,c,0,.45,-.32);sd(.48,.36,.5,-.05);[[-.26,.16],[0,.3],[.26,.18],[-.12,.24],[.14,.26]].forEach((p,i)=>vb(h,.2,p[1]+.1,.2,c,p[0],.88+p[1]/2,i%2?.1:-.1));}
   else if(s===6){vb(h,.78,.12,.78,c,0,.71,0);vb(h,.76,.3,.12,c,0,.52,-.34);sd(.58,.2,.5,-.05);}
   else if(s===7){top();vb(h,.8,.5,.2,c,0,.5,-.32);sd(.48,.36,.5,-.08);fr();vb(h,.34,.3,.34,c,0,.98,-.08);vb(h,.38,.06,.38,'#ff8fc2',0,.84,-.08);}
+  else if(s===8){vb(h,.2,.34,.86,c,0,.86,0);vb(h,.2,.2,.3,c,0,1.0,.1);vb(h,.2,.16,.2,c,0,.74,-.38);}
+  else if(s===9){top();vb(h,.8,.5,.2,c,0,.5,-.32);sd(.5,.3,.5,-.08);vb(h,.5,.14,.14,c,-.12,.62,.37);vb(h,.34,.22,.14,c,.2,.6,.37);vb(h,.12,.2,.16,c,.4,.55,.3);}
+  else if(s===10){top();vb(h,.8,.9,.2,c,0,.25,-.32);sd(.3,.7,.5,-.1);fr();[[-.46,.2],[.46,.15]].forEach(p=>vb(h,.12,.32,.16,c,p[0],p[1],-.1));vb(h,.14,.2,.14,c,.1,.84,.2);}
+  else if(s===11){top();vb(h,.8,.4,.2,c,0,.55,-.32);sd(.55,.3,.5,-.08);vb(h,.5,.14,.14,c,-.1,.62,.37);vb(h,.3,.2,.14,c,.22,.56,.37);vb(h,.1,.1,.1,'#ff8fc2',.32,.7,.4);}
   else{top();vb(h,.8,.6,.2,c,0,.45,-.32);sd(.45,.4,.6,-.05);fr();}
 }
 function buildHero(cls,look){
@@ -1659,7 +1670,7 @@ function guestMsg(d){
 function cleanProf(p){
   if(!p||['warrior','mage','ranger'].indexOf(p.c)<0)return null;
   const L=p.l||{},E2=p.e||{},ci=(v,n)=>clamp((+v)|0,0,n-1);
-  return {n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,8)},e:{w:ci(E2.w,10),a:ci(E2.a,4),p:ci(E2.p,2),h:ci(E2.h,21)},v:ci(p.v,E.MAXLV+1)||1};
+  return {n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,12)},e:{w:ci(E2.w,10),a:ci(E2.a,4),p:ci(E2.p,2),h:ci(E2.h,21)},v:ci(p.v,E.MAXLV+1)||1};
 }
 function setRemote(R,p){
   p=cleanProf(p);if(!p)return false;
@@ -2719,7 +2730,7 @@ function applyOrient(gesture){
     else if(gesture&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(go).catch(()=>banner(t('orFail')));
   }catch(e){}
 }
-function setOrient(m){ORIENT=m;try{localStorage.setItem('ezventure.orient',m);}catch(e){}applyOrient(true);}
+function setOrient(m){ORIENT=m;try{localStorage.setItem('ezventure.orient',m);}catch(e){}applyOrient(true);if(window.buildOrSw)buildOrSw();}
 document.addEventListener('pointerdown',()=>{if(ORIENT!=='auto'&&!applyOrient._d){applyOrient._d=1;applyOrient(false);}},{once:true});
 function setCamMode(m){CAMMODE=m;try{localStorage.setItem('ezventure.cam',m);}catch(e){}if(m!=='rot')camYawT=0;$('#hud').classList.toggle('rot',m==='rot');}
 function rotCam(d){if(CAMMODE==='rot')camYawT+=d*Math.PI/4;}
@@ -2741,8 +2752,8 @@ function updateCamera(dt){
     shake=Math.max(0,shake-dt*2.4);if(shake>0.001){_sh.set(rnd(-1,1),rnd(-1,1),rnd(-1,1)).multiplyScalar(shake*.45);camera.position.add(_sh);}
     camera.lookAt(camPos.x-sy*D,.8-(portrait?2.6:.6)*tk,camPos.z-cy*D);
   }else if(mode==='preview'){
-    const sx=portrait?0:-1.5;camera.position.set(sx,portrait?3.6:2.8,portrait?10.5:8.6);camera.lookAt(sx,portrait?.6:1.1,0);
-    if(portrait){const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;camera.setViewOffset(W,Hh,0,Math.round(Hh*.27),W,Hh);camVO=true;}
+    const sx=0;camera.position.set(sx,portrait?3.6:2.8,portrait?10.5:7.4);camera.lookAt(sx,portrait?.6:1.1,0);
+    {const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;if(portrait)camera.setViewOffset(W,Hh,0,Math.round(Hh*.27),W,Hh);else camera.setViewOffset(W,Hh,-Math.round(Math.min(420,W*.46)/2),0,W,Hh);camVO=true;}
   }else{
     const ang=Math.sin(T*.16)*.5,R=portrait?30:19;
     camera.position.set(Math.sin(ang)*R*.55,4.6+Math.sin(T*.23)*.4,Math.cos(ang)*R);
@@ -2796,14 +2807,20 @@ function openCreate(kind,slot){
   $('#cTitle').textContent=kind==='edit'?t('styler'):t('createT');$('#cClass').hidden=kind==='edit';$('#cOk').textContent=kind==='edit'?t('save'):t('start');
   $('#nm').value=cm.d.name;renderCreate();show('start',false);show('create',true);
 }
+const HSI={0:[[2,2,8,3],[3,4,6,1],[2,5,1,3],[9,5,1,3]],1:[[2,2,8,3],[3,4,6,1],[2,5,1,5],[9,5,1,5]],2:[[2,2,8,3],[3,4,6,1],[2,5,1,7],[9,5,1,7]],3:[[2,2,8,3],[3,4,6,1],[2,5,1,2],[9,5,1,2],[10,3,2,2],[11,5,1,5],[10,3,1,1,1]],4:[[2,2,8,3],[3,4,6,1],[2,5,1,2],[9,5,1,2],[0,5,2,5],[10,5,2,5],[0,4,2,1,1],[10,4,2,1,1]],5:[[2,3,8,2],[2,1,2,2],[5,0,2,3],[8,1,2,2],[2,5,1,2],[9,5,1,2]],6:[[3,3,6,2],[2,4,1,2],[9,4,1,2]],7:[[2,2,8,3],[3,4,6,1],[2,5,1,3],[9,5,1,3],[4,0,4,2],[4,2,4,1,1]],8:[[5,0,2,5]],9:[[2,2,8,3],[3,4,4,1],[2,5,1,2],[9,5,1,2]],10:[[2,2,8,3],[3,4,6,1],[2,5,1,6],[9,5,1,6],[1,7,1,3],[10,7,1,3]],11:[[2,2,8,2],[2,4,1,2],[9,4,1,2],[3,4,4,1],[8,3,1,1,1]]};
+const hiCache={};
+function hairIcon(hs,hc,sc){const k=hs+hc+sc;if(hiCache[k])return hiCache[k];const cv=document.createElement('canvas');cv.width=cv.height=48;const x=cv.getContext('2d');
+  const R=(a,c)=>{x.fillStyle=c;x.fillRect(a[0]*4,a[1]*4,a[2]*4,a[3]*4);};
+  R([3,4,6,6],sc);(HSI[hs]||[]).forEach(r=>R(r,r[4]?'#ff8fc2':hc));R([4,6,1,1],'#1d1630');R([7,6,1,1],'#1d1630');R([5,8,2,1],'#b05a5a');
+  return hiCache[k]=cv.toDataURL();}
 function renderCreate(){
   const cards=$('#cards');cards.innerHTML='';
   Object.keys(E.CLASSES).forEach(k=>{const c=E.CLASSES[k],b=document.createElement('button');b.className='ccard'+(cm.d.cls===k?' sel':'');b.innerHTML='<span class="e">'+c.icon+'</span>'+cn(k)+'<small>'+tnm(k)+'</small>';b.addEventListener('click',()=>{SFX.click();cm.d.cls=k;if(cm.kind==='new')cm.d.look=Object.assign({},defLook(k),{hair:cm.d.look.hair===4&&k!=='mage'?0:cm.d.look.hair,g:cm.d.look.g,hs:cm.d.look.hs});makeHero(k,cm.d.look);renderCreate();});cards.appendChild(b);});
   const sw=(id,arr,key)=>{const el=$(id);el.innerHTML='';arr.forEach((c,i)=>{const b=document.createElement('button');b.style.background=c;b.className=cm.d.look[key]===i?'sel':'';b.setAttribute('aria-label',key+' '+(i+1));b.addEventListener('click',()=>{SFX.click();cm.d.look[key]=i;makeHero(cm.d.cls,cm.d.look);renderCreate();});el.appendChild(b);});};
   sw('#swHair',HAIR,'hair');sw('#swSkin',SKIN,'skin');sw('#swOut',OUTF,'outfit');
   $('#cGender').hidden=cm.kind==='edit';
-  const gs=$('#genders');gs.innerHTML='';[['♂ ',0,'gM'],['♀ ',1,'gF']].forEach(o=>{const b=document.createElement('button');b.className='chipb'+((cm.d.look.g|0)===o[1]?' sel':'');b.textContent=o[0]+t(o[2]);b.addEventListener('click',()=>{SFX.click();cm.d.look.g=o[1];if(!cm.hsT)cm.d.look.hs=o[1]?2:0;makeHero(cm.d.cls,cm.d.look);renderCreate();});gs.appendChild(b);});
-  const hz=$('#hstyles');hz.innerHTML='';for(let i=0;i<8;i++){const b=document.createElement('button');b.className='chipb'+((cm.d.look.hs|0)===i?' sel':'');b.textContent=t('hs'+i);b.addEventListener('click',()=>{SFX.click();cm.hsT=1;cm.d.look.hs=i;makeHero(cm.d.cls,cm.d.look);renderCreate();});hz.appendChild(b);}
+  const gs=$('#genders');gs.innerHTML='';[['♂ ',0,'gM'],['♀ ',1,'gF']].forEach(o=>{const b=document.createElement('button');b.className='chipb'+((cm.d.look.g|0)===o[1]?' sel':'');b.textContent=o[0]+t(o[2]);b.addEventListener('click',()=>{SFX.click();cm.d.look.g=o[1];cm.d.look.hs=o[1]?2:0;makeHero(cm.d.cls,cm.d.look);renderCreate();});gs.appendChild(b);});
+  const hz=$('#hstyles');hz.innerHTML='';HSG[cm.d.look.g|0].forEach(i=>{const b=document.createElement('button');b.className='chipb hsb'+((cm.d.look.hs|0)===i?' sel':'');b.setAttribute('aria-label',t('hs'+i));b.title=t('hs'+i);const im=new Image();im.src=hairIcon(i,HAIR[cm.d.look.hair],SKIN[cm.d.look.skin]);im.alt='';b.appendChild(im);b.addEventListener('click',()=>{SFX.click();cm.hsT=1;cm.d.look.hs=i;makeHero(cm.d.cls,cm.d.look);renderCreate();});hz.appendChild(b);});
 }
 $('#nm').addEventListener('input',e=>{if(cm)cm.d.name=e.target.value.slice(0,12);});
 $('#cBack').addEventListener('click',()=>{SFX.click();if(!cm)return;if(cm.kind==='edit'){closeEdit(false);}else showTitle();});
@@ -2950,7 +2967,7 @@ function renderProf(){
   h+='<h3>'+t('activeQ')+' '+C.qs.length+'/3</h3>'+(C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i],qm=E.MON[q.t];return row(qm.icon,t('defeat',q.n,mn(q.t)),t('progRew',Math.min(a.p,q.n),q.n)+ic('coin',14)+qReward(a.i).coins);}).join(''):row('📋',t('qNone'),t('misTown')))+'</div></div>';
   $('#profR').innerHTML=h;
   const gb=$('#pGen');if(gb)gb.onclick=()=>{if(!gb.dataset.arm){gb.dataset.arm='1';gb.textContent=t('gSure');clearTimeout(gb._t);gb._t=setTimeout(()=>{gb.dataset.arm='';gb.textContent=t('gChange');},3500);return;}
-    C.look.g=C.look.g===1?0:1;C.gch=1;saveDB();makeHero(C.cls,C.look);renderProf();profInit();};
+    C.look.g=C.look.g===1?0:1;C.look.hs=C.look.g?2:0;C.gch=1;saveDB();makeHero(C.cls,C.look);renderProf();profInit();};
 }
 
 /* ---------- Shop & missions ---------- */
@@ -3059,6 +3076,7 @@ function applyLang(){
   document.querySelectorAll('[data-ia]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.ia)));
   document.querySelectorAll('[data-ip]').forEach(e=>{e.placeholder=t(e.dataset.ip);});
   document.querySelectorAll('.langSw').forEach(buildSw);
+  window.buildOrSw=()=>{const b=$('#orSw0');if(!b)return;b.innerHTML='';[['auto','⟳','orAuto'],['land','▭','orLand'],['port','▯','orPort']].forEach(o=>{const x=document.createElement('button');x.textContent=o[1];x.className=ORIENT===o[0]?'on':'';x.setAttribute('aria-label',t(o[2]));x.title=t(o[2]);x.addEventListener('click',()=>{SFX.click();setOrient(o[0]);});b.appendChild(x);});};buildOrSw();
   renderCoop();Object.keys(hCache).forEach(k=>delete hCache[k]);$('#keys').innerHTML=t('keys');$('#err').textContent=t('err');renderPause();
   if(zone&&C&&mode==='play'){zone.tags.forEach(g=>{g.el=null;});tagReset();zone.mons.forEach(m=>{m.tagEl=null;});updateZoneChip();}
   if(mode==='title')buildSlots();
