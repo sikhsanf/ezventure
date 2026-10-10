@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>EZUI demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
+<link rel="stylesheet" href="ezui.css">
+<style>body{background:var(--sky);height:100vh;overflow:hidden}#stage{position:absolute;inset:0;padding:24px;display:flex;flex-wrap:wrap;gap:12px;align-content:flex-start}</style></head><body>
+<div id="stage">
+ <button class="pill" onclick="EZUI.show('d1')">Dialog (confirm)</button>
+ <button class="pill" onclick="EZUI.show('d2')">Dialog (long list)</button>
+ <button class="pill" onclick="EZUI.show('d3')">Side editor</button>
+</div>
+<div class="ov dlg" id="d1"><div class="panel sm">
+ <div class="phead"><h2>Confirm</h2><div class="acts"><button class="xbtn" data-for="d1no">✕</button></div></div>
+ <div class="pbody"><p>Footer rule: secondary on the LEFT, primary on the RIGHT.</p></div>
+ <div class="pfoot"><button class="pill" id="d1no" onclick="EZUI.hide('d1')">Back</button><button class="pill go" onclick="EZUI.hide('d1')">Continue</button></div></div></div>
+<div class="ov dlg" id="d2"><div class="panel md">
+ <div class="phead"><h2>Long list</h2></div>
+ <div class="pbody" id="lst"></div>
+ <div class="pfoot"><button class="pill go" onclick="EZUI.hide('d2')">Close</button></div></div></div>
+<div class="ov side" id="d3"><div class="panel">
+ <div class="phead"><h2>Editor</h2></div>
+ <div class="pbody"><div class="cols"><div>Column A…</div><div>Column B…</div></div></div>
+ <div class="pfoot"><button class="pill" onclick="EZUI.hide('d3')">Back</button><button class="pill go" onclick="EZUI.hide('d3')">Start</button></div></div></div>
+<script src="ezui.js"></script><script>document.getElementById('lst').innerHTML=Array.from({length:30},(_,i)=>'<p>Row '+(i+1)+'</p>').join('')</script>
+</body></html>

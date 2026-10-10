@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-220315"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-004019"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -7,6 +7,7 @@
   /* Concept: full-bleed storybook diorama. Chunky sticker UI (ink outline + hard shadow) hugs the corners so the 3D world stays clear. Single bright look by choice. */
   --sky:#bfe8ff; --ink:#2b2350; --paper:#fffaf0; --berry:#ff5d8f; --sun:#ffc83a; --leaf:#3fbf6e; --sea:#46a6ff; --dusk:#7a55ff;
   --btn:max(80px,16vmin);
+  --mg:12px; --st:env(safe-area-inset-top,0px); --sb:env(safe-area-inset-bottom,0px); --tap:48px; --r-panel:26px;
   --sl:env(safe-area-inset-left,0px); --sr:env(safe-area-inset-right,0px);
   --f-display:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
   --f-body:'Nunito','Segoe UI',system-ui,sans-serif;
@@ -25,7 +26,9 @@ button{font-family:inherit;color:inherit;touch-action:none}
 
 /* HUD */
 #hud{position:absolute;inset:0;pointer-events:none}
-#tl{position:absolute;left:calc(12px + var(--sl));top:12px;display:flex;gap:10px;align-items:center}
+#tl{position:absolute;left:calc(var(--mg) + var(--sl));top:calc(var(--mg) + var(--st));display:flex;flex-direction:column;align-items:flex-start;gap:8px;pointer-events:none;max-width:calc(100% - 190px)}
+#tl>*{pointer-events:auto}
+.hrow{display:flex;gap:10px;align-items:center}
 #badge{width:54px;height:54px;border-radius:50%;background:var(--sun);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:grid;place-items:center;font:800 26px/1 var(--f-display);color:var(--ink)}
 #bars{display:flex;flex-direction:column;gap:0;padding:2px 12px 4px;background:rgba(255,250,240,.82);border:3px solid var(--ink);border-radius:18px}
 .row{display:flex;gap:1px}
@@ -42,13 +45,11 @@ button{font-family:inherit;color:inherit;touch-action:none}
 .bar.xp .bt i{background:linear-gradient(#ffe892,#ffc83a 55%,#f0a820)}
 .bar.hp.low .bt i{animation:lowhp .55s ease-in-out infinite alternate}
 @keyframes lowhp{to{filter:brightness(1.4) saturate(1.3)}}
-#bRest{position:absolute;left:calc(12px + var(--sl));top:74px;pointer-events:auto;padding:8px 16px;border-radius:999px;border:3px solid var(--ink);background:#bfe8ff;font:800 16px/1 var(--f-display);color:var(--ink);box-shadow:0 3px 0 var(--ink);cursor:pointer;touch-action:manipulation}
 #bRest.on{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-@media (orientation:portrait){#bRest{top:120px}}
-@media (orientation:landscape) and (max-width:820px){#bRest{top:112px}}
-#tc{position:absolute;left:50%;top:12px;transform:translateX(-50%);pointer-events:auto;cursor:pointer}
-#quest{display:flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(255,250,240,.9);border:3px solid var(--ink);border-radius:999px;font:800 20px/1 var(--f-display);box-shadow:0 3px 0 var(--ink)}
+#quest{cursor:pointer;display:flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(255,250,240,.9);border:3px solid var(--ink);border-radius:999px;font:800 20px/1 var(--f-display);box-shadow:0 3px 0 var(--ink)}
 #quest.done{animation:pulse .5s 3}
+#bRest{padding:8px 16px;border-radius:999px;border:3px solid var(--ink);background:#bfe8ff;font:800 16px/1 var(--f-display);color:var(--ink);box-shadow:0 3px 0 var(--ink);cursor:pointer;touch-action:manipulation}
+#bRest.on{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 #quest{gap:10px;font-size:17px}#quest .qi{display:flex;align-items:center;gap:4px}
 #tod{position:absolute;left:4px;top:4px;z-index:2;padding:2px 6px;border-radius:10px;background:rgba(43,35,80,.78);color:#fff;font:800 11px/1.2 var(--f-display);pointer-events:none}
 @keyframes pulse{50%{transform:scale(1.18)}}
@@ -59,7 +60,7 @@ button{font-family:inherit;color:inherit;touch-action:none}
 /* Controls */
 #ctl{position:absolute;inset:0;pointer-events:none}
 #joyArea{position:absolute;left:0;bottom:0;width:55%;height:72%;pointer-events:auto;touch-action:none}
-#joyBase{position:absolute;left:calc(26px + var(--sl));bottom:26px;width:132px;height:132px;border-radius:50%;border:4px solid rgba(43,35,80,.5);background:rgba(255,255,255,.3);pointer-events:none;transition:opacity .2s;opacity:.7}
+#joyBase{position:absolute;left:calc(26px + var(--sl));bottom:calc(26px + var(--sb));width:132px;height:132px;border-radius:50%;border:4px solid rgba(43,35,80,.5);background:rgba(255,255,255,.3);pointer-events:none;transition:opacity .2s;opacity:.7}
 #joyBase.act{opacity:1}
 #joyKnob{position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;background:var(--paper);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink)}
 .btn{position:absolute;width:var(--sz);height:var(--sz);border-radius:50%;border:4px solid var(--ink);box-shadow:0 5px 0 var(--ink);background:var(--bg);font-size:calc(var(--sz)*.46);line-height:1;display:grid;place-items:center;padding:0;overflow:hidden;cursor:pointer;pointer-events:auto;touch-action:none;color:#fff;font-family:var(--f-display);font-weight:800}
@@ -67,13 +68,13 @@ button{font-family:inherit;color:inherit;touch-action:none}
 .btn.on{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
 .btn small{position:absolute;right:8px;bottom:6px;font-size:calc(var(--sz)*.2);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill}
 .btn.lock{filter:grayscale(.85) brightness(.9)}
-#bAtk{--sz:calc(var(--btn)*1.3);--bg:#ff6b4a;right:calc(16px + var(--sr));bottom:18px}
-#bDef{--sz:var(--btn);--bg:#4aa0ff;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:18px}
-#bS1{--sz:var(--btn);--bg:#9a5de0;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:calc(30px + var(--btn))}
-#bS2{--sz:var(--btn);--bg:#1fae92;right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(30px + var(--btn)*1.3)}
-#bS3{--sz:var(--btn);--bg:#e8843a;right:calc(36px + var(--btn)*2.45 + var(--sr));bottom:calc(34px + var(--btn)*.55)}
-@media (orientation:portrait){#bS3{right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(40px + var(--btn)*2.3)}}
-#bUse{--sz:calc(var(--btn)*1.05);--bg:#ff8fc2;left:50%;margin-left:calc(var(--btn)*-.52);bottom:calc(30px + var(--btn)*1.4);animation:bob 1s ease-in-out infinite}
+#bAtk{--sz:calc(var(--btn)*1.3);--bg:#ff6b4a;right:calc(16px + var(--sr));bottom:calc(18px + var(--sb))}
+#bDef{--sz:var(--btn);--bg:#4aa0ff;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:calc(18px + var(--sb))}
+#bS1{--sz:var(--btn);--bg:#9a5de0;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:calc(30px + var(--sb) + var(--btn))}
+#bS2{--sz:var(--btn);--bg:#1fae92;right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(30px + var(--sb) + var(--btn)*1.3)}
+#bS3{--sz:var(--btn);--bg:#e8843a;right:calc(36px + var(--btn)*2.45 + var(--sr));bottom:calc(34px + var(--sb) + var(--btn)*.55)}
+@media (orientation:portrait){#bS3{right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(40px + var(--sb) + var(--btn)*2.3)}}
+#bUse{--sz:calc(var(--btn)*1.05);--bg:#ff8fc2;left:50%;margin-left:calc(var(--btn)*-.52);bottom:calc(30px + var(--sb) + var(--btn)*1.4);animation:bob 1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
 
 /* Banner, fade, faint */
@@ -87,17 +88,9 @@ button{font-family:inherit;color:inherit;touch-action:none}
 #err{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;font:800 22px/1.3 var(--f-display);background:var(--paper)}
 
 /* Overlays */
-.ov{position:absolute;inset:0;display:none;z-index:20}
-.ov.show{display:flex}
-.panel{background:var(--paper);border:4px solid var(--ink);border-radius:26px;box-shadow:0 8px 0 var(--ink);padding:16px 18px;box-sizing:border-box;overflow:auto;touch-action:pan-y;-webkit-user-select:text;user-select:text;max-height:100%}
 h1,h2,h3{font-family:var(--f-display);font-weight:800;margin:0}
 h2{font-size:26px;line-height:1.1}
 h3{font-size:17px;margin:12px 0 6px}
-.pill{font:800 18px/1 var(--f-display);padding:12px 20px;border-radius:999px;border:3px solid var(--ink);background:var(--paper);box-shadow:0 4px 0 var(--ink);cursor:pointer;touch-action:manipulation}
-.pill:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
-.pill.go{background:var(--leaf);color:#fff}
-.pill.warn{background:var(--berry);color:#fff}
-.pill[disabled]{opacity:.45}
 .rowx{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 #start{flex-direction:column;align-items:center;justify-content:space-between;padding:max(10px,2vh) 12px max(10px,2vh);box-sizing:border-box;background:linear-gradient(rgba(30,20,80,.0) 50%,rgba(70,36,12,.55))}
 #tHead{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
@@ -119,12 +112,8 @@ h3{font-size:17px;margin:12px 0 6px}
 .slot.empty{background:repeating-linear-gradient(0deg,rgba(201,143,80,.55) 0 9px,rgba(187,128,68,.55) 9px 11px);border-style:dashed}
 .slot small{font:800 12px var(--f-body);-webkit-text-stroke:2.5px #4a2c14}
 #start .note{color:#fff;text-shadow:0 1px 3px rgba(40,20,0,.8);margin:0}
-#create{align-items:stretch;justify-content:flex-start}
-#create .panel{width:min(440px,100%);border-radius:0 26px 26px 0;border-left:0;display:flex;flex-direction:column;gap:2px}
 .cards{display:flex;gap:8px}
 .hsb{padding:4px 6px!important;line-height:0}.hsb img{width:44px;height:44px;image-rendering:pixelated;display:block}
-@media (orientation:landscape){#create .panel{width:min(420px,46%)}}
-@media (orientation:landscape) and (max-height:520px){#create .panel{padding:10px 12px}#create h3{margin:4px 0 2px;font-size:14px}.ccard{padding:4px 2px}.ccard .e{font-size:22px}.hsb img{width:36px;height:36px}}
 .ccard{flex:1;padding:8px 4px;border-radius:16px;border:3px solid var(--ink);background:#fff;text-align:center;cursor:pointer;font:800 15px/1.2 var(--f-display);touch-action:manipulation}
 .ccard .e{font-size:30px;display:block}
 .ccard small{display:block;font:700 12px var(--f-body);opacity:.75}
@@ -136,8 +125,7 @@ h3{font-size:17px;margin:12px 0 6px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chipb{min-width:46px;padding:8px 12px;border-radius:14px;border:3px solid var(--ink);background:#fff;font:800 20px/1 var(--f-display);cursor:pointer;touch-action:manipulation}
 .chipb.sel{background:var(--sun)}
-#menu,#io,#faint,#shop,#mis{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
-#menu .panel,#io .panel,#shop .panel,#mis .panel{width:min(520px,calc(100% - 32px))}
+#faint{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
 #loc{position:absolute;left:50%;top:15%;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0;white-space:nowrap}
 #loc b{display:block;font:800 clamp(26px,min(8vh,10.5vw),56px)/1 var(--f-display);color:#fff;-webkit-text-stroke:min(8px,1.4vh) var(--ink);paint-order:stroke fill;letter-spacing:.02em;filter:drop-shadow(0 5px 0 var(--ink))}
 #loc small{display:inline-block;margin-top:8px;padding:4px 16px;font:800 clamp(13px,2.6vh,18px) var(--f-display);background:var(--sun);color:var(--ink);border:3px solid var(--ink);border-radius:999px;box-shadow:0 3px 0 var(--ink)}
@@ -154,21 +142,18 @@ h3{font-size:17px;margin:12px 0 6px}
 .prog{font:800 14px var(--f-display);color:var(--berry)}
 .shopRow .pill,.misRow .pill{padding:9px 12px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:92px;flex:none}
 .pill small{font:700 11px var(--f-body)}
-#mis .panel{max-height:92%}
 #faint{background:rgba(255,250,240,.55);flex-direction:column;font:800 40px var(--f-display)}
 #faint .st{font-size:90px;animation:spin 1.2s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #ioText{width:100%;box-sizing:border-box;height:110px;font:600 12px/1.3 ui-monospace,Menlo,monospace;border:3px solid var(--ink);border-radius:12px;padding:8px;resize:none;background:#fff;color:var(--ink);touch-action:manipulation}
 .note{font:700 13px/1.35 var(--f-body);opacity:.8;margin:6px 0 0}
 @media (max-width:640px) and (orientation:portrait){
-  #create{align-items:flex-end}
-  #create .panel{width:100%;max-height:64%;border-radius:26px 26px 0 0;border-left:4px solid var(--ink)}
-  #bUse{bottom:calc(40px + var(--btn)*2.4)}
+  #bUse{bottom:calc(40px + var(--sb) + var(--btn)*2.4)}
 }
 
 /* ===== v4: HUD layout (mobile first), map, profile, name tags ===== */
 :root{--mm:clamp(88px,23vmin,124px)}
-#tr{position:absolute;right:calc(12px + var(--sr));top:12px;display:grid;grid-template-columns:auto auto;gap:6px;justify-items:end;align-items:start;pointer-events:none}
+#tr{position:absolute;right:calc(var(--mg) + var(--sr));top:calc(var(--mg) + var(--st));display:grid;grid-template-columns:auto auto;gap:6px;justify-items:end;align-items:start;pointer-events:none}
 #tr>*{pointer-events:auto}
 #minis{grid-column:1;grid-row:1;display:flex;gap:6px}
 #coins{grid-column:2;grid-row:1;align-self:center}
@@ -180,15 +165,11 @@ h3{font-size:17px;margin:12px 0 6px}
   #coins{grid-column:1 / -1;grid-row:1;justify-self:end}
   #mmWrap{grid-column:1;grid-row:2}
   #minis{grid-column:2;grid-row:2;flex-direction:column}
-  #tc{top:78px;left:calc(12px + var(--sl));transform:none}
 }
-@media (orientation:landscape){#tc{left:calc(228px + var(--sl));transform:none}}
-@media (orientation:landscape) and (max-width:820px){#tc{top:74px;left:calc(12px + var(--sl))}}
 @media (max-width:380px){.hrt,.str{font-size:22px}}
 #keys{display:none}
 .desk{--mm:150px}
 .desk #minis .mini{width:44px;height:44px;font-size:20px}
-.desk #tc{left:50%;transform:translateX(-50%)}
 .desk #joyBase:not(.act){opacity:0}
 .desk #keys{display:block;position:absolute;left:50%;bottom:10px;transform:translateX(-50%);padding:5px 14px;background:rgba(255,250,240,.86);border:3px solid var(--ink);border-radius:999px;font:800 12px/1.2 var(--f-body);color:var(--ink);white-space:nowrap;pointer-events:none}
 .desk #keys b{background:var(--sun);border:2px solid var(--ink);border-radius:6px;padding:0 5px;margin:0 3px 0 10px}
@@ -199,8 +180,6 @@ h3{font-size:17px;margin:12px 0 6px}
 .nt.mon{color:#fff}.nt.mon small{color:var(--tc,#fff)}
 .nt.fr{color:#ffc2e2;font-size:13px}
 .mini.on::after{content:'';position:absolute;right:-2px;top:-2px;width:12px;height:12px;border-radius:50%;background:#3fe08a;border:2.5px solid var(--ink)}
-#coop{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
-#coop .panel{width:min(440px,calc(100% - 32px))}
 .codeBig{font:900 54px/1 var(--f-display);letter-spacing:.18em;text-align:center;margin:14px 0 4px;padding-left:.18em;color:var(--ink)}
 .codeBig.sm{font-size:24px;letter-spacing:0;color:#2a9a58;padding:0}
 .codeIn{font:900 28px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;width:7.2ch;max-width:46%;padding:9px 10px 9px calc(10px + .2em);border:3px solid var(--ink);border-radius:16px;background:#fff;color:var(--ink);box-sizing:content-box;text-align:center}
@@ -209,8 +188,6 @@ h3{font-size:17px;margin:12px 0 6px}
 .cpErr{color:#c4243c;opacity:1;font-weight:800}
 .desk .nt{font-size:14px}.desk .nt small{font-size:11px}
 #tapHint{font:800 clamp(12px,2.4vh,16px)/1 var(--f-display);color:#fff;background:rgba(43,35,80,.62);border:3px solid var(--ink);border-radius:999px;padding:6px 16px;animation:pbob 1.6s ease-in-out infinite}
-#prof,#map{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
-#prof .panel{width:min(780px,calc(100% - 32px));max-height:94%}
 #profGrid{display:grid;grid-template-columns:minmax(150px,210px) 1fr;gap:14px;margin-top:8px}
 #profL{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border:3px solid var(--ink);border-radius:18px;background:linear-gradient(#bfe4ff,#fdf1cf);align-self:start}
 #profCv{width:100%;aspect-ratio:3/4;max-height:40vh;display:block}
@@ -225,51 +202,28 @@ h3{font-size:17px;margin:12px 0 6px}
 #profR h3{margin:12px 0 2px}
 .pcols{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .pcols>div{min-width:0}
-#profFoot{position:sticky;bottom:-16px;background:var(--paper);padding:10px 0 2px;margin-top:10px}
-#map .panel{width:min(840px,calc(100% - 32px));display:flex;gap:14px;align-items:center;max-height:96%}
 #mapMain{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px}
-#mapBig{width:min(100%,calc(100vh - 120px));aspect-ratio:1;max-width:100%;border:3px solid var(--ink);border-radius:18px;background:#9fd18b;touch-action:manipulation;display:block}
-#mapSide{flex:0 0 230px;min-width:0}
 .lg{display:flex;align-items:center;gap:8px;font:800 14px/1.2 var(--f-display);padding:3px 0}
 .lg .ic{width:28px;text-align:center;font-size:20px;flex:none}
 .lg small{display:block;font:700 12px/1.25 var(--f-body);opacity:.75}
 #mapSide h2{font-size:22px}
 #mapSub{font:700 13px var(--f-body);opacity:.8;margin:2px 0 8px}
-@media (orientation:portrait){
-  #map .panel{flex-direction:column;align-items:stretch}
-  #mapSide{flex:none;width:100%}
-  #mapBig{width:min(100%,44vh)}
-  #mapMain h2{display:block}
-  #mapSide h2{display:none}
-  #mapLegend{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
-  #mapSub{display:none}
-}
-@media (orientation:landscape){#mapMain h2{display:none}}
+
 @media (max-width:640px) and (orientation:portrait){
-  #shop,#mis,#prof,#map{align-items:flex-end}
-  #shop .panel,#mis .panel,#prof .panel,#map .panel{width:100%;border-radius:26px 26px 0 0;border-bottom:0;max-height:86%}
   #profGrid{grid-template-columns:1fr}
   .pcols{grid-template-columns:1fr}
   #profCv{aspect-ratio:1/1;max-height:24vh}
   #profL{flex-direction:row;gap:12px;justify-content:center}
 }
 @media (max-width:640px) and (orientation:portrait){#profL{flex-wrap:wrap}}
-.desk #prof .panel{width:min(820px,calc(100% - 48px))}
 
 /* ===== v5: icons, header close buttons, language, pause menu ===== */
 .ico{display:inline-block;vertical-align:middle;flex:none;line-height:0}
 .ico svg{display:block}
 .mini .ico{width:26px;height:26px}
 .mini{padding:0}
-.xbtn{width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);background:var(--berry);box-shadow:0 3px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;flex:none}
-.xbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-.xbtn .ico{width:26px;height:26px}
-.phead{position:sticky;top:-16px;z-index:3;margin:-16px -18px 8px;padding:14px 18px 8px;background:var(--paper);display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:22px 22px 0 0}
-.phead h2{display:flex;align-items:center;gap:8px}
 .hic{display:inline-block;width:32px;height:32px;flex:none}
 .hic svg{display:block;width:100%;height:100%}
-#map .panel{position:relative}
-#mapClose{position:absolute;top:10px;right:10px;z-index:4}
 #bUse .ico{width:62%;height:62%}
 .chip{display:inline-flex;align-items:center;gap:6px}
 .langSw,.orSw{display:inline-flex;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--paper);box-shadow:0 3px 0 var(--ink)}
@@ -279,10 +233,6 @@ h3{font-size:17px;margin:12px 0 6px}
 #orSw0{position:absolute;top:calc(max(10px,env(safe-area-inset-top,0px)) + 52px);right:calc(12px + var(--sr));z-index:3}
 .desk #orSw0{display:none}
 #langSw0{position:absolute;top:max(10px,env(safe-area-inset-top,0px));right:calc(12px + var(--sr));z-index:3}
-#langOv{z-index:40;align-items:center;justify-content:center;background:rgba(43,35,80,.6)}
-#langOv .panel{width:min(520px,calc(100% - 32px));text-align:center}
-#pause{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
-#pause .panel{width:min(420px,calc(100% - 32px))}
 .menuBtns{display:flex;flex-direction:column;gap:12px;align-items:stretch;margin-top:6px}
 .menuBtns .pill{text-align:center}
 .lg .ic{width:30px;height:30px;display:grid;place-items:center}
@@ -292,6 +242,66 @@ h3{font-size:17px;margin:12px 0 6px}
 #rotBtns .mini{width:46px;height:46px}
 .desk #rotBtns{bottom:24px;left:50%;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){#bUse,#faint .st,.pill.big,#logo span{animation:none}}
+
+/* EZUI:START modal-standard
+   ANATOMY   .ov.dlg > .panel(.sm|.md|.lg) > .phead (title + .acts[X]) / .pbody (the ONLY scroll area) / .pfoot
+   FOOTER    secondary action = LEFT (Back/Cancel/Close), primary action = RIGHT (Continue/Save/Close). Never inside .pbody.
+   PLACEMENT centered dialog on landscape/desktop, bottom sheet on portrait phones, .side = left editor panel (character creator)
+   RULE      header and footer are always on screen; nothing the player must press may require scrolling. */
+.ov{position:absolute;inset:0;display:none;z-index:20;box-sizing:border-box}
+.ov.show{display:flex}
+.ov.dlg{align-items:center;justify-content:center;background:rgba(43,35,80,.35);padding:calc(var(--mg) + var(--st)) calc(var(--mg) + var(--sr)) calc(var(--mg) + var(--sb)) calc(var(--mg) + var(--sl))}
+.ov.dlg.top{z-index:40;background:rgba(43,35,80,.6)}
+.panel{--pw:520px;display:flex;flex-direction:column;width:min(var(--pw),100%);max-height:100%;box-sizing:border-box;background:var(--paper);border:4px solid var(--ink);border-radius:var(--r-panel);box-shadow:0 8px 0 var(--ink);overflow:hidden;-webkit-user-select:text;user-select:text}
+.panel.sm{--pw:420px}.panel.md{--pw:520px}.panel.lg{--pw:820px}
+.phead{flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px 6px 18px}
+.phead h2{display:flex;align-items:center;gap:8px;min-width:0}
+.phead .acts{display:flex;gap:8px;align-items:center;flex:none}
+.pbody{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding:4px 18px 12px}
+.pfoot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px 14px;border-top:3px dashed rgba(43,35,80,.16);background:var(--paper)}
+.pfoot .fg{display:flex;gap:8px;min-width:0}
+.pfoot>.pill:last-child{margin-left:auto}
+.pfoot .pill{min-width:116px}
+.pill{min-height:var(--tap);font:800 18px/1 var(--f-display);padding:12px 20px;border-radius:999px;border:3px solid var(--ink);background:var(--paper);box-shadow:0 4px 0 var(--ink);cursor:pointer;touch-action:manipulation;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box}
+.pill:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.pill.go{background:var(--leaf);color:#fff}
+.pill.warn{background:var(--berry);color:#fff}
+.pill[disabled]{opacity:.45}
+.xbtn{width:var(--tap);height:var(--tap);border-radius:50%;border:3px solid var(--ink);background:var(--berry);box-shadow:0 3px 0 var(--ink);padding:0;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;flex:none}
+.xbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.xbtn .ico{width:26px;height:26px}
+.ov.side{align-items:stretch;justify-content:flex-start;padding:0}
+.ov.side .panel{--pw:min(420px,46%);height:100%;max-height:none;border-radius:0 var(--r-panel) var(--r-panel) 0;border-left:0}
+.cols{display:block}
+@media (max-height:520px){
+  :root{--mg:8px;--tap:42px}
+  .phead{padding:6px 12px 2px 14px}.phead h2{font-size:20px}.hic{width:26px;height:26px}
+  .pbody{padding:2px 14px 8px}
+  .pfoot{padding:8px 12px 10px}.pill{font-size:16px;padding:8px 16px}.pfoot .pill{min-width:104px}
+  .xbtn .ico{width:22px;height:22px}
+}
+@media (orientation:landscape) and (max-height:520px){
+  .ov.side .panel{--pw:min(640px,62%)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}
+  .ov.side h3{margin:6px 0 3px;font-size:14px}
+  .ccard{padding:4px 2px}.ccard .e{font-size:22px}.hsb img{width:34px;height:34px}.sw button{width:36px;height:36px}
+}
+@media (max-width:640px) and (orientation:portrait){
+  .ov.dlg,.ov.side{align-items:flex-end;justify-content:center;padding:0}
+  .ov.dlg .panel,.ov.side .panel{--pw:100%;width:100%;height:auto;max-height:90%;border-radius:var(--r-panel) var(--r-panel) 0 0;border-bottom:0;border-left:4px solid var(--ink)}
+  .ov.side .panel{max-height:62%}
+  .pfoot{padding-bottom:calc(14px + var(--sb))}
+}
+/* EZUI:END */
+
+/* ---- map modal ---- */
+#map .pbody{display:flex;gap:14px;align-items:center;justify-content:center}
+#mapMain{flex:0 1 auto;min-width:0;display:flex;justify-content:center}
+#mapBig{height:min(calc(var(--vh,1vh)*100 - 190px),560px);width:auto;aspect-ratio:1;max-width:100%;border:3px solid var(--ink);border-radius:18px;background:#9fd18b;touch-action:manipulation;display:block}
+#mapSide{flex:0 0 230px;min-width:0;max-height:100%;overflow:auto}
+#mapTitle{display:none}
+@media (max-height:520px){#mapBig{height:calc(var(--vh,1vh)*100 - 128px)}}
+@media (orientation:portrait){#map .pbody{flex-direction:column;align-items:stretch}#mapBig{width:min(100%,calc(var(--vh,1vh)*100 - 380px));height:auto}#mapMain{align-self:center}#mapSide{flex:none;width:100%;overflow:visible}#mapLegend{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}#mapSub{display:none}}
 </style>
 
 <div id="app">
@@ -302,11 +312,13 @@ h3{font-size:17px;margin:12px 0 6px}
 
   <div id="hud" hidden>
     <div id="tl">
+     <div class="hrow">
       <div id="badge"><span id="lvn">1</span></div>
       <div id="bars"><div class="bar hp" id="hpBar"><span class="bi">❤️</span><div class="bt"><i id="hpF"></i><b id="hpT"></b></div></div><div class="bar xp"><span class="bi">⭐</span><div class="bt"><i id="xpF"></i></div></div></div>
+     </div>
+     <div id="quest"></div>
+     <button id="bRest" hidden></button>
     </div>
-    <button id="bRest" hidden></button>
-    <div id="tc"><div id="quest"></div></div>
     <div id="tr">
       <div class="chip" id="coins"></div>
       <div id="minis">
@@ -351,104 +363,117 @@ h3{font-size:17px;margin:12px 0 6px}
     </div>
   </div>
 
-  <div class="ov" id="create">
+  <div class="ov side" id="create">
     <div class="panel">
-      <h2 id="cTitle"></h2>
-      <div id="cClass"><h3 data-i="lblClass"></h3><div class="cards" id="cards"></div></div>
-      <h3 data-i="lblName"></h3><input id="nm" maxlength="12" autocomplete="off" spellcheck="false" data-ip="phName">
-      <div id="cGender"><h3 data-i="lblGender"></h3><div class="chips" id="genders"></div></div>
-      <h3 data-i="lblHStyle"></h3><div class="chips" id="hstyles"></div>
-      <h3 data-i="lblHair"></h3><div class="sw" id="swHair"></div>
-      <h3 data-i="lblSkin"></h3><div class="sw" id="swSkin"></div>
-      <h3 data-i="lblOutfit"></h3><div class="sw" id="swOut"></div>
-      <div class="rowx" style="margin-top:16px"><button class="pill" id="cBack" data-i="back"></button><button class="pill go" id="cOk"></button></div>
+      <div class="phead"><h2 id="cTitle"></h2></div>
+      <div class="pbody"><div class="cols">
+        <div class="col">
+          <div id="cClass"><h3 data-i="lblClass"></h3><div class="cards" id="cards"></div></div>
+          <h3 data-i="lblName"></h3><input id="nm" maxlength="12" autocomplete="off" spellcheck="false" data-ip="phName">
+          <div id="cGender"><h3 data-i="lblGender"></h3><div class="chips" id="genders"></div></div>
+        </div>
+        <div class="col">
+          <h3 data-i="lblHStyle"></h3><div class="chips" id="hstyles"></div>
+          <h3 data-i="lblHair"></h3><div class="sw" id="swHair"></div>
+          <h3 data-i="lblSkin"></h3><div class="sw" id="swSkin"></div>
+          <h3 data-i="lblOutfit"></h3><div class="sw" id="swOut"></div>
+        </div>
+      </div></div>
+      <div class="pfoot"><button class="pill" id="cBack" data-i="back"></button><button class="pill go" id="cOk"></button></div>
     </div>
   </div>
 
-  <div class="ov" id="pause">
-    <div class="panel">
-      <div class="phead"><h2 data-i="menuT"></h2><button class="xbtn" id="pClose" data-ia="aClose" data-ic="close"></button></div>
-      <div class="menuBtns">
-        <button class="pill go" id="pResume" data-i="resume"></button>
+  <div class="ov dlg" id="pause">
+    <div class="panel sm">
+      <div class="phead"><h2 data-i="menuT"></h2><div class="acts"><button class="xbtn" id="pClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><div class="menuBtns">
         <button class="pill" id="pCoop"></button>
         <button class="pill" id="pChars" data-i="chooseHero"></button>
         <button class="pill" id="pTitle" data-i="titleScr"></button>
         <button class="pill" id="pSnd"></button>
         <div class="rowx"><b data-i="langL"></b><div class="langSw" id="langSw1"></div></div>
         <div class="rowx"><button class="mini" id="gear" aria-label="Parent settings"><span class="ring" id="gearRing"></span><span class="ico" style="width:24px;height:24px" data-ic="gear"></span></button><span class="note" style="margin:0" data-i="parentHold"></span></div>
+      </div></div>
+      <div class="pfoot"><button class="pill go" id="pResume" data-i="resume"></button></div>
+    </div>
+  </div>
+
+  <div class="ov dlg" id="coop">
+    <div class="panel sm">
+      <div class="phead"><h2><span class="hic" data-ic="coop"></span><span data-i="coopT"></span></h2><div class="acts"><button class="xbtn" id="coopClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><div id="coopBody"></div></div>
+      <div class="pfoot"><button class="pill go" data-for="coopClose" data-i="close"></button></div>
+    </div>
+  </div>
+
+  <div class="ov dlg" id="menu">
+    <div class="panel md">
+      <div class="phead"><h2 data-i="parentT"></h2><div class="acts"><button class="xbtn" data-for="mClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody">
+        <h3 data-i="camT"></h3>
+        <div class="rowx" id="camCfg"></div>
+        <p class="note" data-i="camNote"></p>
+        <h3 data-i="orT"></h3>
+        <div class="rowx" id="orCfg"></div>
+        <p class="note" data-i="orNote"></p>
+        <h3 data-i="skillBtns"></h3>
+        <div id="skillCfg"></div>
+        <h3 data-i="storage"></h3>
+        <p class="note" id="saveNote"></p>
+        <div class="rowx" style="margin-top:8px"><button class="pill" id="mCode" data-i="code"></button></div>
+        <h3 data-i="lblChar"></h3>
+        <div class="rowx"><button class="pill" id="mSwitch" data-i="switchHero"></button><button class="pill warn" id="mDel"></button></div>
       </div>
+      <div class="pfoot"><button class="pill go" id="mClose" data-i="keep"></button></div>
     </div>
   </div>
 
-  <div class="ov" id="coop">
-    <div class="panel">
-      <div class="phead"><h2><span class="hic" data-ic="coop"></span><span data-i="coopT"></span></h2><button class="xbtn" id="coopClose" data-ia="aClose" data-ic="close"></button></div>
-      <div id="coopBody"></div>
+  <div class="ov dlg" id="io">
+    <div class="panel md">
+      <div class="phead"><h2 data-i="ioT"></h2><div class="acts"><button class="xbtn" data-for="ioClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody">
+        <p class="note" data-i="ioNote" style="margin-top:0"></p>
+        <textarea id="ioText" spellcheck="false"></textarea>
+        <p class="note" id="ioMsg"></p>
+        <div class="rowx" style="margin-top:6px"><button class="pill" id="ioCopy" data-i="copy"></button></div>
+      </div>
+      <div class="pfoot"><button class="pill" id="ioClose" data-i="close"></button><button class="pill go" id="ioLoad" data-i="load"></button></div>
     </div>
   </div>
 
-  <div class="ov" id="menu">
-    <div class="panel">
-      <h2 data-i="parentT"></h2>
-      <h3 data-i="camT"></h3>
-      <div class="rowx" id="camCfg"></div>
-      <p class="note" data-i="camNote"></p>
-      <h3 data-i="orT"></h3>
-      <div class="rowx" id="orCfg"></div>
-      <p class="note" data-i="orNote"></p>
-      <h3 data-i="skillBtns"></h3>
-      <div id="skillCfg"></div>
-      <h3 data-i="storage"></h3>
-      <p class="note" id="saveNote"></p>
-      <div class="rowx" style="margin-top:8px"><button class="pill" id="mCode" data-i="code"></button></div>
-      <h3 data-i="lblChar"></h3>
-      <div class="rowx"><button class="pill" id="mSwitch" data-i="switchHero"></button><button class="pill warn" id="mDel"></button></div>
-      <div class="rowx" style="margin-top:16px"><button class="pill go" id="mClose" data-i="keep"></button></div>
-    </div>
-  </div>
-
-  <div class="ov" id="io">
-    <div class="panel">
-      <h2 data-i="ioT"></h2>
-      <p class="note" data-i="ioNote"></p>
-      <textarea id="ioText" spellcheck="false"></textarea>
-      <p class="note" id="ioMsg"></p>
-      <div class="rowx" style="margin-top:8px"><button class="pill" id="ioCopy" data-i="copy"></button><button class="pill go" id="ioLoad" data-i="load"></button><button class="pill" id="ioClose" data-i="close"></button></div>
-    </div>
-  </div>
-
-  <div class="ov" id="shop"><div class="panel">
-      <div class="phead"><h2><span class="hic" data-ic="shop"></span><span data-i="shopT"></span></h2><button class="xbtn" id="shopClose" data-ia="aClose" data-ic="close"></button></div>
-      <div class="chip" id="shopCoins" style="display:inline-block"></div>
-      <div id="shopBody"></div>
-      <p class="note" data-i="shopNote"></p>
+  <div class="ov dlg" id="shop"><div class="panel md">
+      <div class="phead"><h2><span class="hic" data-ic="shop"></span><span data-i="shopT"></span></h2><div class="acts"><div class="chip" id="shopCoins"></div><button class="xbtn" id="shopClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><div id="shopBody"></div><p class="note" data-i="shopNote"></p></div>
+      <div class="pfoot"><button class="pill go" data-for="shopClose" data-i="close"></button></div>
     </div></div>
-  <div class="ov" id="tele"><div class="panel">
-      <div class="phead"><h2><span class="hic" data-ic="tele"></span><span data-i="teleT"></span></h2><button class="xbtn" id="teleClose" data-ia="aClose" data-ic="close"></button></div>
-      <div class="chip" id="teleCoins" style="display:inline-block"></div>
-      <div id="teleBody"></div>
-      <p class="note" data-i="teleNote"></p>
+  <div class="ov dlg" id="tele"><div class="panel md">
+      <div class="phead"><h2><span class="hic" data-ic="tele"></span><span data-i="teleT"></span></h2><div class="acts"><div class="chip" id="teleCoins"></div><button class="xbtn" id="teleClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><div id="teleBody"></div><p class="note" data-i="teleNote"></p></div>
+      <div class="pfoot"><button class="pill go" data-for="teleClose" data-i="close"></button></div>
     </div></div>
-  <div class="ov" id="mis"><div class="panel">
-      <div class="phead"><h2><span class="hic" data-ic="mission"></span><span data-i="misT"></span></h2><div class="rowx" style="flex-wrap:nowrap"><button class="mini" id="misMap" data-ia="aMap" data-ic="map"></button><button class="xbtn" id="misClose" data-ia="aClose" data-ic="close"></button></div></div>
-      <p class="note" data-i="misNote" style="margin-top:0"></p>
-      <div id="misBody"></div>
+  <div class="ov dlg" id="mis"><div class="panel md">
+      <div class="phead"><h2><span class="hic" data-ic="mission"></span><span data-i="misT"></span></h2><div class="acts"><button class="mini" id="misMap" data-ia="aMap" data-ic="map"></button><button class="xbtn" id="misClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><p class="note" data-i="misNote" style="margin-top:0"></p><div id="misBody"></div></div>
+      <div class="pfoot"><button class="pill go" data-for="misClose" data-i="close"></button></div>
     </div></div>
-  <div class="ov" id="prof"><div class="panel">
-      <div class="phead"><h2><span class="hic" data-ic="profile"></span><span data-i="profT"></span></h2><button class="xbtn" id="profClose" data-ia="aClose" data-ic="close"></button></div>
-      <div id="profGrid">
+  <div class="ov dlg" id="prof"><div class="panel lg">
+      <div class="phead"><h2><span class="hic" data-ic="profile"></span><span data-i="profT"></span></h2><div class="acts"><button class="xbtn" id="profClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><div id="profGrid">
         <div id="profL"><canvas id="profCv"></canvas><div><div id="profName"></div><div id="profCls"></div></div></div>
         <div id="profR"></div>
-      </div>
-      <div class="rowx" id="profFoot"><button class="pill" id="profMis"></button><button class="pill" id="profMap"></button></div>
+      </div></div>
+      <div class="pfoot"><div class="fg"><button class="pill" id="profMis"></button><button class="pill" id="profMap"></button></div><button class="pill go" data-for="profClose" data-i="close"></button></div>
     </div></div>
-  <div class="ov" id="map"><div class="panel">
-      <button class="xbtn" id="mapClose" data-ia="aClose" data-ic="close"></button>
-      <div id="mapMain"><h2 id="mapTitle2"></h2><canvas id="mapBig" width="720" height="720"></canvas></div>
-      <div id="mapSide"><h2 id="mapTitle"></h2><div id="mapSub"></div><div id="mapLegend"></div></div>
+  <div class="ov dlg" id="map"><div class="panel lg">
+      <div class="phead"><h2><span class="hic" data-ic="map"></span><span id="mapTitle2"></span></h2><div class="acts"><button class="xbtn" id="mapClose" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody">
+        <div id="mapMain"><canvas id="mapBig" width="720" height="720"></canvas></div>
+        <div id="mapSide"><h2 id="mapTitle"></h2><div id="mapSub"></div><div id="mapLegend"></div></div>
+      </div>
+      <div class="pfoot"><button class="pill go" data-for="mapClose" data-i="close"></button></div>
     </div></div>
   <div class="ov" id="faint"><div class="st">&#11088;</div><div data-i="faint"></div></div>
-  <div class="ov" id="langOv"><div class="panel"><h2 data-i="langPick"></h2><div class="rowx" style="margin-top:14px;justify-content:center"><button class="pill big" data-l="id">Bahasa Indonesia</button><button class="pill big" data-l="en">English</button></div></div></div>
+  <div class="ov dlg top" id="langOv"><div class="panel sm" style="text-align:center"><div class="pbody" style="padding-top:16px"><h2 data-i="langPick"></h2><div class="rowx" style="margin-top:14px;justify-content:center"><button class="pill big" data-l="id">Bahasa Indonesia</button><button class="pill big" data-l="en">English</button></div></div></div></div>
   <div id="err" hidden></div>
 </div>
 
@@ -686,7 +711,7 @@ const camera=new THREE.PerspectiveCamera(50,1,0.5,320);
 const hemi=new THREE.HemisphereLight(0xffffff,0x8f9ab8,0.62);scene.add(hemi);
 const sun=new THREE.DirectionalLight(0xfff2d8,0.55);sun.position.set(-12,22,14);scene.add(sun);
 const fxRoot=new THREE.Group();scene.add(fxRoot);
-function resize(){app.classList.toggle('desk',matchMedia('(hover:hover) and (pointer:fine)').matches&&Math.min(innerWidth,innerHeight)>=560);const w=app.clientWidth||innerWidth,h=app.clientHeight||innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+function resize(){document.documentElement.style.setProperty('--vh',(innerHeight*.01)+'px');app.classList.toggle('desk',matchMedia('(hover:hover) and (pointer:fine)').matches&&Math.min(innerWidth,innerHeight)>=560);const w=app.clientWidth||innerWidth,h=app.clientHeight||innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
 resize();addEventListener('resize',resize);
 if(window.ResizeObserver)new ResizeObserver(resize).observe(app);
 
@@ -2789,7 +2814,7 @@ function updateCamera(dt){
     camera.lookAt(camPos.x-sy*D,.8-(portrait?2.6:.6)*tk,camPos.z-cy*D);
   }else if(mode==='preview'){
     const sx=0;camera.position.set(sx,portrait?3.6:2.8,portrait?10.5:7.4);camera.lookAt(sx,portrait?.6:1.1,0);
-    {const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;if(portrait)camera.setViewOffset(W,Hh,0,Math.round(Hh*.27),W,Hh);else camera.setViewOffset(W,Hh,-Math.round(Math.min(420,W*.46)/2),0,W,Hh);camVO=true;}
+    {const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;if(portrait)camera.setViewOffset(W,Hh,0,Math.round(Hh*.27),W,Hh);else{const pe=document.querySelector('#create .panel'),pw=pe?pe.offsetWidth:Math.min(420,W*.46);camera.setViewOffset(W,Hh,-Math.round(pw/2),0,W,Hh);}camVO=true;}
   }else{
     const ang=Math.sin(T*.16)*.5,R=portrait?30:19;
     camera.position.set(Math.sin(ang)*R*.55,4.6+Math.sin(T*.23)*.4,Math.cos(ang)*R);
@@ -2812,7 +2837,8 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(.05,(now-last
 
 /* ---------- Screens ---------- */
 const ovs=['start','create','menu','io'];
-function show(id,on){$('#'+id).classList.toggle('show',on);}
+function show(id,on){const e=$('#'+id);e.classList.toggle('show',on);if(on)e.querySelectorAll('.pbody').forEach(b=>b.scrollTop=0);}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-for]');if(b){const x=document.getElementById(b.dataset.for);if(x)x.click();}});
 function makeHero(cls,look){if(H){scene.remove(H.root);disposeGroup(H.root);H=null;}const eq=C&&C.eq&&(mode!=='preview'||(cm&&cm.kind==='edit'))?{ew:C.eq.w,ea:C.eq.a,ep:C.eq.p,eh:C.eq.h}:{};H=buildHero(cls,Object.assign({},look,eq));scene.add(H.root);}
 function logo(){const L=$('#logo'),cols=['#ff5d8f','#ffc83a','#3fbf6e','#46a6ff','#a07bff','#ff8a3a','#ff5d8f','#3fbf6e','#ffc83a'];'Ezventure'.split('').forEach((ch,i)=>{const s=document.createElement('span');s.textContent=ch;s.style.color=cols[i];s.style.setProperty('--i',i);L.appendChild(s);});}
 function buildSlots(){
@@ -3181,7 +3207,7 @@ $('#rotL').addEventListener('click',()=>{SFX.click();rotCam(-1);});$('#rotR').ad
 $('#bProf').addEventListener('click',()=>{ac();SFX.click();openProf();});
 $('#bMis').addEventListener('click',()=>{ac();SFX.click();if(!paused&&S.state==='play')openMissions();});
 $('#mmWrap').addEventListener('click',()=>{ac();SFX.click();openMap();});
-$('#tc').addEventListener('click',()=>{ac();SFX.click();if(!paused&&S.state==='play')openMissions();});
+$('#quest').addEventListener('click',()=>{ac();SFX.click();if(!paused&&S.state==='play')openMissions();});
 $('#mapClose').addEventListener('click',()=>{SFX.click();closeMap();});
 $('#profClose').addEventListener('click',()=>{SFX.click();closeProf();});
 $('#profMis').addEventListener('click',()=>{SFX.click();closeProf();openMissions();});
