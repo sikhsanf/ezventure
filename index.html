@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-203646"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-210747"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -368,6 +368,9 @@ h3{font-size:17px;margin:12px 0 6px}
       <h3 data-i="camT"></h3>
       <div class="rowx" id="camCfg"></div>
       <p class="note" data-i="camNote"></p>
+      <h3 data-i="orT"></h3>
+      <div class="rowx" id="orCfg"></div>
+      <p class="note" data-i="orNote"></p>
       <h3 data-i="skillBtns"></h3>
       <div id="skillCfg"></div>
       <h3 data-i="storage"></h3>
@@ -423,8 +426,8 @@ h3{font-size:17px;margin:12px 0 6px}
 <script id="logic">
 /* ---------- Pure game data and formulas (no DOM, no 3D) ---------- */
 window.EZ=(function(){
-  const MAXLV=10;
-  const NEED={2:40,3:80,4:150,5:250,6:400,7:600,8:850,9:1200,10:1700};
+  const MAXLV=15;
+  const NEED={2:40,3:80,4:150,5:250,6:400,7:600,8:850,9:1200,10:1700,11:2400,12:3200,13:4200,14:5500,15:7000};
   const TOTAL=[0,0];
   for(let L=2;L<=MAXLV;L++)TOTAL[L]=TOTAL[L-1]+NEED[L];
 
@@ -490,12 +493,16 @@ window.EZ=(function(){
     wraith:{name:'Dread Wraith',icon:'👻',at:'dragon',col:0x3a2a55,fly:1.5,lvl:13,hp:500,atk:43,xp:62,speed:3.0,r:0.8,h:3.0,aoe:2.0,wind:.9,rest:1.5,reach:1.8,aggro:8},
     dragon:{name:'Elder Dragon',icon:'🐉',at:'dragon',anim:'walk',wspd:3,bob:.06,col:0x8a2a3a,big:1,rs:300,lvl:15,hp:2600,atk:58,xp:600,speed:2.2,r:2.3,h:6.2,aoe:4.8,wind:1.2,rest:2.4,reach:4.0,aggro:11}
   };
+  /* balance: monster stats follow a level curve so a hero can solo up to ~3 levels above but not beyond */
+  (function(){const A=L=>.05*(100+30*L)*(35+3*L)/30,hh=L=>(14+6*L)*(1+.1*L),hits=L=>3+(L-1)*.15,fitH=L=>40*Math.pow(1.25,L-1),fitA=L=>6+(L-1)*2.4;
+    for(const k in MON){const d=MON[k],L=d.lvl,cl=(v,a,b)=>Math.min(b,Math.max(a,v)),j=cl(d.hp/fitH(L),.8,1.25),ja=cl(d.atk/fitA(L),.85,1.2),boss=d.rs>=300;
+      d.hp=Math.round(hits(L)*hh(L)*(d.big?(boss?7:4.5):j)/5)*5;d.atk=Math.max(1,Math.round(A(L)*(d.big?(boss?1.6:1.35):ja)));d.xp=Math.round(d.xp*(L>=11?1.5:L>=6?1.6:1));}})();
   const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5},{t:'emberling',n:6},{t:'scorpion',n:5},{t:'salamander',n:5},{t:'firebat',n:5},{t:'obsidian',n:2},{t:'toad',n:6},{t:'mosquito',n:5},{t:'croc',n:4},{t:'wisp',n:5},{t:'treant',n:2},{t:'icewolf',n:5},{t:'snowman',n:5},{t:'frostbat',n:5},{t:'yeti',n:2},{t:'whelp',n:5},{t:'boneknight',n:4},{t:'wraith',n:4},{t:'dragon',n:1}];
 
   function lvOf(xp){for(let L=MAXLV;L>=1;L--)if(xp>=TOTAL[L])return L;return 1;}
   function progress(xp){const L=lvOf(xp);if(L>=MAXLV)return 1;return (xp-TOTAL[L])/NEED[L+1];}
   function stats(cls,L){const c=CLASSES[cls];return {str:c.base[0]+c.grow[0]*(L-1),int:c.base[1]+c.grow[1]*(L-1),agi:c.base[2]+c.grow[2]*(L-1)};}
-  function maxHp(cls,L){return 50+10*stats(cls,L).str;}
+  function maxHp(cls,L){return 50+10*stats(cls,L).str+(cls==='warrior'?0:5*L);}
   function baseAtk(cls,L){const s=stats(cls,L),c=CLASSES[cls];return 4+2*[s.str,s.int,s.agi][c.pri];}
   function atkInterval(cls,L){return Math.max(0.4,CLASSES[cls].ivl/(1+stats(cls,L).agi/100));}
   function skillCd(cls,L,sk){return sk.cd*100/(100+2*stats(cls,L).int);}
@@ -568,7 +575,7 @@ id:{
  lm_warrior:'Markas Pendekar',lmS_warrior:'Markas para ksatria',lm_mage:'Menara Sihir',lmS_mage:'Sekolah sihir',lm_ranger:'Rumah Pohon Raksasa',lmS_ranger:'Markas para pemanah',
  ctr_warrior:'Air Mancur',ctr_mage:'Lingkaran Rune',ctr_ranger:'Api Unggun Besar',camp:'Kemah api unggun',campS:'Tempat istirahat',windmill:'Kincir angin',pond:'Kolam',mush:'Kebun jamur',
  questDone:'Misi selesai!',faint:'Zzz…',err:'Grafik 3D tidak bisa dimuat. Game ini butuh internet sekali untuk memuat Three.js dan perangkat yang mendukung WebGL.',
- camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
+ camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',orT:'Layar HP',orAuto:'Otomatis',orLand:'Landscape',orPort:'Portrait',orNote:'Untuk mengunci arah layar, aplikasi akan masuk layar penuh.',orFail:'Gagal mengunci layar. Putar HP kamu secara manual ya.',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
  menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
  aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Tahan atau guling',aUse:'Bicara',aClose:'Tutup',
  keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>tahan/guling<b>U</b><b>I</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
@@ -580,7 +587,7 @@ id:{
  mon_moth:'Ngengat Bulan',mon_pup:'Anak Serigala Bayangan',mon_crab:'Kepiting Cahaya',mon_mole:'Tikus Penggali',mon_firefly:'Kunang-kunang',mon_fox:'Rubah Bulan',mon_snail:'Siput Mimpi',mon_jelly:'Jeli Hijau',mon_bunny:'Kelinci Mochi',mon_bee:'Lebah Madu',mon_king:'Raja Jeli',
  sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',
  wn_warrior:'Pedang',wn_mage:'Tongkat',wn_ranger:'Busur',an_warrior:'Zirah',an_mage:'Jubah',an_ranger:'Baju Pemburu',
- tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Damage diterima −10%',ps_great:'Serangan +12%',ps_bow:'Jeda jurus −12%',ps_xbow:'Serangan +10%',ps_staff:'Serangan +6%',ps_book:'Jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
+ tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Damage diterima −10%',ps_great:'Serangan +12%',ps_bow:'Jeda jurus −12%',ps_xbow:'Serangan +10%',ps_staff:'Serangan +6%',ps_book:'Jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
 },
 en:{
  tag:'A fun adventure for two!',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
@@ -598,7 +605,7 @@ en:{
  lm_warrior:"Warriors' Keep",lmS_warrior:'Home of the knights',lm_mage:'Wizard Tower',lmS_mage:'School of magic',lm_ranger:'Giant Treehouse',lmS_ranger:'Home of the archers',
  ctr_warrior:'Fountain',ctr_mage:'Rune Circle',ctr_ranger:'Great Campfire',camp:'Campfire camp',campS:'A place to rest',windmill:'Windmill',pond:'Pond',mush:'Mushroom patch',
  questDone:'Quest complete!',faint:'Zzz…',err:'The 3D graphics could not load. This game needs internet once to load Three.js and a device that supports WebGL.',
- camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
+ camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',orT:'Phone screen',orAuto:'Auto',orLand:'Landscape',orPort:'Portrait',orNote:'To lock the orientation the app goes fullscreen.',orFail:"Couldn't lock the screen. Please rotate your phone manually.",camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
  menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
  aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Block or roll',aUse:'Talk',aClose:'Close',
  keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>block/roll<b>U</b><b>I</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
@@ -610,7 +617,7 @@ en:{
  mon_moth:'Lunar Moth',mon_pup:'Shadow Pup',mon_crab:'Glow Crab',mon_mole:'Digger Mole',mon_firefly:'Firefly',mon_fox:'Moon Fox',mon_snail:'Dream Snail',mon_jelly:'Green Jelly',mon_bunny:'Mochi Bunny',mon_bee:'Honey Bee',mon_king:'King Jelly',
  sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',
  wn_warrior:'Sword',wn_mage:'Staff',wn_ranger:'Bow',an_warrior:'Armor',an_mage:'Robe',an_ranger:'Hunter Garb',
- tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Spellbook',ps_sword:'Damage taken −10%',ps_great:'Attack +12%',ps_bow:'Skill cooldown −12%',ps_xbow:'Attack +10%',ps_staff:'Attack +6%',ps_book:'Skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal'
+ tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Spellbook',ps_sword:'Damage taken −10%',ps_great:'Attack +12%',ps_bow:'Skill cooldown −12%',ps_xbow:'Attack +10%',ps_staff:'Attack +6%',ps_book:'Skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',friendHere:'On this map',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal'
 }};
 let LANG='id',LANG_SET=false;
 try{const l=localStorage.getItem('ezventure.lang');if(l==='id'||l==='en'){LANG=l;LANG_SET=true;}else LANG=/^id/i.test(navigator.language||'')?'id':'en';}catch(e){}
@@ -1544,7 +1551,7 @@ function guestMsg(d){
     case 'left':{const R=coop.Rs[sl];if(R){dropR(R);renderCoop();}break;}
     case 'mons':onMons(d);break;
     case 'kill':onKill(d);break;
-    case 'hurt':if(zone&&zone.sync&&!paused&&!trans&&S.state==='play'&&mode==='play')hurt(clamp((+d.a)||1,1,99));break;
+    case 'hurt':if(zone&&zone.sync&&!paused&&!trans&&S.state==='play'&&mode==='play')hurt(clamp((+d.a)||1,1,999),clamp((+d.l)||0,0,30));break;
     case 'bye':guestLost(coop.conn);break;
   }
 }
@@ -2310,8 +2317,8 @@ function updMon(m,dt){
   }else if(m.state==='windup'){
     m.wind-=dt;const p=1-m.wind/d.wind;m.disc.scale.setScalar(Math.max(.05,d.aoe*p));
     if(m.wind<=0){m.tele.visible=false;m.state='rest';m.t=d.rest;
-      if(hAl&&Math.hypot(S.x-m.x,S.z-m.z)<d.aoe+.3)hurt(d.atk);
-      for(const g of TG)if(Math.hypot(g.x-m.x,g.z-m.z)<d.aoe+.3)coopSendTo(g,{t:'hurt',a:d.atk});
+      if(hAl&&Math.hypot(S.x-m.x,S.z-m.z)<d.aoe+.3)hurt(d.atk,d.lvl);
+      for(const g of TG)if(Math.hypot(g.x-m.x,g.z-m.z)<d.aoe+.3)coopSendTo(g,{t:'hurt',a:d.atk,l:d.lvl});
       burst(m.x,.6,m.z,0xff6b4a,8,4,2.5);ringFx(m.x,m.z,d.aoe,0xff5a4a,.35);m.pulse=.3;shake=Math.max(shake,.25);}
   }else if(m.state==='rest'){m.t-=dt;if(m.t<=0)m.state='chase';}
   addCol(m,d.r*.6);
@@ -2344,7 +2351,8 @@ function banner(html){const b=$('#banner');b.innerHTML=html;b.classList.remove('
 /* ---------- Combat ---------- */
 function calcDmg(mult){const L=level();let d=E.baseAtk(C.cls,L)*WTIER[C.eq.w].m*wpPass().atk*mult*(S.buffT>0?1.2:1)*rnd(.92,1.08);const crit=Math.random()<E.critChance(C.cls,L);if(crit)d*=1.5;return {d:Math.max(1,Math.round(d)),crit};}
 function hitMon(m,dmg,o){
-  if(m.dead)return;o=o||{};m.hp-=dmg.d;m.flash=1;
+  if(m.dead)return;o=o||{};if(!o.remote){const df=m.d.lvl-level();if(df>=4)dmg={d:Math.max(1,Math.round(dmg.d*Math.max(.15,Math.pow(.6,df-3)))),crit:dmg.crit};}
+  m.hp-=dmg.d;m.flash=1;
   if(!o.remote){hitStop=Math.max(hitStop,dmg.crit?.08:.045);shake=Math.max(shake,dmg.crit?.5:.2);}
   burst(m.x,m.d.h*.35,m.z,0xffffff,4,4,3);
   float(String(dmg.d),m.x,m.d.h,m.z,dmg.crit?'crit':'');
@@ -2383,9 +2391,10 @@ function levelUp(L){
   banner('Level '+L+'! ⭐'+(sk?' '+sk.icon:''));
   refreshRings();saveDB();
 }
-function hurt(atk){
+function hurt(atk,ml){
   if(S.inv>0||S.state!=='play')return;
-  const dmg=Math.max(1,Math.round(E.dmgTaken(atk,C.cls,level(),S.blocking)*ATIER[C.eq.a].r*wpPass().def));
+  const df=(ml||0)-level(),pen=df>=4?Math.pow(1.5,df-3):1;
+  const dmg=Math.max(1,Math.round(E.dmgTaken(atk,C.cls,level(),S.blocking)*ATIER[C.eq.a].r*wpPass().def*pen));
   S.hp-=dmg;S.hurtT=.5;S.inv=.45;shake=Math.max(shake,.5);hitStop=Math.max(hitStop,.05);
   float(String(dmg),S.x,2.6,S.z,'hurt');SFX.hurt();
   const v=$('#hurtv');v.classList.add('on');setTimeout(()=>v.classList.remove('on'),120);
@@ -2551,6 +2560,18 @@ function transition(fn){if(trans)return;trans=true;$('#fade').classList.add('on'
 const camPos=new THREE.Vector3(),_sh=new THREE.Vector3();
 let CAMMODE='fixed',camYaw=0,camYawT=0,camTalk=0,talkOn=false,talkPos={x:0,z:0};
 try{if(localStorage.getItem('ezventure.cam')==='rot')CAMMODE='rot';}catch(e){}
+let ORIENT='auto';try{ORIENT=localStorage.getItem('ezventure.orient')||'auto';}catch(e){}
+function applyOrient(gesture){
+  try{const so=screen.orientation;if(!so)return;
+    if(ORIENT==='auto'){if(so.unlock)so.unlock();return;}
+    const standalone=window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches;
+    const go=()=>so.lock(ORIENT==='land'?'landscape':'portrait').catch(()=>{if(gesture)banner(t('orFail'));});
+    if(standalone||document.fullscreenElement)go();
+    else if(gesture&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(go).catch(()=>banner(t('orFail')));
+  }catch(e){}
+}
+function setOrient(m){ORIENT=m;try{localStorage.setItem('ezventure.orient',m);}catch(e){}applyOrient(true);}
+document.addEventListener('pointerdown',()=>{if(ORIENT!=='auto'&&!applyOrient._d){applyOrient._d=1;applyOrient(false);}},{once:true});
 function setCamMode(m){CAMMODE=m;try{localStorage.setItem('ezventure.cam',m);}catch(e){}if(m!=='rot')camYawT=0;$('#hud').classList.toggle('rot',m==='rot');}
 function rotCam(d){if(CAMMODE==='rot')camYawT+=d*Math.PI/4;}
 let camVO=false;
@@ -2702,6 +2723,7 @@ function mapBg(z,N){
   g.strokeStyle='rgba(43,35,80,.5)';g.lineWidth=Math.max(2,N*.01);g.beginPath();rr(g,X(-z.half),Z(-z.half),2*z.half*k,2*z.half*k,N*.04);g.stroke();
   return z._mb=cv;
 }
+const FCOL=['#3b9bff','#3fbf6e','#ffc83a'];
 function drawMap(cv,big){
   const z=zone;if(!z||!z.map)return;const N=cv.width,g=cv.getContext('2d'),hf=mapExt(z),k=N/(2*hf),X=x=>(x+hf)*k,Z=y=>(y+hf)*k;
   g.clearRect(0,0,N,N);g.drawImage(mapBg(z,N),0,0);
@@ -2714,6 +2736,10 @@ function drawMap(cv,big){
     if(big){g.font='800 '+Math.round(N*.03)+'px sans-serif';g.lineWidth=5;g.strokeStyle='rgba(43,35,80,.9)';g.fillStyle='#fff';const tx=p.ml?p.ml():p.tf();g.strokeText(tx,px,pz+fs*.78);g.fillText(tx,px,pz+fs*.78);}
   });
   for(const m of z.mons){if(m.dead)continue;const c='#'+ringCol(m).toString(16).padStart(6,'0');g.fillStyle=c;g.strokeStyle='#fff';g.lineWidth=big?2:1.2;g.beginPath();g.arc(X(m.x),Z(m.z),big?N*.011*(m.type==='king'?1.9:1):N*.022*(m.type==='king'?1.8:1),0,6.283);g.fill();g.stroke();}
+  if(coop&&coop.myZ){coopList().forEach(R=>{if(!R.p||!R.zk||R.zk!==coop.myZ)return;const rx=X(R.x),rz=Z(R.z),r=big?N*.024:N*.05;
+    g.fillStyle=FCOL[R.slot%3];g.strokeStyle='#fff';g.lineWidth=big?3:2;g.beginPath();g.arc(rx,rz,r,0,6.283);g.fill();g.stroke();
+    const ini=(R.p.n||'?').slice(0,1).toUpperCase();g.font='900 '+Math.round(r*1.4)+'px sans-serif';g.lineWidth=big?4:2.5;g.strokeStyle='rgba(43,35,80,.9)';g.fillStyle='#fff';g.strokeText(ini,rx,rz+1);g.fillText(ini,rx,rz+1);
+    if(big){g.font='800 '+Math.round(N*.03)+'px sans-serif';g.lineWidth=5;g.strokeText(R.p.n,rx,rz+r*1.9);g.fillText(R.p.n,rx,rz+r*1.9);}});}
   const px=X(S.x),pz=Z(S.z),s=big?N*.03:N*.07,pl=.5+.5*Math.sin(T*5);
   g.fillStyle='rgba(255,79,122,'+(.18+pl*.18).toFixed(2)+')';g.beginPath();g.arc(px,pz,s*(1.5+pl*.5),0,6.283);g.fill();
   g.save();g.translate(px,pz);g.rotate(Math.PI-S.face);g.fillStyle='#ff4f7a';g.strokeStyle='#fff';g.lineWidth=big?3:2;g.beginPath();g.moveTo(0,-s);g.lineTo(s*.75,s*.85);g.lineTo(0,s*.4);g.lineTo(-s*.75,s*.85);g.closePath();g.fill();g.stroke();g.restore();
@@ -2726,6 +2752,7 @@ function fillMapText(){
   $('#mapSub').textContent=zone.id==='town'?t('townSub',zone.cls):t('z_'+zone.id+'Sub');
   let h='<div class="lg"><span class="ic" style="color:#ff4f7a;font-size:22px">▲</span><div>'+t('you')+'<small>'+t('youSub')+'</small></div></div>';
   zone.pois.forEach(p=>{h+='<div class="lg"><span class="ic">'+ic(p.i,30)+'</span><div>'+esc(p.tf())+(p.sf?'<small>'+esc(p.sf())+'</small>':'')+'</div></div>';});
+  if(coop&&coop.st==='on')coopList().forEach(R=>{if(!R.p)return;const here=R.zk&&R.zk===coop.myZ;h+='<div class="lg"><span class="ic" style="color:'+FCOL[R.slot%3]+';font-size:22px">●</span><div>'+esc(R.p.n)+'<small>'+esc(here?t('friendHere'):zoneLabel(R.zk))+'</small></div></div>';});
   if(zone.field)h+='<div class="lg"><span class="ic" style="color:#e0453c;font-size:22px">●</span><div>'+t('monsters')+'<small>'+t('monSub')+'</small></div></div>';
   h+='<p class="note">'+t('mapHint')+'</p>';
   $('#mapLegend').innerHTML=h;
@@ -2743,7 +2770,7 @@ function profInit(){
   const w=cv.clientWidth||160,h=cv.clientHeight||200;prof.r.setSize(w,h,false);prof.cam.aspect=w/h;prof.cam.updateProjectionMatrix();
   prof.cam.position.set(0,1.75,6.1);prof.cam.lookAt(0,1.2,0);
   if(prof.hero){prof.sc.remove(prof.hero.root);disposeGroup(prof.hero.root);}
-  prof.hero=buildHero(C.cls,Object.assign({},C.look,{ew:C.eq.w,ea:C.eq.a}));prof.sc.add(prof.hero.root);
+  prof.hero=buildHero(C.cls,Object.assign({},C.look,{ew:C.eq.w,ea:C.eq.a,ep:C.eq.p}));prof.sc.add(prof.hero.root);
 }
 function profTick(dt){
   if(!profOpen||!prof||!prof.hero)return;const h=prof.hero;
@@ -2882,6 +2909,7 @@ function renderMenu(){
       b.addEventListener('click',()=>{SFX.click();const o=1-i;if(C.slots[o]===si)C.slots[o]=C.slots[i];C.slots[i]=si;saveDB();renderMenu();});chips.appendChild(b);});
     row.appendChild(chips);box.appendChild(row);});
   const cc=$('#camCfg');cc.innerHTML='';[['fixed','camFixed'],['rot','camRot']].forEach(o=>{const b=document.createElement('button');b.className='pill'+(CAMMODE===o[0]?' go':'');b.textContent=t(o[1]);b.addEventListener('click',()=>{SFX.click();setCamMode(o[0]);renderMenu();});cc.appendChild(b);});
+  const oc=$('#orCfg');oc.innerHTML='';[['auto','orAuto'],['land','orLand'],['port','orPort']].forEach(o=>{const b=document.createElement('button');b.className='pill'+(ORIENT===o[0]?' go':'');b.textContent=t(o[1]);b.addEventListener('click',()=>{SFX.click();setOrient(o[0]);renderMenu();});oc.appendChild(b);});
   $('#saveNote').textContent=storageOK?t('saveNoteOk'):t('saveNoteBad');
   const del=$('#mDel');del.textContent=t('delHero');del.dataset.arm='';
 }
