@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-201928"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-203135"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -470,9 +470,27 @@ window.EZ=(function(){
     mole:{name:'Digger Mole',icon:'⛏️',at:'stone',anim:'walk',wspd:7,bob:.1,col:0x6a5a68,lvl:4,hp:100,atk:12,xp:13,speed:2.6,r:0.85,h:2.0,aoe:2.0,wind:1.0,rest:1.6,reach:1.6,aggro:6.5},
     firefly:{name:'Firefly',icon:'✨',at:'glade',col:0xd8ff5a,fly:1.8,lvl:1,hp:40,atk:6,xp:5,speed:2.6,r:0.55,h:2.9,aoe:1.7,wind:1.0,rest:1.5,reach:1.4,aggro:6.5},
     fox:{name:'Moon Fox',icon:'🦊',at:'glade',anim:'walk',wspd:10,bob:.15,col:0xcfd8f5,lvl:4,hp:100,atk:12,xp:13,speed:3.6,r:0.8,h:2.2,aoe:1.9,wind:.9,rest:1.4,reach:1.6,aggro:7},
-    snail:{name:'Dream Snail',icon:'🐌',at:'vale',anim:'walk',wspd:3,bob:.04,col:0xffb6d8,lvl:2,hp:70,atk:8,xp:7,speed:1.6,r:0.85,h:1.9,aoe:1.9,wind:1.1,rest:1.8,reach:1.5,aggro:6}
+    snail:{name:'Dream Snail',icon:'🐌',at:'vale',anim:'walk',wspd:3,bob:.04,col:0xffb6d8,lvl:2,hp:70,atk:8,xp:7,speed:1.6,r:0.85,h:1.9,aoe:1.9,wind:1.1,rest:1.8,reach:1.5,aggro:6},
+    emberling:{name:'Emberling',icon:'🔥',at:'crater',anim:'hop',col:0xff7a2a,lvl:6,hp:130,atk:16,xp:15,speed:2.8,r:0.8,h:2.1,aoe:2.0,wind:1.0,rest:1.5,reach:1.5,aggro:7},
+    scorpion:{name:'Cinder Scorpion',icon:'🦂',at:'crater',anim:'walk',wspd:9,bob:.06,col:0xa04a30,lvl:7,hp:180,atk:20,xp:20,speed:3.0,r:0.9,h:1.9,aoe:2.0,wind:.9,rest:1.5,reach:1.8,aggro:7},
+    salamander:{name:'Lava Salamander',icon:'🦎',at:'crater',anim:'walk',wspd:8,bob:.08,col:0xd8502a,lvl:7,hp:170,atk:19,xp:19,speed:3.4,r:0.9,h:1.6,aoe:2.0,wind:.9,rest:1.4,reach:1.7,aggro:7},
+    firebat:{name:'Fire Bat',icon:'🦇',at:'crater',col:0xff6a2a,fly:1.8,lvl:8,hp:150,atk:21,xp:21,speed:3.8,r:0.65,h:2.8,aoe:1.9,wind:.9,rest:1.4,reach:1.6,aggro:7.5},
+    obsidian:{name:'Obsidian Golem',icon:'🌋',at:'crater',anim:'walk',wspd:4,bob:.1,col:0x3a3040,big:1,rs:60,lvl:9,hp:560,atk:27,xp:80,speed:1.8,r:1.5,h:4.1,aoe:3.2,wind:1.1,rest:2.0,reach:2.8,aggro:8},
+    toad:{name:'Bog Toad',icon:'🐸',at:'bog',anim:'hop',col:0x6a8a3a,lvl:6,hp:140,atk:16,xp:15,speed:2.6,r:0.9,h:1.8,aoe:2.0,wind:1.0,rest:1.5,reach:1.6,aggro:7},
+    mosquito:{name:'Marsh Skeeter',icon:'🦟',at:'bog',col:0x5a5a44,fly:1.7,lvl:7,hp:120,atk:19,xp:18,speed:3.6,r:0.6,h:2.8,aoe:1.8,wind:.9,rest:1.4,reach:1.8,aggro:7.5},
+    croc:{name:'Mud Croc',icon:'🐊',at:'bog',anim:'walk',wspd:7,bob:.05,col:0x4a7a3a,lvl:8,hp:230,atk:22,xp:26,speed:2.8,r:1.0,h:1.7,aoe:2.2,wind:1.0,rest:1.6,reach:2.0,aggro:7},
+    wisp:{name:'Marsh Wisp',icon:'🫧',at:'bog',col:0x9affc8,fly:1.5,lvl:7,hp:140,atk:18,xp:18,speed:2.6,r:0.7,h:2.9,aoe:1.9,wind:1.0,rest:1.6,reach:1.6,aggro:7},
+    treant:{name:'Swamp Treant',icon:'🌳',at:'bog',anim:'walk',wspd:3,bob:.08,col:0x6a4a2a,big:1,rs:60,lvl:9,hp:520,atk:26,xp:75,speed:1.7,r:1.5,h:5.0,aoe:3.2,wind:1.1,rest:2.0,reach:2.8,aggro:8},
+    icewolf:{name:'Ice Wolf',icon:'🐺',at:'frost',anim:'walk',wspd:10,bob:.12,col:0xdfeaf5,lvl:11,hp:420,atk:34,xp:45,speed:3.6,r:0.9,h:2.2,aoe:2.0,wind:.9,rest:1.4,reach:1.8,aggro:8},
+    snowman:{name:'Grumpy Snowman',icon:'⛄',at:'frost',anim:'hop',col:0xf4f9ff,lvl:11,hp:380,atk:32,xp:42,speed:2.4,r:0.9,h:3.0,aoe:2.0,wind:1.0,rest:1.5,reach:1.6,aggro:7},
+    frostbat:{name:'Frost Bat',icon:'🦇',at:'frost',col:0xbfe4ff,fly:1.8,lvl:12,hp:360,atk:35,xp:46,speed:3.4,r:0.65,h:2.8,aoe:1.9,wind:.9,rest:1.4,reach:1.6,aggro:8},
+    yeti:{name:'Yeti',icon:'🦍',at:'frost',anim:'walk',wspd:4,bob:.1,col:0xeef2f8,big:1,rs:90,lvl:13,hp:1100,atk:44,xp:220,speed:2.0,r:1.6,h:4.6,aoe:3.4,wind:1.1,rest:2.0,reach:3.0,aggro:9},
+    whelp:{name:'Dragon Whelp',icon:'🐲',at:'dragon',anim:'walk',wspd:8,bob:.1,col:0xc04040,lvl:12,hp:520,atk:38,xp:52,speed:3.2,r:1.0,h:2.3,aoe:2.2,wind:.9,rest:1.5,reach:2.0,aggro:8},
+    boneknight:{name:'Bone Knight',icon:'💀',at:'dragon',anim:'walk',wspd:6,bob:.08,col:0xe8e2d0,lvl:13,hp:640,atk:42,xp:60,speed:2.6,r:0.9,h:3.4,aoe:2.2,wind:1.0,rest:1.6,reach:2.0,aggro:8},
+    wraith:{name:'Dread Wraith',icon:'👻',at:'dragon',col:0x3a2a55,fly:1.5,lvl:13,hp:500,atk:43,xp:62,speed:3.0,r:0.8,h:3.0,aoe:2.0,wind:.9,rest:1.5,reach:1.8,aggro:8},
+    dragon:{name:'Elder Dragon',icon:'🐉',at:'dragon',anim:'walk',wspd:3,bob:.06,col:0x8a2a3a,big:1,rs:300,lvl:15,hp:2600,atk:58,xp:600,speed:2.2,r:2.3,h:6.2,aoe:4.8,wind:1.2,rest:2.4,reach:4.0,aggro:11}
   };
-  const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5}];
+  const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5},{t:'emberling',n:6},{t:'scorpion',n:5},{t:'salamander',n:5},{t:'firebat',n:5},{t:'obsidian',n:2},{t:'toad',n:6},{t:'mosquito',n:5},{t:'croc',n:4},{t:'wisp',n:5},{t:'treant',n:2},{t:'icewolf',n:5},{t:'snowman',n:5},{t:'frostbat',n:5},{t:'yeti',n:2},{t:'whelp',n:5},{t:'boneknight',n:4},{t:'wraith',n:4},{t:'dragon',n:1}];
 
   function lvOf(xp){for(let L=MAXLV;L>=1;L--)if(xp>=TOTAL[L])return L;return 1;}
   function progress(xp){const L=lvOf(xp);if(L>=MAXLV)return 1;return (xp-TOTAL[L])/NEED[L+1];}
@@ -557,8 +575,8 @@ id:{
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Pendekar',cls_mage:'Penyihir',cls_ranger:'Pemanah',role_warrior:'Pelindung',role_mage:'Sihir',role_ranger:'Panah',
  town_warrior:'Benteng Besi',town_mage:'Menara Bintang',town_ranger:'Pondok Daun',
- z_stone:'Bukit Batu',z_stoneSub:'Perbukitan berbatu · Lv 1-5',z_glade:'Hutan Jamur',z_gladeSub:'Hutan penuh jamur · Lv 1-5',z_vale:'Lembah Bintang',z_valeSub:'Lembah berkilau · Lv 1-5',poi_ruins:'Reruntuhan batu',poi_bigtree:'Pohon raksasa',poi_giant:'Jamur raksasa',poi_stars:'Lingkaran bintang',
- mon_pebble:'Kerikil Kecil',mon_beetle:'Kumbang Baja',mon_golem:'Golem Batu',mon_sprout:'Tunas Lincah',mon_shroom:'Jamur Bandel',mon_frog:'Katak Hutan',mon_bat:'Kelelawar Malam',mon_ghost:'Hantu Mungil',mon_owl:'Burung Hantu',
+ z_stone:'Bukit Batu',z_stoneSub:'Perbukitan berbatu · Lv 1-5',z_glade:'Hutan Jamur',z_gladeSub:'Hutan penuh jamur · Lv 1-5',z_vale:'Lembah Bintang',z_valeSub:'Lembah berkilau · Lv 1-5',z_crater:'Kawah Bara',z_craterSub:'Kawah gunung berapi · Lv 6-10',z_bog:'Rawa Berkabut',z_bogSub:'Rawa lembap penuh kabut · Lv 6-10',z_frost:'Puncak Beku',z_frostSub:'Dataran salju abadi · Lv 11-15',z_dragon:'Sarang Naga',z_dragonSub:'Sarang naga purba · Lv 11-15',poi_volcano:'Gunung Berapi',poi_lava:'Danau Lava',poi_swamptree:'Pohon Rawa Tua',poi_bogpond:'Telaga Rawa',poi_icepeak:'Menara Es',poi_frozen:'Danau Beku',poi_skull:'Tengkorak Naga',poi_hoard:'Timbunan Harta',poi_ruins:'Reruntuhan batu',poi_bigtree:'Pohon raksasa',poi_giant:'Jamur raksasa',poi_stars:'Lingkaran bintang',
+ mon_pebble:'Kerikil Kecil',mon_beetle:'Kumbang Baja',mon_golem:'Golem Batu',mon_emberling:'Bara Kecil',mon_scorpion:'Kalajengking Abu',mon_salamander:'Salamander Lava',mon_firebat:'Kelelawar Api',mon_obsidian:'Golem Obsidian',mon_toad:'Kodok Rawa',mon_mosquito:'Nyamuk Rawa',mon_croc:'Buaya Lumpur',mon_wisp:'Arwah Rawa',mon_treant:'Treant Rawa',mon_icewolf:'Serigala Es',mon_snowman:'Manusia Salju Galak',mon_frostbat:'Kelelawar Beku',mon_yeti:'Yeti',mon_whelp:'Anak Naga',mon_boneknight:'Ksatria Tulang',mon_wraith:'Hantu Kelam',mon_dragon:'Naga Purba',mon_sprout:'Tunas Lincah',mon_shroom:'Jamur Bandel',mon_frog:'Katak Hutan',mon_bat:'Kelelawar Malam',mon_ghost:'Hantu Mungil',mon_owl:'Burung Hantu',
  mon_moth:'Ngengat Bulan',mon_pup:'Anak Serigala Bayangan',mon_crab:'Kepiting Cahaya',mon_mole:'Tikus Penggali',mon_firefly:'Kunang-kunang',mon_fox:'Rubah Bulan',mon_snail:'Siput Mimpi',mon_jelly:'Jeli Hijau',mon_bunny:'Kelinci Mochi',mon_bee:'Lebah Madu',mon_king:'Raja Jeli',
  sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',
  wn_warrior:'Pedang',wn_mage:'Tongkat',wn_ranger:'Busur',an_warrior:'Zirah',an_mage:'Jubah',an_ranger:'Baju Pemburu',
@@ -587,8 +605,8 @@ en:{
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Warrior',cls_mage:'Mage',cls_ranger:'Ranger',role_warrior:'Tank',role_mage:'Magic',role_ranger:'Arrows',
  town_warrior:'Ironhold',town_mage:'Starspire',town_ranger:'Leafhaven',
- z_stone:'Stony Hills',z_stoneSub:'Rocky hills · Lv 1-5',z_glade:'Mushroom Glade',z_gladeSub:'A forest full of mushrooms · Lv 1-5',z_vale:'Starfall Vale',z_valeSub:'A glittering valley · Lv 1-5',poi_ruins:'Stone ruins',poi_bigtree:'Giant tree',poi_giant:'Giant mushrooms',poi_stars:'Star circle',
- mon_pebble:'Pebble Pal',mon_beetle:'Steel Beetle',mon_golem:'Rock Golem',mon_sprout:'Hop Sprout',mon_shroom:'Cheeky Shroom',mon_frog:'Forest Frog',mon_bat:'Night Bat',mon_ghost:'Tiny Ghost',mon_owl:'Wise Owl',
+ z_stone:'Stony Hills',z_stoneSub:'Rocky hills · Lv 1-5',z_glade:'Mushroom Glade',z_gladeSub:'A forest full of mushrooms · Lv 1-5',z_vale:'Starfall Vale',z_valeSub:'A glittering valley · Lv 1-5',z_crater:'Ember Crater',z_craterSub:'Volcanic crater · Lv 6-10',z_bog:'Misty Bog',z_bogSub:'A damp, foggy swamp · Lv 6-10',z_frost:'Frostpeak',z_frostSub:'Eternal snowfields · Lv 11-15',z_dragon:"Dragon's Roost",z_dragonSub:'Ancient dragon lair · Lv 11-15',poi_volcano:'Volcano',poi_lava:'Lava Lake',poi_swamptree:'Ancient Swamp Tree',poi_bogpond:'Murky Pond',poi_icepeak:'Ice Spire',poi_frozen:'Frozen Lake',poi_skull:'Dragon Skull',poi_hoard:'Treasure Hoard',poi_ruins:'Stone ruins',poi_bigtree:'Giant tree',poi_giant:'Giant mushrooms',poi_stars:'Star circle',
+ mon_pebble:'Pebble Pal',mon_beetle:'Steel Beetle',mon_golem:'Rock Golem',mon_emberling:'Emberling',mon_scorpion:'Cinder Scorpion',mon_salamander:'Lava Salamander',mon_firebat:'Fire Bat',mon_obsidian:'Obsidian Golem',mon_toad:'Bog Toad',mon_mosquito:'Marsh Skeeter',mon_croc:'Mud Croc',mon_wisp:'Marsh Wisp',mon_treant:'Swamp Treant',mon_icewolf:'Ice Wolf',mon_snowman:'Grumpy Snowman',mon_frostbat:'Frost Bat',mon_yeti:'Yeti',mon_whelp:'Dragon Whelp',mon_boneknight:'Bone Knight',mon_wraith:'Dread Wraith',mon_dragon:'Elder Dragon',mon_sprout:'Hop Sprout',mon_shroom:'Cheeky Shroom',mon_frog:'Forest Frog',mon_bat:'Night Bat',mon_ghost:'Tiny Ghost',mon_owl:'Wise Owl',
  mon_moth:'Lunar Moth',mon_pup:'Shadow Pup',mon_crab:'Glow Crab',mon_mole:'Digger Mole',mon_firefly:'Firefly',mon_fox:'Moon Fox',mon_snail:'Dream Snail',mon_jelly:'Green Jelly',mon_bunny:'Mochi Bunny',mon_bee:'Honey Bee',mon_king:'King Jelly',
  sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',
  wn_warrior:'Sword',wn_mage:'Staff',wn_ranger:'Bow',an_warrior:'Armor',an_mage:'Robe',an_ranger:'Hunter Garb',
@@ -699,6 +717,18 @@ TRACKS.field_glade=mkTrack({bpm:132,leadType:'triangle',leadVol:.075,lp:4200,dru
 TRACKS.field_vale=mkTrack({bpm:84,leadType:'sine',leadVol:.07,lp:5200,drums:0,arp:true,bass:'long',tr:0,
   chords:['Dm','Am','F','C','Dm','Am','F','C'],
   mel:['D6 _ _ F6 _ A6 _ _','E6 _ _ C6 _ A5 _ _','F6 _ _ A6 _ C7 _ _','G6 _ E6 _ C6 _ . .','D6 _ _ A6 _ F6 _ _','C6 _ E6 _ A6 _ . .','A5 _ C6 _ F6 _ A6 _','G6 _ _ E6 _ C6 _ .']});
+TRACKS.field_crater=mkTrack({bpm:140,leadType:'square',leadVol:.035,lp:3000,drums:2,stab:true,bass:'bounce',tr:0,
+  chords:['Am','G','F','G','Am','G','F','Am'],
+  mel:['A5 _ C6 E6 A6 _ E6 C6','G5 _ B5 D6 G6 _ D6 B5','F5 _ A5 C6 F6 _ C6 A5','G5 _ B5 D6 B5 _ G5 _','A5 _ C6 E6 A6 _ C7 _','G6 _ D6 B5 G5 _ B5 D6','F6 _ C6 A5 F5 _ A5 C6','E6 _ C6 A5 A5 _ . .']});
+TRACKS.field_bog=mkTrack({bpm:90,leadType:'triangle',leadVol:.07,lp:3400,drums:1,bass:'long',tr:0,
+  chords:['Dm','Am','C','G','Dm','Am','F','Am'],
+  mel:['D6 _ _ F6 _ E6 _ _','C6 _ _ E6 _ A5 _ _','C6 _ E6 _ G6 _ . .','B5 _ D6 _ G6 _ . .','D6 _ _ A6 _ F6 _ _','E6 _ C6 _ A5 _ . .','F6 _ _ A6 _ C7 _ .','A6 _ E6 _ C6 _ A5 .']});
+TRACKS.field_frost=mkTrack({bpm:100,leadType:'sine',leadVol:.07,lp:6000,drums:0,arp:true,bass:'long',tr:0,
+  chords:['C','Am','F','G','C','Em','F','G'],
+  mel:['E6 _ G6 _ C7 _ G6 _','C7 _ B6 _ A6 _ E6 _','A6 _ C7 _ F6 _ A6 _','B6 _ D7 _ G6 _ . .','E6 _ G6 _ C7 _ E7 _','D7 _ B6 _ G6 _ E6 _','C7 _ A6 _ F6 _ A6 _','D7 _ B6 _ G6 _ . .']});
+TRACKS.field_dragon=mkTrack({bpm:112,leadType:'square',leadVol:.035,lp:3200,drums:2,stab:true,bass:'bounce',tr:0,
+  chords:['Dm','Dm','Am','Am','F','G','Dm','Dm'],
+  mel:['D6 _ D6 F6 A6 _ F6 D6','D6 _ F6 A6 D7 _ A6 F6','E6 _ E6 A6 C7 _ A6 E6','E6 _ A6 C7 E7 _ C7 A6','F6 _ F6 A6 C7 _ A6 F6','G6 _ G6 B6 D7 _ B6 G6','D6 _ F6 A6 D7 _ F7 _','E7 _ D7 _ A6 _ . .']});
 let trk=null,trkName='',nextT=0,mstep=0;
 function setTrack(name){
   if(name===trkName)return;trkName=name;trk=TRACKS[name]||null;mstep=0;
@@ -751,7 +781,7 @@ function sanitize(o){
     look:{hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:li(L.hat,5)},
     slots:Array.isArray(o.slots)&&o.slots.length===2?[li(o.slots[0],3),li(o.slots[1],3)]:[0,1],
     qs:(Array.isArray(o.qs)?o.qs:[]).filter((x,k,a)=>x&&typeof x==='object'&&a.findIndex(y=>y&&(y.i|0)===(x.i|0))===k).slice(0,3).map(x=>({i:clamp(x.i|0,0,E.QUESTS.length-1),p:Math.max(0,x.p|0)})),
-    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,4),p:v2?li(e.p,2):0};})(),qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),zone:/^(meadow|stone|glade|vale|town:(warrior|mage|ranger))$/.test(o.zone)?o.zone:'town'};
+    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,4),p:v2?li(e.p,2):0};})(),qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),zone:/^(meadow|stone|glade|vale|crater|bog|frost|dragon|town:(warrior|mage|ranger))$/.test(o.zone)?o.zone:'town'};
 }
 function encodeDB(){return 'EZV1:'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,slots:DB.slots}))));}
 function decodeDB(s){s=String(s||'').trim();if(s.indexOf('EZV1:')!==0)throw new Error('format');const j=JSON.parse(decodeURIComponent(escape(atob(s.slice(5)))));if(!j||!Array.isArray(j.slots))throw new Error('format');return j.slots.map(sanitize);}
@@ -1224,6 +1254,102 @@ snail(g,u,own){const body=grp(g,0,0,0);u.body=body;
   vb(body,.3,.06,.05,'#e07a8a',0,.62,1.22,own);
   vb(body,1.1,1.1,1.0,'#ffb6d8',0,1.0,-.35,own);vb(body,.8,.8,1.04,'#ff8fc2',0,1.05,-.35,own);vb(body,.45,.45,1.08,'#ffd84a',0,1.08,-.35,own);}
 };
+/* ---- Lv 6-15 monster models (parametric helpers) ---- */
+const glowM=c=>({own:true,emissive:c});
+function eyesB(body,own,y,z,sep,col,em){[-1,1].forEach(s=>{vb(body,.2,.26,.06,'#1d1630',s*sep,y,z,own);vb(body,.08,.1,.05,col||'#fff',s*(sep-.03),y+.05,z+.03,em?glowM(em):own);});}
+function wingsB(body,u,col,span,len,y,o){[-1,1].forEach(s=>{const w=grp(body,s*.3,y,0);u['wing'+(s>0?'R':'L')]=w;vb(w,span,.05,len,col,s*span/2,0,0,Object.assign({own:true,opacity:.9},o||{}));});}
+function quadB(g,u,own,P){
+  const body=grp(g,0,0,0);u.body=body;const L=P.len||1.6,Hh=P.h||.8,W=P.w||1,y0=P.leg||.5,sn=P.snout||0,tl=P.tl||.6;
+  vb(body,W,Hh,L,P.c1,0,y0+Hh/2,0,own);
+  vb(body,W*.85,Hh*.9,Hh*.9+sn,P.c2||P.c1,0,y0+Hh*.8,L/2+.15+sn/2,own);
+  eyesB(body,own,y0+Hh*.95,L/2+.15+Hh*.4,W*.22,P.eye,P.eem);
+  [-1,1].forEach(s=>[-1,1].forEach(f=>vb(body,.28,y0,.3,P.c3||P.c1,s*W*.33,y0/2,f*L*.32,own)));
+  vb(body,.28,.28,L*tl,P.c1,0,y0+Hh*.65,-L/2-L*tl/2+.05,own);
+  if(P.back)for(let i=0;i<4;i++)vb(body,.16,.3,.2,P.back,0,y0+Hh+.12,-L/2+L*(.15+i*.23),P.bem?glowM(P.bem):own);
+  if(P.horn)[-1,1].forEach(s=>{vb(body,.12,.4,.12,P.horn,s*W*.3,y0+Hh*1.35,L/2+.15,own).rotation.z=-s*.3;});
+  if(P.fn)P.fn(body,own,P);
+}
+Object.assign(MONB,{
+emberling(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,1.3,1.15,1.3,'#ff6a2a',0,.62,0,{own:true,opacity:.88,emissive:'#ff3a00'});vb(body,.7,.6,.7,'#ffd84a',0,.62,0,glowM('#ffb800'));
+  [-1,1].forEach(s=>{vb(body,.2,.28,.06,'#1d1630',s*.3,.78,.67,own);vb(body,.07,.09,.05,'#fff',s*.27,.84,.7,own);vb(body,.35,.3,.4,'#c8401a',s*.38,.14,.15,own);});
+  vb(body,.3,.08,.05,'#1d1630',0,.5,.67,own);
+  vb(body,.3,.7,.3,'#ff8a2a',0,1.55,0,glowM('#ff5a00'));vb(body,.22,.5,.22,'#ffb02a',-.35,1.45,.1,glowM('#ff8a00'));vb(body,.22,.45,.22,'#ffb02a',.35,1.4,-.1,glowM('#ff8a00'));},
+scorpion(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,1.1,.5,1.5,'#8a3a2a',0,.55,0,own);vb(body,.8,.4,.6,'#a04a30',0,.6,.95,own);
+  [-1,1].forEach(s=>{vb(body,.14,.14,.05,'#ffd84a',s*.2,.72,1.27,glowM('#ffb800'));vb(body,.18,.18,.8,'#a04a30',s*.65,.55,1.1,own);vb(body,.5,.3,.4,'#c8603a',s*.7,.55,1.65,own);vb(body,.14,.3,.4,'#6a2a1e',s*.5,.55,1.7,own);
+    [-.5,0,.5].forEach(z=>vb(body,.5,.12,.12,'#5a2418',s*.7,.15,z,own));});
+  [[.9,-.9],[1.4,-1.1],[1.8,-.85]].forEach(p=>vb(body,.3,.5,.3,'#8a3a2a',0,p[0],p[1],own));vb(body,.2,.2,.45,'#ffd84a',0,1.9,-.45,glowM('#ffb800'));},
+salamander(g,u,own){quadB(g,u,own,{c1:'#d8502a',c2:'#e86a30',c3:'#8a2a1a',len:1.8,h:.7,w:.9,leg:.35,tl:.9,eye:'#ffd84a',eem:'#ffb800',back:'#ffb02a',bem:'#ff8a00',
+  fn:(b)=>{[-.5,0,.5].forEach(z=>vb(b,.5,.06,.18,'#ffb02a',0,1.07,z,glowM('#ff8a00')));}});},
+firebat(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,.75,.75,.75,'#7a2a22',0,0,0,own);
+  [-1,1].forEach(s=>{vb(body,.2,.38,.15,'#5a1a18',s*.22,.52,0,own);vb(body,.14,.14,.05,'#ffd84a',s*.17,.08,.38,glowM('#ffb800'));vb(body,.08,.14,.05,'#fff',s*.1,-.2,.38,own);});
+  vb(body,.2,.5,.2,'#ff8a2a',0,-.1,-.5,glowM('#ff5a00'));wingsB(body,u,'#ff6a2a',1.2,.8,.1,{emissive:'#ff3a00'});},
+obsidian(g,u,own){const body=grp(g,0,0,0);u.body=body;const L=glowM('#ff6a1a');
+  vb(body,1.7,1.6,1.3,'#2a2330',0,1.8,0,own);vb(body,1.72,.14,.3,'#ff6a1a',0,1.9,.55,L);vb(body,.14,1.2,.3,'#ff6a1a',-.4,1.8,.66,L);vb(body,.9,.8,.9,'#3a3040',0,3.0,.1,own);
+  [-1,1].forEach(s=>{vb(body,.2,.15,.05,'#ffb02a',s*.25,3.05,.58,L);vb(body,.55,1.6,.55,'#2a2330',s*1.15,1.7,0,own);vb(body,.75,.65,.75,'#1d1826',s*1.15,.8,0,own);vb(body,.65,.95,.65,'#1d1826',s*.42,.48,0,own);vb(body,.3,.7,.3,'#4a3a5a',s*1.0,2.85,0,own);});
+  vb(body,.4,.4,.1,'#ff6a1a',0,1.5,.68,L);},
+toad(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,1.5,.9,1.4,'#6a8a3a',0,.55,0,own);vb(body,1.2,.4,1.0,'#c8d890',0,.28,.15,own);vb(body,1.3,.2,.1,'#2a3a1a',0,.62,.72,own);
+  [-1,1].forEach(s=>{vb(body,.4,.4,.4,'#7a9a46',s*.45,1.1,.35,own);vb(body,.22,.28,.08,'#ffe27a',s*.45,1.12,.57,own);vb(body,.08,.2,.05,'#1d1630',s*.45,1.12,.62,own);vb(body,.36,.3,.6,'#587a2e',s*.7,.15,.25,own);});
+  [[.3,.9,-.2],[-.4,.95,.1],[.1,1.0,-.5]].forEach(w=>vb(body,.22,.14,.22,'#4a6a2a',w[0],w[1],w[2],own));},
+mosquito(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,.45,.45,.9,'#5a5a44',0,0,0,own);vb(body,.5,.5,.5,'#6a6a50',0,.05,.6,own);vb(body,.08,.08,.8,'#e0e0b0',0,-.05,1.2,own);
+  [-1,1].forEach(s=>{vb(body,.14,.16,.05,'#ff4a4a',s*.15,.12,.86,glowM('#ff2020'));[-.2,.2].forEach(z=>vb(body,.05,.7,.05,'#3a3a2a',s*.18,-.45,z,own));});
+  wingsB(body,u,'#e8f2ff',1.0,.55,.2);},
+croc(g,u,own){quadB(g,u,own,{c1:'#4a7a3a',c2:'#5a8a46',c3:'#355a2a',len:2.0,h:.65,w:1.1,leg:.3,snout:.9,tl:.9,back:'#355a2a',eye:'#ffd84a'});},
+wisp(g,u,own){const body=grp(g,0,0,0);u.body=body;const go={own:true,opacity:.8,emissive:'#5affb0'};
+  vb(body,.9,.9,.9,'#9affc8',0,0,0,go);vb(body,.5,.5,.5,'#e8fff4',0,0,0,{own:true,emissive:'#ffffff'});
+  [-1,1].forEach(s=>vb(body,.16,.22,.05,'#0a3a2a',s*.22,.08,.46,own));
+  [[-.6,-.2,.5],[-.95,-.4,.35],[-1.2,-.6,.22]].forEach(p=>vb(body,p[2],p[2],p[2],'#9affc8',0,p[0],p[1],go));
+  u.wingL=grp(body,0,0,0);u.wingR=grp(body,0,0,0);},
+treant(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,1.7,2.4,1.4,'#6a4a2a',0,2.0,0,own);vb(body,1.5,.5,1.2,'#5a3a20',0,.8,0,own);
+  [-1,1].forEach(s=>{vb(body,.5,.7,.6,'#4a3018',s*.7,.35,.3,own);vb(body,.5,.7,.6,'#4a3018',s*.55,.35,-.5,own);
+    vb(body,.22,.28,.06,'#ffe27a',s*.38,2.8,.72,glowM('#ffb800'));vb(body,.45,1.7,.45,'#5a3a20',s*1.2,2.1,0,own);vb(body,.7,.25,.25,'#5a3a20',s*1.35,3.0,0,own);});
+  vb(body,.5,.15,.08,'#2a1a10',0,2.35,.72,own);
+  [[0,3.8,0,3.2,1.2,3.2,'#3f8a3a'],[0,4.6,0,2.4,1.0,2.4,'#4a9a46'],[1.0,3.6,.6,1.2,.8,1.2,'#356f32'],[-1.0,3.4,-.5,1.2,.8,1.2,'#356f32']].forEach(l=>vb(body,l[3],l[4],l[5],l[6],l[0],l[1],l[2],own));
+  vb(body,1.3,.2,.6,'#6fbf5a',.3,3.3,.3,own);},
+icewolf(g,u,own){quadB(g,u,own,{c1:'#dfeaf5',c2:'#eaf2fb',c3:'#b8cce0',len:1.7,h:.8,w:.9,leg:.55,tl:.7,eye:'#7ae8ff',eem:'#38b8e8',back:'#8ad8ff',bem:'#4ab8e8',
+  fn:(b,o)=>{[-1,1].forEach(s=>vb(b,.2,.4,.14,'#b8cce0',s*.25,1.7,1.0,o));}});},
+snowman(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,1.5,1.0,1.5,'#f4f9ff',0,.5,0,own);vb(body,1.15,.9,1.15,'#eef5fc',0,1.35,0,own);vb(body,.85,.8,.85,'#f8fbff',0,2.15,0,own);
+  [-1,1].forEach(s=>{vb(body,.14,.16,.06,'#1d1630',s*.22,2.25,.44,own);vb(body,.25,.06,.06,'#1d1630',s*.22,2.4,.45,own).rotation.z=s*.35;const a=vb(body,.7,.1,.1,'#6a4a2a',s*.9,1.5,.2,own);a.rotation.z=s*.5;});
+  vb(body,.14,.14,.5,'#ff8a3a',0,2.1,.65,own);vb(body,.9,.12,.9,'#3a4a8a',0,2.62,0,own);vb(body,.6,.4,.6,'#3a4a8a',0,2.85,0,own);
+  vb(body,.12,.12,.05,'#1d1630',0,1.4,.6,own);vb(body,.12,.12,.05,'#1d1630',0,1.1,.6,own);},
+frostbat(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,.75,.75,.75,'#bfe4ff',0,0,0,own);
+  [-1,1].forEach(s=>{vb(body,.2,.38,.15,'#9ac8f0',s*.22,.52,0,own);vb(body,.14,.14,.05,'#2b6ad8',s*.17,.08,.38,glowM('#2b6ad8'));vb(body,.07,.22,.05,'#fff',s*.1,-.25,.38,own);});
+  vb(body,.16,.5,.16,'#e8f6ff',0,-.1,-.5,own);
+  wingsB(body,u,'#e8f6ff',1.2,.8,.1,{emissive:'#7ac8ff',opacity:.8});},
+yeti(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,2.0,1.9,1.5,'#eef2f8',0,2.0,0,own);vb(body,1.3,1.2,.2,'#d6dfeb',0,1.9,.78,own);vb(body,1.1,1.0,1.0,'#e3eaf3',0,3.4,.15,own);vb(body,.8,.55,.15,'#9ac0e0',0,3.35,.68,own);
+  [-1,1].forEach(s=>{vb(body,.2,.18,.06,'#7ae8ff',s*.25,3.55,.72,glowM('#38b8e8'));vb(body,.14,.35,.1,'#fff',s*.18,3.05,.74,own);vb(body,.14,.5,.14,'#cfe9ff',s*.5,4.0,.1,own);
+    vb(body,.6,1.9,.6,'#dfe7f1',s*1.35,1.7,.1,own);vb(body,.8,.7,.8,'#c8d3e0',s*1.35,.6,.2,own);vb(body,.75,.9,.75,'#dfe7f1',s*.5,.45,0,own);vb(body,.85,.35,1.0,'#c8d3e0',s*.5,.17,.1,own);});
+  vb(body,.8,.14,.1,'#3a2a3a',0,3.1,.7,own);},
+whelp(g,u,own){quadB(g,u,own,{c1:'#c04040',c2:'#d05050',c3:'#8a2a30',len:1.8,h:.85,w:1,leg:.5,tl:1.0,eye:'#ffd84a',eem:'#ffb800',horn:'#f0e0b0',back:'#f0c070',
+  fn:(b,o)=>{[-1,1].forEach(s=>{vb(b,.08,.9,1.0,'#8a2a30',s*.55,1.75,-.1,o).rotation.z=s*.5;});vb(b,.8,.3,1.4,'#f0c070',0,.75,0,o);}});},
+boneknight(g,u,own){const body=grp(g,0,0,0);u.body=body;const bn='#e8e2d0';
+  vb(body,1.0,1.1,.6,bn,0,1.7,0,own);[1.4,1.7,2.0].forEach(y=>vb(body,1.1,.1,.7,'#cfc8b4',0,y,0,own));vb(body,.2,1.2,.2,'#cfc8b4',0,1.7,-.2,own);
+  vb(body,.8,.75,.75,bn,0,2.65,.05,own);vb(body,.85,.35,.8,'#5a5a70',0,2.95,.05,own);
+  [-1,1].forEach(s=>{vb(body,.2,.22,.05,'#7aff9a',s*.2,2.65,.44,glowM('#30e060'));vb(body,.22,1.0,.22,bn,s*.7,1.8,0,own);vb(body,.24,.9,.24,bn,s*.28,.6,0,own);vb(body,.3,.18,.45,'#cfc8b4',s*.28,.12,.1,own);vb(body,.55,.3,.5,'#5a5a70',s*.7,2.4,0,own);});
+  vb(body,.12,1.8,.12,'#aab4c8',-.95,1.7,.45,own);vb(body,.5,.1,.14,'#6a6a80',-.95,.95,.45,own);vb(body,.14,1.1,.9,'#4a4a60',.95,1.7,.35,own);vb(body,.16,.5,.3,'#c04040',.95,1.8,.35,own);},
+wraith(g,u,own){const body=grp(g,0,0,0);u.body=body;const go={own:true,opacity:.88};
+  vb(body,1.1,1.3,.9,'#3a2a55',0,0,0,go);vb(body,.85,.8,.8,'#2a1d42',0,.8,.05,go);[-.4,0,.4].forEach((x,i)=>vb(body,.3,.5+(i%2)*.2,.3,'#3a2a55',x,-.85,0,go));
+  [-1,1].forEach(s=>{vb(body,.2,.14,.06,'#ff4a5a',s*.2,.82,.46,glowM('#ff2040'));vb(body,.18,.9,.18,'#cfc8e8',s*.75,-.1,.25,own);vb(body,.3,.18,.18,'#cfc8e8',s*.75,-.6,.35,own);});
+  u.wingL=grp(body,0,0,0);u.wingR=grp(body,0,0,0);},
+dragon(g,u,own){const body=grp(g,0,0,0);u.body=body;
+  vb(body,2.2,1.8,3.6,'#8a2a3a',0,2.2,0,own);vb(body,1.6,.8,3.2,'#f0c070',0,1.5,.1,own);
+  vb(body,1.4,1.2,1.8,'#a03a4a',0,3.3,2.2,own);vb(body,1.0,.7,1.0,'#8a2a3a',0,3.0,3.2,own);
+  [-1,1].forEach(s=>{vb(body,.28,.3,.08,'#ffd84a',s*.45,3.7,3.0,glowM('#ffb800'));vb(body,.2,.9,.2,'#f0e0b0',s*.55,4.3,2.0,own).rotation.x=-.4;
+    vb(body,.5,1.7,.6,'#6a1a2a',s*1.0,.85,1.2,own);vb(body,.55,1.7,.6,'#6a1a2a',s*1.0,.85,-1.2,own);vb(body,.6,.3,.9,'#4a1018',s*1.0,.15,1.4,own);vb(body,.6,.3,.9,'#4a1018',s*1.0,.15,-1.0,own);
+    vb(body,.12,2.8,2.4,'#6a1a30',s*1.9,4.3,-.2,own).rotation.z=s*.55;
+    vb(body,.14,.3,.05,'#ff7a2a',s*.3,2.85,3.7,glowM('#ff5a00'));});
+  [[2.0,-2.3,1.2,1.2,1.6],[1.8,-3.6,.9,.9,1.6],[1.6,-4.8,.6,.6,1.4]].forEach(l=>vb(body,l[2],l[3],l[4],'#8a2a3a',0,l[0],l[1],own));
+  vb(body,.3,.5,.5,'#f0e0b0',0,1.6,-5.7,own);
+  for(let i=0;i<5;i++)vb(body,.25,.45,.3,'#f0c070',0,3.35-i*.12,1.4-i*.9,glowM('#ff8a00'));}
+});
 function buildMonModel(type){
   const g=new THREE.Group(),own={own:true},u={};g.userData=u;
   if(type==='jelly'||type==='king'){
@@ -1672,15 +1798,20 @@ function buildMeadow(){
 
 /* ---------- World graph: towns and fields ---------- */
 const SIDE={W:{p:[-24.4,0],in:[-20.5,0,Math.PI/2]},E:{p:[24.4,0],in:[20.5,0,-Math.PI/2]},N:{p:[0,-24.4],in:[0,-20.5,0]},S:{p:[0,24.4],in:[0,15,Math.PI]}};
-const LINKS={meadow:{W:'stone',N:'vale',E:'glade'},stone:{W:'town:warrior',E:'meadow'},glade:{W:'meadow',E:'town:ranger'},vale:{N:'town:mage',S:'meadow'}};
-const TLINK={warrior:{side:'E',to:'stone'},mage:{side:'S',to:'vale'},ranger:{side:'W',to:'glade'}};
-const TPOS={E:{p:[16.2,0],in:[12.2,0,-Math.PI/2]},S:{p:[0,16.2],in:[0,7.5,Math.PI]},W:{p:[-16.2,0],in:[-12.2,0,Math.PI/2]}};
-const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a'};
+const LINKS={meadow:{W:'stone',N:'vale',E:'glade'},stone:{W:'town:warrior',E:'meadow'},glade:{W:'meadow',E:'town:ranger',S:'bog'},vale:{N:'town:mage',S:'meadow'},
+  crater:{S:'town:warrior',N:'dragon'},dragon:{S:'crater'},bog:{N:'glade'},frost:{S:'town:mage'}};
+const TLINK={warrior:[{side:'E',to:'stone'},{side:'N',to:'crater'}],mage:[{side:'S',to:'vale'},{side:'N',to:'frost'}],ranger:[{side:'W',to:'glade'}]};
+const TPOS={N:{p:[0,-16.2],in:[0,-12.2,0]},E:{p:[16.2,0],in:[12.2,0,-Math.PI/2]},S:{p:[0,16.2],in:[0,7.5,Math.PI]},W:{p:[-16.2,0],in:[-12.2,0,Math.PI/2]}};
+const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a',crater:'#ff5a2a',bog:'#7ac04a',frost:'#8ad8ff',dragon:'#e04a5a'};
 const FIELDS={
   meadow:{day:[['jelly',7],['bunny',5],['bee',4]],boss:['king',30],night:[['moth',6],['pup',6],['jelly',3]]},
   stone:{day:[['pebble',7],['beetle',5],['golem',2]],night:[['crab',6],['mole',5],['beetle',3],['golem',2]]},
   glade:{day:[['sprout',7],['shroom',5],['frog',4]],night:[['firefly',7],['fox',5],['shroom',4]]},
-  vale:{day:[['ghost',5],['snail',6],['bat',2]],night:[['bat',6],['ghost',6],['owl',2]]}
+  vale:{day:[['ghost',5],['snail',6],['bat',2]],night:[['bat',6],['ghost',6],['owl',2]]},
+  crater:{day:[['emberling',6],['scorpion',5],['obsidian',2]],night:[['firebat',6],['salamander',6],['scorpion',3],['obsidian',2]]},
+  bog:{day:[['toad',7],['mosquito',5],['treant',2]],night:[['wisp',7],['croc',5],['mosquito',3],['treant',2]]},
+  frost:{day:[['snowman',6],['icewolf',5],['yeti',2]],night:[['frostbat',6],['icewolf',6],['snowman',3],['yeti',2]]},
+  dragon:{day:[['whelp',6],['boneknight',5]],boss:['dragon',45],night:[['wraith',6],['boneknight',5],['whelp',3]]}
 };
 /* day / night: shared wall clock, so every player is always in the same phase */
 const DAY_S=300,NIGHT_S=180,DUSK=18;
@@ -1731,7 +1862,11 @@ function addPortals(z,id){const lk=LINKS[id];Object.keys(lk).forEach(sd=>{const 
 const FTHEME={
   stone:{sky:'#ffe0b8',top:'#6aa6ee',seed:21,g:['#b5ab92','#a4997f','#c2b89f'],path:['#7a6a52','#8d7c62'],hill:['#8a8f99','#767c86'],map:{bg:'#7e8590',ground:'#b5ab92',path:'#8d7c62'}},
   glade:{sky:'#d8f5c8',top:'#58b8a0',seed:23,g:['#4fae5e','#5cbd66','#3f9a54'],path:['#b79a66','#a98b58'],hill:['#2f8a4a','#27763f'],map:{bg:'#3d8a52',ground:'#58b866',path:'#b79a66'}},
-  vale:{sky:'#c7b8ff',top:'#3f2f9a',seed:25,g:['#6a5cc0','#7868ce','#5c4fb0'],path:['#d9ccff','#c9baff'],hill:['#4a3d9a','#3d3286'],map:{bg:'#4a3d9a',ground:'#6a5cc0',path:'#d9ccff'}}
+  vale:{sky:'#c7b8ff',top:'#3f2f9a',seed:25,g:['#6a5cc0','#7868ce','#5c4fb0'],path:['#d9ccff','#c9baff'],hill:['#4a3d9a','#3d3286'],map:{bg:'#4a3d9a',ground:'#6a5cc0',path:'#d9ccff'}},
+  crater:{sky:'#ffc9a0',top:'#c8503a',seed:27,g:['#5a4a52','#4d3e46','#68575f'],path:['#c8703a','#b8602e'],hill:['#3a2e36','#2e242b'],snow:'#6a5a66',mid:'#4a3c46',side:'#3a2e30',map:{bg:'#3a2e36',ground:'#5a4a52',path:'#b8602e'},ring:(z,x,zz,s)=>basalt(z,x,zz,s*1.4)},
+  bog:{sky:'#c8dcb0',top:'#5a7a68',seed:29,g:['#587a48','#4c6c3c','#648650'],path:['#8a7a52','#7a6a44'],hill:['#3a5a3a','#304c30'],snow:'#6a8a6a',mid:'#4a6a4a',side:'#3a4a2a',map:{bg:'#3a5a3a',ground:'#587a48',path:'#8a7a52'},ring:(z,x,zz,s)=>swampTree(z,x,zz,s*.9)},
+  frost:{sky:'#dff2ff',top:'#7ab0f0',seed:31,g:['#eef5fb','#dce9f4','#f8fbff'],path:['#a8c4dc','#98b8d2'],hill:['#c4d8ea','#aec6dc'],snow:'#ffffff',mid:'#b8cce0',side:'#9ab4cc',map:{bg:'#9ab4cc',ground:'#eef5fb',path:'#a8c4dc'},ring:(z,x,zz,s)=>pine(z,x,zz,s,['#d8ecf8','#c4dff0','#eaf5fc'])},
+  dragon:{sky:'#6a3a5a',top:'#2a1a4a',seed:33,g:['#6a5a6a','#5a4a5a','#756575'],path:['#d8b878','#c8a868'],hill:['#3a2a45','#2e2038'],snow:'#5a4a66',mid:'#46385a',side:'#2e2038',map:{bg:'#3a2a45',ground:'#6a5a6a',path:'#c8a868'},ring:(z,x,zz,s)=>basalt(z,x,zz,s*1.5,['#4a3a55','#3a2a45','#5a4a66'])}
 };
 const fieldH=(x,zz)=>meadowH(x,zz,{pond:{x:999,z:999,r:0}});
 function deadTree(z,x,zz,s){const b=z.b;b.at(x,0,zz,x*2);b.box(0,1.4*s,0,.5*s,2.8*s,.5*s,'#5a4632');b.box(.5*s,2.3*s,0,1*s,.25*s,.25*s,'#5a4632');b.box(-.45*s,3*s,0,.9*s,.22*s,.22*s,'#5a4632');b.box(.2*s,3.5*s,.3*s,.22*s,.8*s,.22*s,'#5a4632');z.cols.push({x,z:zz,r:.55*s});}
@@ -1749,23 +1884,52 @@ function starCircle(z,x,zz){const g=grp(z.group,x,0,zz);
   for(let i=0;i<8;i++){const a=i/8*Math.PI*2;vb(g,.7,1.2+(i%2)*.6,.7,'#cdbdf5',Math.cos(a)*3.4,.6+(i%2)*.3,Math.sin(a)*3.4);z.cols.push({x:x+Math.cos(a)*3.4,z:zz+Math.sin(a)*3.4,r:.5});}
   z.anim.push((dt,t)=>{rune.rotation.y=t*.6;disc.material.opacity=.4+Math.sin(t*2)*.1;});}
 
+/* ---------- Tier 6-15 field scenery ---------- */
+function lavaPool(z,x,zz,r){const m=vb(z.group,r*2,.1,r*1.7,'#ff6a1a',x,.07,zz,{own:true,emissive:'#ff4a00'});vb(z.group,r*2+.8,.08,r*1.7+.8,'#2a2028',x,.04,zz,{own:true});
+  z.cols.push({x,z:zz,r:r*.95});const ph=x*3;z.anim.push((dt,t)=>{m.material.emissiveIntensity=.7+.3*Math.sin(t*2+ph);});}
+function basalt(z,x,zz,s,cl){cl=cl||['#3a3040','#2e2634','#463a52'];const b=z.b;b.at(x,gy(z,x,zz),zz,x*2);
+  b.box(0,.7*s,0,1.5*s,1.4*s,1.5*s,cl[0]);b.box(.1*s,1.8*s,0,1.0*s,.9*s,1.0*s,cl[1]);b.box(-.3*s,.2*s,.5*s,.7*s,.4*s,.7*s,cl[2]);b.box(.05*s,2.35*s,0,.4*s,.2*s,.4*s,'#ff6a1a');z.cols.push({x,z:zz,r:1.0*s});}
+function volcano(z,x,zz){const b=z.b;b.at(x,0,zz,0);[[9,'#3a3040'],[7.6,'#463a52'],[6.2,'#3a3040'],[4.8,'#2e2634'],[3.4,'#3a3040']].forEach((l,i)=>b.box(0,.8+i*1.6,0,l[0],1.6,l[0],l[1]));
+  b.box(0,8.1,0,3.8,.3,3.8,'#2a2028');const g=vb(z.group,2.6,.3,2.6,'#ff6a1a',x,8.2,zz,{own:true,emissive:'#ff4a00'});z.cols.push({x,z:zz,r:4.6});
+  const em=[];for(let i=0;i<6;i++)em.push(vb(z.group,.3,.3,.3,'#ffb02a',x,9,zz,{own:true,emissive:'#ff8a00'}));
+  z.anim.push((dt,t)=>{g.material.emissiveIntensity=.7+.3*Math.sin(t*2);em.forEach((e,i)=>{const u=(t*.5+i/6)%1;e.position.set(x+Math.sin(i*2.1)*u*2.5,8.4+u*4.5,zz+Math.cos(i*1.7)*u*2.5);e.scale.setScalar(1-u*.8);});});}
+function bogPool(z,x,zz,r){vb(z.group,r*2,.08,r*1.7,'#3f6a5a',x,.06,zz,{own:true,opacity:.85,emissive:'#1a3a30'});vb(z.group,r*2+.7,.06,r*1.7+.7,'#4a3a22',x,.03,zz,{own:true});
+  for(let i=0;i<4;i++){const a=i*1.7+x;vb(z.group,.7,.04,.7,'#4a9a46',x+Math.cos(a)*r*.6,.11,zz+Math.sin(a)*r*.5,{own:true});}z.cols.push({x,z:zz,r:r*.85});}
+function reeds(z,x,zz){const b=z.b;b.at(x,gy(z,x,zz),zz,x*3);[[0,0],[.3,.2],[-.25,.25],[.15,-.3]].forEach((p,i)=>{b.box(p[0],.7+i*.1,p[1],.08,1.4+i*.2,.08,'#6a8a3a');b.box(p[0],1.5+i*.2,p[1],.16,.4,.16,'#6a4a2a');});}
+function swampTree(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x*2);b.box(0,1.4*s,0,.7*s,2.8*s,.7*s,'#4a3a28');b.box(.5*s,2.4*s,0,1*s,.3*s,.3*s,'#4a3a28');b.box(0,3.3*s,0,2.8*s,.9*s,2.8*s,'#35603a');b.box(.3*s,4.0*s,.2*s,2.0*s,.8*s,2.0*s,'#3f7040');
+  b.box(-.9*s,2.6*s,.8*s,.12*s,1.3*s,.12*s,'#7a9a6a');b.box(1.0*s,2.8*s,-.7*s,.12*s,1.1*s,.12*s,'#7a9a6a');z.cols.push({x,z:zz,r:.7*s});}
+function iceLake(z,x,zz,r){vb(z.group,r*2,.08,r*1.7,'#bfe6f5',x,.06,zz,{own:true,opacity:.9,emissive:'#5ab8e8'});vb(z.group,r*1.2,.02,.12,'#ffffff',x,.12,zz+.5,{own:true,opacity:.6});}
+function snowDrift(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x);b.box(0,.3*s,0,2.2*s,.6*s,1.6*s,'#f4f9ff');b.box(.4*s,.7*s,.1*s,1.2*s,.5*s,1.0*s,'#ffffff');}
+function ribs(z,x,zz,s,ry){const b=z.b;b.at(x,gy(z,x,zz),zz,ry);b.box(0,.3*s,0,.5*s,.6*s,6*s,'#d8d0b8');
+  for(let i=0;i<5;i++){const zo=(i-2)*1.2*s;b.box(-.9*s,1.0*s,zo,.35*s,1.8*s,.35*s,'#e8e2d0');b.box(.9*s,1.0*s,zo,.35*s,1.8*s,.35*s,'#e8e2d0');b.box(-.5*s,1.9*s,zo,1.0*s,.3*s,.35*s,'#e8e2d0');b.box(.5*s,1.9*s,zo,1.0*s,.3*s,.35*s,'#e8e2d0');}z.cols.push({x,z:zz,r:1.4*s});}
+function hoard(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x);b.box(0,.35*s,0,3*s,.7*s,2.6*s,'#e8b830');b.box(.2*s,.9*s,0,2*s,.5*s,1.8*s,'#f4c840');b.box(-.3*s,1.3*s,.1*s,1*s,.4*s,1*s,'#ffd860');b.box(.9*s,.7*s,.8*s,.4*s,.3*s,.4*s,'#e04a5a');b.box(-1.0*s,.5*s,-.8*s,.4*s,.3*s,.4*s,'#4a8ae8');z.cols.push({x,z:zz,r:1.8*s});
+  const sp=[];for(let i=0;i<5;i++)sp.push(vb(z.group,.14,.14,.14,'#fff6c0',x,1.4,zz,{own:true,emissive:'#ffd84a'}));
+  z.anim.push((dt,t)=>sp.forEach((e,i)=>{e.position.set(x+Math.sin(i*2.3+t)*1.2,1.3+Math.abs(Math.sin(t*1.5+i))*.8,zz+Math.cos(i*1.9+t*.8)*1.0);e.scale.setScalar(.5+.5*Math.sin(t*4+i));}));}
+function skullRock(z,x,zz){const b=z.b;b.at(x,0,zz,.4);b.box(0,1.6,0,5,3.2,6,'#e8e2d0');b.box(0,1.2,3.6,3.2,2.2,2.6,'#e0d9c4');b.box(0,.5,4.9,2.6,.5,.4,'#cfc8b4');
+  [-1,1].forEach(s=>{b.box(s*2.2,4.2,-1,.7,2.4,.7,'#cfc8b4');b.box(s*.9,.55,5.0,.3,.5,.3,'#fff');});
+  z.cols.push({x,z:zz,r:3.2});const ex=Math.sin(.4),ez=Math.cos(.4);
+  [-1,1].forEach(s=>{const lx=x+(s*1.3)*ez+3.0*ex,lz=zz-(s*1.3)*ex+3.0*ez;vb(z.group,.8,.7,.3,'#ff4a2a',lx,2.5,lz,{own:true,emissive:'#ff2a10'});});}
+function torch(z,x,zz){const b=z.b;b.at(x,gy(z,x,zz),zz,0);b.box(0,1.2,0,.5,2.4,.5,'#3a2e3a');b.box(0,2.5,0,.8,.3,.8,'#2a2030');
+  const f=vb(z.group,.4,.6,.4,'#ff8a2a',x,2.95,zz,{own:true,emissive:'#ff5a00'});z.anim.push((dt,t)=>{f.scale.y=1+Math.sin(t*12+x)*.2;});z.cols.push({x,z:zz,r:.5});}
+
 function buildField(id){
   const T=FTHEME[id],z=newZone(id,26,T.sky,T.top);z.field=true;const r=seeded(T.seed),b=z.b;
   const lk=LINKS[id],sides=Object.keys(lk),horiz=!!lk.W||!!lk.E;
   const path=horiz?[[-25,0],[-14,2.2],[-4,-.8],[6,1.6],[15,-1.8],[25,0]]:[[0,-25],[2.2,-14],[-.8,-4],[1.6,6],[-1.8,15],[0,25]];
-  const pthD=(x,y)=>segDist(x,y,path);
+  const extra=[];sides.forEach(k=>{if(horiz!==(k==='W'||k==='E'))extra.push([[0,0],[SIDE[k].p[0]*.5,SIDE[k].p[1]*.5],[SIDE[k].p[0],SIDE[k].p[1]]]);});
+  const pthD=(x,y)=>{let d=segDist(x,y,path);for(const e of extra)d=Math.min(d,segDist(x,y,e));return d;};
   const nearP=(x,y)=>sides.some(k=>Math.hypot(x-SIDE[k].p[0],y-SIDE[k].p[1])<6.5);
   z.gy=(x,zz)=>fieldH(bc2(x),bc2(zz));
   voxTerrain(b,{inner:34,ext:60,seed:T.seed,h:fieldH,pix:(cx,cz,t)=>t>=0&&Math.abs(cx)<30&&Math.abs(cz)<30,
     col:(cx,cz,t,u)=>{
       if(t===0){const sd=pthD(cx,cz);if(sd<1.35)return jit(sd<1.0?T.path[0]:T.path[1],.08,u);
         const n=vnoise(cx*.22,cz*.22,9);return jit(n>.62?T.g[2]:n<.3?T.g[1]:T.g[0],.07,u);}
-      if(t>=11)return jit('#f4f8ff',.04,u);if(t>=8)return jit('#9aa3b4',.08,u);
+      if(t>=11)return jit(T.snow||'#f4f8ff',.04,u);if(t>=8)return jit(T.mid||'#9aa3b4',.08,u);
       if(t>=5)return jit(vnoise(cx*.3,cz*.3,4)>.5?T.hill[0]:T.hill[1],.1,u);return jit(T.hill[1],.09,u);},
-    side:(t,u)=>jit(t>=8?'#7c8596':id==='vale'?'#4a3a80':id==='stone'?'#7a6a58':'#6a4a2a',.1,u)});
+    side:(t,u)=>jit(t>=8?(T.mid||'#7c8596'):T.side||(id==='vale'?'#4a3a80':id==='stone'?'#7a6a58':'#6a4a2a'),.1,u)});
   const GL=['#2f9a5a','#38a866','#26884c','#4ab870'],PV=['#5a4aa8','#6a58c0','#4f4096'],PS=['#5f7a5a','#55705a','#688a62'];
   for(let i=0;i<90;i++){const a=r()*6.283,rad=25.5+r()*13,x=Math.cos(a)*rad,zz=Math.sin(a)*rad;if(zz>14||nearP(x,zz))continue;if(z.gy(x,zz)>7)continue;const s=1.1+r()*.7;
-    if(id==='stone'){if(r()<.5)pine(z,x,zz,s,PS);else rockv(z,x,zz,s*1.3);}else if(id==='glade')oak(z,x,zz,s*1.2,GL);else pine(z,x,zz,s,PV);}
+    if(T.ring)T.ring(z,x,zz,s,r);else if(id==='stone'){if(r()<.5)pine(z,x,zz,s,PS);else rockv(z,x,zz,s*1.3);}else if(id==='glade')oak(z,x,zz,s*1.2,GL);else pine(z,x,zz,s,PV);}
   const used=[];const spot=(rad,pd)=>{for(let k=0;k<40;k++){const x=(r()-.5)*48,zz=(r()-.5)*46;if(pthD(x,zz)<(pd||2.4)||nearP(x,zz)||used.some(u=>Math.hypot(x-u[0],zz-u[1])<u[2]+rad))continue;used.push([x,zz,rad]);return [x,zz];}return null;};
   const px={};
   if(id==='stone'){
@@ -1800,8 +1964,52 @@ function buildField(id){
     z.pois.push({x:-9,z:-8,i:'rune',tf:()=>t('poi_stars')});
     sparkleField(z,60,'#fff2a0',46,6,41);sparkleField(z,30,'#c9b3ff',46,6,43);driftBits(z,24,['#ffffff','#e6ccff','#fff2a0'],7);
   }
+  if(id==='crater'){
+    used.push([10,-12,6],[-11,10,5]);let lp=null;
+    volcano(z,10,-12);
+    for(let i=0;i<3;i++){const p=spot(3.2);if(p){lavaPool(z,p[0],p[1],2+r()*1.3);if(!lp)lp=p;}}
+    for(let i=0;i<14;i++){const p=spot(1.6);if(p)basalt(z,p[0],p[1],.9+r()*.9);}
+    for(let i=0;i<8;i++){const p=spot(1.2);if(p)deadTree(z,p[0],p[1],.9+r()*.5);}
+    for(let i=0;i<70;i++){const x=(r()-.5)*50,zz=(r()-.5)*50;b.at(x,0,zz,r()*6);b.box(0,.12,0,.3+r()*.3,.24,.3+r()*.3,r()<.5?'#4a3e48':'#5a4c56');}
+    campfire(z,-11,10);tent(z,-14.5,11,.5,'#8a3a2a','#fff0d8');crate(z,-9,12,1);chest(z,-11.5,13.5,.4);
+    z.pois.push({x:10,z:-12,i:'fire',tf:()=>t('poi_volcano')},{x:-12,z:10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});if(lp)z.pois.push({x:lp[0],z:lp[1],i:'pond',tf:()=>t('poi_lava')});
+    sparkleField(z,40,'#ff8a2a',44,5,51);driftBits(z,20,['#ffb070','#ff8a2a','#554a52'],8);
+  }
+  if(id==='bog'){
+    used.push([-9,-12,6]);let bp=null;
+    swampTree(z,-9,-12,2.0);
+    for(let i=0;i<5;i++){const p=spot(3.4);if(p){bogPool(z,p[0],p[1],2.2+r()*1.4);if(!bp)bp=p;}}
+    for(let i=0;i<14;i++){const p=spot(1.8);if(p)swampTree(z,p[0],p[1],.9+r()*.5);}
+    for(let i=0,n=0;i<300&&n<45;i++){const x=(r()-.5)*50,zz=(r()-.5)*50;if(pthD(x,zz)<1.8||nearP(x,zz))continue;reeds(z,x,zz);n++;}
+    for(let i=0;i<10;i++){const a=r()*6.28,d=r()*3;mushroom(z,12+Math.cos(a)*d,10+Math.sin(a)*d,.7+r()*.8);}
+    campfire(z,13,-10);tent(z,16,-11,-.6,'#5a7a3a','#fff4d8');
+    z.pois.push({x:-9,z:-12,i:'tree',tf:()=>t('poi_swamptree')},{x:14,z:-10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});if(bp)z.pois.push({x:bp[0],z:bp[1],i:'pond',tf:()=>t('poi_bogpond')});
+    sparkleField(z,45,'#9affc8',44,4,61);driftBits(z,16,['#9aba6a','#6a8a3a'],9);
+  }
+  if(id==='frost'){
+    used.push([10,-12,6]);const SNP=['#d8ecf8','#c4dff0','#eaf5fc'];
+    crystal(z,10,-12,2.8,'#bfe8ff','#5ab8e8');
+    const lk=spot(4.6);if(lk){iceLake(z,lk[0],lk[1],4.2);z.pois.push({x:lk[0],z:lk[1],i:'pond',tf:()=>t('poi_frozen')});}
+    for(let i=0;i<18;i++){const p=spot(1.8);if(p){pine(z,p[0],p[1],1+r()*.6,SNP);z.cols.push({x:p[0],z:p[1],r:.9});}}
+    for(let i=0;i<10;i++){const p=spot(1.8);if(p)crystal(z,p[0],p[1],.8+r()*.8,'#bfe8ff','#5ab8e8');}
+    for(let i=0;i<16;i++){const p=spot(1.4);if(p)snowDrift(z,p[0],p[1],.8+r()*.8);}
+    campfire(z,-12,10);tent(z,-15,11,.5,'#4a7ac8','#ffffff');crate(z,-10,12,1);
+    z.pois.push({x:10,z:-12,i:'tower',tf:()=>t('poi_icepeak')},{x:-13,z:10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
+    driftBits(z,45,['#ffffff','#e8f4ff'],10);sparkleField(z,30,'#bfe8ff',44,5,71);
+  }
+  if(id==='dragon'){
+    used.push([-10,-12,7],[11,8,5]);const DC=['#4a3a55','#3a2a45','#5a4a66'];
+    skullRock(z,-10,-12);hoard(z,11,8,1.3);
+    for(let i=0;i<2;i++){const p=spot(3.5);if(p)ribs(z,p[0],p[1],1+r()*.4,r()*6);}
+    for(let i=0;i<12;i++){const p=spot(1.6);if(p)basalt(z,p[0],p[1],.9+r()*.9,DC);}
+    for(let i=0;i<2;i++){const p=spot(3.2);if(p)lavaPool(z,p[0],p[1],2+r()*1.0);}
+    for(let i=0;i<4;i++){const p=spot(1.0);if(p)torch(z,p[0],p[1]);}
+    for(let i=0;i<60;i++){const x=(r()-.5)*50,zz=(r()-.5)*50;b.at(x,0,zz,r()*6);b.box(0,.12,0,.3+r()*.3,.24,.3+r()*.3,r()<.5?'#d8d0b8':'#5a4a66');}
+    z.pois.push({x:-10,z:-12,i:'castle',tf:()=>t('poi_skull')},{x:11,z:8,i:'rune',tf:()=>t('poi_hoard')});
+    sparkleField(z,35,'#ff6a4a',44,5,81);driftBits(z,18,['#ff8a5a','#554a52','#aa3a4a'],11);
+  }
   addPortals(z,id);
-  z.map={bg:T.map.bg,ground:T.map.ground,path:T.map.path,paths:[path],water:[]};
+  z.map={bg:T.map.bg,ground:T.map.ground,path:T.map.path,paths:[path].concat(extra),water:[]};
   return finishZone(z);
 }
 
@@ -1815,11 +2023,11 @@ function townH(x,zz){const m=Math.max(Math.abs(x),Math.abs(zz));if(m<=19)return 
 const LAY={
   warrior:{lm:[0,-9],houses:[[-12,8.5,.25],[12,9,-.25],[-13,-4,Math.PI/2.4],[13,-5.5,-Math.PI/2.4]],hc:['#ffb3c1','#ffe08a','#a8e6cf','#bcd4ff'],rc:['#e0603c','#7a55ff','#2f9e5f','#4f7de0'],
     shop:[-6,3],mis:[8,-4],style:[6,3],awn:'#3f7be0',awnL:'#8fb8ff',lampc:'#ffe9a0',
-    paths:[[[0,0],[15,0],[19,0]],[[0,0],[-8,-9]],[[0,0],[0,8],[0,14]]],
+    paths:[[[0,0],[15,0],[19,0]],[[0,0],[-8,-9]],[[0,0],[0,8],[0,14]],[[0,-11],[0,-16]]],
     lmName:'Benteng Ironhold',lmIcon:'🏰',lmSub:'Markas para ksatria',cName:'Air Mancur',cIcon:'⛲'},
   mage:{lm:[-8.5,-10],houses:[[-14,3,1.4],[-10,11,.5],[10,11,-.5],[14.5,-8.5,-1.2]],hc:['#e6defc','#cdbdf5','#f5d9ff','#d6e4ff'],rc:['#7a4fe0','#6b3fd0','#b04fd0','#4f6fe0'],
     shop:[-5,-4.5],mis:[7,4.5],style:[-8.5,4],awn:'#7a4fe0',awnL:'#cdbdf5',lampc:'#ffc9f0',
-    paths:[[[0,0],[0,15],[0,19]],[[0,0],[-7,-8]],[[0,0],[9,-8]],[[0,0],[-8.5,4]],[[0,0],[7,4.5]]],
+    paths:[[[0,0],[0,15],[0,19]],[[0,0],[-7,-8]],[[0,0],[9,-8]],[[0,0],[-8.5,4]],[[0,0],[7,4.5]],[[0,-6],[0,-16]]],
     lmName:'Menara Bintang',lmIcon:'🗼',lmSub:'Sekolah sihir',cName:'Lingkaran Rune',cIcon:'🔮'},
   ranger:{lm:[9,-10.5],houses:[[-13,-6,1.0],[-12,10,.3],[4,12,0],[13,9,-.4]],hc:['#d9b98a','#c9a46a','#e8cf9a','#b8905a'],rc:['#2f9e5f','#3fae5a','#52a050','#2b8a45'],
     shop:[-6.5,-3.5],mis:[5,-3],style:[-5,5.5],awn:'#2f9e5f',awnL:'#8fd9a0',lampc:'#ffe9a0',
@@ -1926,9 +2134,9 @@ function buildTown(cls){
   z.tags.push({o:{x:nx,z:nz-.4},y:2.95,cls:'npc',name:N.style,sf:()=>t('nStyle'),R:14});
   z.pois.push({x:nx,z:nz,i:'style',tf:()=>t('nStyle'),sf:()=>t('styleS'),mini:true});
   townFolk(z,cls,L,N);
-  {const tl=TLINK[cls],tp=TPOS[tl.side].p;portalMesh(z,tp[0],tp[1],PCOL[tl.to],tl.to);
+  TLINK[cls].forEach(tl=>{const tp=TPOS[tl.side].p;portalMesh(z,tp[0],tp[1],PCOL[tl.to],tl.to);
    z.pois.push({x:tp[0],z:tp[1],i:'portal',tf:()=>t('portalTo',t('z_'+tl.to)),sf:()=>t('z_'+tl.to+'Sub'),ml:()=>'\u2192 '+t('z_'+tl.to),mini:true,portal:true});
-   z.tags.push({o:{x:tp[0],z:tp[1]},y:5.6,cls:'port',nf:()=>t('portal'),sf:()=>'\u2192 '+t('z_'+tl.to),R:18});}
+   z.tags.push({o:{x:tp[0],z:tp[1]},y:5.6,cls:'port',nf:()=>t('portal'),sf:()=>'\u2192 '+t('z_'+tl.to),R:18});});
   z.pois.push({x:LX,z:LZ,i:{warrior:'castle',mage:'tower',ranger:'tree'}[cls],tf:()=>t('lm_'+cls),sf:()=>t('lmS_'+cls)},{x:0,z:0,i:{warrior:'fountain',mage:'rune',ranger:'fire'}[cls],tf:()=>t('ctr_'+cls)});
   butterflies(z,5,7,24);driftBits(z,18,cls==='mage'?['#e6ccff','#ffffff','#ffc9f0']:['#ffe27a','#ffffff','#ff9ec8'],5);
   return finishZone(z);
@@ -2336,7 +2544,7 @@ function updatePlay(dt){
 
 function usePortal(PP){
   const to=PP.to,from=zone.id==='town'?'town:'+zone.cls:zone.id;SFX.portal();
-  transition(()=>{if(to.indexOf('town:')===0){const c=to.slice(5),a=TPOS[TLINK[c].side].in;setZone('town',{x:a[0],z:a[1],face:a[2]},false,c);}
+  transition(()=>{if(to.indexOf('town:')===0){const c=to.slice(5),a=TPOS[(TLINK[c].find(l=>l.to===from)||TLINK[c][0]).side].in;setZone('town',{x:a[0],z:a[1],face:a[2]},false,c);}
     else{const sd=Object.keys(LINKS[to]).find(k=>LINKS[to][k]===from),a=SIDE[sd].in;setZone(to,{x:a[0],z:a[1],face:a[2]});}});
 }
 function transition(fn){if(trans)return;trans=true;$('#fade').classList.add('on');setTimeout(()=>{try{fn();}catch(e){console.error(e);}$('#fade').classList.remove('on');setTimeout(()=>{trans=false;},260);},320);}
@@ -2442,7 +2650,7 @@ function startPlay(slot){
   show('start',false);show('create',false);mode='play';paused=false;
   makeHero(C.cls,C.look);
   const zs=C.zone||'town',m=/^town:(warrior|mage|ranger)$/.exec(zs);
-  if(/^(meadow|stone|glade|vale)$/.test(zs)){const a=SIDE[Object.keys(LINKS[zs])[0]].in;setZone(zs,{x:a[0],z:a[1],face:a[2]});}else setZone('town',{x:0,z:6,face:Math.PI},false,m?m[1]:C.cls);
+  if(/^(meadow|stone|glade|vale|crater|bog|frost|dragon)$/.test(zs)){const a=SIDE[Object.keys(LINKS[zs])[0]].in;setZone(zs,{x:a[0],z:a[1],face:a[2]});}else setZone('town',{x:0,z:6,face:Math.PI},false,m?m[1]:C.cls);
   $('#bAtk').innerHTML=E.CLASSES[C.cls].icon;Object.keys(hCache).forEach(k=>delete hCache[k]);
   $('#hud').hidden=false;$('#ctl').hidden=false;refreshRings();saveDB();ac();
 }
@@ -2564,7 +2772,7 @@ function renderProf(){
 }
 
 /* ---------- Shop & missions ---------- */
-function qReward(i){const q=E.QUESTS[i];return {coins:12+q.n*3+(q.t==='king'?40:(E.MON[q.t].big?20:0))};}
+function qReward(i){const q=E.QUESTS[i];const mm=E.MON[q.t];return {coins:12+q.n*3+Math.max(0,mm.lvl-5)*q.n*2+(q.t==='king'?40:q.t==='dragon'?120:(mm.big?20:0))};}
 let shopPath=0;
 function openShop(){if(mode!=='play')return;paused=true;S.defDown=false;S.blocking=false;shopPath=C.eq.p|0;renderShop();show('shop',true);}
 function wpAway(){return !!(zone&&zone.id==='town'&&zone.cls!==C.cls);}
@@ -2728,7 +2936,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={openShop:()=>openShop(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:()=>openShop(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
