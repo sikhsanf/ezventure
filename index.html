@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-195054"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -2243,7 +2243,7 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(.05,(now-last
 /* ---------- Screens ---------- */
 const ovs=['start','create','menu','io'];
 function show(id,on){$('#'+id).classList.toggle('show',on);}
-function makeHero(cls,look){if(H){scene.remove(H.root);disposeGroup(H.root);H=null;}const eq=C&&C.eq&&(!cm||cm.kind==='edit')?{ew:C.eq.w,ea:C.eq.a}:{};H=buildHero(cls,Object.assign({},look,eq));scene.add(H.root);}
+function makeHero(cls,look){if(H){scene.remove(H.root);disposeGroup(H.root);H=null;}const eq=C&&C.eq&&(mode!=='preview'||(cm&&cm.kind==='edit'))?{ew:C.eq.w,ea:C.eq.a}:{};H=buildHero(cls,Object.assign({},look,eq));scene.add(H.root);}
 function logo(){const L=$('#logo'),cols=['#ff5d8f','#ffc83a','#3fbf6e','#46a6ff','#a07bff','#ff8a3a','#ff5d8f','#3fbf6e','#ffc83a'];'Ezventure'.split('').forEach((ch,i)=>{const s=document.createElement('span');s.textContent=ch;s.style.color=cols[i];s.style.setProperty('--i',i);L.appendChild(s);});}
 function buildSlots(){
   const box=$('#slots');box.innerHTML='';
@@ -2542,7 +2542,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={coop:()=>coop,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
