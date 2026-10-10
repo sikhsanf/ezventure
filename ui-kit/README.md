@@ -21,3 +21,5 @@ Top-left status stack (badge+bars, quest chip, contextual button) · top-right (
 
 ## Checklist for a new modal
 1. Use header/body/footer. 2. Primary on right. 3. Test 780×360, 390×780, 320×568, 1280×720. 4. Only `.pbody` scrolls.
+
+Exception: read-only full-bleed viewers (e.g. the map) may drop the footer to maximise content; the header X stays top-right/left column and nothing scrolls.
