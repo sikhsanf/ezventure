@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-013202"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-062039"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -2013,7 +2013,7 @@ const SIDE={W:{p:[-24.4*FS,0],in:[-20.5*FS,0,Math.PI/2]},E:{p:[24.4*FS,0],in:[20
 const LINKS={meadow:{W:'stone',N:'vale',E:'glade',S:'camp'},stone:{W:'town:warrior',E:'meadow'},glade:{W:'meadow',E:'town:ranger',S:'bog'},vale:{N:'town:mage',S:'meadow'},
   crater:{S:'town:warrior',N:'dragon'},camp:{N:'meadow'},dragon:{S:'crater'},bog:{N:'glade'},frost:{S:'town:mage'}};
 const TLINK={warrior:[{side:'E',to:'stone'},{side:'N',to:'crater'}],mage:[{side:'S',to:'vale'},{side:'N',to:'frost'}],ranger:[{side:'W',to:'glade'}]};
-const TPOS={N:{p:[0,-16.2],in:[0,-12.2,0]},E:{p:[16.2,0],in:[12.2,0,-Math.PI/2]},S:{p:[0,16.2],in:[0,7.5,Math.PI]},W:{p:[-16.2,0],in:[-12.2,0,Math.PI/2]}};
+const TPOS={N:{p:[0,-16.2*FS],in:[0,-12.2*FS,0]},E:{p:[16.2*FS,0],in:[12.2*FS,0,-Math.PI/2]},S:{p:[0,16.2*FS],in:[0,7.5*FS,Math.PI]},W:{p:[-16.2*FS,0],in:[-12.2*FS,0,Math.PI/2]}};
 const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a',camp:'#7ae8a0','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a',crater:'#ff5a2a',bog:'#7ac04a',frost:'#8ad8ff',dragon:'#e04a5a'};
 const FIELDS={
   meadow:{day:[['jelly',7],['bunny',5],['bee',4]],boss:['king',30],night:[['moth',6],['pup',6],['jelly',3]]},
@@ -2249,7 +2249,7 @@ const TOWNS={
   mage:{g:['#c5b3f2','#d0c0f7','#b9a5ec'],plaza:['#e9e0ff','#d4c8f7'],hill:['#7d68c9','#6c58b8'],top:'#6a58d8',bot:'#dccdff',tree:['#8f7ad8','#a08be6']},
   ranger:{g:['#84dd6e','#8fe47a','#78d062'],plaza:['#a8c88a','#b9d69c'],hill:['#3f9a4a','#357f3e'],top:'#58b8c8',bot:'#cdf3d3',tree:['#35a04f','#2b8a45']}
 };
-function townH(x,zz){const m=Math.max(Math.abs(x),Math.abs(zz));if(m<=19)return 0;let v=Math.round((m-18)*.55+vnoise(x*.12,zz*.12,5)*3.4-.4);if(m>30)v+=Math.round((m-30)*.55);
+function townH(x,zz){const m=Math.max(Math.abs(x),Math.abs(zz))/FS;if(m<=19)return 0;let v=Math.round((m-18)*.55+vnoise(x*.12,zz*.12,5)*3.4-.4);if(m>30)v+=Math.round((m-30)*.55);
   if(zz>0&&Math.abs(zz)>=Math.abs(x))v=Math.min(v,Math.round(1+vnoise(x*.2,zz*.2,2)*1.6));return clamp(v,1,15);}
 const LAY={
   warrior:{lm:[0,-9],houses:[[-12,8.5,.25],[12,9,-.25],[-13,-4,Math.PI/2.4],[13,-5.5,-Math.PI/2.4]],hc:['#ffb3c1','#ffe08a','#a8e6cf','#bcd4ff'],rc:['#e0603c','#7a55ff','#2f9e5f','#4f7de0'],
@@ -2273,11 +2273,11 @@ const NM={
   ranger:{shop:'Pak Rowan',mis:'Kak Fern',style:'Willow',vill:['Tupai','Ayu','Bima','Lumi']}
 };
 function buildTown(cls){
-  const T=TOWNS[cls],L=LAY[cls],N=NM[cls],z=newZone('town',17,T.bot,T.top);z.cls=cls;const r=seeded(cls.length*13);const b=z.b;
+  const T=TOWNS[cls],L=LAY[cls],N=NM[cls],z=newZone('town',17*FS,T.bot,T.top);z.cls=cls;const r=seeded(cls.length*13);const b=z.b;
   const LX=L.lm[0],LZ=L.lm[1];
   z.gy=(x,zz)=>townH(bc2(x),bc2(zz));
   const pdist=(cx,cz)=>{let m=1e9;for(const p of L.paths)m=Math.min(m,segDist(cx,cz,p));return m;};
-  voxTerrain(b,{inner:26,ext:48,seed:9,h:townH,pix:(cx,cz,t)=>t>=0&&Math.abs(cx)<21&&Math.abs(cz)<21,
+  voxTerrain(b,{inner:33,ext:60,seed:9,h:townH,pix:(cx,cz,t)=>t>=0&&Math.abs(cx)<27&&Math.abs(cz)<27,
     col:(cx,cz,t,u)=>{
       if(t===0){const d=Math.hypot(cx,cz),ck=(Math.floor(cx)+Math.floor(cz))&1;
         if(cls==='ranger'){
@@ -2352,10 +2352,12 @@ function buildTown(cls){
   // lamps, flowers, tufts
   for(let i=0;i<8;i++){const a=i/8*Math.PI*2+.4,x=Math.cos(a)*8.6,zz=Math.sin(a)*8.6;if(Math.abs(zz-0)<1.2&&x>0)continue;lamp(z,x,zz,L.lampc);z.cols.push({x,z:zz,r:.35});}
   const fc=['#ff8fc2','#ffd84a','#ffffff','#a58bff','#ff9f5a'];
-  for(let i=0;i<60;i++){const a=r()*6.28,d=3.4+r()*10;const x=Math.cos(a)*d,zz=Math.sin(a)*d;if(Math.hypot(x,zz)<4||Math.abs(zz-LZ)<5.5&&Math.abs(x-LX)<7)continue;if(Math.hypot(x,zz)<8.4)continue;flower(z,x,zz,fc[i%5]);}
-  for(let i=0;i<40;i++){const x=(r()-.5)*32,zz=(r()-.5)*32;if(Math.hypot(x,zz)>8.4)tuft(z,x,zz);}
+  for(let i=0;i<95;i++){const a=r()*6.28,d=3.4+r()*16;const x=Math.cos(a)*d,zz=Math.sin(a)*d;if(Math.hypot(x,zz)<4||Math.abs(zz-LZ)<5.5&&Math.abs(x-LX)<7)continue;if(Math.hypot(x,zz)<8.4)continue;flower(z,x,zz,fc[i%5]);}
+  for(let i=0;i<65;i++){const x=(r()-.5)*42,zz=(r()-.5)*42;if(Math.hypot(x,zz)>8.4)tuft(z,x,zz);}
   // border trees
-  for(let i=0;i<80;i++){const a=r()*6.283,rad=18.5+r()*10,x=Math.cos(a)*rad,zz=Math.sin(a)*rad;if(zz>12)continue;const hh=z.gy(x,zz);if(hh>7)continue;if(hh>=3)pine(z,x,zz,1.1+r()*.6,cls==='mage'?['#6e58b8','#8068cc','#5c4aa8']:null);else oak(z,x,zz,1.1+r()*.5,T.tree);}
+  const nearTP=(x,y)=>TLINK[cls].some(l=>Math.hypot(x-TPOS[l.side].p[0],y-TPOS[l.side].p[1])<6.5);
+  for(let i=0;i<70;i++){const a=r()*6.283,rad=17.5+r()*5,x=Math.cos(a)*rad,zz=Math.sin(a)*rad;if(zz>12||Math.max(Math.abs(x),Math.abs(zz))<16.5||nearTP(x,zz))continue;if(r()<.5)oak(z,x,zz,1+r()*.5,T.tree);else if(r()<.5)pine(z,x,zz,1+r()*.5,cls==='mage'?['#6e58b8','#8068cc','#5c4aa8']:null);else rockv(z,x,zz,.8+r()*.6);}
+  for(let i=0;i<120;i++){const a=r()*6.283,rad=(18.5+r()*10)*FS,x=Math.cos(a)*rad,zz=Math.sin(a)*rad;if(zz>12)continue;const hh=z.gy(x,zz);if(hh>7)continue;if(hh>=3)pine(z,x,zz,1.1+r()*.6,cls==='mage'?['#6e58b8','#8068cc','#5c4aa8']:null);else oak(z,x,zz,1.1+r()*.5,T.tree);}
   // stylist booth
   const nx=L.style[0],nz=L.style[1];b.at(nx,0,nz+1.1,0);b.box(0,.5,0,2.8,1,1.2,'#ffb3c1');b.box(0,1.05,0,3,.12,1.4,'#fff');[-1.35,1.35].forEach(x=>b.box(x,1.6,.5,.16,3.2,.16,'#8a5a35'));
   for(let i=0;i<7;i++)b.box(-1.5+i*.5,3.2,.1,.5,.2,1.6,i%2?'#fff':'#ff5d8f');b.box(0,2.95,.9,3.2,.2,.2,'#ff5d8f');b.box(-.7,1.25,-.1,.4,.3,.4,'#7ad8ff');b.box(.6,1.25,.05,.35,.35,.3,'#ffd84a');
