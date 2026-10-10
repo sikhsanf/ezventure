@@ -175,6 +175,16 @@ h3{font-size:17px;margin:12px 0 6px}
 .nt small{display:block;font-size:10px;margin-top:1px;opacity:.96}
 .nt.npc{color:#ffe27a}.nt.vil{color:#fff3c8}.nt.me{color:#9be7ff;font-size:13px}.nt.port{color:#9dffc4}
 .nt.mon{color:#fff}.nt.mon small{color:var(--tc,#fff)}
+.nt.fr{color:#ffc2e2;font-size:13px}
+.mini.on::after{content:'';position:absolute;right:-2px;top:-2px;width:12px;height:12px;border-radius:50%;background:#3fe08a;border:2.5px solid var(--ink)}
+#coop{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
+#coop .panel{width:min(440px,calc(100% - 32px))}
+.codeBig{font:900 54px/1 var(--f-display);letter-spacing:.18em;text-align:center;margin:14px 0 4px;padding-left:.18em;color:var(--ink)}
+.codeBig.sm{font-size:24px;letter-spacing:0;color:#2a9a58;padding:0}
+.codeIn{font:900 28px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;width:7.2ch;max-width:46%;padding:9px 10px 9px calc(10px + .2em);border:3px solid var(--ink);border-radius:16px;background:#fff;color:var(--ink);box-sizing:content-box;text-align:center}
+.frCard{display:flex;flex-direction:column;gap:2px;margin:8px 0;padding:10px 14px;border:3px solid var(--ink);border-radius:18px;background:#fff7e6;font:700 15px/1.25 var(--f-body)}
+.frCard b{font:900 20px/1.1 var(--f-display)}.frCard small{opacity:.85}
+.cpErr{color:#c4243c;opacity:1;font-weight:800}
 .desk .nt{font-size:14px}.desk .nt small{font-size:11px}
 #tapHint{font:800 clamp(12px,2.4vh,16px)/1 var(--f-display);color:#fff;background:rgba(43,35,80,.62);border:3px solid var(--ink);border-radius:999px;padding:6px 16px;animation:pbob 1.6s ease-in-out infinite}
 #prof,#map{align-items:center;justify-content:center;background:rgba(43,35,80,.35)}
@@ -277,6 +287,7 @@ h3{font-size:17px;margin:12px 0 6px}
       <div id="minis">
         <button class="mini" id="bProf" data-ia="aProf" data-ic="profile"></button>
         <button class="mini" id="bMis" data-ia="aMis" data-ic="mission"></button>
+        <button class="mini" id="bCoop" data-ia="aCoop" data-ic="coop"></button>
         <button class="mini" id="bMenu" data-ia="aMenu" data-ic="menu"></button>
       </div>
       <button id="mmWrap" data-ia="aMap"><canvas id="mm" width="192" height="192"></canvas><span id="mmName"></span></button>
@@ -331,12 +342,20 @@ h3{font-size:17px;margin:12px 0 6px}
       <div class="phead"><h2 data-i="menuT"></h2><button class="xbtn" id="pClose" data-ia="aClose" data-ic="close"></button></div>
       <div class="menuBtns">
         <button class="pill go" id="pResume" data-i="resume"></button>
+        <button class="pill" id="pCoop"></button>
         <button class="pill" id="pChars" data-i="chooseHero"></button>
         <button class="pill" id="pTitle" data-i="titleScr"></button>
         <button class="pill" id="pSnd"></button>
         <div class="rowx"><b data-i="langL"></b><div class="langSw" id="langSw1"></div></div>
         <div class="rowx"><button class="mini" id="gear" aria-label="Parent settings"><span class="ring" id="gearRing"></span><span class="ico" style="width:24px;height:24px" data-ic="gear"></span></button><span class="note" style="margin:0" data-i="parentHold"></span></div>
       </div>
+    </div>
+  </div>
+
+  <div class="ov" id="coop">
+    <div class="panel">
+      <div class="phead"><h2><span class="hic" data-ic="coop"></span><span data-i="coopT"></span></h2><button class="xbtn" id="coopClose" data-ia="aClose" data-ic="close"></button></div>
+      <div id="coopBody"></div>
     </div>
   </div>
 
@@ -480,6 +499,7 @@ mission:'<rect x="14" y="10" width="36" height="44" rx="4" fill="#fff3c4"/><rect
 profile:'<path d="M9 59 Q9 40 32 40 Q55 40 55 59Z" fill="#4f7de0"/><circle cx="32" cy="25" r="13" fill="#ffd0a0"/><path d="M18 24 Q18 8 32 8 Q46 8 46 24Z" fill="#e0453c"/><rect x="30" y="21" width="23" height="6" rx="3" fill="#b8322c"/>',
 map:'<path d="M6 15 L22 10 L42 15 L58 10 V49 L42 54 L22 49 L6 54Z" fill="#bfe4a0"/><path d="M22 10 V49 M42 15 V54" stroke-width="3" fill="none"/><path d="M9 40 Q22 31 32 38 T55 29" stroke="#5fb8ff" stroke-width="5" fill="none"/><path d="M46 38 L40 28 H52Z" fill="#ff4f7a"/><circle cx="46" cy="23" r="8" fill="#ff4f7a"/><circle cx="46" cy="23" r="3" fill="#fff" stroke="none"/>',
 menu:'<rect x="9" y="11" width="46" height="10" rx="5" fill="#ffd84a"/><rect x="9" y="27" width="46" height="10" rx="5" fill="#ff8fc2"/><rect x="9" y="43" width="46" height="10" rx="5" fill="#7ad8ff"/>',
+coop:'<circle cx="43" cy="26" r="9" fill="#ffd0a0"/><path d="M28 57 Q28 40 43 40 Q58 40 58 57Z" fill="#ff8fc2"/><path d="M34 25 Q34 14 43 14 Q52 14 52 25Z" fill="#7a4bd0"/><circle cx="22" cy="23" r="10" fill="#ffd0a0"/><path d="M5 58 Q5 38 22 38 Q39 38 39 58Z" fill="#4f7de0"/><path d="M11 22 Q11 10 22 10 Q33 10 33 22Z" fill="#e0453c"/>',
 sndOn:'<path d="M7 25 H19 L34 12 V52 L19 39 H7Z" fill="#ffd84a"/><path d="M42 23 Q49 32 42 41 M48 15 Q61 32 48 49" fill="none"/>',
 sndOff:'<path d="M7 25 H19 L34 12 V52 L19 39 H7Z" fill="#cfd6e0"/><path d="M43 24 L58 40 M58 24 L43 40" stroke="#ff4f7a" stroke-width="6" fill="none"/>',
 gear:'<g fill="#cfd6e0"><rect x="27" y="5" width="10" height="54" rx="3"/><rect x="5" y="27" width="54" height="10" rx="3"/><rect x="27" y="5" width="10" height="54" rx="3" transform="rotate(45 32 32)"/><rect x="27" y="5" width="10" height="54" rx="3" transform="rotate(-45 32 32)"/></g><circle cx="32" cy="32" r="17" fill="#cfd6e0"/><circle cx="32" cy="32" r="7" fill="#fff"/>',
@@ -521,7 +541,7 @@ id:{
  ctr_warrior:'Air Mancur',ctr_mage:'Lingkaran Rune',ctr_ranger:'Api Unggun Besar',camp:'Kemah api unggun',campS:'Tempat istirahat',windmill:'Kincir angin',pond:'Kolam',mush:'Kebun jamur',
  questDone:'Misi selesai!',faint:'Zzz…',err:'Grafik 3D tidak bisa dimuat. Game ini butuh internet sekali untuk memuat Three.js dan perangkat yang mendukung WebGL.',
  camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
- menuT:'Menu',resume:'Lanjut main',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
+ menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 2 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
  aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Tahan atau guling',aUse:'Bicara',aClose:'Tutup',
  keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>tahan/guling<b>U</b><b>I</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -551,7 +571,7 @@ en:{
  ctr_warrior:'Fountain',ctr_mage:'Rune Circle',ctr_ranger:'Great Campfire',camp:'Campfire camp',campS:'A place to rest',windmill:'Windmill',pond:'Pond',mush:'Mushroom patch',
  questDone:'Quest complete!',faint:'Zzz…',err:'The 3D graphics could not load. This game needs internet once to load Three.js and a device that supports WebGL.',
  camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
- menuT:'Menu',resume:'Resume',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
+ menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together with a friend on another device! One person makes a room, the other types in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (2 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
  aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Block or roll',aUse:'Talk',aClose:'Close',
  keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>block/roll<b>U</b><b>I</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -1176,6 +1196,246 @@ function animMon(m,dt){
 
 /* ---------- Game state ---------- */
 let C=null,curSlot=0,mode='title',paused=false,trans=false,T=0,H=null,zone=null,camSnap=true,lastT=performance.now();
+/* ---------- Co-op (PeerJS, max 2 players) ---------- */
+let monSeq=0;
+const coop={role:null,st:'idle',code:'',peer:null,conn:null,R:null,err:'',lp:0,lm:0,sig:'',seq:0,myZ:'',open:false};
+const CODE_AL='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const PEER_URL='https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
+function coopOn(){return coop.st==='on'&&!!coop.conn&&coop.conn.open!==false;}
+function coopSend(o){const c=coop.conn;if(c&&c.open!==false){try{c.send(o);}catch(e){}}}
+function zkey(){return(mode==='play'&&C&&zone&&zone.id!=='preview')?(zone.id==='town'?'town:'+zone.cls:zone.id):'';}
+function coopTarget(){const R=coop.R;return(coop.role==='host'&&coopOn()&&R&&!R.fa&&R.zk&&R.zk===coop.myZ)?R:null;}
+function coopWorldOn(){return !!(zone.field&&coopOn()&&coop.R&&((coop.role==='host'&&coop.R.zk===coop.myZ)||zone.sync));}
+function loadPeer(ok,bad){
+  if(window.Peer)return ok();
+  const s=document.createElement('script');s.src=PEER_URL;s.onload=()=>window.Peer?ok():bad();s.onerror=bad;document.head.appendChild(s);
+}
+function dropRemote(){const R=coop.R;if(R){if(R.H){scene.remove(R.H.root);disposeGroup(R.H.root);}if(R.tag)R.tag.remove();}coop.R=null;}
+function coopStop(){
+  const c=coop.conn,p=coop.peer;coop.conn=null;coop.peer=null;
+  if(c){try{c.send({t:'bye'});}catch(e){}try{c.close();}catch(e){}}
+  if(p){try{p.destroy();}catch(e){}}
+  dropRemote();coop.role=null;coop.st='idle';coop.code='';coop.err='';coop.open=false;
+  coopHud();renderCoop();
+}
+function coopFail(msg){coopStop();coop.st='err';coop.err=msg;renderCoop();}
+function coopHost(tries){
+  tries=tries||0;coop.role='host';coop.st='wait';coop.err='';coop.open=false;renderCoop();
+  loadPeer(()=>{
+    const code=Array.from({length:4},()=>CODE_AL[Math.random()*CODE_AL.length|0]).join('');
+    let p;try{p=new Peer('ezv-'+code);}catch(e){return coopFail(t('coopNet'));}
+    coop.peer=p;coop.code=code;
+    p.on('open',()=>{coop.open=true;renderCoop();});
+    p.on('connection',c=>{
+      if(coopOn()){c.on('open',()=>{try{c.send({t:'full'});}catch(e){}setTimeout(()=>{try{c.close();}catch(e){}},400);});return;}
+      c.on('open',()=>coopAttach(c));
+    });
+    p.on('error',e=>{
+      if(e&&e.type==='unavailable-id'&&tries<5){try{p.destroy();}catch(_){}coop.peer=null;coopHost(tries+1);return;}
+      if(coopOn())return;coopFail(t('coopNet'));
+    });
+    p.on('disconnected',()=>{try{p.reconnect();}catch(e){}});
+  },()=>coopFail(t('coopNoLib')));
+}
+function coopJoin(code){
+  code=String(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(code.length<4){coop.err=t('coopNoRoom');renderCoop();return;}
+  coop.role='guest';coop.st='joining';coop.code=code;coop.err='';renderCoop();
+  loadPeer(()=>{
+    let p;try{p=new Peer();}catch(e){return coopFail(t('coopNet'));}
+    coop.peer=p;let done=false;
+    const to=setTimeout(()=>{if(!done)coopFail(t('coopNoRoom'));},12000);
+    p.on('open',()=>{
+      const c=p.connect('ezv-'+code,{reliable:true});
+      c.on('open',()=>{done=true;clearTimeout(to);coopAttach(c);});
+      c.on('error',()=>{});
+    });
+    p.on('error',e=>{if(done&&coopOn())return;clearTimeout(to);coopFail(e&&e.type==='peer-unavailable'?t('coopNoRoom'):t('coopNet'));});
+  },()=>coopFail(t('coopNoLib')));
+}
+function coopAttach(c){
+  coop.conn=c;coop.st='on';coop.sig='';coop.lp=0;coop.lm=0;dropRemote();
+  c.on('data',d=>{try{coopMsg(d);}catch(e){console.error(e);}});
+  c.on('close',()=>coopLost(c));c.on('error',()=>coopLost(c));
+  coopHud();renderCoop();
+}
+function coopLost(c){
+  if(coop.conn!==c)return;
+  const had=coop.R&&coop.R.p;dropRemote();coop.conn=null;
+  if(coop.role==='host'){coop.st='wait';}else{const p=coop.peer;coop.peer=null;if(p){try{p.destroy();}catch(e){}}coop.role=null;coop.st='idle';coop.code='';}
+  if(had&&mode==='play')banner(t('coopFriendOut'));
+  coopHud();renderCoop();
+}
+function cleanProf(p){
+  if(!p||['warrior','mage','ranger'].indexOf(p.c)<0)return null;
+  const L=p.l||{},E2=p.e||{},ci=(v,n)=>clamp((+v)|0,0,n-1);
+  return {n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:ci(L.hat,HATS.length)},e:{w:ci(E2.w,4),a:ci(E2.a,4)},v:ci(p.v,E.MAXLV+1)||1};
+}
+function setRemote(p){
+  p=cleanProf(p);if(!p)return;
+  const R=coop.R||(coop.R={x:0,z:0,tx:0,tz:0,f:0,tf:0,zk:'',mv:0,k:-1,b:0,bl:0,dg:-1,fa:0,H:null,key:'',tag:null,p:null,first:true});
+  const key=JSON.stringify([p.c,p.l,p.e]);
+  if(key!==R.key){R.key=key;if(R.H){scene.remove(R.H.root);disposeGroup(R.H.root);}R.H=buildHero(p.c,Object.assign({},p.l,{ew:p.e.w,ea:p.e.a}));scene.add(R.H.root);R.H.root.visible=false;}
+  const fresh=!R.p;R.p=p;if(R.tag){R.tag.remove();R.tag=null;}
+  if(fresh&&mode==='play')banner(t('coopFriendIn',p.n));
+  renderCoop();
+}
+function coopMsg(d){
+  if(!d||typeof d!=='object')return;
+  switch(d.t){
+    case 'full':coopFail(t('coopFull'));break;
+    case 'hello':setRemote(d.p);break;
+    case 'pos':onPos(d);break;
+    case 'mons':onMons(d);break;
+    case 'need':coop.lm=0;break;
+    case 'hit':onHit(d);break;
+    case 'kill':onKill(d);break;
+    case 'hurt':if(zone&&zone.sync&&!paused&&!trans&&S.state==='play'&&mode==='play')hurt(clamp((+d.a)||1,1,99));break;
+    case 'bye':coopLost(coop.conn);break;
+  }
+}
+function onPos(d){
+  const R=coop.R;if(!R)return;const f=v=>Number.isFinite(+v)?+v:0;
+  R.tx=clamp(f(d.x),-45,45);R.tz=clamp(f(d.z),-45,45);R.tf=f(d.f);R.mv=d.m?1:0;R.k=f(d.k);R.b=d.b?1:0;R.bl=d.bl?1:0;R.dg=d.dg===undefined?-1:f(d.dg);R.fa=d.fa?1:0;
+  const zk=typeof d.zk==='string'?d.zk.slice(0,16):'';
+  if(zk!==R.zk){R.zk=zk;R.first=true;renderCoop();}
+  if(R.first){R.x=R.tx;R.z=R.tz;R.f=R.tf;R.first=false;}
+}
+const ST=['idle','chase','windup','rest'];
+function rmMon(q){zone.group.remove(q.root);disposeGroup(q.root);if(q.tagEl){q.tagEl.remove();q.tagEl=null;}const i=zone.mons.indexOf(q);if(i>=0)zone.mons.splice(i,1);}
+function onMons(d){
+  if(!zone||!zone.sync||coop.role!=='guest'||d.zk!==coop.myZ||!Array.isArray(d.l))return;
+  const seq=++coop.seq;
+  for(const e of d.l){
+    if(!Array.isArray(e)||!E.MON[e[1]])continue;const id=e[0]|0;
+    let m=zone.mons.find(q=>q.pup&&q.id===id&&!q.dead);
+    if(!m){m=spawnMon(e[1]);m.id=id;m.pup=true;m.x=m.tx=+e[2]||0;m.z=m.tz=+e[3]||0;m.face=m.tf=+e[4]||0;m.root.position.set(m.x,0,m.z);}
+    m.tx=+e[2]||0;m.tz=+e[3]||0;m.tf=+e[4]||0;m.hp=+e[5]||1;m.maxHp=+e[6]||m.hp;m.st=e[7]|0;m.w=+e[8]||0;m.seen=seq;
+  }
+  zone.mons.filter(q=>q.pup&&!q.dead&&q.seen!==seq).forEach(rmMon);
+}
+function onHit(d){
+  const R=coop.R;if(coop.role!=='host'||!zone||!zone.field||!R||R.zk!==coop.myZ)return;
+  const m=zone.mons.find(q=>q.id===(d.id|0)&&!q.dead);if(!m||m.pup)return;
+  hitMon(m,{d:clamp((+d.d)|0,1,999),crit:!!d.c},{dx:+d.dx||0,dz:+d.dz||0,stun:clamp(+d.st||0,0,5),slow:clamp(+d.sl||0,0,8),remote:true});
+}
+function onKill(d){
+  if(!zone||!zone.sync)return;
+  const m=zone.mons.find(q=>q.pup&&q.id===(d.id|0)&&!q.dead);if(m){m.hp=0;killMon(m);}
+}
+function puppet(m,dt){
+  const d=m.d,f=1-Math.exp(-dt*12);
+  const mvx=m.tx-m.x,mvz=m.tz-m.z;
+  m.x+=mvx*f;m.z+=mvz*f;m.face+=angDiff(m.face,m.tf)*f;
+  m.wx=m.x+mvx*20;m.wz=m.z+mvz*20;
+  const ns=ST[m.st]||'idle';
+  if(ns==='windup'){m.tele.visible=true;m.wind=m.w;m.disc.scale.setScalar(Math.max(.05,d.aoe*(1-m.w/d.wind)));}
+  else if(m.state==='windup'){m.tele.visible=false;if(ns==='rest'){burst(m.x,.6,m.z,0xff6b4a,8,4,2.5);ringFx(m.x,m.z,d.aoe,0xff5a4a,.35);m.pulse=.3;shake=Math.max(shake,.25);}}
+  m.state=ns;
+  m.root.position.set(m.x,0,m.z);m.model.rotation.y=m.face;
+  animMon(m,dt);m.ring.visible=true;
+  if(m.hp<m.maxHp||d.big){m.bar.visible=true;m.bar.quaternion.copy(camera.quaternion);m.fg.scale.x=1.3*Math.max(0,m.hp/m.maxHp);}
+}
+function clearMons(){zone.mons.slice().forEach(rmMon);zone.spawnQ.length=0;}
+function coopWorld(dt){
+  if(!zone.sync)for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);spawnMon(q.type);}}
+  zone.mons.slice().forEach(m=>updMon(m,dt));
+}
+function profNow(){return C?{n:C.name,c:C.cls,l:C.look,e:{w:C.eq.w,a:C.eq.a},v:level()}:null;}
+function coopTick(dt){
+  try{
+    coop.myZ=zkey();
+    if(!coopOn()){
+      if(zone&&zone.sync){zone.sync=false;if(zone.field){clearMons();populate(zone.id);}}
+      return;
+    }
+    const now=performance.now(),R=coop.R;
+    if(now-coop.lp>=80){
+      coop.lp=now;
+      const pr=profNow(),sg=pr?JSON.stringify(pr):'';
+      if(pr&&sg!==coop.sig){coop.sig=sg;coopSend({t:'hello',p:pr});}
+      const on=!!coop.myZ;
+      coopSend({t:'pos',zk:coop.myZ,x:on?+S.x.toFixed(2):0,z:on?+S.z.toFixed(2):0,f:+S.face.toFixed(2),m:S.moving&&S.dodgeT<=0?1:0,k:S.swing>0?+(1-S.swing/S.swingMax).toFixed(2):-1,b:S.big?1:0,bl:S.blocking?1:0,dg:S.dodgeT>0?+(1-S.dodgeT/.35).toFixed(2):-1,fa:S.state==='faint'?1:0});
+    }
+    // host -> guest monster snapshot
+    if(coop.role==='host'&&R&&coop.myZ&&R.zk===coop.myZ&&zone.field&&now-coop.lm>=100){
+      coop.lm=now;
+      coopSend({t:'mons',zk:coop.myZ,l:zone.mons.filter(m=>!m.dead).map(m=>[m.id,m.type,+m.x.toFixed(2),+m.z.toFixed(2),+m.face.toFixed(2),m.hp,m.maxHp,m.state==='chase'?1:m.state==='windup'?2:m.state==='rest'?3:0,+(m.wind||0).toFixed(2)])});
+    }
+    // guest: sync with host's monsters when in the same field
+    if(zone){
+      const want=coop.role==='guest'&&!!zone.field&&!!R&&!!R.zk&&R.zk===coop.myZ;
+      if(want&&!zone.sync){zone.sync=true;clearMons();coopSend({t:'need'});}
+      else if(!want&&zone.sync){zone.sync=false;clearMons();if(zone.field)populate(zone.id);}
+    }
+    // friend hero visuals
+    if(R&&R.H){
+      const vis=!!(zone&&R.zk&&R.zk===coop.myZ);R.H.root.visible=vis;
+      if(vis){
+        const f=1-Math.exp(-dt*14);
+        if(Math.hypot(R.tx-R.x,R.tz-R.z)>8){R.x=R.tx;R.z=R.tz;}else{R.x+=(R.tx-R.x)*f;R.z+=(R.tz-R.z)*f;}
+        R.f+=angDiff(R.f,R.tf)*f;
+        const H2=R.H;H2.root.position.set(R.x,0,R.z);H2.root.rotation.y=R.f;
+        animHero(H2,{moving:!!R.mv&&R.dg<0,spd:E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.35,atk:R.k,big:!!R.b,dodge:R.dg,block:!!R.bl,hurt:0,faint:!!R.fa,cheer:0},dt,T);
+        H2.pivot.rotation.x=R.fa?lerp(H2.pivot.rotation.x,-1.45,1-Math.exp(-dt*8)):R.dg>=0?-R.dg*Math.PI*2:0;
+      }
+    }
+  }catch(e){console.error('coopTick',e);}
+}
+function zoneLabel(zk){if(!zk)return t('coopFriendMenu');const m=/^town:(warrior|mage|ranger)$/.exec(zk);if(m)return tnm(m[1]);return FIELDS[zk]||zk==='meadow'?t('z_'+zk):zk;}
+function coopGoto(){
+  const R=coop.R;if(!R||!R.zk||R.zk===coop.myZ||S.state!=='play'||trans)return;
+  const zk=R.zk,fx=clamp(R.tx+1.8,-22,22),fz=clamp(R.tz,-22,22),m=/^town:(warrior|mage|ranger)$/.exec(zk);
+  closeCoop();
+  transition(()=>{if(m)setZone('town',{x:fx,z:fz,face:Math.PI},false,m[1]);else if(LINKS[zk])setZone(zk,{x:fx,z:fz,face:0});});
+}
+function coopHud(){const b=$('#bCoop');if(b)b.classList.toggle('on',coopOn());}
+function openCoop(){if(mode!=='play'||!C)return;paused=true;S.defDown=false;S.blocking=false;show('pause',false);renderCoop();show('coop',true);}
+function closeCoop(){show('coop',false);if(mode==='play')paused=false;}
+function renderCoop(){
+  const box=$('#coopBody');if(!box)return;
+  const keepVal=box.querySelector('#cjCode')?box.querySelector('#cjCode').value:'';
+  box.innerHTML='';
+  const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;box.appendChild(e);return e;};
+  const btn=(cls,txt,fn)=>{const b=el('button','pill '+cls,txt);b.addEventListener('click',()=>{ac();SFX.click();fn();});return b;};
+  const st=coop.st;
+  if(st==='idle'||st==='err'){
+    if(st==='err'){el('p','note cpErr',esc(coop.err));const r=el('div','rowx');r.style.marginTop='10px';box.removeChild(r);box.appendChild(r);const b=document.createElement('button');b.className='pill go';b.textContent=t('coopOk');b.addEventListener('click',()=>{SFX.click();coop.st='idle';coop.err='';renderCoop();});r.appendChild(b);return;}
+    el('p','note',t('coopIntro'));
+    const r1=el('div','rowx');r1.style.margin='12px 0';const b1=document.createElement('button');b1.className='pill go';b1.id='cCreate';b1.textContent=t('coopCreate');b1.addEventListener('click',()=>{ac();SFX.click();coopHost();});r1.appendChild(b1);
+    el('h3','',t('coopJoin'));
+    const r2=el('div','rowx');const inp=document.createElement('input');inp.id='cjCode';inp.maxLength=4;inp.autocapitalize='characters';inp.autocomplete='off';inp.spellcheck=false;inp.placeholder='ABCD';inp.value=keepVal;inp.className='codeIn';
+    inp.addEventListener('input',()=>{inp.value=inp.value.toUpperCase().replace(/[^A-Z0-9]/g,'');});
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')jb.click();});
+    const jb=document.createElement('button');jb.className='pill';jb.id='cJoin';jb.textContent=t('coopGo');jb.addEventListener('click',()=>{ac();SFX.click();coopJoin(inp.value);});
+    r2.appendChild(inp);r2.appendChild(jb);
+    if(coop.err)el('p','note cpErr',esc(coop.err));
+    return;
+  }
+  if(st==='wait'){
+    el('p','note',t('coopHostWait'));
+    el('div','codeBig',coop.open?esc(coop.code):'…').id='cCode';
+    const r=el('div','rowx');r.style.marginTop='12px';const b=document.createElement('button');b.className='pill warn';b.textContent=t('coopCloseRoom');b.addEventListener('click',()=>{SFX.click();coopStop();});r.appendChild(b);
+    return;
+  }
+  if(st==='joining'){
+    el('p','note',t('coopJoining'));
+    const r=el('div','rowx');r.style.marginTop='12px';const b=document.createElement('button');b.className='pill';b.textContent=t('coopCancel');b.addEventListener('click',()=>{SFX.click();coopStop();});r.appendChild(b);
+    return;
+  }
+  // connected
+  const R=coop.R,p=R&&R.p;
+  el('div','codeBig sm','✓ '+t('coopConnected'));
+  if(p){
+    el('div','frCard','<b>'+esc(p.n)+'</b><small>'+cn(p.c)+' · Lv '+p.v+'</small><small>'+t('coopWhere')+': '+esc(zoneLabel(R.zk))+'</small>');
+    if(R.zk&&R.zk===coop.myZ)el('p','note',t('coopSame'));
+  }else el('p','note',t('coopJoining'));
+  const r=el('div','rowx');r.style.marginTop='12px';
+  if(p&&R.zk&&R.zk!==coop.myZ){const b=document.createElement('button');b.className='pill go';b.id='cGoto';b.textContent=t('coopGoto');b.addEventListener('click',()=>{SFX.click();coopGoto();});r.appendChild(b);}
+  const b2=document.createElement('button');b2.className='pill warn';b2.textContent=t('coopLeave');b2.addEventListener('click',()=>{SFX.click();coopStop();});r.appendChild(b2);
+}
+addEventListener('pagehide',()=>{try{coopSend({t:'bye'});}catch(e){}});
+
 const S={x:0,z:0,face:0,hp:1,maxHp:1,atkCd:0,atkMax:1,cd:[0,0],cdMax:[1,1],dodgeCd:0,dodgeMax:1,dodgeT:0,ddx:0,ddz:1,inv:0,blocking:false,defDown:false,defT:0,swing:0,swingMax:.28,buffT:0,state:'play',faintT:0,moving:false,portalLock:0,bufAtk:0,hurtT:0,lunge:0,moveT:0,big:false,cheer:0,cheerMax:1};
 const level=()=>E.lvOf(C.xp);
 const keys={};const joy={id:null,x:0,z:0};
@@ -1600,11 +1860,12 @@ function setZone(id,arr,quiet,cls){
   scene.add(zone.group);scene.background=new THREE.Color(zone.sky);scene.fog=zone.titleSky?new THREE.Fog(zone.sky,70,230):new THREE.Fog(zone.sky,42,120);
   if(arr){S.x=arr.x;S.z=arr.z;S.face=arr.face||0;}
   camSnap=true;S.portalLock=1.2;
-  if(FIELDS[id]){const F=FIELDS[id];F.mons.forEach(q=>{for(let i=0;i<q[1];i++)spawnMon(q[0]);});if(F.boss)zone.spawnQ.push({type:F.boss[0],t:F.boss[1]});}
+  if(FIELDS[id])populate(id);
   if(id!=='preview'&&C&&mode==='play'){C.zone=id==='town'?'town:'+zone.cls:id;saveDB();}
   updateZoneChip();
   if(!quiet&&mode==='play'&&C&&(id==='town'||FIELDS[id])){if(id==='town')showLoc(tnm(zone.cls),t('townSub',zone.cls));else showLoc(t('z_'+id),t('z_'+id+'Sub'));}
 }
+function populate(id){const F=FIELDS[id];F.mons.forEach(q=>{for(let i=0;i<q[1];i++)spawnMon(q[0]);});if(F.boss)zone.spawnQ.push({type:F.boss[0],t:F.boss[1]});}
 function updateZoneChip(){if(!zone||!C)return;$('#mmName').textContent=zone.id==='town'?tnm(zone.cls):zone.field?t('z_'+zone.id):'';}
 
 /* ---------- Monsters ---------- */
@@ -1623,7 +1884,7 @@ function spawnMon(type){
   const bg=new THREE.Mesh(new THREE.PlaneGeometry(1.4,.22),new THREE.MeshBasicMaterial({color:0x2b2350,depthTest:false,transparent:true}));bg.renderOrder=10;bar.add(bg);
   const fgG=new THREE.PlaneGeometry(1,1);fgG.translate(.5,0,0);const fg=new THREE.Mesh(fgG,new THREE.MeshBasicMaterial({color:0x58e08a,depthTest:false,transparent:true}));fg.renderOrder=11;fg.position.set(-.65,0,.01);fg.scale.set(1.3,.13,1);bar.add(fg);
   const mats=[];model.traverse(o=>{if(o.material&&o.material.emissive)mats.push(o.material);});
-  const m={type,d,root,model,ring,tele,disc,bar,fg,mats,x,z:zz,hp:d.hp,maxHp:d.hp,state:'idle',t:rnd(.5,2.5),wx:x,wz:zz,face:rnd(0,6.28),dead:false,spawnT:0,stun:0,slow:0,flash:0,kx:0,kz:0,age:rnd(0,9),wind:0,pulse:0};
+  const m={type,id:++monSeq,d,root,model,ring,tele,disc,bar,fg,mats,x,z:zz,hp:d.hp,maxHp:d.hp,state:'idle',t:rnd(.5,2.5),wx:x,wz:zz,face:rnd(0,6.28),dead:false,spawnT:0,stun:0,slow:0,flash:0,kx:0,kz:0,age:rnd(0,9),wind:0,pulse:0};
   root.scale.setScalar(.01);zone.group.add(root);zone.mons.push(m);m.ring.material.color.setHex(ringCol(m));
   return m;
 }
@@ -1633,9 +1894,11 @@ function updMon(m,dt){
   if(m.spawnT<1){m.spawnT=Math.min(1,m.spawnT+dt*2.5);m.root.scale.setScalar(Math.max(.01,m.spawnT));}
   if(m.dead){m.deadT-=dt;m.root.scale.setScalar(Math.max(.001,m.deadT/.45));m.root.rotation.y+=dt*10;if(m.deadT<=0){zone.group.remove(m.root);disposeGroup(m.root);zone.mons.splice(zone.mons.indexOf(m),1);}return;}
   if(m.flash>0){m.flash=Math.max(0,m.flash-dt*5);m.mats.forEach(x=>x.emissive.setRGB(m.flash,m.flash,m.flash));}
+  if(m.pup){puppet(m,dt);return;}
   if(m.kx||m.kz){m.x+=m.kx*dt;m.z+=m.kz*dt;const f=Math.exp(-dt*9);m.kx*=f;m.kz*=f;if(Math.abs(m.kx)<.05&&Math.abs(m.kz)<.05)m.kx=m.kz=0;}
   if(m.slow>0)m.slow-=dt;
-  const dx=S.x-m.x,dz=S.z-m.z,dist=Math.hypot(dx,dz),alive=S.state==='play'&&zone.id!=='town'&&!trans;
+  let dx=S.x-m.x,dz=S.z-m.z,dist=Math.hypot(dx,dz);const hAl=S.state==='play'&&zone.id!=='town'&&!trans&&!paused;let alive=hAl;
+  const RR=coopTarget();if(RR){const gx=RR.x-m.x,gz=RR.z-m.z,gd=Math.hypot(gx,gz);if(!hAl||gd<dist){dx=gx;dz=gz;dist=gd;}alive=true;}
   const sp=d.speed*(m.slow>0?.5:1);
   if(m.stun>0){m.stun-=dt;if(m.state==='windup'){m.state='chase';m.tele.visible=false;}}
   else if(m.state==='idle'){
@@ -1651,8 +1914,8 @@ function updMon(m,dt){
   }else if(m.state==='windup'){
     m.wind-=dt;const p=1-m.wind/d.wind;m.disc.scale.setScalar(Math.max(.05,d.aoe*p));
     if(m.wind<=0){m.tele.visible=false;m.state='rest';m.t=d.rest;
-      const dd=Math.hypot(S.x-m.x,S.z-m.z);
-      if(alive&&dd<d.aoe+.3)hurt(d.atk);
+      if(hAl&&Math.hypot(S.x-m.x,S.z-m.z)<d.aoe+.3)hurt(d.atk);
+      if(RR&&Math.hypot(RR.x-m.x,RR.z-m.z)<d.aoe+.3)coopSend({t:'hurt',a:d.atk});
       burst(m.x,.6,m.z,0xff6b4a,8,4,2.5);ringFx(m.x,m.z,d.aoe,0xff5a4a,.35);m.pulse=.3;shake=Math.max(shake,.25);}
   }else if(m.state==='rest'){m.t-=dt;if(m.t<=0)m.state='chase';}
   addCol(m,d.r*.6);
@@ -1685,10 +1948,13 @@ function banner(html){const b=$('#banner');b.innerHTML=html;b.classList.remove('
 /* ---------- Combat ---------- */
 function calcDmg(mult){const L=level();let d=E.baseAtk(C.cls,L)*WTIER[C.eq.w].m*mult*(S.buffT>0?1.2:1)*rnd(.92,1.08);const crit=Math.random()<E.critChance(C.cls,L);if(crit)d*=1.5;return {d:Math.max(1,Math.round(d)),crit};}
 function hitMon(m,dmg,o){
-  if(m.dead)return;o=o||{};m.hp-=dmg.d;m.flash=1;hitStop=Math.max(hitStop,dmg.crit?.08:.045);shake=Math.max(shake,dmg.crit?.5:.2);burst(m.x,m.d.h*.35,m.z,0xffffff,4,4,3);
+  if(m.dead)return;o=o||{};m.hp-=dmg.d;m.flash=1;
+  if(!o.remote){hitStop=Math.max(hitStop,dmg.crit?.08:.045);shake=Math.max(shake,dmg.crit?.5:.2);}
+  burst(m.x,m.d.h*.35,m.z,0xffffff,4,4,3);
   float(String(dmg.d),m.x,m.d.h,m.z,dmg.crit?'crit':'');
   if(dmg.crit)SFX.crit();else SFX.hit();
   let kx=o.dx,kz=o.dz;if(kx===undefined){const ex=m.x-S.x,ez=m.z-S.z,ed=Math.hypot(ex,ez)||1;kx=ex/ed;kz=ez/ed;}
+  if(m.pup){coopSend({t:'hit',id:m.id,d:dmg.d,c:dmg.crit?1:0,dx:+kx.toFixed(3),dz:+kz.toFixed(3),st:o.stun||0,sl:o.slow||0});if(m.hp<1)m.hp=1;return;}
   const kb=m.d.big?1.5:4.5;m.kx+=kx*kb;m.kz+=kz*kb;
   if(o.stun)m.stun=Math.max(m.stun,o.stun);if(o.slow)m.slow=Math.max(m.slow,o.slow);
   if(m.state==='idle')m.state='chase';
@@ -1699,7 +1965,8 @@ function killMon(m){
   burst(m.x,.8,m.z,({jelly:0x6fdc5e,bunny:0xffe3ee,bee:0xffd84a,king:0x3fd0a0})[m.type]||m.d.col||0xffffff,18,5,5,1.3);burst(m.x,.8,m.z,0xffd84a,8,4,4);shake=Math.max(shake,.35);SFX.kill();
   gainXp(m.d.xp);const c=Math.ceil(m.d.xp/2);C.coins+=c;SFX.coin();
   float('+'+m.d.xp+' ⭐',S.x,3.1,S.z,'xp');
-  zone.spawnQ.push({type:m.type,t:m.d.rs||8});
+  if(!m.pup)zone.spawnQ.push({type:m.type,t:m.d.rs||8});
+  if(!m.pup&&coop.role==='host'&&coopOn()&&coop.R&&coop.R.zk&&coop.R.zk===coop.myZ)coopSend({t:'kill',id:m.id});
   const q=E.QUESTS[C.quest.i];if(q.t===m.type){C.quest.p++;if(C.quest.p>=q.n)questDone();}
 }
 function questDone(){
@@ -1866,7 +2133,7 @@ function updatePlay(dt){
     if(zone.portals){let nr=false;for(const PP of zone.portals){const d=Math.hypot(S.x-PP.x,S.z-PP.z);if(d<PP.r){nr=true;if(S.portalLock<=0){usePortal(PP);break;}}else if(d<PP.r+1.2)nr=true;}if(!nr&&S.portalLock>0&&S.portalLock<1.1)S.portalLock=0;}
   }
   // spawner
-  for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);spawnMon(q.type);}}
+  if(!zone.sync)for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);spawnMon(q.type);}}
   zone.mons.slice().forEach(m=>updMon(m,dt));
   // hero visuals
   H.root.position.set(S.x,0,S.z);H.root.rotation.y=S.face;
@@ -1889,8 +2156,10 @@ let CAMMODE='fixed',camYaw=0,camYawT=0,camTalk=0,talkOn=false,talkPos={x:0,z:0};
 try{if(localStorage.getItem('ezventure.cam')==='rot')CAMMODE='rot';}catch(e){}
 function setCamMode(m){CAMMODE=m;try{localStorage.setItem('ezventure.cam',m);}catch(e){}if(m!=='rot')camYawT=0;$('#hud').classList.toggle('rot',m==='rot');}
 function rotCam(d){if(CAMMODE==='rot')camYawT+=d*Math.PI/4;}
+let camVO=false;
 function updateCamera(dt){
   const portrait=camera.aspect<1.2,k=portrait?1.45:1;
+  if(camVO&&mode!=='preview'){camera.clearViewOffset();camVO=false;}
   if(mode==='play'){
     const town=zone&&zone.id==='town';
     camYaw+=angDiff(camYaw,camYawT)*(1-Math.exp(-dt*6));
@@ -1906,6 +2175,7 @@ function updateCamera(dt){
     camera.lookAt(camPos.x-sy*D,.8-(portrait?2.6:.6)*tk,camPos.z-cy*D);
   }else if(mode==='preview'){
     const sx=portrait?0:-1.5;camera.position.set(sx,portrait?3.6:2.8,portrait?10.5:8.6);camera.lookAt(sx,portrait?.6:1.1,0);
+    if(portrait){const W=renderer.domElement.clientWidth,Hh=renderer.domElement.clientHeight;camera.setViewOffset(W,Hh,0,Math.round(Hh*.27),W,Hh);camVO=true;}
   }else{
     const ang=Math.sin(T*.16)*.5,R=portrait?30:19;
     camera.position.set(Math.sin(ang)*R*.55,4.6+Math.sin(T*.23)*.4,Math.cos(ang)*R);
@@ -1914,9 +2184,10 @@ function updateCamera(dt){
 }
 function tick(dt){
   if(hitStop>0){hitStop-=dt;dt*=.1;}
-  T+=dt;
+  T+=dt;coopTick(dt);
   if(zone){zone.t+=dt;zone.anim.forEach(f=>f(dt,zone.t));}
   if(mode==='play'&&!paused&&C&&zone){updatePlay(dt);hud();}
+  else if(mode==='play'&&paused&&C&&zone&&coopWorldOn())coopWorld(dt);
   else if(mode==='preview'&&H){H.root.position.set(0,.4,0);H.root.rotation.y=Math.sin(T*.6)*.8;const c=(T*.38)%1;animHero(H,window.__pose||{moving:false,spd:0,atk:c<.2?c/.2:-1,big:false,dodge:-1,hurt:0},dt,T);if(window.__pose)H.root.rotation.y=-.5;}
   if(mode!=='play'||!paused)updateFx(dt);
   updateCamera(dt);
@@ -2008,6 +2279,7 @@ function updateNames(){
   if(!heroTag)heroTag=mkTag('me',C.name,'');
   const hs=C.name+'|'+L;if(heroTag._s!==hs){heroTag._s=hs;heroTag.innerHTML=esc(C.name)+'<small>Lv '+L+'</small>';}
   placeTag(heroTag,S.x,2.9,S.z,99);
+  {const R=coop.R;if(R&&R.p&&R.H&&R.H.root.visible){if(!R.tag||!R.tag.isConnected)R.tag=mkTag('fr',R.p.n,'Lv '+R.p.v);placeTag(R.tag,R.x,2.9,R.z,99);}else if(R&&R.tag&&R.tag._v!==0){R.tag.style.display='none';R.tag._v=0;}}
   for(const g of zone.tags){if(!g.el)g.el=mkTag(g.cls,g.nf?g.nf():g.name,g.sf?g.sf():g.sub);placeTag(g.el,g.o.x,g.y,g.o.z,g.R);}
   for(const m of zone.mons){
     if(m.dead||m.spawnT<.3){if(m.tagEl){m.tagEl.remove();m.tagEl=null;}continue;}
@@ -2132,14 +2404,14 @@ $('#misClose').addEventListener('click',()=>{SFX.click();show('mis',false);pause
 /* ---------- Pause menu / language ---------- */
 function buildSw(el){el.innerHTML='';[['id','ID'],['en','EN']].forEach(a=>{const b=document.createElement('button');b.textContent=a[1];b.className=LANG===a[0]?'on':'';b.addEventListener('click',()=>{ac();SFX.click();setLang(a[0]);});el.appendChild(b);});}
 function setLang(l){LANG=l;LANG_SET=true;try{localStorage.setItem('ezventure.lang',l);}catch(e){}applyLang();}
-function renderPause(){$('#pSnd').innerHTML=ic(muted?'sndOff':'sndOn',24)+' '+t(muted?'sndOff':'sndOn');}
+function renderPause(){$('#pCoop').innerHTML=ic('coop',24)+' '+t('coopT')+(coopOn()?' · '+t('coopConnected'):'');$('#pSnd').innerHTML=ic(muted?'sndOff':'sndOn',24)+' '+t(muted?'sndOff':'sndOn');}
 function applyLang(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(e=>{e.innerHTML=t(e.dataset.i);});
   document.querySelectorAll('[data-ia]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.ia)));
   document.querySelectorAll('[data-ip]').forEach(e=>{e.placeholder=t(e.dataset.ip);});
   document.querySelectorAll('.langSw').forEach(buildSw);
-  $('#keys').innerHTML=t('keys');$('#err').textContent=t('err');renderPause();
+  renderCoop();$('#keys').innerHTML=t('keys');$('#err').textContent=t('err');renderPause();
   if(zone&&C&&mode==='play'){zone.tags.forEach(g=>{g.el=null;});tagReset();zone.mons.forEach(m=>{m.tagEl=null;});updateZoneChip();}
   if(mode==='title')buildSlots();
   if(profOpen)renderProf();if(mapOpen)fillMapText();
@@ -2149,6 +2421,9 @@ function openPause(){if(mode!=='play'||paused||S.state!=='play')return;paused=tr
 function closePause(){show('pause',false);if(mode==='play')paused=false;}
 $('#bMenu').addEventListener('click',()=>{ac();SFX.click();openPause();});
 $('#pClose').addEventListener('click',()=>{SFX.click();closePause();});
+$('#pCoop').addEventListener('click',()=>{ac();SFX.click();openCoop();});
+$('#coopClose').addEventListener('click',()=>{SFX.click();closeCoop();});
+$('#bCoop').addEventListener('click',()=>{ac();SFX.click();if(!paused&&S.state==='play')openCoop();});
 $('#pResume').addEventListener('click',()=>{SFX.click();closePause();});
 $('#pSnd').addEventListener('click',()=>{ac();setMuted(!muted);if(!muted)SFX.click();renderPause();});
 $('#pChars').addEventListener('click',()=>{SFX.click();saveDB();showTitle();$('#playBtn').hidden=true;$('#slotsWrap').hidden=false;});
@@ -2195,6 +2470,7 @@ function hotkeys(k,e){
   if(profOpen){if(k==='p'||k==='escape')closeProf();return true;}
   if($('#mis').classList.contains('show')){if(k==='q'||k==='escape')$('#misClose').click();return true;}
   if($('#shop').classList.contains('show')){if(k==='escape')$('#shopClose').click();return true;}
+  if($('#coop').classList.contains('show')){if(k==='escape')closeCoop();return true;}
   if($('#pause').classList.contains('show')){if(k==='escape')closePause();return true;}
   if(paused)return true;
   if(k==='m'){openMap();return true;}if(k==='p'){openProf();return true;}if(k==='q'){openMissions();return true;}if(k==='escape'){openPause();return true;}
@@ -2222,7 +2498,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={coop:()=>coop,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
