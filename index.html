@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-062039"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-062302"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -2267,6 +2267,10 @@ const LAY={
 };
 const NMX={warrior:{hg:'Bu Mimosa',tele:'Paman Kris'},mage:{hg:'Nona Pita',tele:'Penjaga Kristal'},ranger:{hg:'Kak Topi',tele:'Pak Teleo'}};
 const LAY2={warrior:{hg:[-10,1],tp:[3,-5.2],cl:[-9,-6.5]},mage:{hg:[-1.5,-5.5],tp:[2,7],cl:[8.5,-4.5]},ranger:{hg:[-9.5,-7.5],tp:[9,3.5],cl:[4,-9]}};
+/* spread the town layout out (K) so buildings are not cramped; portal-bound path ends stay at the portal */
+const TK=1.3,tp2=v=>v*TK,tpp=v=>Math.abs(v)>=14?Math.sign(v)*19.5:v*TK;
+Object.values(LAY).forEach(L=>{['lm','shop','mis','style'].forEach(k=>L[k]=L[k].map(tp2));L.houses=L.houses.map(h=>[h[0]*TK,h[1]*TK,h[2]]);L.paths=L.paths.map(pa=>pa.map(q=>[tpp(q[0]),tpp(q[1])]));});
+Object.values(LAY2).forEach(o=>['hg','tp','cl'].forEach(k=>o[k]=o[k].map(tp2)));
 const NM={
   warrior:{shop:'Bruno',mis:'Sersan Mira',style:'Luna',vill:['Tomo','Dewi','Bibi','Kiko']},
   mage:{shop:'Pak Zeno',mis:'Nona Astra',style:'Lyra',vill:['Pip','Nova','Mimi','Orin']},
@@ -2297,7 +2301,7 @@ function buildTown(cls){
     z.cols.push({x:0,z:0,r:2.7});
     const dr=[];for(let i=0;i<12;i++)dr.push(vb(z.group,.14,.14,.14,'#bfeaff',0,0,0,{emissive:'#7fd0ff',own:true}));
     z.anim.push((dt,t)=>dr.forEach((d,i)=>{const u=((t*.8+i/12)%1),a=i*2.4;d.position.set(Math.cos(a)*u*1.5,3.4+Math.sin(u*Math.PI)*1.1-u*2.6,Math.sin(a)*u*1.5);}));
-    [[11,1.5],[11,4.5]].forEach(p=>{b.at(p[0],0,p[1],-1.2);b.box(0,.9,0,.25,1.8,.25,'#8a5a32');b.box(0,1.5,0,1.2,.25,.25,'#8a5a32');b.box(0,1.1,0,.8,1,.5,'#d9b87a');b.box(0,2.05,0,.5,.5,.5,'#d9b87a');b.box(0,.1,0,.9,.2,.9,'#8d867a');z.cols.push({x:p[0],z:p[1],r:.55});});
+    [[11*TK,1.5*TK],[11*TK,4.5*TK]].forEach(p=>{b.at(p[0],0,p[1],-1.2);b.box(0,.9,0,.25,1.8,.25,'#8a5a32');b.box(0,1.5,0,1.2,.25,.25,'#8a5a32');b.box(0,1.1,0,.8,1,.5,'#d9b87a');b.box(0,2.05,0,.5,.5,.5,'#d9b87a');b.box(0,.1,0,.9,.2,.9,'#8d867a');z.cols.push({x:p[0],z:p[1],r:.55});});
   }
   if(cls==='mage'){
     b.at(0,0,0,0);[[11,'#d4c8f7'],[9.6,'#b8a5ef'],[8.2,'#e9e0ff'],[6.8,'#7a4fe0'],[5.4,'#e9e0ff']].forEach((c,i)=>b.box(0,.06+i*.035,0,c[0],.12,c[0],c[1]));
@@ -2308,7 +2312,7 @@ function buildTown(cls){
     const gems=ob.map(p=>vb(z.group,.45,.45,.45,'#ffd84a',p[0],2.75,p[1],{emissive:'#ffb800',own:true}));
     z.anim.push((dt,t)=>{cr.rotation.y=t*1.2;cr.position.y=3.0+Math.sin(t*2)*.25;gems.forEach((g,i)=>{g.rotation.set(t,t*1.3,0);g.position.y=2.75+Math.sin(t*2+i)*.12;});});
     // observatory
-    const ox=9,oz=-10;b.at(ox,0,oz,0);b.box(0,1.6,0,5.4,3.2,5.4,'#e6defc');b.box(0,3.35,0,5.8,.3,5.8,'#b8a5ef');
+    const ox=9*TK,oz=-10*TK;b.at(ox,0,oz,0);b.box(0,1.6,0,5.4,3.2,5.4,'#e6defc');b.box(0,3.35,0,5.8,.3,5.8,'#b8a5ef');
     [[4.6,.9,4.0],[3.6,.9,4.9],[2.6,.9,5.8],[1.6,.8,6.6]].forEach((l,i)=>b.box(0,l[2],0,l[0],l[1],l[0],i%2?'#7a4fe0':'#6b3fd0'));
     b.box(0,1.1,2.72,1.4,2.2,.1,'#6b3fd0');b.box(-1.8,2,2.72,.8,.8,.1,'#ffe27a');b.box(1.8,2,2.72,.8,.8,.1,'#ffe27a');b.box(.9,6.0,1.3,.5,.5,2.6,'#ffd84a');
     z.cols.push({x:ox,z:oz,r:3.2});
@@ -2319,7 +2323,7 @@ function buildTown(cls){
     campfire(z,0,0);z.cols.push({x:0,z:0,r:2.3});
     for(let i=0;i<6;i++){const a=i/6*Math.PI*2+.3,x=Math.cos(a)*3.9,zz=Math.sin(a)*3.9;b.at(x,0,zz,-a-Math.PI/2);b.box(0,.25,0,2.1,.5,.6,'#8a5a32');b.box(1.05,.25,0,.1,.44,.54,'#c9a56a');z.cols.push({x,z:zz,r:.7});}
     // archery range
-    [[-4,-13],[0.5,-13]].forEach(p=>{b.at(p[0],0,p[1],0);b.box(-.5,.6,-.1,.15,1.2,.15,'#6b4423');b.box(.5,.6,-.1,.15,1.2,.15,'#6b4423');b.box(0,1.45,0,1.7,1.7,.25,'#fff7e0');b.box(0,1.45,.06,1.2,1.2,.25,'#e0453c');b.box(0,1.45,.12,.6,.6,.25,'#ffd84a');z.cols.push({x:p[0],z:p[1],r:.9});});
+    [[-4*TK,-13*TK],[0.5*TK,-13*TK]].forEach(p=>{b.at(p[0],0,p[1],0);b.box(-.5,.6,-.1,.15,1.2,.15,'#6b4423');b.box(.5,.6,-.1,.15,1.2,.15,'#6b4423');b.box(0,1.45,0,1.7,1.7,.25,'#fff7e0');b.box(0,1.45,.06,1.2,1.2,.25,'#e0453c');b.box(0,1.45,.12,.6,.6,.25,'#ffd84a');z.cols.push({x:p[0],z:p[1],r:.9});});
   }
   // ---- landmark ----
   if(cls==='warrior'){
@@ -2328,7 +2332,7 @@ function buildTown(cls){
     b.box(0,7.3,0,2.4,3.2,2.4,'#a8a296');b.box(0,9.4,0,3,.4,3,'#8d867a');b.box(0,10.4,0,1.8,1.8,1.8,'#b9b3a6');
     z.cols.push({x:LX,z:LZ,r:4.1},{x:LX-5.2,z:LZ,r:1.6},{x:LX+5.2,z:LZ,r:1.6});flagPole(z,LX-5.2,LZ,13,'#e0453c');flagPole(z,LX+5.2,LZ,13,'#e0453c');
     [[LX-3,LZ+4.5],[LX+3,LZ+4.5]].forEach(p=>{b.at(p[0],0,p[1],0);b.box(0,.6,0,.9,1.2,.9,'#cfd3dd');b.box(0,1.4,0,.6,.5,.6,'#9aa3b4');z.cols.push({x:p[0],z:p[1],r:.7});});
-    barrel(z,-14,-1.5);barrel(z,-14.8,-.5);crate(z,14,2,1);
+    barrel(z,-14*TK,-1.5*TK);barrel(z,-14.8*TK,-.5*TK);crate(z,14*TK,2*TK,1);
   }
   if(cls==='mage'){
     b.at(LX,0,LZ,0);const cl=['#cdbdf5','#e6defc','#b8a5ef'];for(let i=0;i<5;i++){const w=4.2-i*.35;b.box(0,1.2+i*2.4,0,w,2.4,w,cl[i%3]);b.box(0,2.2+i*2.4,w/2+.04,.9,1,.1,'#ffe27a');b.box(w/2+.04,2.2+i*2.4,0,.1,1,.9,'#ffe27a');}
@@ -2451,7 +2455,7 @@ function townFolk(z,cls,L,N){
   // villagers wandering around the plaza
   const Lk=(h,s,o,ht,g,hs)=>({hair:h,skin:s,outfit:o,hat:ht,g:g|0,hs:hs|0});
   const V=N.vill;
-  villagers(z,[{cls:'mage',look:Lk(1,0,1,0,1,3),cx:0,cz:2,r0:4,r1:9,sc:.8,name:V[0],sk:'kid'},{cls:'ranger',look:Lk(2,3,4,3,1,2),cx:0,cz:2,r0:4,r1:10,sc:1,name:V[1]},{cls:'mage',look:Lk(3,2,2,4,0,5),cx:0,cz:3,r0:3.6,r1:9,sc:.78,name:V[2],sk:'kid'},{cls:'ranger',look:Lk(0,1,0,1,0,6),cx:0,cz:2,r0:5,r1:11,sc:1,name:V[3]}],[1]);
+  villagers(z,[{cls:'mage',look:Lk(1,0,1,0,1,3),cx:0,cz:2,r0:4,r1:11,sc:.8,name:V[0],sk:'kid'},{cls:'ranger',look:Lk(2,3,4,3,1,2),cx:0,cz:2,r0:4,r1:13,sc:1,name:V[1]},{cls:'mage',look:Lk(3,2,2,4,0,5),cx:0,cz:3,r0:3.6,r1:11,sc:.78,name:V[2],sk:'kid'},{cls:'ranger',look:Lk(0,1,0,1,0,6),cx:0,cz:2,r0:5,r1:14,sc:1,name:V[3]}],[1]);
 }
 const TOWN_PORTAL={x:16.2,z:0};
 const MPORT=[[-24.4*FS,0],[0,-24.4*FS],[24.4*FS,0],[0,24.4*FS]];
