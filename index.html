@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-215224"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-220315"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -32,6 +32,20 @@ button{font-family:inherit;color:inherit;touch-action:none}
 .hrt,.str{font-size:26px;line-height:1.05;font-family:var(--f-body);background:linear-gradient(90deg,var(--c1) var(--f,100%),var(--c0) var(--f,100%));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
 .hrt{--c1:#ff4d6d;--c0:#f3d7dd}
 .str{--c1:#ffc83a;--c0:#e8e2cf}
+#bars{gap:5px;padding:6px 10px}
+.bar{display:flex;align-items:center;gap:6px}
+.bi{font-size:18px;line-height:1;filter:drop-shadow(0 1px 0 rgba(43,35,80,.45))}
+.bt{position:relative;width:clamp(100px,30vw,176px);height:20px;border:3px solid var(--ink);border-radius:999px;background:#f3d7dd;overflow:hidden;box-sizing:content-box}
+.bt i{position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(#ff9bb0,#ff4d6d 55%,#e03a5a);border-radius:999px;transition:width .25s}
+.bt b{position:absolute;inset:0;display:grid;place-items:center;font:800 12px/1 var(--f-body);color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill}
+.bar.xp .bt{height:11px;background:#e8e2cf}.bar.xp .bi{font-size:15px}
+.bar.xp .bt i{background:linear-gradient(#ffe892,#ffc83a 55%,#f0a820)}
+.bar.hp.low .bt i{animation:lowhp .55s ease-in-out infinite alternate}
+@keyframes lowhp{to{filter:brightness(1.4) saturate(1.3)}}
+#bRest{position:absolute;left:calc(12px + var(--sl));top:74px;pointer-events:auto;padding:8px 16px;border-radius:999px;border:3px solid var(--ink);background:#bfe8ff;font:800 16px/1 var(--f-display);color:var(--ink);box-shadow:0 3px 0 var(--ink);cursor:pointer;touch-action:manipulation}
+#bRest.on{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+@media (orientation:portrait){#bRest{top:120px}}
+@media (orientation:landscape) and (max-width:820px){#bRest{top:112px}}
 #tc{position:absolute;left:50%;top:12px;transform:translateX(-50%);pointer-events:auto;cursor:pointer}
 #quest{display:flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(255,250,240,.9);border:3px solid var(--ink);border-radius:999px;font:800 20px/1 var(--f-display);box-shadow:0 3px 0 var(--ink)}
 #quest.done{animation:pulse .5s 3}
@@ -58,6 +72,7 @@ button{font-family:inherit;color:inherit;touch-action:none}
 #bS1{--sz:var(--btn);--bg:#9a5de0;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:calc(30px + var(--btn))}
 #bS2{--sz:var(--btn);--bg:#1fae92;right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(30px + var(--btn)*1.3)}
 #bS3{--sz:var(--btn);--bg:#e8843a;right:calc(36px + var(--btn)*2.45 + var(--sr));bottom:calc(34px + var(--btn)*.55)}
+@media (orientation:portrait){#bS3{right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(40px + var(--btn)*2.3)}}
 #bUse{--sz:calc(var(--btn)*1.05);--bg:#ff8fc2;left:50%;margin-left:calc(var(--btn)*-.52);bottom:calc(30px + var(--btn)*1.4);animation:bob 1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
 
@@ -288,8 +303,9 @@ h3{font-size:17px;margin:12px 0 6px}
   <div id="hud" hidden>
     <div id="tl">
       <div id="badge"><span id="lvn">1</span></div>
-      <div id="bars"><div class="row" id="hearts"></div><div class="row" id="stars"></div></div>
+      <div id="bars"><div class="bar hp" id="hpBar"><span class="bi">❤️</span><div class="bt"><i id="hpF"></i><b id="hpT"></b></div></div><div class="bar xp"><span class="bi">⭐</span><div class="bt"><i id="xpF"></i></div></div></div>
     </div>
+    <button id="bRest" hidden></button>
     <div id="tc"><div id="quest"></div></div>
     <div id="tr">
       <div class="chip" id="coins"></div>
@@ -587,6 +603,7 @@ tent:'<path d="M5 56 L32 9 L59 56Z" fill="#e0603c"/><path d="M32 29 L23 56 H41Z"
 };
 IC.hgear='<path d="M10 44 L12 20 L22 32 L32 14 L42 32 L52 20 L54 44Z" fill="#ffd84a"/><rect x="10" y="44" width="44" height="9" rx="3" fill="#ffc83a"/><circle cx="32" cy="36" r="4" fill="#e0453c"/>';IC.tele='<path d="M32 4 L50 26 L32 60 L14 26Z" fill="#7ae8ff"/><path d="M32 4 L50 26 L32 30 L14 26Z" fill="#bff4ff"/><path d="M32 30 L32 60 L14 26Z" fill="#46c4f0"/>';
 IC.rotR='<path d="M50 34 A18 18 0 1 1 38 15" fill="none" stroke-width="7"/><path d="M31 5 L47 14 L33 26Z" fill="#ffd84a" stroke-width="4"/>';IC.rotL='<g transform="translate(64 0) scale(-1 1)">'+IC.rotR+'</g>';
+IC.clinic='<rect x="8" y="8" width="48" height="48" rx="12" fill="#fff"/><path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z" fill="#e0453c"/>';
 const icSvg=(n,wh)=>'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"'+(wh?' width="'+wh+'" height="'+wh+'"':' width="100%" height="100%"')+' stroke="#2b2350" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">'+(IC[n]||'')+'</svg>';
 const ic=(n,s)=>'<span class="ico" style="width:'+(s||24)+'px;height:'+(s||24)+'px">'+icSvg(n)+'</span>';
 const ICIMG={};Object.keys(IC).forEach(n=>{const im=new Image();im.src='data:image/svg+xml;utf8,'+encodeURIComponent(icSvg(n,128));ICIMG[n]=im;});
@@ -594,7 +611,7 @@ const ICIMG={};Object.keys(IC).forEach(n=>{const im=new Image();im.src='data:ima
 /* ---------- Language (Indonesian / English, everything literal) ---------- */
 const TX={
 id:{
- tag:'Petualangan seru bersama!',tap:'🎵 Ketuk layar untuk menyalakan musik',play:'▶ Mulai petualangan!',pick:'Pilih petualang',back:'Kembali',code:'Kode save',newHero:'Petualang baru',
+ tag:'Petualangan seru bersama!',nClinic:'Klinik',clinicS:'Pulihkan nyawa · 50 koin',clFull:'Nyawa sudah penuh! ❤️',clNoCoin:'Koin kurang (butuh 50)',clDone:'Sehat lagi! ❤️ −50 koin',rest:'Istirahat',wake:'Bangun',restBusy:'Ada musuh dekat, belum bisa istirahat!',restDone:'Sudah segar! 💪',tap:'🎵 Ketuk layar untuk menyalakan musik',play:'▶ Mulai petualangan!',pick:'Pilih petualang',back:'Kembali',code:'Kode save',newHero:'Petualang baru',
  noteOk:'Progres tersimpan di perangkat ini.',noteBad:'Penyimpanan browser tidak tersedia di sini. Pakai Kode save untuk cadangan.',
  createT:'Buat karakter',lblGender:'Gender',lblHStyle:'Model rambut',gM:'Cowok',gF:'Cewek',gender:'Gender',gOnce:'Bisa diganti sekali saja',gDone:'Sudah pernah diganti',gChange:'Ganti gender (sekali)',gSure:'Yakin? Cuma bisa sekali!',hs0:'Pendek',hs1:'Bob',hs2:'Panjang',hs3:'Kuncir Kuda',hs4:'Kuncir Dua',hs5:'Jabrik',hs6:'Cepak',hs7:'Sanggul',hs8:'Mohawk',hs9:'Rapi',hs10:'Gondrong',hs11:'Pixie',styler:'Butik & Barbershop',save:'Simpan',start:'Mulai',lblClass:'Kelas',lblName:'Nama',phName:'Nama petualang',lblHair:'Warna rambut',lblSkin:'Kulit',lblOutfit:'Baju',lblHat:'Topi',
  parentT:'Pengaturan orang tua',skillBtns:'Tombol skill',storage:'Penyimpanan',lblChar:'Karakter',switchHero:'Ganti karakter',delHero:'Hapus karakter',sure:'Yakin? Tekan lagi',keep:'Lanjut main',btnN:n=>'Tombol '+n,
@@ -624,7 +641,7 @@ id:{
  tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Perisai kuat · damage diterima −10%',ps_great:'Serangan +30%, ayunan agak lambat',ps_bow:'Tembak cepat, damage kecil',ps_xbow:'Tembak lambat, damage besar',ps_staff:'Sihir elemen · serangan +6%',ps_book:'Sihir gelap/cahaya · jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Headgear',hgS:'Topi & mahkota lucu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Headgear',hgNote:'Headgear lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Headgear menggantikan topi dari Penata Gaya.',hgNone:'Tanpa headgear',hgNoneS:'Lepas headgear',hgOwned:'Sudah dimiliki',hgPrice:'Headgear spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Penyihir Bintang',hg10:'Topi Jerami',hg11:'Tanduk Iblis Mini',hg12:'Halo Malaikat',hg13:'Topi Sinterklas',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
 },
 en:{
- tag:'A fun adventure together!',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
+ tag:'A fun adventure together!',nClinic:'Clinic',clinicS:'Restore health · 50 coins',clFull:'Health is already full! ❤️',clNoCoin:'Not enough coins (need 50)',clDone:'Good as new! ❤️ −50 coins',rest:'Rest',wake:'Get up',restBusy:'Enemies nearby, can\'t rest!',restDone:'Fully rested! 💪',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
  noteOk:'Progress is saved on this device.',noteBad:'Browser storage is not available here. Use a Save code as backup.',
  createT:'Create hero',lblGender:'Gender',lblHStyle:'Hairstyle',gM:'Boy',gF:'Girl',gender:'Gender',gOnce:'Can be changed once only',gDone:'Already changed once',gChange:'Change gender (once)',gSure:'Sure? Only once!',hs0:'Short',hs1:'Bob',hs2:'Long',hs3:'Ponytail',hs4:'Twin Tails',hs5:'Spiky',hs6:'Buzz',hs7:'Bun',hs8:'Mohawk',hs9:'Neat',hs10:'Shaggy',hs11:'Pixie',styler:'Boutique & Barbershop',save:'Save',start:'Start',lblClass:'Class',lblName:'Name',phName:'Hero name',lblHair:'Hair color',lblSkin:'Skin',lblOutfit:'Outfit',lblHat:'Hat',
  parentT:'Parent settings',skillBtns:'Skill buttons',storage:'Storage',lblChar:'Hero',switchHero:'Switch hero',delHero:'Delete hero',sure:'Sure? Tap again',keep:'Keep playing',btnN:n=>'Button '+n,
@@ -2154,7 +2171,7 @@ const LAY={
     lmName:'Rumah Pohon Raksasa',lmIcon:'🌳',lmSub:'Markas para pemburu',cName:'Api Unggun Besar',cIcon:'🔥'}
 };
 const NMX={warrior:{hg:'Bu Mimosa',tele:'Paman Kris'},mage:{hg:'Nona Pita',tele:'Penjaga Kristal'},ranger:{hg:'Kak Topi',tele:'Pak Teleo'}};
-const LAY2={warrior:{hg:[-10,1],tp:[3,-5.2]},mage:{hg:[-1.5,-5.5],tp:[2,7]},ranger:{hg:[-9.5,-7.5],tp:[9,3.5]}};
+const LAY2={warrior:{hg:[-10,1],tp:[3,-5.2],cl:[-9,-6.5]},mage:{hg:[-1.5,-5.5],tp:[2,7],cl:[8.5,-4.5]},ranger:{hg:[-9.5,-7.5],tp:[9,3.5],cl:[4,-9]}};
 const NM={
   warrior:{shop:'Bruno',mis:'Sersan Mira',style:'Luna',vill:['Tomo','Dewi','Bibi','Kiko']},
   mage:{shop:'Pak Zeno',mis:'Nona Astra',style:'Lyra',vill:['Pip','Nova','Mimi','Orin']},
@@ -2295,6 +2312,12 @@ function townExtra(z,cls,N){
   z.tags.push({o:{x:hx,z:hz-.4},y:3.2,cls:'npc',name:X.hg,sf:()=>TOD.night?t('closed'):t('nHg'),dyn:()=>TOD.night?t('closed'):t('nHg'),R:14});closedSign(z,hx,hz+.2,hk,hmk);
   z.npcs.push({id:'hgear',x:hx,z:hz-.4,r:4.3,closed:()=>TOD.night});
   z.pois.push({x:hx,z:hz,i:'hgear',tf:()=>t('nHg'),sf:()=>t('hgS'),mini:true});
+  // clinic
+  {const cx=P.cl[0],cz=P.cl[1];stallMesh(z,cx,cz,'#e0453c','#ffd0d6');b.at(cx,0,cz+1.1,0);b.box(0,4.4,.9,.32,1.2,.2,'#e0453c');b.box(0,4.4,.9,1.2,.32,.2,'#e0453c');
+   const nk=npcHero(z,cx,cz-.4,{hair:0,skin:1,outfit:2,hat:0,g:1,hs:7},'mage',0,true);npcLife(z,nk,cx,cz-.4,0);marker(z,cx,cz-.4,'#ff8a9a','#d03040');
+   z.tags.push({o:{x:cx,z:cz-.4},y:3.2,cls:'npc',name:'Mira',sf:()=>t('nClinic'),R:14});
+   z.npcs.push({id:'clinic',x:cx,z:cz-.4,r:4.3});
+   z.pois.push({x:cx,z:cz,i:'clinic',tf:()=>t('nClinic'),sf:()=>t('clinicS'),mini:true});}
   // teleport crystal
   const tx=P.tp[0],tz=P.tp[1];b.at(tx,0,tz,0);b.box(0,.25,0,3.4,.5,3.4,'#cfd6e0');b.box(0,.6,0,2.6,.2,2.6,'#9ad8ff');b.box(0,.9,0,1.4,.5,1.4,'#cfd6e0');
   for(let i=0;i<6;i++){const a=i/6*Math.PI*2;b.box(Math.cos(a)*1.6,.35,Math.sin(a)*1.6,.4,.7,.4,i%2?'#7ae8ff':'#bff4ff');}
@@ -2534,7 +2557,7 @@ function levelUp(L){
   refreshRings();saveDB();
 }
 function hurt(atk,ml){
-  if(S.inv>0||S.state!=='play')return;
+  if(S.inv>0||S.state!=='play')return;S.rest=false;
   const df=(ml||0)-level(),pen=df>=4?Math.pow(1.5,df-3):1;
   let dmg=Math.max(1,Math.round(E.dmgTaken(atk,C.cls,level(),false)*(S.blocking?(myPath()==='sword'?.25:.55):1)*(S.wardT>0?S.wardMul:1)*ATIER[C.eq.a].r*wpPass().def*pen));
   if(S.shield>0){const ab=Math.min(S.shield,dmg);S.shield-=ab;dmg-=ab;float('🛡️'+ab,S.x,2.8,S.z,'');burst(S.x,1.2,S.z,0x9ad7ff,8,3,2);ringFx(S.x,S.z,2,0x9ad7ff,.3);if(S.shield<=0)S.shieldT=0;if(dmg<=0){S.inv=.35;SFX.hit();return;}}
@@ -2568,8 +2591,22 @@ function fire(ang,mult,o){
   const p={m,x:S.x+dx*.9,z:S.z+dz*.9,dx,dz,sp:o.speed||15,life:(o.range||9)/(o.speed||15)+.25,dmg,crit:dmg.crit,r:big?.5:.35,target:o.target||null,col:o.color,big,arrow};
   m.position.set(p.x,1.15,p.z);fxRoot.add(m);projs.push(p);burst(p.x,1.2,p.z,o.color,5,2.5,1.5,.9);
 }
+function stopRest(){S.rest=false;}
+function startRest(){
+  if(S.state!=='play'||trans||paused||S.rest||S.hp>=S.maxHp)return;
+  if(zone&&zone.mons&&zone.mons.some(m=>!m.dead&&m.spawnT>=.5&&m.state!=='idle'&&Math.hypot(m.x-S.x,m.z-S.z)<12)){banner(t('restBusy'));return;}
+  S.rest=true;S.restT=0;S.blocking=false;S.defDown=false;S.swing=0;
+}
+function useClinic(){
+  if(S.hp>=S.maxHp){banner(t('clFull'));return;}
+  if(C.coins<50){banner(t('clNoCoin'));return;}
+  C.coins-=50;S.hp=S.maxHp;S.rest=false;saveDB();banner(t('clDone'));SFX.heal();burst(S.x,1,S.z,0xff8aa0,26,4,5);ringFx(S.x,S.z,3,0xff8aa0,.6);float('+'+S.maxHp,S.x,2.6,S.z,'heal');
+}
+const paleCache=new Map();
+function paleMat(m){let p=paleCache.get(m);if(!p){p=m.clone();p.color.lerp(new THREE.Color(0xe4eaf3),.62);p.userData.shared=true;paleCache.set(m,p);}return p;}
+function applyPale(h,on){h.root.traverse(o=>{if(!o.isMesh||!o.material||!o.material.isMeshLambertMaterial)return;if(on){if(!o.userData.om){o.userData.om=o.material;o.material=paleMat(o.material);}}else if(o.userData.om){o.material=o.userData.om;o.userData.om=null;}});h._pale=on;}
 function doAttack(){
-  if(S.state!=='play'||trans||paused)return;
+  if(S.state!=='play'||trans||paused)return;S.rest=false;
   if(S.atkCd>0){S.bufAtk=.25;return;}
   const c=E.CLASSES[C.cls],L=level(),cls=C.cls;
   S.atkCd=S.atkMax=E.atkInterval(cls,L)*wpPass().ivl;S.big=false;S.blocking=false;S.blockT=0;
@@ -2585,7 +2622,7 @@ function doAttack(){
 }
 function useSkill(i){
   if(S.state!=='play'||trans||paused)return;
-  const L=level(),cls=C.cls,sk=mySkills()[i];if(!sk||sk.lv>L||S.cd[i]>0)return;
+  const L=level(),cls=C.cls,sk=mySkills()[i];if(!sk||sk.lv>L||S.cd[i]>0)return;S.rest=false;
   S.cd[i]=S.cdMax[i]=E.skillCd(cls,L,sk)*wpPass().cd;S.blocking=false;S.blockT=0;SFX.skill();
   const nonAtk=sk.kind==='heal'||sk.kind==='buff'||sk.kind==='ward',dur=cls==='warrior'?.5:.56;
   S.big=true;if(nonAtk){S.swing=0;S.cheer=S.cheerMax=.7;}else{S.swing=S.swingMax=dur;}
@@ -2635,7 +2672,7 @@ function doShield(){
   const L=level();S.dodgeCd=S.dodgeMax=Math.max(5.5,10-.08*E.stats('mage',L).int);S.shield=Math.round(S.maxHp*.45);S.shieldT=4.5;
   ringFx(S.x,S.z,2.6,0x9ad7ff,.5);burst(S.x,1.2,S.z,0x9ad7ff,18,4,4);SFX.heal();
 }
-function defDown(){if(S.state!=='play')return;if(C.cls==='ranger'){doDodge();return;}if(C.cls==='mage'){doShield();return;}S.defDown=true;S.defT=0;S.blockT=.55;}
+function defDown(){if(S.state!=='play')return;S.rest=false;if(C.cls==='ranger'){doDodge();return;}if(C.cls==='mage'){doShield();return;}S.defDown=true;S.defT=0;S.blockT=.55;}
 function defUp(){S.defDown=false;}
 let bub=null;
 function updBubble(T){
@@ -2645,8 +2682,8 @@ function updBubble(T){
   bub.position.set(S.x,1.2,S.z);bub.material.color.setHex(S.shieldT>0?0x9ad7ff:0xffd84a);bub.material.opacity=.22+.08*Math.sin(T*8);bub.scale.setScalar(1+.03*Math.sin(T*10));
 }
 bindBtn($('#bAtk'),doAttack);bindBtn($('#bDef'),defDown,defUp);bindBtn($('#bS1'),()=>useSkill(0));bindBtn($('#bS2'),()=>useSkill(1));bindBtn($('#bS3'),()=>useSkill(2));
-function doNpc(){if(mode!=='play'||paused||!S.near)return;const id=S.near.id;if(id==='style')openCreate('edit');else if(id==='tele'){openTele();}else if(id==='shop'||id==='hgear'||id==='mission'){talkPos={x:S.near.x,z:S.near.z};talkOn=true;if(id==='shop')openShop('eq');else if(id==='hgear')openShop('hg');else openMissions();}}
-bindBtn($('#bUse'),doNpc);
+function doNpc(){if(mode!=='play'||paused||!S.near)return;const id=S.near.id;if(id==='style')openCreate('edit');else if(id==='clinic')useClinic();else if(id==='tele'){openTele();}else if(id==='shop'||id==='hgear'||id==='mission'){talkPos={x:S.near.x,z:S.near.z};talkOn=true;if(id==='shop')openShop('eq');else if(id==='hgear')openShop('hg');else openMissions();}}
+bindBtn($('#bUse'),doNpc);bindBtn($('#bRest'),()=>{if(S.rest)stopRest();else startRest();});
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(e.target&&e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(keys[k])return;keys[k]=true;if(mode!=='play')return;
   if(hotkeys(k,e))return;
   if(k==='j'||k===' ')doAttack();else if(k==='k'||k==='shift')defDown();else if(k==='u')useSkill(0);else if(k==='i')useSkill(1);else if(k==='o')useSkill(2);else if(k==='e'&&!$('#bUse').hidden)doNpc();
@@ -2655,8 +2692,6 @@ addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false;if(k==='k
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;joy.x=joy.z=0;});
 
 /* ---------- HUD ---------- */
-const heartsEl=$('#hearts'),starsEl=$('#stars');
-for(let i=0;i<5;i++){const h=document.createElement('span');h.className='hrt';h.textContent='♥';heartsEl.appendChild(h);const s=document.createElement('span');s.className='str';s.textContent='★';starsEl.appendChild(s);}
 const hCache={},els={atk:$('#bAtk'),def:$('#bDef'),s:[$('#bS1'),$('#bS2'),$('#bS3')],use:$('#bUse'),lvn:$('#lvn'),quest:$('#quest'),coins:$('#coins')};
 function setC(key,val,fn){if(hCache[key]!==val){hCache[key]=val;fn(val);}}
 function setBtn(el,key,html,locked){setC(key,html+locked,()=>{el.innerHTML=html;el.classList.toggle('lock',!!locked);});}
@@ -2664,10 +2699,9 @@ function hud(){
   const L=level();
   setC('lv',L,v=>{$('#lvn').textContent=v;});
   const hf=S.maxHp?S.hp/S.maxHp:1,pr=E.progress(C.xp);
-  for(let i=0;i<5;i++){
-    const a=Math.round(clamp(hf*5-i,0,1)*100),b=Math.round(clamp(pr*5-i,0,1)*100);
-    setC('h'+i,a,v=>heartsEl.children[i].style.setProperty('--f',v+'%'));setC('s'+i,b,v=>starsEl.children[i].style.setProperty('--f',v+'%'));
-  }
+  setC('hpf',Math.round(hf*100),v=>{$('#hpF').style.width=v+'%';});setC('hpt',Math.ceil(S.hp)+'/'+S.maxHp,v=>{$('#hpT').textContent=v;});setC('hplow',hf<=.3?1:0,v=>$('#hpBar').classList.toggle('low',!!v));
+  setC('xpf',Math.round(pr*100),v=>{$('#xpF').style.width=v+'%';});
+  setC('rest',(S.state==='play'&&S.hp<S.maxHp-.5)?(S.rest?2:1):0,v=>{const b=$('#bRest');b.hidden=!v;b.textContent=v===2?'☀️ '+t('wake'):'😴 '+t('rest');});
   setC('q',JSON.stringify(C.qs),()=>{$('#quest').innerHTML=C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i];return '<span class="qi"><span>'+E.MON[q.t].icon+'</span><span>'+Math.min(a.p,q.n)+'/'+q.n+'</span></span>';}).join(''):'<span>📋</span><small style="font-size:13px;font-weight:800">'+t('qNone')+'</small>';});
   setC('tod',(TOD.night?'n':'d')+Math.ceil(TOD.left),()=>{$('#tod').textContent=(TOD.night?'🌙 ':'☀️ ')+Math.floor(Math.ceil(TOD.left)/60)+':'+('0'+Math.ceil(TOD.left)%60).slice(-2);});
   setC('coins',C.coins,v=>{$('#coins').innerHTML=ic('coin',20)+'<span>'+v+'</span>';});
@@ -2686,15 +2720,16 @@ function updatePlay(dt){
   if(S.bufAtk>0){S.bufAtk-=dt;if(S.atkCd<=0){S.bufAtk=0;doAttack();}}
   if(S.state==='faint'){S.faintT-=dt;if(S.faintT<=0)respawn();}
   if(S.state==='play'&&!trans){
+    if(S.rest){const kk=readInput();if(kk.m>.1||S.hurtT>0)S.rest=false;else{S.hp=Math.min(S.maxHp,S.hp+S.maxHp*.07*dt);S.restT=(S.restT||0)+dt;if(S.restT>1.1){S.restT=0;float('💤',S.x,2.8,S.z,'heal');}if(S.hp>=S.maxHp){S.rest=false;banner(t('restDone'));}}}
     S.blockT=Math.max(0,S.blockT-dt);S.blocking=C.cls==='warrior'&&(S.defDown||S.blockT>0);
     let vx=0,vz=0;
     if(S.dodgeT>0){S.dodgeT-=dt;vx=S.ddx*10.5;vz=S.ddz*10.5;}
     else{const k=readInput();let sp=E.moveSpeed(C.cls,L)*1.35;if(S.blocking)sp*=.5;if(S.swing>0)sp*=.6;vx=k.x*sp;vz=k.z*sp;
       if(k.m>.05&&S.swing<=0)S.face+=angDiff(S.face,Math.atan2(k.x,k.z))*(1-Math.exp(-dt*18));}
+    if(S.rest){vx=0;vz=0;}
     if(S.lunge>0){S.lunge-=dt;vx+=Math.sin(S.face)*8;vz+=Math.cos(S.face)*8;}
     S.x+=vx*dt;S.z+=vz*dt;S.moving=Math.hypot(vx,vz)>.4;S.moveT+=dt*(S.moving?1:0);
     addCol(S,.45);
-    if(zone.id==='town'&&S.hp<S.maxHp)S.hp=Math.min(S.maxHp,S.hp+S.maxHp*.25*dt);
     if(zone.portals){let nr=false;for(const PP of zone.portals){const d=Math.hypot(S.x-PP.x,S.z-PP.z);if(d<PP.r){nr=true;if(S.portalLock<=0){usePortal(PP);break;}}else if(d<PP.r+1.2)nr=true;}if(!nr&&S.portalLock>0&&S.portalLock<1.1)S.portalLock=0;}
   }
   // spawner
@@ -2705,6 +2740,7 @@ function updatePlay(dt){
   const sp=S.swing>0?1-S.swing/S.swingMax:-1;
   animHero(H,{moving:S.moving&&S.dodgeT<=0,spd:E.moveSpeed(C.cls,L)*1.35*(S.blocking?.5:1),atk:sp,big:S.big,dodge:S.dodgeT>0?1-S.dodgeT/.35:-1,block:S.blocking,hurt:S.hurtT>0?S.hurtT/.5:0,faint:S.state==='faint',cheer:S.cheer>0?1-S.cheer/S.cheerMax:0},dt,T);
   updBubble(T);
+  {const pl=S.hp<=S.maxHp*.3;if(H._pale!==pl)applyPale(H,pl);H.model.scale.y=lerp(H.model.scale.y,S.rest?.7:1,1-Math.exp(-dt*10));}
   if(S.state==='faint')H.pivot.rotation.x=lerp(H.pivot.rotation.x,-1.45,1-Math.exp(-dt*8));else H.pivot.rotation.x=S.dodgeT>0?-(1-S.dodgeT/.35)*Math.PI*2:0;
   H.model.visible=S.hurtT<=0||Math.floor(T*24)%2===0;
   if(S.moving&&S.dodgeT<=0){const sn=Math.floor(H.ph/Math.PI);if(sn!==H.lastStep){H.lastStep=sn;SFX.step();burst(S.x,.1,S.z,0xdfd3b8,2,1.4,.8,.7);}}
@@ -2835,7 +2871,7 @@ function closeEdit(saved){
 }
 function startPlay(slot){
   curSlot=slot;C=DB.slots[slot];DB.last=slot;dailyCheck();
-  const L=level();S.maxHp=E.maxHp(C.cls,L);S.hp=S.maxHp;S.state='play';S.atkCd=0;S.cd=[0,0,0];S.wardT=0;S.shield=0;S.shieldT=0;S.blockT=0;S.dodgeCd=0;S.inv=0;S.buffT=0;S.blocking=false;S.defDown=false;S.dodgeT=0;S.swing=0;S.lunge=0;S.hurtT=0;
+  const L=level();S.maxHp=E.maxHp(C.cls,L);S.hp=S.maxHp;S.state='play';S.rest=false;S.atkCd=0;S.cd=[0,0,0];S.wardT=0;S.shield=0;S.shieldT=0;S.blockT=0;S.dodgeCd=0;S.inv=0;S.buffT=0;S.blocking=false;S.defDown=false;S.dodgeT=0;S.swing=0;S.lunge=0;S.hurtT=0;
   show('start',false);show('create',false);mode='play';paused=false;
   makeHero(C.cls,C.look);
   const zs=C.zone||'town',m=/^town:(warrior|mage|ranger)$/.exec(zs);
