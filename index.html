@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-211823"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261010-212358"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -57,6 +57,7 @@ button{font-family:inherit;color:inherit;touch-action:none}
 #bDef{--sz:var(--btn);--bg:#4aa0ff;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:18px}
 #bS1{--sz:var(--btn);--bg:#9a5de0;right:calc(26px + var(--btn)*1.3 + var(--sr));bottom:calc(30px + var(--btn))}
 #bS2{--sz:var(--btn);--bg:#1fae92;right:calc(16px + var(--btn)*.15 + var(--sr));bottom:calc(30px + var(--btn)*1.3)}
+#bS3{--sz:var(--btn);--bg:#e8843a;right:calc(36px + var(--btn)*2.45 + var(--sr));bottom:calc(34px + var(--btn)*.55)}
 #bUse{--sz:calc(var(--btn)*1.05);--bg:#ff8fc2;left:50%;margin-left:calc(var(--btn)*-.52);bottom:calc(30px + var(--btn)*1.4);animation:bob 1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
 
@@ -305,6 +306,7 @@ h3{font-size:17px;margin:12px 0 6px}
     <button class="btn" id="bDef" data-ia="aDef"><span>&#128737;&#65039;</span><small>&#128168;</small></button>
     <button class="btn" id="bS1" aria-label="Skill 1"></button>
     <button class="btn" id="bS2" aria-label="Skill 2"></button>
+    <button class="btn" id="bS3" aria-label="Skill 3"></button>
     <button class="btn" id="bUse" data-ia="aUse" hidden></button>
   </div>
 
@@ -443,20 +445,35 @@ window.EZ=(function(){
     ranger:{label:'Ranger',town:'Leafhaven',role:'Panah',icon:'🏹',base:[4,4,8],grow:[1,1,3],pri:2,ivl:0.8,range:8,ranged:true,defOut:2,sky:'#cdf3d3'}
   };
   const SKILLS={
-    warrior:[
-      {id:'slash',icon:'⚔️',name:'Tebasan Kuat',lv:1,cd:4,kind:'arc',mult:2,range:3.3,arc:150},
-      {id:'bash',icon:'🛡️',name:'Benturan Perisai',lv:5,cd:8,kind:'arc',mult:1.5,range:3,arc:110,stun:1.5},
-      {id:'roar',icon:'📣',name:'Raungan Berani',lv:10,cd:25,kind:'buff',dmg:1.2,dur:8}
+    sword:[
+      {id:'bash',icon:'🛡️',lv:5,cd:7,kind:'arc',mult:1.3,range:3,arc:120,stun:1.5},
+      {id:'wall',icon:'🏰',lv:10,cd:20,kind:'ward',dur:5,mul:.3,taunt:9},
+      {id:'rally',icon:'🚩',lv:15,cd:32,kind:'heal',pct:.4,ward:3,mul:.4}
     ],
-    mage:[
-      {id:'fire',icon:'🔥',name:'Bola Api',lv:1,cd:3,kind:'proj',mult:2,count:1,big:true,color:0xff7a2a},
-      {id:'ice',icon:'❄️',name:'Ledakan Es',lv:5,cd:8,kind:'aoe',mult:1.5,radius:4.2,slow:3,center:'self',color:0x7fd8ff},
-      {id:'meteor',icon:'☄️',name:'Hujan Meteor',lv:10,cd:20,kind:'aoe',mult:3.5,radius:6,center:'target',range:9,delay:0.6,color:0xff5a3a}
+    great:[
+      {id:'cleave',icon:'🌙',lv:5,cd:6,kind:'arc',mult:2.6,range:3.8,arc:200},
+      {id:'roar',icon:'📣',lv:10,cd:24,kind:'buff',dmg:1.35,dur:8},
+      {id:'quake',icon:'🌋',lv:15,cd:22,kind:'aoe',mult:4.2,radius:5,center:'self',stun:1.3,color:0xc8903a}
     ],
-    ranger:[
-      {id:'tri',icon:'🏹',name:'Panah Tiga',lv:1,cd:4,kind:'proj',mult:0.8,count:3,spread:0.28,color:0xffe27a},
-      {id:'heal',icon:'💚',name:'Angin Penyembuh',lv:5,cd:15,kind:'heal',pct:0.25},
-      {id:'rain',icon:'🌧️',name:'Hujan Panah',lv:10,cd:20,kind:'aoe',mult:1.0,waves:3,radius:5,center:'target',range:8,color:0xfff2a0}
+    bow:[
+      {id:'tri',icon:'🏹',lv:5,cd:4,kind:'proj',mult:.7,count:3,spread:.28,color:0xffe27a},
+      {id:'flurry',icon:'💨',lv:10,cd:9,kind:'proj',mult:.6,count:1,volley:7,gap:.08,color:0xfff2a0},
+      {id:'rain',icon:'🌧️',lv:15,cd:20,kind:'aoe',mult:1,waves:4,radius:5.5,center:'target',range:8,color:0xfff2a0}
+    ],
+    xbow:[
+      {id:'bolt',icon:'🎯',lv:5,cd:7,kind:'proj',mult:3.4,count:1,speed:24,color:0xffb04a},
+      {id:'snare',icon:'🕸️',lv:10,cd:13,kind:'aoe',mult:1.8,radius:3.8,slow:4,center:'target',range:8,color:0xd8d8e8},
+      {id:'siege',icon:'💣',lv:15,cd:26,kind:'aoe',mult:6.5,radius:4.2,center:'target',range:9,delay:.6,stun:1,color:0xff8a2a}
+    ],
+    staff:[
+      {id:'fire',icon:'🔥',lv:5,cd:5,kind:'proj',mult:2.5,count:1,big:true,color:0xff7a2a},
+      {id:'ice',icon:'❄️',lv:10,cd:10,kind:'aoe',mult:2,radius:4.6,slow:3.5,center:'self',color:0x7fd8ff},
+      {id:'wind',icon:'🌪️',lv:15,cd:22,kind:'aoe',mult:1.3,waves:5,radius:5,center:'target',range:9,noDrop:1,color:0xb6ffd8}
+    ],
+    book:[
+      {id:'dark',icon:'🌑',lv:5,cd:6,kind:'proj',mult:1,count:3,spread:.32,big:true,color:0x7a3aff},
+      {id:'light',icon:'✨',lv:10,cd:15,kind:'aoe',mult:1.8,radius:5,center:'self',heal:.2,color:0xfff3a0},
+      {id:'grav',icon:'🕳️',lv:15,cd:26,kind:'aoe',mult:4.5,radius:6,center:'target',range:9,delay:.6,pull:1,stun:2,color:0x5a3aa8}
     ]
   };
   const MON={
@@ -516,7 +533,7 @@ window.EZ=(function(){
   function critChance(cls,L){return Math.min(0.25,0.003*stats(cls,L).agi);}
   function moveSpeed(cls,L){return 4+0.03*stats(cls,L).agi;}
   function dmgTaken(atk,cls,L,blocking){let d=atk*30/(30+stats(cls,L).str);if(blocking)d*=0.4;return Math.max(1,Math.round(d));}
-  function unlocked(cls,L){return SKILLS[cls].map((s,i)=>s.lv<=L?i:-1).filter(i=>i>=0);}
+  function unlocked(path,L){return SKILLS[path].map((s,i)=>s.lv<=L?i:-1).filter(i=>i>=0);}
   return {MAXLV,NEED,TOTAL,CLASSES,SKILLS,MON,QUESTS,lvOf,progress,stats,maxHp,baseAtk,atkInterval,skillCd,dodgeCd,critChance,moveSpeed,dmgTaken,unlocked};
 })();
 </script>
@@ -584,17 +601,17 @@ id:{
  questDone:'Misi selesai!',faint:'Zzz…',err:'Grafik 3D tidak bisa dimuat. Game ini butuh internet sekali untuk memuat Three.js dan perangkat yang mendukung WebGL.',
  camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',orT:'Layar HP',orAuto:'Otomatis',orLand:'Landscape',orPort:'Portrait',orNote:'Untuk mengunci arah layar, aplikasi akan masuk layar penuh.',orFail:'Gagal mengunci layar. Putar HP kamu secara manual ya.',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
  menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
- aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Tahan atau guling',aUse:'Bicara',aClose:'Tutup',
- keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>tahan/guling<b>U</b><b>I</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
+ aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Bertahan',aUse:'Bicara',aClose:'Tutup',
+ keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>bertahan<b>U</b><b>I</b><b>O</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Pendekar',cls_mage:'Penyihir',cls_ranger:'Pemanah',role_warrior:'Pelindung',role_mage:'Sihir',role_ranger:'Panah',
  town_warrior:'Benteng Besi',town_mage:'Menara Bintang',town_ranger:'Pondok Daun',
  z_stone:'Bukit Batu',z_stoneSub:'Perbukitan berbatu · Lv 1-5',z_glade:'Hutan Jamur',z_gladeSub:'Hutan penuh jamur · Lv 1-5',z_vale:'Lembah Bintang',z_valeSub:'Lembah berkilau · Lv 1-5',z_crater:'Kawah Bara',z_craterSub:'Kawah gunung berapi · Lv 6-10',z_bog:'Rawa Berkabut',z_bogSub:'Rawa lembap penuh kabut · Lv 6-10',z_frost:'Puncak Beku',z_frostSub:'Dataran salju abadi · Lv 11-15',z_dragon:'Sarang Naga',z_dragonSub:'Sarang naga purba · Lv 11-15',poi_volcano:'Gunung Berapi',poi_lava:'Danau Lava',poi_swamptree:'Pohon Rawa Tua',poi_bogpond:'Telaga Rawa',poi_icepeak:'Menara Es',poi_frozen:'Danau Beku',poi_skull:'Tengkorak Naga',poi_hoard:'Timbunan Harta',poi_ruins:'Reruntuhan batu',poi_bigtree:'Pohon raksasa',poi_giant:'Jamur raksasa',poi_stars:'Lingkaran bintang',
  mon_pebble:'Kerikil Kecil',mon_beetle:'Kumbang Baja',mon_golem:'Golem Batu',mon_emberling:'Bara Kecil',mon_scorpion:'Kalajengking Abu',mon_salamander:'Salamander Lava',mon_firebat:'Kelelawar Api',mon_obsidian:'Golem Obsidian',mon_toad:'Kodok Rawa',mon_mosquito:'Nyamuk Rawa',mon_croc:'Buaya Lumpur',mon_wisp:'Arwah Rawa',mon_treant:'Treant Rawa',mon_icewolf:'Serigala Es',mon_snowman:'Manusia Salju Galak',mon_frostbat:'Kelelawar Beku',mon_yeti:'Yeti',mon_whelp:'Anak Naga',mon_boneknight:'Ksatria Tulang',mon_wraith:'Hantu Kelam',mon_dragon:'Naga Purba',mon_sprout:'Tunas Lincah',mon_shroom:'Jamur Bandel',mon_frog:'Katak Hutan',mon_bat:'Kelelawar Malam',mon_ghost:'Hantu Mungil',mon_owl:'Burung Hantu',
  mon_moth:'Ngengat Bulan',mon_pup:'Anak Serigala Bayangan',mon_crab:'Kepiting Cahaya',mon_mole:'Tikus Penggali',mon_firefly:'Kunang-kunang',mon_fox:'Rubah Bulan',mon_snail:'Siput Mimpi',mon_jelly:'Jeli Hijau',mon_bunny:'Kelinci Mochi',mon_bee:'Lebah Madu',mon_king:'Raja Jeli',
- sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',
+ sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',sk_wall:'Dinding Besi',sk_rally:'Panji Semangat',sk_cleave:'Tebasan Bulan',sk_quake:'Hantaman Gempa',sk_flurry:'Tembakan Beruntun',sk_bolt:'Baut Tembus',sk_snare:'Jaring Jebakan',sk_siege:'Peluru Meriam',sk_wind:'Badai Angin',sk_dark:'Bola Kegelapan',sk_light:'Cahaya Suci',sk_grav:'Lubang Gravitasi',
  wn_warrior:'Pedang',wn_mage:'Tongkat',wn_ranger:'Busur',an_warrior:'Zirah',an_mage:'Jubah',an_ranger:'Baju Pemburu',
- tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Damage diterima −10%',ps_great:'Serangan +12%',ps_bow:'Jeda jurus −12%',ps_xbow:'Serangan +10%',ps_staff:'Serangan +6%',ps_book:'Jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Headgear',hgS:'Topi & mahkota lucu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Headgear',hgNote:'Headgear lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Headgear menggantikan topi dari Penata Gaya.',hgNone:'Tanpa headgear',hgNoneS:'Lepas headgear',hgOwned:'Sudah dimiliki',hgPrice:'Headgear spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Penyihir Bintang',hg10:'Topi Jerami',hg11:'Tanduk Iblis Mini',hg12:'Halo Malaikat',hg13:'Topi Sinterklas',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
+ tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Buku Sihir',ps_sword:'Perisai kuat · damage diterima −10%',ps_great:'Serangan +30%, ayunan agak lambat',ps_bow:'Tembak cepat, damage kecil',ps_xbow:'Tembak lambat, damage besar',ps_staff:'Sihir elemen · serangan +6%',ps_book:'Sihir gelap/cahaya · jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Headgear',hgS:'Topi & mahkota lucu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Headgear',hgNote:'Headgear lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Headgear menggantikan topi dari Penata Gaya.',hgNone:'Tanpa headgear',hgNoneS:'Lepas headgear',hgOwned:'Sudah dimiliki',hgPrice:'Headgear spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Penyihir Bintang',hg10:'Topi Jerami',hg11:'Tanduk Iblis Mini',hg12:'Halo Malaikat',hg13:'Topi Sinterklas',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal'
 },
 en:{
  tag:'A fun adventure for two!',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
@@ -614,17 +631,17 @@ en:{
  questDone:'Quest complete!',faint:'Zzz…',err:'The 3D graphics could not load. This game needs internet once to load Three.js and a device that supports WebGL.',
  camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',orT:'Phone screen',orAuto:'Auto',orLand:'Landscape',orPort:'Portrait',orNote:'To lock the orientation the app goes fullscreen.',orFail:"Couldn't lock the screen. Please rotate your phone manually.",camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
  menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
- aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Block or roll',aUse:'Talk',aClose:'Close',
- keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>block/roll<b>U</b><b>I</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
+ aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Defend',aUse:'Talk',aClose:'Close',
+ keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>defend<b>U</b><b>I</b><b>O</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Warrior',cls_mage:'Mage',cls_ranger:'Ranger',role_warrior:'Tank',role_mage:'Magic',role_ranger:'Arrows',
  town_warrior:'Ironhold',town_mage:'Starspire',town_ranger:'Leafhaven',
  z_stone:'Stony Hills',z_stoneSub:'Rocky hills · Lv 1-5',z_glade:'Mushroom Glade',z_gladeSub:'A forest full of mushrooms · Lv 1-5',z_vale:'Starfall Vale',z_valeSub:'A glittering valley · Lv 1-5',z_crater:'Ember Crater',z_craterSub:'Volcanic crater · Lv 6-10',z_bog:'Misty Bog',z_bogSub:'A damp, foggy swamp · Lv 6-10',z_frost:'Frostpeak',z_frostSub:'Eternal snowfields · Lv 11-15',z_dragon:"Dragon's Roost",z_dragonSub:'Ancient dragon lair · Lv 11-15',poi_volcano:'Volcano',poi_lava:'Lava Lake',poi_swamptree:'Ancient Swamp Tree',poi_bogpond:'Murky Pond',poi_icepeak:'Ice Spire',poi_frozen:'Frozen Lake',poi_skull:'Dragon Skull',poi_hoard:'Treasure Hoard',poi_ruins:'Stone ruins',poi_bigtree:'Giant tree',poi_giant:'Giant mushrooms',poi_stars:'Star circle',
  mon_pebble:'Pebble Pal',mon_beetle:'Steel Beetle',mon_golem:'Rock Golem',mon_emberling:'Emberling',mon_scorpion:'Cinder Scorpion',mon_salamander:'Lava Salamander',mon_firebat:'Fire Bat',mon_obsidian:'Obsidian Golem',mon_toad:'Bog Toad',mon_mosquito:'Marsh Skeeter',mon_croc:'Mud Croc',mon_wisp:'Marsh Wisp',mon_treant:'Swamp Treant',mon_icewolf:'Ice Wolf',mon_snowman:'Grumpy Snowman',mon_frostbat:'Frost Bat',mon_yeti:'Yeti',mon_whelp:'Dragon Whelp',mon_boneknight:'Bone Knight',mon_wraith:'Dread Wraith',mon_dragon:'Elder Dragon',mon_sprout:'Hop Sprout',mon_shroom:'Cheeky Shroom',mon_frog:'Forest Frog',mon_bat:'Night Bat',mon_ghost:'Tiny Ghost',mon_owl:'Wise Owl',
  mon_moth:'Lunar Moth',mon_pup:'Shadow Pup',mon_crab:'Glow Crab',mon_mole:'Digger Mole',mon_firefly:'Firefly',mon_fox:'Moon Fox',mon_snail:'Dream Snail',mon_jelly:'Green Jelly',mon_bunny:'Mochi Bunny',mon_bee:'Honey Bee',mon_king:'King Jelly',
- sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',
+ sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',sk_wall:'Iron Wall',sk_rally:'Rallying Banner',sk_cleave:'Crescent Cleave',sk_quake:'Quake Smash',sk_flurry:'Rapid Volley',sk_bolt:'Piercing Bolt',sk_snare:'Snare Net',sk_siege:'Cannon Shot',sk_wind:'Wind Storm',sk_dark:'Dark Orbs',sk_light:'Holy Light',sk_grav:'Gravity Well',
  wn_warrior:'Sword',wn_mage:'Staff',wn_ranger:'Bow',an_warrior:'Armor',an_mage:'Robe',an_ranger:'Hunter Garb',
- tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Spellbook',ps_sword:'Damage taken −10%',ps_great:'Attack +12%',ps_bow:'Skill cooldown −12%',ps_xbow:'Attack +10%',ps_staff:'Attack +6%',ps_book:'Skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',nHg:'Headgear Shop',hgS:'Cute hats & crowns',nTele:'Teleport Crystal',teleS:'Travel to another town',closed:'Closed 🌙 (resting)',hgT:'Headgear Shop',hgNote:"Cute headgear, but pricey! Buy once, swap anytime. Headgear replaces the Stylist's hats.",hgNone:'No headgear',hgNoneS:'Take headgear off',hgOwned:'Owned',hgPrice:'Special headgear',hgWear:'Wear',teleT:'Teleport Crystal',teleNote:'Pay coins to teleport to another town. Price grows with your level.',teleHere:'You are here',hg1:'Red Bow',hg2:'Baseball Cap',hg3:'Chef Hat',hg4:'Flower Crown',hg5:'Cat Ears',hg6:'Bear Ears',hg7:'Pirate Hat',hg8:'Fishbowl Helmet',hg9:'Star Wizard Hat',hg10:'Straw Hat',hg11:'Mini Devil Horns',hg12:'Angel Halo',hg13:'Santa Hat',hg14:'Duck Hat',hg15:'Party Hat',hg16:'Golden Crown',hg17:'Viking Helmet',hg18:'Mushroom Cap',hg19:'Mini Dragon Hood',hg20:'Rainbow Crown',friendHere:'On this map',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal'
+ tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Spellbook',ps_sword:'Strong shield · damage taken −10%',ps_great:'Attack +30%, slower swing',ps_bow:'Fast shots, low damage',ps_xbow:'Slow shots, heavy damage',ps_staff:'Elemental magic · attack +6%',ps_book:'Dark/light magic · skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',nHg:'Headgear Shop',hgS:'Cute hats & crowns',nTele:'Teleport Crystal',teleS:'Travel to another town',closed:'Closed 🌙 (resting)',hgT:'Headgear Shop',hgNote:"Cute headgear, but pricey! Buy once, swap anytime. Headgear replaces the Stylist's hats.",hgNone:'No headgear',hgNoneS:'Take headgear off',hgOwned:'Owned',hgPrice:'Special headgear',hgWear:'Wear',teleT:'Teleport Crystal',teleNote:'Pay coins to teleport to another town. Price grows with your level.',teleHere:'You are here',hg1:'Red Bow',hg2:'Baseball Cap',hg3:'Chef Hat',hg4:'Flower Crown',hg5:'Cat Ears',hg6:'Bear Ears',hg7:'Pirate Hat',hg8:'Fishbowl Helmet',hg9:'Star Wizard Hat',hg10:'Straw Hat',hg11:'Mini Devil Horns',hg12:'Angel Halo',hg13:'Santa Hat',hg14:'Duck Hat',hg15:'Party Hat',hg16:'Golden Crown',hg17:'Viking Helmet',hg18:'Mushroom Cap',hg19:'Mini Dragon Hood',hg20:'Rainbow Crown',friendHere:'On this map',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal'
 }};
 let LANG='id',LANG_SET=false;
 try{const l=localStorage.getItem('ezventure.lang');if(l==='id'||l==='en'){LANG=l;LANG_SET=true;}else LANG=/^id/i.test(navigator.language||'')?'id':'en';}catch(e){}
@@ -808,12 +825,14 @@ const HATS=['—','🧢','🧙','🌸','🐰'];
 const WP_P=[0,80,200,420,900,1700,3000,5000,8000,12500],WP_M=[1,1.12,1.26,1.42,1.62,1.85,2.12,2.45,2.85,3.3];
 const WTIER=WP_P.map((p,i)=>({p,m:WP_M[i]}));
 const WPATHS={warrior:['sword','great'],ranger:['bow','xbow'],mage:['staff','book']};
-const WPASS={sword:{def:.9},great:{atk:1.12},bow:{cd:.88},xbow:{atk:1.1},staff:{atk:1.06},book:{cd:.85}};
+const WPASS={sword:{def:.9},great:{atk:1.3,ivl:1.15},bow:{atk:.85,ivl:.7},xbow:{atk:1.6,ivl:1.45},staff:{atk:1.06},book:{cd:.85}};
 const WPC={m:['#8a5a2b','#c9824a','#aeb7c4','#d5dbe6','#eef3fa','#ffd84a','#7ae8ff','#b49bff','#ff6a3a','#fff3c0'],
  a:['#6b3f26','#8a5a2b','#8d97a6','#9fb4cc','#c9d1dc','#e0a010','#c8f6ff','#ff7ae0','#ffb02a','#ffd84a'],
  g:['#9a7bff','#4f7de0','#46a6ff','#ff3b4a','#ff7ae0','#7ae8ff','#ffd84a','#ff3ad0','#ffffff','#ff8a3a'],
  e:[null,null,null,null,'#6a7a90','#a07000','#38b8e8','#8a4cff','#ff3a10','#ffcc40']};
-function wpPass(){const k=WPATHS[C.cls][C.eq.p|0];return Object.assign({atk:1,def:1,cd:1},WPASS[k]);}
+function wpPass(){const k=WPATHS[C.cls][C.eq.p|0];return Object.assign({atk:1,def:1,cd:1,ivl:1},WPASS[k]);}
+function myPath(){return WPATHS[C.cls][C.eq.p|0];}
+function mySkills(){return E.SKILLS[myPath()];}
 const ATIER=[{n:'Dasar',p:0,r:1},{n:'Besi',p:100,r:.85},{n:'Emas',p:300,r:.72},{n:'Kristal',p:750,r:.6}];
 const WNAME={warrior:'Pedang',mage:'Tongkat',ranger:'Busur'},ANAME={warrior:'Zirah',mage:'Jubah',ranger:'Baju Pemburu'};
 const defLook=cls=>({hair:cls==='mage'?4:0,skin:0,outfit:E.CLASSES[cls].defOut,hat:0});
@@ -1749,7 +1768,7 @@ function renderCoop(){
 }
 addEventListener('pagehide',()=>{try{coopSend({t:'bye'});}catch(e){}});
 
-const S={x:0,z:0,face:0,hp:1,maxHp:1,atkCd:0,atkMax:1,cd:[0,0],cdMax:[1,1],dodgeCd:0,dodgeMax:1,dodgeT:0,ddx:0,ddz:1,inv:0,blocking:false,defDown:false,defT:0,swing:0,swingMax:.28,buffT:0,state:'play',faintT:0,moving:false,portalLock:0,bufAtk:0,hurtT:0,lunge:0,moveT:0,big:false,cheer:0,cheerMax:1};
+const S={x:0,z:0,face:0,hp:1,maxHp:1,atkCd:0,atkMax:1,cd:[0,0,0],cdMax:[1,1,1],wardT:0,wardMul:1,shield:0,shieldT:0,blockT:0,dodgeCd:0,dodgeMax:1,dodgeT:0,ddx:0,ddz:1,inv:0,blocking:false,defDown:false,defT:0,swing:0,swingMax:.28,buffT:0,state:'play',faintT:0,moving:false,portalLock:0,bufAtk:0,hurtT:0,lunge:0,moveT:0,big:false,cheer:0,cheerMax:1};
 const level=()=>E.lvOf(C.xp);
 const keys={};const joy={id:null,x:0,z:0};
 let fxList=[],parts=[],projs=[],shake=0,hitStop=0;
@@ -2450,20 +2469,21 @@ function gainXp(n){
 function levelUp(L){
   S.maxHp=E.maxHp(C.cls,L);S.hp=S.maxHp;SFX.level();S.cheer=S.cheerMax=1.1;
   burst(S.x,1.2,S.z,0xffd84a,34,7,7,1.3);ringFx(S.x,S.z,3.5,0xffd84a,.6);
-  const sk=E.SKILLS[C.cls].find(s=>s.lv===L);
+  const sk=mySkills().find(s=>s.lv===L);
   banner('Level '+L+'! ⭐'+(sk?' '+sk.icon:''));
   refreshRings();saveDB();
 }
 function hurt(atk,ml){
   if(S.inv>0||S.state!=='play')return;
   const df=(ml||0)-level(),pen=df>=4?Math.pow(1.5,df-3):1;
-  const dmg=Math.max(1,Math.round(E.dmgTaken(atk,C.cls,level(),S.blocking)*ATIER[C.eq.a].r*wpPass().def*pen));
+  let dmg=Math.max(1,Math.round(E.dmgTaken(atk,C.cls,level(),false)*(S.blocking?(myPath()==='sword'?.25:.55):1)*(S.wardT>0?S.wardMul:1)*ATIER[C.eq.a].r*wpPass().def*pen));
+  if(S.shield>0){const ab=Math.min(S.shield,dmg);S.shield-=ab;dmg-=ab;float('🛡️'+ab,S.x,2.8,S.z,'');burst(S.x,1.2,S.z,0x9ad7ff,8,3,2);ringFx(S.x,S.z,2,0x9ad7ff,.3);if(S.shield<=0)S.shieldT=0;if(dmg<=0){S.inv=.35;SFX.hit();return;}}
   S.hp-=dmg;S.hurtT=.5;S.inv=.45;shake=Math.max(shake,.5);hitStop=Math.max(hitStop,.05);
   float(String(dmg),S.x,2.6,S.z,'hurt');SFX.hurt();
   const v=$('#hurtv');v.classList.add('on');setTimeout(()=>v.classList.remove('on'),120);
   if(S.hp<=0){S.hp=0;faint();}
 }
-function faint(){S.state='faint';S.faintT=2.4;S.blocking=false;S.defDown=false;$('#faint').classList.add('show');SFX.faint();}
+function faint(){S.state='faint';S.faintT=2.4;S.blocking=false;S.defDown=false;S.wardT=0;S.shield=0;S.shieldT=0;$('#faint').classList.add('show');SFX.faint();}
 function respawn(){
   $('#faint').classList.remove('show');S.hp=S.maxHp=E.maxHp(C.cls,level());S.state='play';S.inv=1;
   transition(()=>setZone('town',{x:0,z:6,face:Math.PI}));
@@ -2492,7 +2512,7 @@ function doAttack(){
   if(S.state!=='play'||trans||paused)return;
   if(S.atkCd>0){S.bufAtk=.25;return;}
   const c=E.CLASSES[C.cls],L=level(),cls=C.cls;
-  S.atkCd=S.atkMax=E.atkInterval(cls,L);S.big=false;S.blocking=false;
+  S.atkCd=S.atkMax=E.atkInterval(cls,L)*wpPass().ivl;S.big=false;S.blocking=false;S.blockT=0;
   const dur=c.ranged?(cls==='mage'?.5:.4):.42;S.swing=S.swingMax=dur;
   const tg=nearestMon(c.range+1.5);if(tg)aimAt(tg);
   if(c.ranged){
@@ -2505,25 +2525,29 @@ function doAttack(){
 }
 function useSkill(i){
   if(S.state!=='play'||trans||paused)return;
-  const L=level(),cls=C.cls,sk=E.SKILLS[cls][C.slots[i]];if(!sk||sk.lv>L||S.cd[i]>0)return;
-  S.cd[i]=S.cdMax[i]=E.skillCd(cls,L,sk)*wpPass().cd;S.blocking=false;SFX.skill();
-  const nonAtk=sk.kind==='heal'||sk.kind==='buff',dur=cls==='warrior'?.5:.56;
+  const L=level(),cls=C.cls,sk=mySkills()[i];if(!sk||sk.lv>L||S.cd[i]>0)return;
+  S.cd[i]=S.cdMax[i]=E.skillCd(cls,L,sk)*wpPass().cd;S.blocking=false;S.blockT=0;SFX.skill();
+  const nonAtk=sk.kind==='heal'||sk.kind==='buff'||sk.kind==='ward',dur=cls==='warrior'?.5:.56;
   S.big=true;if(nonAtk){S.swing=0;S.cheer=S.cheerMax=.7;}else{S.swing=S.swingMax=dur;}
   const tg=nearestMon((sk.range||E.CLASSES[cls].range)+1.5);if(tg)aimAt(tg);
   const run=()=>{
     if(!zone||S.state!=='play')return;
     if(sk.kind==='arc'){const n=arcHit(sk.range,sk.arc,sk.mult,{stun:sk.stun});slashFx(sk.stun?0x9ad7ff:0xffc83a,sk.range,sk.arc,true);swingFx(sk.stun?0x9ad7ff:0xffc83a,sk.range,sk.arc);ringFx(S.x,S.z,sk.range,0xffffff,.3);if(!n&&tg&&!tg.dead)S.lunge=.14;shake=Math.max(shake,.3);}
-    else if(sk.kind==='proj'){const n=sk.count,sp=sk.spread||0;for(let k=0;k<n;k++){const off=n>1?(k-(n-1)/2)*sp:0;fire(S.face+off,sk.mult,{color:sk.color,big:sk.big,arrow:cls==='ranger',range:E.CLASSES[cls].range,speed:cls==='ranger'?19:14,target:(k===(n-1)/2||n===1)&&tg&&!tg.dead?tg:null});}}
+    else if(sk.kind==='proj'){const n=sk.count,sp=sk.spread||0,vol=sk.volley||1;
+      const shot=()=>{if(!zone||S.state!=='play')return;for(let k=0;k<n;k++){const off=n>1?(k-(n-1)/2)*sp:0;fire(S.face+off+(vol>1?rnd(-.06,.06):0),sk.mult,{color:sk.color,big:sk.big,arrow:cls==='ranger',range:E.CLASSES[cls].range,speed:sk.speed||(cls==='ranger'?19:14),target:(k===(n-1)/2||n===1)&&tg&&!tg.dead?tg:null});}};
+      for(let v=0;v<vol;v++){if(v===0)shot();else after(v*(sk.gap||.08),shot);}}
     else if(sk.kind==='aoe'){
       let cx=S.x,cz=S.z;if(sk.center==='target'){if(tg&&!tg.dead){cx=tg.x;cz=tg.z;}else{cx=S.x+Math.sin(S.face)*5;cz=S.z+Math.cos(S.face)*5;}}
       const waves=sk.waves||1,delay=sk.delay||0;
       for(let w=0;w<waves;w++)after(delay+w*.28,()=>{
-        if(!zone)return;ringFx(cx,cz,sk.radius,sk.color,.45);burst(cx,.6,cz,sk.color,18,sk.radius*1.1,4,1.2);SFX.hit();shake=Math.max(shake,.3);
-        for(const m of zone.mons){if(m.dead||m.spawnT<.5)continue;const dx=m.x-cx,dz=m.z-cz,d=Math.hypot(dx,dz);if(d<=sk.radius+m.d.r)hitMon(m,calcDmg(sk.mult),{dx:dx/(d||1),dz:dz/(d||1),slow:sk.slow,stun:sk.stun});}});
+        if(!zone)return;ringFx(cx,cz,sk.radius,sk.color,.45);burst(cx,.6,cz,sk.color,18,sk.radius*1.1,4,1.2);if(sk.noDrop)burst(cx,.3,cz,sk.color,16,sk.radius*.7,9,1.1);SFX.hit();shake=Math.max(shake,.3);
+        if(w===0&&sk.heal&&S.state==='play'){const h=Math.round(S.maxHp*sk.heal);S.hp=Math.min(S.maxHp,S.hp+h);float('+'+h,S.x,2.6,S.z,'heal');SFX.heal();}
+        for(const m of zone.mons){if(m.dead||m.spawnT<.5)continue;if(w===0&&sk.pull&&Math.hypot(m.x-cx,m.z-cz)<=sk.radius+m.d.r){m.x+=(cx-m.x)*.75;m.z+=(cz-m.z)*.75;}const dx=m.x-cx,dz=m.z-cz,d=Math.hypot(dx,dz);if(d<=sk.radius+m.d.r)hitMon(m,calcDmg(sk.mult),{dx:dx/(d||1),dz:dz/(d||1),slow:sk.slow,stun:sk.stun});}});
       if(delay){const fall=new THREE.Mesh(new THREE.BoxGeometry(1.4,1.4,1.4),new THREE.MeshBasicMaterial({color:sk.color}));fall.position.set(cx,14,cz);fxRoot.add(fall);let t=0;fxList.push(dt=>{t+=dt;fall.rotation.x+=dt*5;fall.rotation.y+=dt*4;fall.position.y=lerp(14,.7,Math.min(1,t/delay));if(t>=delay){fxRoot.remove(fall);return false;}});}
-      if(sk.waves){for(let w=0;w<sk.waves;w++)after(w*.28,()=>{if(!zone)return;for(let a=0;a<8;a++){const ar=new THREE.Mesh(new THREE.BoxGeometry(.08,.8,.08),new THREE.MeshBasicMaterial({color:sk.color}));const ax=cx+rnd(-sk.radius,sk.radius)*.8,az=cz+rnd(-sk.radius,sk.radius)*.8;ar.position.set(ax,9,az);fxRoot.add(ar);let t=0;fxList.push(dt=>{t+=dt;ar.position.y=lerp(9,.3,Math.min(1,t/.22));if(t>=.22){fxRoot.remove(ar);return false;}});}});}
+      if(sk.waves&&!sk.noDrop){for(let w=0;w<sk.waves;w++)after(w*.28,()=>{if(!zone)return;for(let a=0;a<8;a++){const ar=new THREE.Mesh(new THREE.BoxGeometry(.08,.8,.08),new THREE.MeshBasicMaterial({color:sk.color}));const ax=cx+rnd(-sk.radius,sk.radius)*.8,az=cz+rnd(-sk.radius,sk.radius)*.8;ar.position.set(ax,9,az);fxRoot.add(ar);let t=0;fxList.push(dt=>{t+=dt;ar.position.y=lerp(9,.3,Math.min(1,t/.22));if(t>=.22){fxRoot.remove(ar);return false;}});}});}
     }
-    else if(sk.kind==='heal'){const h=Math.round(S.maxHp*sk.pct);S.hp=Math.min(S.maxHp,S.hp+h);float('+'+h,S.x,2.6,S.z,'heal');burst(S.x,1,S.z,0x7dffa8,22,4,5);ringFx(S.x,S.z,3,0x7dffa8,.5);SFX.heal();}
+    else if(sk.kind==='heal'){const h=Math.round(S.maxHp*sk.pct);S.hp=Math.min(S.maxHp,S.hp+h);float('+'+h,S.x,2.6,S.z,'heal');burst(S.x,1,S.z,0x7dffa8,22,4,5);ringFx(S.x,S.z,3,0x7dffa8,.5);SFX.heal();if(sk.ward){S.wardT=Math.max(S.wardT,sk.ward);S.wardMul=sk.mul;}}
+    else if(sk.kind==='ward'){S.wardT=sk.dur;S.wardMul=sk.mul;ringFx(S.x,S.z,sk.taunt*.6,0xffd84a,.6);burst(S.x,1.2,S.z,0xffd84a,26,5,5);shake=Math.max(shake,.3);for(const m of zone.mons)if(!m.dead&&m.state==='idle'&&Math.hypot(m.x-S.x,m.z-S.z)<sk.taunt)m.state='chase';}
     else if(sk.kind==='buff'){S.buffT=sk.dur;ringFx(S.x,S.z,7,0xff8a3a,.5);burst(S.x,1.2,S.z,0xff8a3a,22,5,5);shake=Math.max(shake,.3);for(const m of zone.mons)if(!m.dead&&m.state==='idle'&&Math.hypot(m.x-S.x,m.z-S.z)<9)m.state='chase';}
   };
   after(nonAtk?dur*.25:dur*(sk.kind==='arc'?.35:sk.kind==='proj'?.58:.5),run);
@@ -2546,14 +2570,26 @@ function joyMove(e){const dx=e.clientX-jc.x,dy=e.clientY-jc.y,d=Math.hypot(dx,dy
 function joyEnd(e){if(e.pointerId!==joy.id)return;joy.id=null;joy.x=0;joy.z=0;joyKnob.style.transform='';joyBase.classList.remove('act');joyBase.style.left='';joyBase.style.bottom='';}
 joyArea.addEventListener('pointerup',joyEnd);joyArea.addEventListener('pointercancel',joyEnd);
 function bindBtn(el,down,up){let on=false;el.addEventListener('pointerdown',e=>{e.preventDefault();ac();on=true;el.classList.add('on');try{el.setPointerCapture(e.pointerId);}catch(_){}down();});const end=()=>{if(!on)return;on=false;el.classList.remove('on');if(up)up();};el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);el.addEventListener('lostpointercapture',end);}
-function defDown(){if(S.state!=='play')return;S.defDown=true;S.defT=0;}
-function defUp(){if(!S.defDown)return;if(S.defT<.22)doDodge();S.defDown=false;S.blocking=false;}
-bindBtn($('#bAtk'),doAttack);bindBtn($('#bDef'),defDown,defUp);bindBtn($('#bS1'),()=>useSkill(0));bindBtn($('#bS2'),()=>useSkill(1));
+function doShield(){
+  if(S.dodgeCd>0||S.state!=='play'||trans||paused)return;
+  const L=level();S.dodgeCd=S.dodgeMax=Math.max(5.5,10-.08*E.stats('mage',L).int);S.shield=Math.round(S.maxHp*.45);S.shieldT=4.5;
+  ringFx(S.x,S.z,2.6,0x9ad7ff,.5);burst(S.x,1.2,S.z,0x9ad7ff,18,4,4);SFX.heal();
+}
+function defDown(){if(S.state!=='play')return;if(C.cls==='ranger'){doDodge();return;}if(C.cls==='mage'){doShield();return;}S.defDown=true;S.defT=0;S.blockT=.55;}
+function defUp(){S.defDown=false;}
+let bub=null;
+function updBubble(T){
+  const on=S.state==='play'&&(S.shieldT>0||S.wardT>0);
+  if(!bub){bub=new THREE.Mesh(new THREE.SphereGeometry(1.7,16,12),new THREE.MeshBasicMaterial({color:0x9ad7ff,transparent:true,opacity:.28,depthWrite:false}));bub.visible=false;scene.add(bub);}
+  bub.visible=on;if(!on)return;
+  bub.position.set(S.x,1.2,S.z);bub.material.color.setHex(S.shieldT>0?0x9ad7ff:0xffd84a);bub.material.opacity=.22+.08*Math.sin(T*8);bub.scale.setScalar(1+.03*Math.sin(T*10));
+}
+bindBtn($('#bAtk'),doAttack);bindBtn($('#bDef'),defDown,defUp);bindBtn($('#bS1'),()=>useSkill(0));bindBtn($('#bS2'),()=>useSkill(1));bindBtn($('#bS3'),()=>useSkill(2));
 function doNpc(){if(mode!=='play'||paused||!S.near)return;const id=S.near.id;if(id==='style')openCreate('edit');else if(id==='tele'){openTele();}else if(id==='shop'||id==='hgear'||id==='mission'){talkPos={x:S.near.x,z:S.near.z};talkOn=true;if(id==='shop')openShop('eq');else if(id==='hgear')openShop('hg');else openMissions();}}
 bindBtn($('#bUse'),doNpc);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(e.target&&e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(keys[k])return;keys[k]=true;if(mode!=='play')return;
   if(hotkeys(k,e))return;
-  if(k==='j'||k===' ')doAttack();else if(k==='k'||k==='shift')defDown();else if(k==='u')useSkill(0);else if(k==='i')useSkill(1);else if(k==='e'&&!$('#bUse').hidden)doNpc();
+  if(k==='j'||k===' ')doAttack();else if(k==='k'||k==='shift')defDown();else if(k==='u')useSkill(0);else if(k==='i')useSkill(1);else if(k==='o')useSkill(2);else if(k==='e'&&!$('#bUse').hidden)doNpc();
   if(k===' ')e.preventDefault();});
 addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false;if(k==='k'||k==='shift')defUp();});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;joy.x=joy.z=0;});
@@ -2561,7 +2597,7 @@ addEventListener('blur',()=>{for(const k in keys)keys[k]=false;joy.x=joy.z=0;});
 /* ---------- HUD ---------- */
 const heartsEl=$('#hearts'),starsEl=$('#stars');
 for(let i=0;i<5;i++){const h=document.createElement('span');h.className='hrt';h.textContent='♥';heartsEl.appendChild(h);const s=document.createElement('span');s.className='str';s.textContent='★';starsEl.appendChild(s);}
-const hCache={},els={atk:$('#bAtk'),def:$('#bDef'),s:[$('#bS1'),$('#bS2')],use:$('#bUse'),lvn:$('#lvn'),quest:$('#quest'),coins:$('#coins')};
+const hCache={},els={atk:$('#bAtk'),def:$('#bDef'),s:[$('#bS1'),$('#bS2'),$('#bS3')],use:$('#bUse'),lvn:$('#lvn'),quest:$('#quest'),coins:$('#coins')};
 function setC(key,val,fn){if(hCache[key]!==val){hCache[key]=val;fn(val);}}
 function setBtn(el,key,html,locked){setC(key,html+locked,()=>{el.innerHTML=html;el.classList.toggle('lock',!!locked);});}
 function hud(){
@@ -2575,8 +2611,8 @@ function hud(){
   setC('q',JSON.stringify(C.qs),()=>{$('#quest').innerHTML=C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i];return '<span class="qi"><span>'+E.MON[q.t].icon+'</span><span>'+Math.min(a.p,q.n)+'/'+q.n+'</span></span>';}).join(''):'<span>📋</span><small style="font-size:13px;font-weight:800">'+t('qNone')+'</small>';});
   setC('tod',(TOD.night?'n':'d')+Math.ceil(TOD.left),()=>{$('#tod').textContent=(TOD.night?'🌙 ':'☀️ ')+Math.floor(Math.ceil(TOD.left)/60)+':'+('0'+Math.ceil(TOD.left)%60).slice(-2);});
   setC('coins',C.coins,v=>{$('#coins').innerHTML=ic('coin',20)+'<span>'+v+'</span>';});
-  const sks=E.SKILLS[C.cls];
-  [0,1].forEach(i=>{const sk=sks[C.slots[i]],lock=sk.lv>L;setBtn(els.s[i],'sb'+i+C.slots[i],lock?'🔒<small>'+sk.lv+'</small>':sk.icon,lock?1:0);els.s[i].style.setProperty('--p',lock?0:clamp(S.cd[i]/S.cdMax[i],0,1));});
+  const sks=mySkills();setBtn(els.def,'def'+C.cls,'<span>'+({warrior:'🛡️',mage:'🔮',ranger:'💨'}[C.cls])+'</span>',0);
+  [0,1,2].forEach(i=>{const sk=sks[i],lock=sk.lv>L;setBtn(els.s[i],'sb'+i+sk.id,lock?'🔒<small>'+sk.lv+'</small>':sk.icon,lock?1:0);els.s[i].style.setProperty('--p',lock?0:clamp(S.cd[i]/S.cdMax[i],0,1));});
   els.atk.style.setProperty('--p',clamp(S.atkCd/S.atkMax,0,1));
   els.def.style.setProperty('--p',clamp(S.dodgeCd/S.dodgeMax,0,1));
   let nearN=null;if(zone&&zone.npcs&&S.state==='play'){let bd=1e9;for(const n of zone.npcs){if(n.closed&&n.closed())continue;const d=Math.hypot(S.x-n.x,S.z-n.z);if(d<n.r&&d<bd){bd=d;nearN=n;}}}
@@ -2586,11 +2622,11 @@ function hud(){
 /* ---------- Main loop ---------- */
 function updatePlay(dt){
   const L=level(),c=E.CLASSES[C.cls];
-  S.atkCd=Math.max(0,S.atkCd-dt);S.cd[0]=Math.max(0,S.cd[0]-dt);S.cd[1]=Math.max(0,S.cd[1]-dt);S.dodgeCd=Math.max(0,S.dodgeCd-dt);S.inv-=dt;S.buffT-=dt;S.swing=Math.max(0,S.swing-dt);S.cheer=Math.max(0,S.cheer-dt);S.hurtT=Math.max(0,S.hurtT-dt);S.portalLock=Math.max(0,S.portalLock-dt);
+  S.atkCd=Math.max(0,S.atkCd-dt);S.cd[0]=Math.max(0,S.cd[0]-dt);S.cd[1]=Math.max(0,S.cd[1]-dt);S.cd[2]=Math.max(0,S.cd[2]-dt);S.wardT-=dt;S.shieldT-=dt;if(S.shieldT<=0)S.shield=0;S.dodgeCd=Math.max(0,S.dodgeCd-dt);S.inv-=dt;S.buffT-=dt;S.swing=Math.max(0,S.swing-dt);S.cheer=Math.max(0,S.cheer-dt);S.hurtT=Math.max(0,S.hurtT-dt);S.portalLock=Math.max(0,S.portalLock-dt);
   if(S.bufAtk>0){S.bufAtk-=dt;if(S.atkCd<=0){S.bufAtk=0;doAttack();}}
   if(S.state==='faint'){S.faintT-=dt;if(S.faintT<=0)respawn();}
   if(S.state==='play'&&!trans){
-    if(S.defDown){S.defT+=dt;S.blocking=S.defT>=.22;}
+    S.blockT=Math.max(0,S.blockT-dt);S.blocking=C.cls==='warrior'&&(S.defDown||S.blockT>0);
     let vx=0,vz=0;
     if(S.dodgeT>0){S.dodgeT-=dt;vx=S.ddx*10.5;vz=S.ddz*10.5;}
     else{const k=readInput();let sp=E.moveSpeed(C.cls,L)*1.35;if(S.blocking)sp*=.5;if(S.swing>0)sp*=.6;vx=k.x*sp;vz=k.z*sp;
@@ -2608,6 +2644,7 @@ function updatePlay(dt){
   H.root.position.set(S.x,0,S.z);H.root.rotation.y=S.face;
   const sp=S.swing>0?1-S.swing/S.swingMax:-1;
   animHero(H,{moving:S.moving&&S.dodgeT<=0,spd:E.moveSpeed(C.cls,L)*1.35*(S.blocking?.5:1),atk:sp,big:S.big,dodge:S.dodgeT>0?1-S.dodgeT/.35:-1,block:S.blocking,hurt:S.hurtT>0?S.hurtT/.5:0,faint:S.state==='faint',cheer:S.cheer>0?1-S.cheer/S.cheerMax:0},dt,T);
+  updBubble(T);
   if(S.state==='faint')H.pivot.rotation.x=lerp(H.pivot.rotation.x,-1.45,1-Math.exp(-dt*8));else H.pivot.rotation.x=S.dodgeT>0?-(1-S.dodgeT/.35)*Math.PI*2:0;
   H.model.visible=S.hurtT<=0||Math.floor(T*24)%2===0;
   if(S.moving&&S.dodgeT<=0){const sn=Math.floor(H.ph/Math.PI);if(sn!==H.lastStep){H.lastStep=sn;SFX.step();burst(S.x,.1,S.z,0xdfd3b8,2,1.4,.8,.7);}}
@@ -2730,7 +2767,7 @@ function closeEdit(saved){
 }
 function startPlay(slot){
   curSlot=slot;C=DB.slots[slot];DB.last=slot;dailyCheck();
-  const L=level();S.maxHp=E.maxHp(C.cls,L);S.hp=S.maxHp;S.state='play';S.atkCd=0;S.cd=[0,0];S.dodgeCd=0;S.inv=0;S.buffT=0;S.blocking=false;S.defDown=false;S.dodgeT=0;S.swing=0;S.lunge=0;S.hurtT=0;
+  const L=level();S.maxHp=E.maxHp(C.cls,L);S.hp=S.maxHp;S.state='play';S.atkCd=0;S.cd=[0,0,0];S.wardT=0;S.shield=0;S.shieldT=0;S.blockT=0;S.dodgeCd=0;S.inv=0;S.buffT=0;S.blocking=false;S.defDown=false;S.dodgeT=0;S.swing=0;S.lunge=0;S.hurtT=0;
   show('start',false);show('create',false);mode='play';paused=false;
   makeHero(C.cls,C.look);
   const zs=C.zone||'town',m=/^town:(warrior|mage|ranger)$/.exec(zs);
@@ -2842,7 +2879,7 @@ function profTick(dt){
   prof.r.render(prof.sc,prof.cam);
 }
 function renderProf(){
-  const L=level(),cl=E.CLASSES[C.cls],pr=E.progress(C.xp),sks=E.SKILLS[C.cls];
+  const L=level(),cl=E.CLASSES[C.cls],pr=E.progress(C.xp),sks=mySkills();
   $('#profName').textContent=C.name;$('#profCls').textContent=cl.icon+' '+cn(C.cls)+' · '+t('role_'+C.cls);
   $('#profMis').innerHTML=ic('mission',22)+' '+t('misBtn');$('#profMap').innerHTML=ic('map',22)+' '+t('mapBtn');
   const need=L<E.MAXLV?E.NEED[L+1]:0,have=L<E.MAXLV?C.xp-E.TOTAL[L]:0;
@@ -2856,7 +2893,7 @@ function renderProf(){
   h+=row('🛡️',eqName('a',C.cls,C.eq.a),t('armorSub',Math.round(ATIER[C.eq.a].r*100)));
   h+=row(HATS[C.look.hat]==='—'?'🚫':HATS[C.look.hat],HATS[C.look.hat]==='—'?t('hatNone'):t('hatSub'),t('lookSub'));
   h+='</div><div><h3>'+t('skillsH')+'</h3>';
-  [0,1].forEach(i=>{const sk=sks[C.slots[i]];h+=row(sk.icon,skn(sk),t('slotInfo',i+1,sk.lv>L,sk.lv,Math.round(E.skillCd(C.cls,L,sk))));});
+  [0,1,2].forEach(i=>{const sk=sks[i];h+=row(sk.icon,skn(sk),t('slotInfo',i+1,sk.lv>L,sk.lv,Math.round(E.skillCd(C.cls,L,sk))));});
   h+='<h3>'+t('activeQ')+' '+C.qs.length+'/3</h3>'+(C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i],qm=E.MON[q.t];return row(qm.icon,t('defeat',q.n,mn(q.t)),t('progRew',Math.min(a.p,q.n),q.n)+ic('coin',14)+qReward(a.i).coins);}).join(''):row('📋',t('qNone'),t('misTown')))+'</div></div>';
   $('#profR').innerHTML=h;
 }
@@ -2994,11 +3031,8 @@ const gear=$('#gear');gear.addEventListener('pointerdown',gStart);['pointerup','
 function openMenu(){if(mode!=='play')return;paused=true;S.defDown=false;S.blocking=false;show('pause',false);renderMenu();show('menu',true);}
 function renderMenu(){
   const L=level(),box=$('#skillCfg');box.innerHTML='';
-  [0,1].forEach(i=>{const row=document.createElement('div');row.className='rowx';row.style.marginBottom='8px';const lb=document.createElement('b');lb.textContent=t('btnN',i+1);lb.style.minWidth='72px';row.appendChild(lb);
-    const chips=document.createElement('div');chips.className='chips';
-    E.unlocked(C.cls,L).forEach(si=>{const sk=E.SKILLS[C.cls][si],b=document.createElement('button');b.className='chipb'+(C.slots[i]===si?' sel':'');b.textContent=sk.icon+' '+skn(sk);b.style.fontSize='15px';
-      b.addEventListener('click',()=>{SFX.click();const o=1-i;if(C.slots[o]===si)C.slots[o]=C.slots[i];C.slots[i]=si;saveDB();renderMenu();});chips.appendChild(b);});
-    row.appendChild(chips);box.appendChild(row);});
+  mySkills().forEach((sk,i)=>{const row=document.createElement('div');row.className='rowx';row.style.marginBottom='8px';const lb=document.createElement('b');lb.textContent=t('btnN',i+1);lb.style.minWidth='72px';row.appendChild(lb);
+    const chips=document.createElement('div');chips.className='chips';const b=document.createElement('span');b.className='chipb'+(sk.lv<=L?' sel':'');b.style.fontSize='15px';b.textContent=sk.icon+' '+skn(sk)+(sk.lv>L?' 🔒 Lv'+sk.lv:'');chips.appendChild(b);row.appendChild(chips);box.appendChild(row);});
   const cc=$('#camCfg');cc.innerHTML='';[['fixed','camFixed'],['rot','camRot']].forEach(o=>{const b=document.createElement('button');b.className='pill'+(CAMMODE===o[0]?' go':'');b.textContent=t(o[1]);b.addEventListener('click',()=>{SFX.click();setCamMode(o[0]);renderMenu();});cc.appendChild(b);});
   const oc=$('#orCfg');oc.innerHTML='';[['auto','orAuto'],['land','orLand'],['port','orPort']].forEach(o=>{const b=document.createElement('button');b.className='pill'+(ORIENT===o[0]?' go':'');b.textContent=t(o[1]);b.addEventListener('click',()=>{SFX.click();setOrient(o[0]);renderMenu();});oc.appendChild(b);});
   $('#saveNote').textContent=storageOK?t('saveNoteOk'):t('saveNoteBad');
