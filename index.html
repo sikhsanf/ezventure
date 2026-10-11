@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-174803"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-175605"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -125,7 +125,7 @@ h3{font-size:17px;margin:12px 0 6px}
 .sw{display:flex;gap:8px;flex-wrap:wrap}
 .cols>.col{min-width:0}
 #create .chips,#create .cards{flex-wrap:wrap}
-#create .cards{display:grid;grid-template-columns:repeat(3,1fr)}
+#create .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .sw button{width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);padding:0;cursor:pointer;touch-action:manipulation}
 .sw button.sel{outline:4px solid var(--sun);outline-offset:1px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -327,7 +327,10 @@ body.bal #cineSkip{display:none}
 }
 @media (orientation:landscape) and (max-height:520px){
   .ov.side .panel{--pw:min(640px,62%)}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}
+  .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 14px;align-items:start}
+  #create .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  #create .ccard{font-size:11.5px;padding:4px 1px;overflow:hidden}#create .ccard small{font-size:10.5px}
+  .chips,.sw{gap:6px}
   .ov.side h3{margin:6px 0 3px;font-size:14px}
   .ccard{padding:4px 2px}.ccard .e{font-size:22px}.hsb img{width:34px;height:34px}.sw button{width:36px;height:36px}
 }

@@ -51,7 +51,10 @@ h2,h3{font-family:var(--f-display);margin:0}
 }
 @media (orientation:landscape) and (max-height:520px){
   .ov.side .panel{--pw:min(640px,62%)}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}
+  .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 14px;align-items:start}
+  #create .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  #create .ccard{font-size:11.5px;padding:4px 1px;overflow:hidden}#create .ccard small{font-size:10.5px}
+  .chips,.sw{gap:6px}
   .ov.side h3{margin:6px 0 3px;font-size:14px}
   .ccard{padding:4px 2px}.ccard .e{font-size:22px}.hsb img{width:34px;height:34px}.sw button{width:36px;height:36px}
 }
