@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-070625"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-073246"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -437,6 +437,7 @@ body.cine #cine .lb{transform:none}
         <h3 data-i="advT"></h3>
         <p class="note" data-i="advNote"></p>
         <div class="rowx" id="mAdv" style="margin-top:6px"></div>
+        <div class="rowx" style="margin-top:8px"><button class="pill" id="mCine" data-i="cineAgain"></button></div>
         <h3 data-i="lblChar"></h3>
         <div class="rowx"><button class="pill warn" id="mDel"></button></div>
       </div>
@@ -520,12 +521,12 @@ window.EZ=(function(){
   const SKILLS={
     sword:[
       {id:'bash',icon:'🛡️',lv:5,cd:7,kind:'arc',mult:1.3,range:3,arc:120,stun:1.5},
-      {id:'wall',icon:'🏰',lv:10,cd:20,kind:'ward',dur:5,mul:.3,taunt:9},
-      {id:'rally',icon:'🚩',lv:15,cd:32,kind:'heal',pct:.4,ward:3,mul:.4}
+      {id:'wall',icon:'🏰',lv:10,cd:20,kind:'ward',dur:5,mul:.3,taunt:9,team:9},
+      {id:'rally',icon:'🚩',lv:15,cd:32,kind:'heal',pct:.4,ward:3,mul:.4,team:9}
     ],
     great:[
       {id:'cleave',icon:'🌙',lv:5,cd:6,kind:'arc',mult:2.6,range:3.8,arc:200},
-      {id:'roar',icon:'📣',lv:10,cd:24,kind:'buff',dmg:1.35,dur:8},
+      {id:'roar',icon:'📣',lv:10,cd:24,kind:'buff',dmg:1.35,dur:8,team:9},
       {id:'quake',icon:'🌋',lv:15,cd:22,kind:'aoe',mult:4.2,radius:5,center:'self',stun:1.3,color:0xc8903a}
     ],
     bow:[
@@ -545,7 +546,7 @@ window.EZ=(function(){
     ],
     book:[
       {id:'dark',icon:'🟣',lv:5,cd:6,kind:'proj',mult:1,count:3,spread:.32,big:true,color:0x7a3aff},
-      {id:'light',icon:'✨',lv:10,cd:15,kind:'aoe',mult:1.8,radius:5,center:'self',heal:.2,color:0xfff3a0},
+      {id:'light',icon:'✨',lv:10,cd:15,kind:'aoe',mult:1.8,radius:5,center:'self',heal:.2,color:0xfff3a0,team:6},
       {id:'grav',icon:'🌀',lv:15,cd:26,kind:'aoe',mult:4.5,radius:6,center:'target',range:9,delay:.6,pull:1,stun:2,color:0x5a3aa8}
     ]
   };
@@ -624,16 +625,16 @@ window.EZ=(function(){
   /* advanced classes: unlocked by the promotion exam; their 3 skills REPLACE the weapon's basic skills */
   const ADV={
     ksatria:{cls:'warrior',path:'sword',icon:'🛡️',skills:[
-      {id:'holy',icon:'✨',lv:10,cd:18,kind:'ward',dur:6,mul:.25,taunt:10},
+      {id:'holy',icon:'✨',lv:10,cd:18,kind:'ward',dur:6,mul:.25,taunt:10,team:10},
       {id:'smite',icon:'🔆',lv:12,cd:8,kind:'arc',mult:3.2,range:3.4,arc:150,stun:1.5,sh:.08},
-      {id:'bastion',icon:'🏯',lv:15,cd:30,kind:'heal',pct:.5,ward:5,mul:.3,taunt:9}]},
+      {id:'bastion',icon:'🏯',lv:15,cd:30,kind:'heal',pct:.5,ward:5,mul:.3,taunt:9,team:9}]},
     amuk:{cls:'warrior',path:'great',icon:'🔥',skills:[
       {id:'spin',icon:'🌀',lv:10,cd:7,kind:'arc',mult:3.4,range:4.2,arc:360},
-      {id:'fury',icon:'😤',lv:12,cd:24,kind:'buff',dur:9,m:1.55},
+      {id:'fury',icon:'😤',lv:12,cd:24,kind:'buff',dur:9,m:1.55,team:9},
       {id:'quake2',icon:'🌋',lv:15,cd:22,kind:'aoe',mult:5,radius:6,center:'self',stun:1.5,rage:.9,color:0xff8a3a}]},
     kimia:{cls:'mage',path:'staff',icon:'⚗️',skills:[
       {id:'colorboom',icon:'🎆',lv:10,cd:8,kind:'aoe',mult:1.7,radius:4.4,center:'target',range:9,waves:3,color:0xff7ad8},
-      {id:'potion',icon:'🧪',lv:12,cd:20,kind:'heal',pct:.45,ward:4,mul:.5},
+      {id:'potion',icon:'🧪',lv:12,cd:20,kind:'heal',pct:.45,ward:4,mul:.5,team:10},
       {id:'bubble',icon:'🫧',lv:15,cd:26,kind:'aoe',mult:5.2,radius:5,center:'target',range:9,delay:.6,pull:1,stun:2.4,color:0x8ee8ff}]},
     listrik:{cls:'mage',path:'book',icon:'⚡',skills:[
       {id:'zap',icon:'⚡',lv:10,cd:6,kind:'proj',mult:1.4,count:3,spread:.34,big:true,color:0x7ad8ff},
@@ -645,7 +646,7 @@ window.EZ=(function(){
       {id:'megabomb',icon:'💥',lv:15,cd:28,kind:'aoe',mult:8,radius:5.2,center:'target',range:9,delay:.7,stun:1.2,color:0xff8a2a}]},
     angin:{cls:'ranger',path:'bow',icon:'🍃',skills:[
       {id:'lightning',icon:'🌟',lv:10,cd:9,kind:'proj',mult:.62,count:1,volley:10,gap:.06,color:0xfff2a0},
-      {id:'breeze',icon:'🍃',lv:12,cd:12,kind:'dash',haste:5},
+      {id:'breeze',icon:'🍃',lv:12,cd:12,kind:'dash',haste:5,team:7},
       {id:'stormrain',icon:'🌧️',lv:15,cd:22,kind:'aoe',mult:1.15,waves:6,radius:6,center:'target',range:9,color:0xbff0ff}]}
   };
   const ADV_OF={warrior:['ksatria','amuk'],mage:['kimia','listrik'],ranger:['jitu','angin']};
@@ -811,6 +812,8 @@ Object.assign(TX.en,{advT:'Advanced class (test)',advNote:'Temporary for testing
  sk_aim:'Deadly Aim',sk_thorn:'Thorn Trap',sk_megabomb:'Mega Bomb',sk_lightning:'Lightning Arrows',sk_breeze:'Wind Step',sk_stormrain:'Storm Arrow Rain',
  cls_mage:'Scientist',role_mage:'Science',wp_staff:'Lab Staff',wp_book:'Zap Gadget',ps_staff:'Chemistry experiments · attack +6%',ps_book:'Electricity & light · skill cooldown −15%',
  sk_dark:'Purple Orb',sk_light:'Bright Beam',sk_grav:'Energy Vortex',sk_ice:'Freeze Fluid',lm_mage:'Laboratory Tower',lmS_mage:'Home of scientists',hg9:'Star Scientist Hat'});
+Object.assign(TX.id,{cineAgain:'Putar ulang cutscene kota',cineNext:'Cutscene akan diputar saat masuk kota'});
+Object.assign(TX.en,{cineAgain:'Replay town cutscene',cineNext:'The cutscene plays when you enter a town'});
 function t(k,a,b,c){let v=TX[LANG][k];if(v===undefined)v=TX.id[k];if(v===undefined)return k;return typeof v==='function'?v(a,b,c):v;}
 const cn=c=>t('cls_'+c),tnm=c=>t('town_'+c),skn=s=>t('sk_'+s.id),mn=k=>t('mon_'+k);
 const eqName=(kind,cls,i,p)=>{const item=kind==='w'?t('wp_'+WPATHS[cls][p|0]):t('an_'+cls),tier=t((kind==='w'?'tw':'ta')+i);return LANG==='id'?item+' '+tier:tier+' '+item;};
@@ -1792,6 +1795,7 @@ function hostMsg(R,d){
     case 'pos':onPos(R,d);if(R.p){const o2=Object.assign({},d,{s:R.slot});coopList().forEach(o=>{if(o!==R)rawSend(o.conn,o2);});}break;
     case 'need':R.lm=0;break;
     case 'hit':onHit(R,d);break;
+    case 'buf':onBuf(d);if(R.p){const o2=Object.assign({},d,{s:R.slot});coopList().forEach(o=>{if(o!==R)rawSend(o.conn,o2);});}break;
     case 'bye':hostLost(R);break;
     case 'qs':if(Array.isArray(d.q)){setSharedQs(d.q);coopList().forEach(o=>{if(o!==R)rawSend(o.conn,{t:'qs',q:d.q});});}break;
   }
@@ -1838,6 +1842,7 @@ function guestMsg(d){
     case 'qs':setSharedQs(d.q);break;
     case 'mons':onMons(d);break;
     case 'kill':onKill(d);break;
+    case 'buf':if(sl!==coop.me)onBuf(d);break;
     case 'hurt':if(zone&&zone.sync&&!paused&&!trans&&S.state==='play'&&mode==='play')hurt(clamp((+d.a)||1,1,999),clamp((+d.l)||0,0,30));break;
     case 'bye':guestLost(coop.conn);break;
   }
@@ -2857,7 +2862,25 @@ function useSkill(i){
     else if(sk.kind==='dash'){const k=readInput();if(k.m>.2){S.ddx=k.x/k.m;S.ddz=k.z/k.m;}else{S.ddx=Math.sin(S.face);S.ddz=Math.cos(S.face);}S.face=Math.atan2(S.ddx,S.ddz);S.dodgeT=.35;S.inv=Math.max(S.inv,.9);S.hasteT=sk.haste;SFX.dodge();ringFx(S.x,S.z,2.4,0xbff0ff,.4);burst(S.x,.6,S.z,0xbff0ff,22,5,3);}
     else if(sk.kind==='buff'){S.buffT=sk.dur;S.buffM=sk.m||1.2;ringFx(S.x,S.z,7,0xff8a3a,.5);burst(S.x,1.2,S.z,0xff8a3a,22,5,5);shake=Math.max(shake,.3);for(const m of zone.mons)if(!m.dead&&m.state==='idle'&&Math.hypot(m.x-S.x,m.z-S.z)<9)m.state='chase';}
   };
-  after(nonAtk?dur*.25:dur*(sk.kind==='arc'?.35:sk.kind==='proj'?.58:.5),run);
+  after(nonAtk?dur*.25:dur*(sk.kind==='arc'?.35:sk.kind==='proj'?.58:.5),()=>{run();teamBuf(sk);});
+}
+/* support skills also help friends who are close by (co-op) */
+function teamBuf(sk){
+  if(!sk.team||!coopOn()||S.state!=='play')return;
+  const o={t:'buf',x:+S.x.toFixed(2),z:+S.z.toFixed(2),r:sk.team,zk:zkey()};
+  if(sk.kind==='heal'){o.h=sk.pct;o.w=sk.ward||0;o.m=sk.mul||1;}else if(sk.kind==='ward'){o.w=sk.dur;o.m=sk.mul;}else if(sk.kind==='buff'){o.bd=sk.dur;o.bm=sk.m||1.2;}else if(sk.kind==='dash'){o.hs=sk.haste;}else if(sk.heal){o.h=sk.heal;}else return;
+  coopSend(o);
+}
+function onBuf(d){
+  if(!d||S.state!=='play'||paused||trans||mode!=='play'||!zone)return;
+  const f=v=>Number.isFinite(+v)?+v:0;if(d.zk!==zkey())return;
+  if(Math.hypot(S.x-f(d.x),S.z-f(d.z))>clamp(f(d.r),1,14))return;
+  let any=false;
+  if(f(d.h)>0){const h=Math.round(S.maxHp*clamp(f(d.h),0,.6));S.hp=Math.min(S.maxHp,S.hp+h);float('+'+h,S.x,2.6,S.z,'heal');any=true;}
+  if(f(d.w)>0){S.wardT=Math.max(S.wardT,clamp(f(d.w),0,10));S.wardMul=clamp(f(d.m)||1,.2,1);any=true;}
+  if(f(d.bd)>0){S.buffT=Math.max(S.buffT,clamp(f(d.bd),0,12));S.buffM=clamp(f(d.bm)||1.2,1,1.8);any=true;}
+  if(f(d.hs)>0){S.hasteT=Math.max(S.hasteT||0,clamp(f(d.hs),0,8));any=true;}
+  if(any){burst(S.x,1,S.z,0x7dffa8,16,3.5,4);ringFx(S.x,S.z,2.4,0xfff3a0,.5);SFX.heal();}
 }
 
 function doDodge(){
@@ -2980,6 +3003,7 @@ function updatePlay(dt){
     addCol(S,.45);
     if(zone.portals){let nr=false;for(const PP of zone.portals){const d=Math.hypot(S.x-PP.x,S.z-PP.z);if(d<PP.r){nr=true;if(S.portalLock<=0){usePortal(PP);break;}}else if(d<PP.r+1.2)nr=true;}if(!nr&&S.portalLock>0&&S.portalLock<1.1)S.portalLock=0;}
   }
+  if(zone.id==='town'&&C.tut>=7&&!CINE.on&&!trans&&!((C.cs|0)&CSB[zone.cls]))startCine();
   // spawner
   if(!zone.sync)for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);if(phaseTypes(zone.id).indexOf(q.type)>=0)spawnMon(q.type);}}
   zone.mons.slice().forEach(m=>updMon(m,dt));
@@ -3467,6 +3491,7 @@ function renderMenu(){
   const del=$('#mDel');del.textContent=t('delHero');del.dataset.arm='';
 }
 $('#mClose').addEventListener('click',()=>{SFX.click();show('menu',false);paused=false;saveDB();});
+$('#mCine').addEventListener('click',()=>{SFX.click();C.cs=0;saveDB();show('menu',false);paused=false;if(zone&&zone.id==='town')startCine();else banner(t('cineNext'));});
 let delT=null;$('#mDel').addEventListener('click',e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm='1';b.textContent=t('sure');clearTimeout(delT);delT=setTimeout(()=>{b.dataset.arm='';b.textContent=t('delHero');},3000);return;}DB.slots[curSlot]=null;saveDB();show('menu',false);showTitle();});
 let ioFrom='title';
 function openIo(from){ioFrom=from;$('#ioText').value=encodeDB();$('#ioMsg').textContent='';show('io',true);if(from==='menu')show('menu',false);}
@@ -3517,7 +3542,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
