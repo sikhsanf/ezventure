@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-091216"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-093201"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -333,9 +333,19 @@ body.demo #cineCap{display:block}
   #map .pbody{padding:8px 8px 8px 0}
 }
 @media (max-width:640px) and (orientation:portrait){#map .panel{height:auto;max-height:92%}#map .pbody{height:calc(100vw - 8px);flex:none}}
+#story{position:fixed;inset:0;z-index:90;display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:max(12px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom));box-sizing:border-box;color:var(--ink);transition:background .5s}
+#story.show{display:flex}
+#stArt{flex:1;display:flex;align-items:center;justify-content:center;gap:2vmin;font-size:min(22vh,18vw);line-height:1;min-height:0}
+#stArt span{display:inline-block;animation:stfl 3s ease-in-out infinite;filter:drop-shadow(0 6px 0 rgba(43,35,80,.35))}#stArt span:nth-child(2){animation-delay:-1s}#stArt span:nth-child(3){animation-delay:-2s}#stArt span:nth-child(4){animation-delay:-1.5s}
+@keyframes stfl{50%{transform:translateY(-2.2vh) rotate(3deg)}}
+#stBox{width:min(640px,100%);background:var(--paper);border:4px solid var(--ink);border-radius:var(--r-panel,22px);box-shadow:0 6px 0 var(--ink);padding:14px 18px;box-sizing:border-box}
+#stTxt{font:800 clamp(16px,3.6vh,24px)/1.35 var(--f-body);min-height:3.8em;display:flex;align-items:center}
+#stDots{display:flex;gap:6px;justify-content:center;margin:8px 0}#stDots i{width:10px;height:10px;border-radius:50%;background:#d9d2c0;border:2px solid var(--ink)}#stDots i.on{background:var(--sun)}
+.stBtns{display:flex;gap:10px;justify-content:space-between}
 </style>
 
 <div id="app">
+  <div id="story"><div id="stArt"></div><div id="stBox"><div id="stTxt"></div><div id="stDots"></div><div class="stBtns"><button class="pill" id="stSkip"></button><button class="pill go" id="stNext"></button></div></div></div>
   <canvas id="c"></canvas>
   <div id="fx"></div>
   <div id="names"></div>
@@ -424,6 +434,7 @@ body.demo #cineCap{display:block}
         <button class="pill" id="pTitle" data-i="titleScr"></button>
         <button class="pill" id="pSnd"></button>
         <button class="pill" id="pRot"></button>
+        <button class="pill" id="pStory" data-i="storyBtn"></button>
         <div class="rowx deskonly"><b data-i="keysSw"></b><button class="swt" id="pKeys" aria-label="Keys"></button></div>
         <div class="rowx"><b data-i="langL"></b><div class="langSw" id="langSw1"></div></div>
         <div class="rowx"><button class="mini" id="gear" aria-label="Advanced settings"><span class="ring" id="gearRing"></span><span class="ico" style="width:24px;height:24px" data-ic="gear"></span></button><span class="note" style="margin:0" data-i="parentHold"></span></div>
@@ -713,7 +724,7 @@ pond:'<path d="M32 5 Q51 28 51 39 A19 19 0 0 1 13 39 Q13 28 32 5Z" fill="#5fb8ff
 mush:'<rect x="25" y="34" width="14" height="22" rx="5" fill="#f4efe0"/><path d="M6 38 Q6 8 32 8 Q58 8 58 38Z" fill="#e0453c"/><circle cx="21" cy="24" r="4.5" fill="#fff" stroke-width="2.4"/><circle cx="39" cy="19" r="4" fill="#fff" stroke-width="2.4"/><circle cx="46" cy="30" r="3.5" fill="#fff" stroke-width="2.4"/>',
 tent:'<path d="M5 56 L32 9 L59 56Z" fill="#e0603c"/><path d="M32 29 L23 56 H41Z" fill="#5a3b2a"/>'
 };
-IC.ranch='<path d="M8 28 L32 8 L56 28 V54 H8Z" fill="#e0603c"/><rect x="23" y="34" width="18" height="20" fill="#fff1c8"/><path d="M23 34 L41 54 M41 34 L23 54" stroke-width="3"/>';IC.hgear='<path d="M10 44 L12 20 L22 32 L32 14 L42 32 L52 20 L54 44Z" fill="#ffd84a"/><rect x="10" y="44" width="44" height="9" rx="3" fill="#ffc83a"/><circle cx="32" cy="36" r="4" fill="#e0453c"/>';IC.tele='<path d="M32 4 L50 26 L32 60 L14 26Z" fill="#7ae8ff"/><path d="M32 4 L50 26 L32 30 L14 26Z" fill="#bff4ff"/><path d="M32 30 L32 60 L14 26Z" fill="#46c4f0"/>';
+IC.ranch='<path d="M8 28 L32 8 L56 28 V54 H8Z" fill="#e0603c"/><rect x="23" y="34" width="18" height="20" fill="#fff1c8"/><path d="M23 34 L41 54 M41 34 L23 54" stroke-width="3"/>';IC.labgate='<rect x="14" y="28" width="36" height="26" rx="5" fill="#c06bff"/><path d="M22 28 V20 A10 10 0 0 1 42 20 V28" fill="none" stroke-width="5"/><circle cx="32" cy="41" r="4" fill="#fff"/>';IC.hgear='<path d="M10 44 L12 20 L22 32 L32 14 L42 32 L52 20 L54 44Z" fill="#ffd84a"/><rect x="10" y="44" width="44" height="9" rx="3" fill="#ffc83a"/><circle cx="32" cy="36" r="4" fill="#e0453c"/>';IC.tele='<path d="M32 4 L50 26 L32 60 L14 26Z" fill="#7ae8ff"/><path d="M32 4 L50 26 L32 30 L14 26Z" fill="#bff4ff"/><path d="M32 30 L32 60 L14 26Z" fill="#46c4f0"/>';
 IC.rotR='<path d="M50 34 A18 18 0 1 1 38 15" fill="none" stroke-width="7"/><path d="M31 5 L47 14 L33 26Z" fill="#ffd84a" stroke-width="4"/>';IC.rotL='<g transform="translate(64 0) scale(-1 1)">'+IC.rotR+'</g>';
 IC.clinic='<rect x="8" y="8" width="48" height="48" rx="12" fill="#fff"/><path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z" fill="#e0453c"/>';
 const icSvg=(n,wh)=>'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"'+(wh?' width="'+wh+'" height="'+wh+'"':' width="100%" height="100%"')+' stroke="#2b2350" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">'+(IC[n]||'')+'</svg>';
@@ -740,7 +751,7 @@ id:{
  ctr_warrior:'Air Mancur',ctr_mage:'Lingkaran Energi',ctr_ranger:'Api Unggun Besar',camp:'Kemah api unggun',campS:'Tempat istirahat',windmill:'Kincir angin',pond:'Kolam',mush:'Kebun jamur',
  questDone:'Misi selesai!',faint:'Zzz…',err:'Grafik 3D tidak bisa dimuat. Game ini butuh internet sekali untuk memuat Three.js dan perangkat yang mendukung WebGL.',
  camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',orT:'Layar HP',orAuto:'Otomatis',orLand:'Landscape',orPort:'Portrait',orNote:'Untuk mengunci arah layar, aplikasi akan masuk layar penuh.',orFail:'Gagal mengunci layar. Putar HP kamu secara manual ya.',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
- petN0:'☀️ aktif siang',petN1:'🌙 aktif malam',petN2:'☀️🌙 siang & malam',examReady:'Kamu sudah Lv 10! Temui Ketua di Markas untuk ujian naik kelas 🎓',examReadyChip:'Siap ujian naik kelas! Temui Ketua di Markas',keysSw:'⌨️ Petunjuk tombol',menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
+ petN0:'☀️ aktif siang',petN1:'🌙 aktif malam',petN2:'☀️🌙 siang & malam',examReady:'Kamu sudah Lv 10! Temui Ketua di Markas untuk ujian naik kelas 🎓',examReadyChip:'Siap ujian naik kelas! Temui Ketua di Markas',storyBtn:'📖 Cerita dunia',stSkip:'Lewati',stNext:'Lanjut',stGo:'Mulai petualangan!',st1:'Di dunia Ezventure, tiga kota hidup damai: Benteng Besi para ksatria, Menara Bintang para ilmuwan, dan Pondok Daun para pemburu.',st2:'Prof. Nova dan Prof. Zarko dulu sahabat ilmuwan. Bersama-sama mereka membuat banyak penemuan hebat.',st3:'Tapi Prof. Zarko jadi serakah. Dia ingin menguasai seluruh dunia! Dia membuat Zat Mutan ungu dan menyebarkannya lewat balon dan pipa.',st4:'Hewan dan tanaman yang terkena zat itu bermutasi jadi monster. Mereka bukan jahat, mereka cuma bingung dan berubah.',st5:'Prof. Zarko bersembunyi di markas rahasia. Pintunya dikunci rapat oleh sistem pintarnya, dan belum ada yang bisa membukanya.',st6:'Sekarang dunia butuh pahlawan! Berlatih, naik level, ajak teman, dan cari cara membuka pintu itu bersama-sama.',labGateN:'Pintu Rahasia',labGateSub:'🔒 Terkunci',labG1:'Wow, pintu baja raksasa! Ada cahaya ungu aneh di sekelilingnya.',labG2:'Ini pintu ke markas rahasia Prof. Zarko. Sistemnya canggih sekali, pintunya terkunci rapat.',labG3:'Belum ada yang bisa membukanya… Jadi lebih kuat dulu, lalu cari cara membukanya!',labT:'Markas Prof. Zarko',labSub:'Laboratorium rahasia',mStory:'Hati-hati ya! Prof. Zarko menyebar Zat Mutan sampai hewan dan tanaman berubah jadi monster. Markas rahasianya masih terkunci.',mStoryM:'Prof. Zarko itu sahabat lamaku. Aku sedih melihat dia berubah. Tolong bantu hentikan dia, ya! Markasnya masih terkunci rapat.',keysSw:'⌨️ Petunjuk tombol',menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',sndOn:'Suara: nyala',sndOff:'Suara: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
  aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Bertahan',aUse:'Bicara',aClose:'Tutup',
  keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>bertahan<b>U</b><b>I</b><b>O</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -751,7 +762,7 @@ id:{
  mon_moth:'Ngengat Bulan',mon_pup:'Anak Serigala Bayangan',mon_crab:'Kepiting Cahaya',mon_mole:'Tikus Penggali',mon_firefly:'Kunang-kunang',mon_fox:'Rubah Bulan',mon_snail:'Siput Mimpi',mon_jelly:'Jeli Hijau',mon_bunny:'Kelinci Mochi',mon_bee:'Lebah Madu',mon_king:'Raja Jeli',
  sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',sk_wall:'Dinding Besi',sk_rally:'Panji Semangat',sk_cleave:'Tebasan Bulan',sk_quake:'Hantaman Gempa',sk_flurry:'Tembakan Beruntun',sk_bolt:'Baut Tembus',sk_snare:'Jaring Jebakan',sk_siege:'Peluru Meriam',sk_wind:'Badai Angin',sk_dark:'Bola Kegelapan',sk_light:'Cahaya Suci',sk_grav:'Lubang Gravitasi',
  wn_warrior:'Pedang',wn_mage:'Tongkat Lab',wn_ranger:'Busur',an_warrior:'Zirah',an_mage:'Jas Lab',an_ranger:'Baju Pemburu',
- tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Alat Listrik',ps_sword:'Perisai kuat · damage diterima −10%',ps_great:'Serangan +30%, ayunan agak lambat',ps_bow:'Tembak cepat, damage kecil',ps_xbow:'Tembak lambat, damage besar',ps_staff:'Eksperimen kimia · serangan +6%',ps_book:'Listrik & cahaya · jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Aksesoris',hgS:'Aksesoris lucu untuk gayamu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Aksesoris',hgNote:'Aksesoris lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Aksesoris menggantikan topi dari Penata Gaya.',hgNone:'Tanpa aksesoris',hgNoneS:'Lepas aksesoris',hgOwned:'Sudah dimiliki',hgPrice:'Aksesoris spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Ilmuwan Bintang',hg10:'Topi Jerami',hg11:'Tanduk Iblis Mini',hg12:'Halo Malaikat',hg13:'Topi Sinterklas',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal',ta4:'Bintang',ta5:'Naga',ta6:'Legenda',wpAdv:'Kelas lanjutan',shopAdvNote:'Senjata tier 6–10 dan zirah tier 5–7 khusus kelas lanjutan. Ikut ujian di markas saat Level 10.'
+ tw0:'Latihan',tw1:'Perunggu',tw2:'Besi',tw3:'Baja',tw4:'Perak',tw5:'Emas',tw6:'Kristal',tw7:'Bintang',tw8:'Naga',tw9:'Legenda',wp_sword:'Pedang & Perisai',wp_great:'Pedang Besar',wp_bow:'Busur',wp_xbow:'Busur Silang',wp_staff:'Tongkat',wp_book:'Alat Listrik',ps_sword:'Perisai kuat · damage diterima −10%',ps_great:'Serangan +30%, ayunan agak lambat',ps_bow:'Tembak cepat, damage kecil',ps_xbow:'Tembak lambat, damage besar',ps_staff:'Eksperimen kimia · serangan +6%',ps_book:'Listrik & cahaya · jeda jurus −15%',wpAway:n=>'Senjata hanya dijual di '+n+'. Pulang ke kota kelasmu dulu ya!',wpLock:'Terkunci',nHg:'Toko Aksesoris',hgS:'Aksesoris lucu untuk gayamu',nTele:'Kristal Teleport',teleS:'Pindah ke kota lain',closed:'Tutup 🌙 (istirahat)',hgT:'Toko Aksesoris',hgNote:'Aksesoris lucu, harganya mahal! Sekali beli bisa dipakai ganti-ganti. Aksesoris menggantikan topi dari Penata Gaya.',hgNone:'Tanpa aksesoris',hgNoneS:'Lepas aksesoris',hgOwned:'Sudah dimiliki',hgPrice:'Aksesoris spesial',hgWear:'Pakai',teleT:'Kristal Teleport',teleNote:'Bayar koin untuk teleport ke kota lain. Harga naik sesuai level kamu.',teleHere:'Kamu di sini',hg1:'Pita Merah',hg2:'Topi Baseball',hg3:'Topi Koki',hg4:'Mahkota Bunga',hg5:'Telinga Kucing',hg6:'Telinga Beruang',hg7:'Topi Bajak Laut',hg8:'Helm Akuarium',hg9:'Topi Ilmuwan Bintang',hg10:'Topi Jerami',hg11:'Tanduk Rusa Mini',hg12:'Cincin Bintang',hg13:'Topi Salju',hg14:'Topi Bebek',hg15:'Topi Pesta',hg16:'Mahkota Emas',hg17:'Helm Viking',hg18:'Topi Jamur',hg19:'Tudung Naga Mini',hg20:'Mahkota Pelangi',friendHere:'Di peta ini',free:'Gratis',wpNote:n=>'Beli senjata baru → senjata lama otomatis dijual +'+n+' koin (50%).',wpOwned:'Dipakai ✓',wpLower:'Lebih rendah',armorH:'Armor',ta0:'Dasar',ta1:'Besi',ta2:'Emas',ta3:'Kristal',ta4:'Bintang',ta5:'Naga',ta6:'Legenda',wpAdv:'Kelas lanjutan',shopAdvNote:'Senjata tier 6–10 dan zirah tier 5–7 khusus kelas lanjutan. Ikut ujian di markas saat Level 10.'
 },
 en:{
  tag:'A fun adventure together!',nClinic:'Clinic',clinicS:'Restore health · 50 coins',clFull:'Health is already full! ❤️',clNoCoin:'Not enough coins (need 50)',clDone:'Good as new! ❤️ −50 coins',rest:'Rest',wake:'Get up',restBusy:'Enemies nearby, can\'t rest!',restDone:'Fully rested! 💪',tap:'🎵 Tap the screen to turn on music',play:'▶ Start adventure!',pick:'Choose your hero',back:'Back',code:'Save code',newHero:'New hero',
@@ -770,7 +781,7 @@ en:{
  ctr_warrior:'Fountain',ctr_mage:'Energy Circle',ctr_ranger:'Great Campfire',camp:'Campfire camp',campS:'A place to rest',windmill:'Windmill',pond:'Pond',mush:'Mushroom patch',
  questDone:'Quest complete!',faint:'Zzz…',err:'The 3D graphics could not load. This game needs internet once to load Three.js and a device that supports WebGL.',
  camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',orT:'Phone screen',orAuto:'Auto',orLand:'Landscape',orPort:'Portrait',orNote:'To lock the orientation the app goes fullscreen.',orFail:"Couldn't lock the screen. Please rotate your phone manually.",camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
- petN0:'☀️ active by day',petN1:'🌙 active at night',petN2:'☀️🌙 day & night',examReady:'You reached Lv 10! Visit the Guild Master at the Guildhall for your class promotion exam 🎓',examReadyChip:'Ready for the promotion exam! Visit the Guild Master',keysSw:'⌨️ Key hints',menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
+ petN0:'☀️ active by day',petN1:'🌙 active at night',petN2:'☀️🌙 day & night',examReady:'You reached Lv 10! Visit the Guild Master at the Guildhall for your class promotion exam 🎓',examReadyChip:'Ready for the promotion exam! Visit the Guild Master',storyBtn:'📖 World story',stSkip:'Skip',stNext:'Next',stGo:'Start the adventure!',st1:'In the world of Ezventure, three towns live in peace: Ironhold for the knights, Star Tower for the scientists, and Leaf Lodge for the rangers.',st2:'Prof. Nova and Prof. Zarko were once best friends and scientists. Together they made many great inventions.',st3:'But Prof. Zarko became greedy. He wants to rule the whole world! He made a purple Mutant Goo and spread it with balloons and pipes.',st4:'Animals and plants touched by the goo mutated into monsters. They are not evil, just confused and changed.',st5:'Prof. Zarko hides in a secret lab. His smart system locked the door tight, and nobody can open it yet.',st6:'Now the world needs heroes! Train, level up, bring friends, and find a way to open that door together.',labGateN:'Secret Door',labGateSub:'🔒 Locked',labG1:'Wow, a giant steel door! Strange purple light glows around it.',labG2:'This is the door to Prof. Zarko\'s secret lab. His system is so advanced that the door is locked tight.',labG3:'Nobody can open it yet… Get stronger first, then find a way in!',labT:'Prof. Zarko\'s Lab',labSub:'Secret laboratory',mStory:'Be careful! Prof. Zarko spread Mutant Goo and turned animals and plants into monsters. His secret lab is still locked.',mStoryM:'Prof. Zarko is my old friend. It makes me sad to see him change. Please help stop him! His lab is locked tight.',keysSw:'⌨️ Key hints',menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',sndOn:'Sound: on',sndOff:'Sound: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
  aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Defend',aUse:'Talk',aClose:'Close',
  keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>defend<b>U</b><b>I</b><b>O</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -781,7 +792,7 @@ en:{
  mon_moth:'Lunar Moth',mon_pup:'Shadow Pup',mon_crab:'Glow Crab',mon_mole:'Digger Mole',mon_firefly:'Firefly',mon_fox:'Moon Fox',mon_snail:'Dream Snail',mon_jelly:'Green Jelly',mon_bunny:'Mochi Bunny',mon_bee:'Honey Bee',mon_king:'King Jelly',
  sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',sk_wall:'Iron Wall',sk_rally:'Rallying Banner',sk_cleave:'Crescent Cleave',sk_quake:'Quake Smash',sk_flurry:'Rapid Volley',sk_bolt:'Piercing Bolt',sk_snare:'Snare Net',sk_siege:'Cannon Shot',sk_wind:'Wind Storm',sk_dark:'Dark Orbs',sk_light:'Holy Light',sk_grav:'Gravity Well',
  wn_warrior:'Sword',wn_mage:'Lab Staff',wn_ranger:'Bow',an_warrior:'Armor',an_mage:'Lab Coat',an_ranger:'Hunter Garb',
- tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Zap Gadget',ps_sword:'Strong shield · damage taken −10%',ps_great:'Attack +30%, slower swing',ps_bow:'Fast shots, low damage',ps_xbow:'Slow shots, heavy damage',ps_staff:'Chemistry experiments · attack +6%',ps_book:'Electricity & light · skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',nHg:'Accessory Shop',hgS:'Cute accessories for your style',nTele:'Teleport Crystal',teleS:'Travel to another town',closed:'Closed 🌙 (resting)',hgT:'Accessory Shop',hgNote:"Cute accessories, but pricey! Buy once, swap anytime. Accessories replace the Stylist's hats.",hgNone:'No accessory',hgNoneS:'Take accessory off',hgOwned:'Owned',hgPrice:'Special accessory',hgWear:'Wear',teleT:'Teleport Crystal',teleNote:'Pay coins to teleport to another town. Price grows with your level.',teleHere:'You are here',hg1:'Red Bow',hg2:'Baseball Cap',hg3:'Chef Hat',hg4:'Flower Crown',hg5:'Cat Ears',hg6:'Bear Ears',hg7:'Pirate Hat',hg8:'Fishbowl Helmet',hg9:'Star Scientist Hat',hg10:'Straw Hat',hg11:'Mini Devil Horns',hg12:'Angel Halo',hg13:'Santa Hat',hg14:'Duck Hat',hg15:'Party Hat',hg16:'Golden Crown',hg17:'Viking Helmet',hg18:'Mushroom Cap',hg19:'Mini Dragon Hood',hg20:'Rainbow Crown',friendHere:'On this map',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal',ta4:'Starforged',ta5:'Dragon',ta6:'Legendary',wpAdv:'Advanced class',shopAdvNote:'Tier 6–10 weapons and tier 5–7 armor are for advanced classes only. Take the guild exam at Level 10.'
+ tw0:'Training',tw1:'Bronze',tw2:'Iron',tw3:'Steel',tw4:'Silver',tw5:'Golden',tw6:'Crystal',tw7:'Starforged',tw8:'Dragon',tw9:'Legendary',wp_sword:'Sword & Shield',wp_great:'Greatsword',wp_bow:'Bow',wp_xbow:'Crossbow',wp_staff:'Staff',wp_book:'Zap Gadget',ps_sword:'Strong shield · damage taken −10%',ps_great:'Attack +30%, slower swing',ps_bow:'Fast shots, low damage',ps_xbow:'Slow shots, heavy damage',ps_staff:'Chemistry experiments · attack +6%',ps_book:'Electricity & light · skill cooldown −15%',wpAway:n=>'Weapons are only sold in '+n+'. Head back to your class town!',wpLock:'Locked',nHg:'Accessory Shop',hgS:'Cute accessories for your style',nTele:'Teleport Crystal',teleS:'Travel to another town',closed:'Closed 🌙 (resting)',hgT:'Accessory Shop',hgNote:"Cute accessories, but pricey! Buy once, swap anytime. Accessories replace the Stylist's hats.",hgNone:'No accessory',hgNoneS:'Take accessory off',hgOwned:'Owned',hgPrice:'Special accessory',hgWear:'Wear',teleT:'Teleport Crystal',teleNote:'Pay coins to teleport to another town. Price grows with your level.',teleHere:'You are here',hg1:'Red Bow',hg2:'Baseball Cap',hg3:'Chef Hat',hg4:'Flower Crown',hg5:'Cat Ears',hg6:'Bear Ears',hg7:'Pirate Hat',hg8:'Fishbowl Helmet',hg9:'Star Scientist Hat',hg10:'Straw Hat',hg11:'Mini Antlers',hg12:'Star Ring',hg13:'Snow Hat',hg14:'Duck Hat',hg15:'Party Hat',hg16:'Golden Crown',hg17:'Viking Helmet',hg18:'Mushroom Cap',hg19:'Mini Dragon Hood',hg20:'Rainbow Crown',friendHere:'On this map',free:'Free',wpNote:n=>'Buying a new weapon auto-sells the old one for +'+n+' coins (50%).',wpOwned:'Equipped ✓',wpLower:'Lower tier',armorH:'Armor',ta0:'Basic',ta1:'Iron',ta2:'Gold',ta3:'Crystal',ta4:'Starforged',ta5:'Dragon',ta6:'Legendary',wpAdv:'Advanced class',shopAdvNote:'Tier 6–10 weapons and tier 5–7 armor are for advanced classes only. Take the guild exam at Level 10.'
 }};
 let LANG='id',LANG_SET=false;
 try{const l=localStorage.getItem('ezventure.lang');if(l==='id'||l==='en'){LANG=l;LANG_SET=true;}else LANG=/^id/i.test(navigator.language||'')?'id':'en';}catch(e){}
@@ -991,7 +1002,7 @@ function playStep(k,s,t,sd){
     if(battle>.5){noise(sfxBus,t+sd/2,.035,.05,8500,.8,'highpass');if(slot===3||slot===7)voice(sfxBus,150,t+sd/2,.12,'sine',.22,{slide:-100,att:.002});}
   }
 }
-function wantTrack(){if(mode!=='play')return 'title';if(!zone)return '';return zone.id==='meadow'?'meadow':zone.field?'field_'+zone.id:'town_'+(zone.cls||C.cls);}
+function wantTrack(){if(mode!=='play')return 'title';if(!zone)return '';return zone.lab?'field_dragon':zone.id==='meadow'?'meadow':zone.field?'field_'+zone.id:'town_'+(zone.cls||C.cls);}
 function musicPump(){
   if(!AC||AC.state!=='running'||muted||document.hidden){if(AC&&nextT<AC.currentTime)nextT=AC.currentTime+.05;return;}
   const w=wantTrack();if(w&&w!==trkName)setTrack(w);
@@ -1031,7 +1042,7 @@ function decodeDB(s){s=String(s||'').trim();if(s.indexOf('EZV1:')!==0)throw new 
 const HAIR=['#3b2a20','#e8b94a','#e0508a','#4a8fe0','#f3f0ea'];
 const SKIN=['#ffdcc0','#f3b98d','#c98a5c','#8d5a3b','#fbe8d5'];
 const OUTF=['#e0603c','#4f7de0','#3fb36b','#9a5de0','#f2c230'];
-const HATS=['—','🧢','🧙','🌸','🐰'];
+const HATS=['—','🧢','🥽','🌸','🐰'];
 const WP_P=[0,80,200,420,900,1700,3000,5000,8000,12500],WP_M=[1,1.12,1.26,1.42,1.62,1.85,2.12,2.45,2.85,3.3];
 const WTIER=WP_P.map((p,i)=>({p,m:WP_M[i]}));
 const WPATHS={warrior:['sword','great'],ranger:['bow','xbow'],mage:['staff','book']};
@@ -1233,7 +1244,7 @@ const petSleeps=id=>{const p=PETS[id];return !!p&&p.n!==2&&(p.n===1)!==!!TOD.nig
 const petFx=()=>{const o={atk:0,def:0,xp:0,coin:0,spd:0,rg:0},p=C&&C.pet?PETS[C.pet]:null;if(p&&!petSleeps(C.pet))o[p.k]=p.v/100;return o;};
 const hgf=()=>{const o=hgFx(effHat()),p=petFx();o.atk+=p.atk;o.def+=p.def;o.xp+=p.xp;o.coin+=p.coin;return o;};
 const mxHp=L=>Math.round(E.maxHp(C.cls,L)*(1+hgf().hp));
-const HG_ICON=['','🎀','🧢','👨‍🍳','🌸','🐱','🐻','🏴‍☠️','🐠','🧙','🌾','😈','😇','🎅','🦆','🥳','👑','🪖','🍄','🐲','🌈'];
+const HG_ICON=['','🎀','🧢','👨‍🍳','🌸','🐱','🐻','🏴‍☠️','🐠','🔬','🌾','🦌','⭐','⛄','🦆','🥳','👑','🪖','🍄','🐲','🌈'];
 const HGB=[null,
 (h)=>{vb(h,.3,.3,.2,'#ff3d6e',-.28,.95,.2);vb(h,.3,.3,.2,'#ff3d6e',.28,.95,.2);vb(h,.18,.18,.24,'#c8184a',0,.95,.2);},
 (h)=>{vb(h,.86,.22,.86,'#2f6fe0',0,.88,0);vb(h,.7,.06,.4,'#1f4fb0',0,.8,.6);vb(h,.14,.12,.14,'#fff',0,1.0,0);},
@@ -1245,9 +1256,9 @@ const HGB=[null,
 (h)=>{vb(h,1.1,1.0,1.1,'#bfe8ff',0,.4,0,{own:true,opacity:.28,emissive:'#7ac8ff'});vb(h,1.16,.1,1.16,'#c9d1dc',0,-.02,0);vb(h,.18,.12,.1,'#ff8a2a',.18,.7,.1);vb(h,.08,.1,.08,'#ff8a2a',.02,.72,.1);},
 (h)=>{vb(h,.9,.24,.9,'#2b2a8a',0,.92,0);vb(h,1.3,.08,1.3,'#3a3ab0',0,1.08,0);vb(h,.12,.12,.12,'#ffd84a',.55,1.0,.55,{emissive:'#ffb800'});vb(h,.06,.3,.06,'#ffd84a',.6,.85,.6);vb(h,.24,.24,.1,'#ffd84a',0,.92,.46,{emissive:'#ffb800'});},
 (h)=>{vb(h,1.4,.08,1.4,'#e6c370',0,.84,0);vb(h,.84,.34,.84,'#f0d080',0,1.02,0);vb(h,.86,.1,.86,'#e0453c',0,.94,0);},
-(h)=>{[-1,1].forEach(s=>{const m=vb(h,.2,.5,.2,'#c0182a',s*.26,1.0,0);m.rotation.z=-s*.3;vb(h,.12,.2,.12,'#ff4a5a',s*.36,1.3,0);});vb(h,.84,.08,.84,'#5a0a14',0,.84,0);},
-(h)=>{[[0,.38],[0,-.38]].forEach(p=>vb(h,.9,.08,.14,'#ffe27a',0,1.4,p[1],{emissive:'#ffcc40'}));[.38,-.38].forEach(x=>vb(h,.14,.08,.9,'#ffe27a',x,1.4,0,{emissive:'#ffcc40'}));vb(h,.06,.5,.06,'#ffe27a',0,1.1,.0,{emissive:'#ffcc40'});},
-(h)=>{vb(h,.9,.22,.9,'#fff',0,.86,0);vb(h,.78,.32,.78,'#d82a2a',0,1.1,0);vb(h,.58,.3,.58,'#d82a2a',-.05,1.36,-.1);vb(h,.4,.24,.4,'#d82a2a',-.15,1.6,-.2);vb(h,.22,.22,.22,'#fff',-.25,1.72,-.3);},
+(h)=>{[-1,1].forEach(s=>{const m=vb(h,.2,.5,.2,'#b98a52',s*.26,1.0,0);m.rotation.z=-s*.3;vb(h,.12,.2,.12,'#d9b27a',s*.36,1.3,0);});vb(h,.84,.08,.84,'#6b4a2a',0,.84,0);},
+(h)=>{[[0,.38],[0,-.38]].forEach(p=>vb(h,.9,.08,.14,'#bfe8ff',0,1.4,p[1],{emissive:'#7ac8ff'}));[.38,-.38].forEach(x=>vb(h,.14,.08,.9,'#bfe8ff',x,1.4,0,{emissive:'#7ac8ff'}));vb(h,.06,.5,.06,'#ffe27a',0,1.1,.0,{emissive:'#ffcc40'});},
+(h)=>{vb(h,.9,.22,.9,'#fff',0,.86,0);vb(h,.78,.32,.78,'#5aa8e0',0,1.1,0);vb(h,.58,.3,.58,'#5aa8e0',-.05,1.36,-.1);vb(h,.4,.24,.4,'#5aa8e0',-.15,1.6,-.2);vb(h,.22,.22,.22,'#fff',-.25,1.72,-.3);},
 (h)=>{vb(h,.84,.3,.84,'#ffd84a',0,.92,0);vb(h,.5,.12,.4,'#ff9a2a',0,.86,.58);[-1,1].forEach(s=>vb(h,.1,.12,.05,'#1d1630',s*.2,1.02,.43));},
 (h)=>{[[.52,.92,'#ff5d8f'],[.42,1.12,'#ffd84a'],[.32,1.32,'#46a6ff'],[.18,1.5,'#7ae88f']].forEach(l=>vb(h,l[0],.2,l[0],l[2],0,l[1],0));vb(h,.2,.2,.2,'#fff',0,1.66,0);},
 (h)=>{vb(h,.84,.22,.84,'#ffd84a',0,.9,0,{emissive:'#7a5a00'});[[-.32,-.32],[.32,-.32],[-.32,.32],[.32,.32],[0,.34],[0,-.34]].forEach(p=>vb(h,.18,.3,.18,'#ffd84a',p[0],1.14,p[1],{emissive:'#7a5a00'}));vb(h,.12,.12,.05,'#e0453c',0,.92,.43);vb(h,.1,.1,.05,'#46a6ff',.28,.92,.43);vb(h,.1,.1,.05,'#46a6ff',-.28,.92,.43);},
@@ -2135,7 +2146,7 @@ function buildMeadow(){
   const path=scl([[-25,0],[-19,1.5],[-13,4],[-7,3],[-2,0],[4,-3],[10,-8],[15,-14],[19,-19]]);
   const pn=scl([[-2,0],[-2,-8],[0,-16],[0,-25]]),pe=scl([[-2,0],[6,1],[14,1],[20,0],[25,0]]),ps=scl([[-2,0],[-1,10],[0,18],[0,25]]);
   const pthD=(x,y)=>Math.min(segDist(x,y,path),segDist(x,y,pn),segDist(x,y,pe),segDist(x,y,ps));
-  const nearPortal=(x,y)=>MPORT.some(p=>Math.hypot(x-p[0],y-p[1])<6.5);
+  const nearPortal=(x,y)=>MPORT.some(p=>Math.hypot(x-p[0],y-p[1])<6.5)||Math.hypot(x-LABG[0],y-LABG[1])<9;
   z.gy=(x,zz)=>meadowH(bc2(x),bc2(zz),P);
   voxTerrain(b,{inner:43,ext:76,seed:6,h:(x,zz)=>meadowH(x,zz,P),pix:(cx,cz,t)=>t>=0&&Math.abs(cx)<38&&Math.abs(cz)<38,
     col:(cx,cz,t,u)=>{
@@ -2152,10 +2163,11 @@ function buildMeadow(){
     if(hh>=3||r()<.45)pine(z,x,zz,1.1+r()*.7);else oak(z,x,zz,1.1+r()*.6);}
   for(let i=0;i<30;i++){const a=r()*3.14+3.14,rad=(26+r()*5)*FS,x=Math.cos(a)*rad,zz=Math.sin(a)*rad;if(z.gy(x,zz)<2&&r()<.6)oak(z,x,zz,1.2+r()*.5);}
   // inner trees & rocks
-  [[-18,-4],[-3,-16],[9,-4],[15,6],[2,9],[-9,12],[20,-22],[-22,-18],[-4,17],[22,12],[12,-18]].forEach((p,i)=>{const s=1+r()*.35;if(i%3===2)pine(z,p[0],p[1],s);else oak(z,p[0],p[1],s);z.cols.push({x:p[0],z:p[1],r:.9*s,c:'#3f9a45'});});
+  [[-18,-4],[-3,-16],[9,-4],[15,6],[2,9],[-9,12],[20,-22],[-22,-18],[-4,17],[22,12],[12,-18]].filter(p=>Math.hypot(p[0]-LABG[0],p[1]-LABG[1])>10).forEach((p,i)=>{const s=1+r()*.35;if(i%3===2)pine(z,p[0],p[1],s);else oak(z,p[0],p[1],s);z.cols.push({x:p[0],z:p[1],r:.9*s,c:'#3f9a45'});});
   [[-6,-6],[8,12],[-20,8],[3,-12],[18,-9],[-1,22]].forEach(p=>rockv(z,p[0],p[1],.8+r()*.6));
   // extra scatter in the widened outer ring
   for(let i=0;i<80;i++){const x=(r()-.5)*64,zz=(r()-.5)*64;if(Math.abs(x)<23&&Math.abs(zz)<23)continue;if(nearPortal(x,zz)||pthD(x,zz)<2.2||Math.hypot(x-P.pond.x,zz-P.pond.z)<8)continue;const q=r();if(q<.3)oak(z,x,zz,1+r()*.5);else if(q<.5)pine(z,x,zz,1+r()*.5);else if(q<.7)rockv(z,x,zz,.8+r()*.7);}
+  labGate(z);
   // pond decor
   const px=P.pond.x,pz=P.pond.z;z.cols.push({x:px,z:pz,r:4.6});
   for(let i=0;i<5;i++){const a=r()*6.28,d=r()*3.4;b.at(px+Math.cos(a)*d,-.66,pz+Math.sin(a)*d,r()*3);b.box(0,0,0,.9,.06,.9,'#4cae4c');if(i%2)b.box(.15,.06,.1,.28,.08,.28,'#ff8fc2');}
@@ -2793,6 +2805,46 @@ function renderRanch(){
 }
 $('#ranchClose').addEventListener('click',()=>{SFX.click();closeRanch();});
 $('#petStore').addEventListener('click',()=>{if(!C.pet)return;SFX.click();C.pet=0;saveDB();renderRanch();});
+function labGate(z){
+  const gx=LABG[0],gz=LABG[1],rot=LABG[2],b=z.b;
+  const toW=(lx,lz)=>[gx+lx*Math.cos(rot)+lz*Math.sin(rot),gz-lx*Math.sin(rot)+lz*Math.cos(rot)];
+  b.at(gx,0,gz,rot);
+  b.box(0,2.2,-1.8,10,4.4,3.4,'#4a4f62');b.box(0,4.55,-1.8,10.6,.5,3.8,'#383c4e');b.box(-3.6,5.6,-2,.5,2.4,.5,'#6a7088');b.box(3.6,5.6,-2,.5,2.4,.5,'#6a7088');
+  [-2.9,2.9].forEach(x=>b.box(x,2.1,.1,1,4.2,1.2,'#6a7088'));b.box(0,4.3,.1,6.8,.9,1.2,'#6a7088');
+  b.box(-1.25,1.95,-.05,2.5,3.9,.6,'#8d93a8');b.box(1.25,1.95,-.05,2.5,3.9,.6,'#8d93a8');b.box(0,1.95,.3,.12,3.9,.12,'#23252f');
+  for(let i=0;i<8;i++)b.box(-3.5+i,.18,1.1,.5,.36,.12,i%2?'#ffd84a':'#2a2c3a');
+  [-4.7,4.7].forEach(x=>{b.box(x,1.6,.2,1.5,3.2,1.5,'#5a4a86');b.box(x,3.3,.2,1.7,.3,1.7,'#3d3260');});
+  const g=grp(z.group,gx,0,gz);g.rotation.y=rot;
+  const lock=vb(g,1.1,1.1,.3,'#c06bff',0,2.0,.5,{own:true,emissive:'#a040ff'});lock.rotation.z=Math.PI/4;vb(g,.4,.4,.2,'#fff',0,2.0,.7,{emissive:'#ffffff'});
+  const gl=[-4.7,4.7].map(x=>vb(g,1.1,2.4,1.1,'#7affb0',x,1.9,.2,{own:true,opacity:.55,emissive:'#3fe08a'}));
+  const red=vb(g,.3,.3,.3,'#ff4a5a',-3.6,7,-2,{own:true,emissive:'#ff2040'});
+  const pud=vb(g,3.2,.05,2.2,'#7aff6a',2.4,.05,3.2,{own:true,opacity:.8,emissive:'#3fe05a'});
+  const bub=[0,1,2,3,4,5].map(i=>vb(g,.16,.16,.16,'#caffd8',(i%2?4.7:-4.7)+(i%3-1)*.2,1,.2+((i%2)-.5)*.5,{own:true,emissive:'#7affb0'}));
+  z.anim.push((dt,t)=>{const k=.5+.5*Math.sin(t*2.4);lock.scale.setScalar(.9+k*.2);lock.material.emissiveIntensity=.6+k*.8;red.visible=Math.sin(t*5)>0;pud.material.opacity=.6+.2*Math.sin(t*2);bub.forEach((q,i)=>{q.position.y=.6+((t*.5+i*.31)%1)*2.4;});gl.forEach((q,i)=>{q.material.opacity=.45+.15*Math.sin(t*2+i);});});
+  [[-4.7,.2],[-2.4,.2],[0,.2],[2.4,.2],[4.7,.2],[-2.5,-1.8],[2.5,-1.8]].forEach(p=>{const w=toW(p[0],p[1]);z.cols.push({x:w[0],z:w[1],r:1.5});});
+  const f=toW(0,3.2);z.npcs=z.npcs||[];z.npcs.push({id:'labgate',x:f[0],z:f[1],r:5});
+  z.tags.push({o:{x:gx,z:gz},y:6.4,cls:'port',nf:()=>t('labGateN'),sf:()=>t('labGateSub'),R:22});
+  z.pois.push({x:gx,z:gz,i:'labgate',tf:()=>t('labGateN'),sf:()=>t('labGateSub'),mini:true});
+}
+function labGateTalk(){const lines=[t('labG1'),t('labG2'),t('labG3')];if(LAB_OPEN){openTalk({name:t('labGateN'),lines:lines.slice(0,1),act:{label:t('tNext'),fn:()=>{SFX.portal();transition(()=>setZone('lab',{x:0,z:10,face:Math.PI},true));}}});return;}openTalk({name:t('labGateN'),lines});}
+function buildLab(){
+  const z=newZone('lab',20,'#1a1030','#3b2a66');z.lab=true;const b=z.b,r=seeded(5);z.gy=()=>0;
+  const H=(x,zz)=>Math.max(Math.abs(x),Math.abs(zz))>15.5?3:0;
+  voxTerrain(b,{inner:22,ext:46,seed:4,h:H,pix:(cx,cz,t)=>t===0,
+    col:(cx,cz,t,u)=>{if(t>0)return jit('#2c2744',.08,u);const ck=(Math.floor(cx)+Math.floor(cz))&1;return jit(ck?'#4a4468':'#413b5c',.04,u);},side:(t,u)=>jit('#241f3a',.1,u)});
+  b.at(0,0,0,0);for(let i=0;i<24;i++){const a=i/24*Math.PI*2;b.box(Math.cos(a)*6,.05,Math.sin(a)*6,.5,.1,.5,i%2?'#c06bff':'#7affb0');}
+  b.box(0,3,-12.5,16,6,4,'#4a4f62');b.box(0,6.2,-12.5,17,.6,4.6,'#383c4e');b.box(0,2,-10.4,4,4,.3,'#8d93a8');b.box(0,1.9,-10.2,.12,3.9,.12,'#23252f');z.cols.push({x:0,z:-12.5,r:7});
+  [[-9,-5],[9,-5],[-9,5],[9,5]].forEach((p,i)=>{b.at(p[0],0,p[1],0);b.box(0,.3,0,2.2,.6,2.2,'#6a7088');b.box(0,3.1,0,2.2,.3,2.2,'#6a7088');z.cols.push({x:p[0],z:p[1],r:1.4});
+    vb(z.group,1.8,2.5,1.8,i%2?'#c06bff':'#7affb0',p[0],1.8,p[1],{own:true,opacity:.5,emissive:i%2?'#a040ff':'#3fe08a'});
+    const bs=[0,1,2,3].map(k=>vb(z.group,.18,.18,.18,'#e8ffe8',p[0]+(k-1.5)*.3,.8,p[1]+(k%2-.5)*.4,{own:true,emissive:'#ffffff'}));z.anim.push((dt,t)=>bs.forEach((q,k)=>{q.position.y=.8+((t*.4+k*.27+i*.1)%1)*2;}));});
+  for(let i=0;i<12;i++){const a=r()*6.28,d=8+r()*6,x=Math.cos(a)*d,zz=Math.sin(a)*d;if(Math.abs(x)<3&&zz>6)continue;b.at(x,0,zz,0);b.box(0,.9,0,.2,1.8,.2,'#3a9a5a');b.box(0,2,0,.9,.8,.9,i%2?'#c06bff':'#ff6bd0');vb(z.group,.4,.4,.4,'#ffffff',x,2.1,zz,{own:true,emissive:'#d070ff'});}
+  z.map={bg:'#241f3a',ground:'#413b5c',path:'#413b5c',paths:[],plaza:[{x:0,z:0,r:6,c:'#4a4468'}]};
+  portalMesh(z,0,12,'#c06bff','meadow');
+  z.tags.push({o:{x:0,z:12},y:5.6,cls:'port',nf:()=>t('portal'),sf:()=>'→ '+t('z_meadow'),R:18});
+  z.pois.push({x:0,z:12,i:'portal',tf:()=>t('portal'),sf:()=>'→ '+t('z_meadow'),ml:()=>'→ '+t('z_meadow'),mini:true,portal:true});
+  sparkleField(z,34,'#c9a0ff',24,5,47);
+  return finishZone(z);
+}
 function townHome(L,defs){defs.forEach((d,i)=>{const h=L.houses[i];if(h){const k=2.9;d.home=[h[0]+Math.sin(h[2])*k,h[1]+Math.cos(h[2])*k];}});return defs;}
 function townFolk(z,cls,L,N){
   const b=z.b;
@@ -2820,6 +2872,7 @@ function townFolk(z,cls,L,N){
   villagers(z,townHome(L,[{cls:'mage',look:Lk(1,0,1,0,1,3),cx:0,cz:2,r0:4,r1:11,sc:.8,name:V[0],sk:'kid'},{cls:'ranger',look:Lk(2,3,4,3,1,2),cx:0,cz:2,r0:4,r1:13,sc:1,name:V[1]},{cls:'mage',look:Lk(3,2,2,4,0,5),cx:0,cz:3,r0:3.6,r1:11,sc:.78,name:V[2],sk:'kid'},{cls:'ranger',look:Lk(0,1,0,1,0,6),cx:0,cz:2,r0:5,r1:14,sc:1,name:V[3]}]),[1]);
 }
 const TOWN_PORTAL={x:16.2,z:0};
+const LABG=[13,-29,-.42],LAB_OPEN=false;
 const MPORT=[[-24.4*FS,0],[0,-24.4*FS],[24.4*FS,0],[0,24.4*FS]];
 const MEADOW_IN={warrior:{x:-20.5*FS,z:0,face:Math.PI/2},mage:{x:0,z:-20.5*FS,face:0},ranger:{x:20.5*FS,z:0,face:-Math.PI/2}};
 
@@ -2887,20 +2940,21 @@ function addCol(e,rad){for(const c of zone.cols){const dx=e.x-c.x,dz=e.z-c.z,d=M
 function showLoc(t,sub){const e=$('#loc');e.innerHTML='<b>'+esc(t)+'</b><small>'+esc(sub)+'</small>';e.classList.remove('show');void e.offsetWidth;e.classList.add('show');}
 function setZone(id,arr,quiet,cls){
   endCine(true);clearZone();
-  zone=id==='town'?buildTown(cls||C.cls):id==='exam'?buildArena(cls||C.cls):id==='meadow'?buildMeadow():FIELDS[id]?buildField(id):id==='title'?buildTitle():buildPreview();
+  zone=id==='town'?buildTown(cls||C.cls):id==='exam'?buildArena(cls||C.cls):id==='lab'?buildLab():id==='meadow'?buildMeadow():FIELDS[id]?buildField(id):id==='title'?buildTitle():buildPreview();
   scene.add(zone.group);scene.background=new THREE.Color(zone.sky);scene.fog=zone.titleSky?new THREE.Fog(zone.sky,70,230):new THREE.Fog(zone.sky,42,120);
   if(arr){S.x=arr.x;S.z=arr.z;S.face=arr.face||0;}
   darkNow=-1;applyDark(true);
   camSnap=true;S.portalLock=1.2;
   if(FIELDS[id])populate(id);
-  if(id!=='preview'&&id!=='exam'&&C&&mode==='play'){C.zone=id==='town'?'town:'+zone.cls:id;saveDB();}
+  if(id!=='preview'&&id!=='exam'&&id!=='lab'&&C&&mode==='play'){C.zone=id==='town'?'town:'+zone.cls:id;saveDB();}
   updateZoneChip();
+  if(!quiet&&mode==='play'&&C&&id==='lab')showLoc(t('labT'),t('labSub'));
   if(!quiet&&mode==='play'&&C&&(id==='town'||FIELDS[id])){if(id==='town')showLoc(tnm(zone.cls),t('townSub',zone.cls));else showLoc(t('z_'+id),t('z_'+id+'Sub'));}
   if(id==='town'&&mode==='play'&&C&&C.tut>=7&&!((C.cs|0)&CSB[zone.cls]))startCine();
   if(id==='town'&&mode==='play'&&C&&C.tut>=7&&examReady())setTimeout(()=>{if(mode==='play'&&zone&&zone.id==='town'&&!CINE.on)banner(t('examReady'));},3200);
 }
 function populate(id){const F=FIELDS[id];todCompute();phaseList(id).forEach(q=>{const n=id==='camp'?q[1]:Math.ceil(q[1]*1.3);for(let i=0;i<n;i++)spawnMon(q[0]);});bossList(id).forEach(b=>zone.spawnQ.push({type:b[0],t:b[1]}));}
-function updateZoneChip(){if(!zone||!C)return;$('#mmName').textContent=zone.id==='town'?tnm(zone.cls):zone.exam?t('examT'):zone.field?t('z_'+zone.id):'';}
+function updateZoneChip(){if(!zone||!C)return;$('#mmName').textContent=zone.id==='town'?tnm(zone.cls):zone.exam?t('examT'):zone.lab?t('labT'):zone.field?t('z_'+zone.id):'';}
 
 /* ---------- Monsters ---------- */
 function ringCol(m){const d=m.d.lvl-level();return d<=0?0x44d46f:d<=2?0xffc83a:0xff4a5a;}
@@ -3190,7 +3244,7 @@ function cteleTalk(){const N=t('nCtele');
   if(C.tut>=7){openTele();return;}
   if(C.tut<6){openTalk({name:N,lines:[t('ctNo')]});return;}
   openTalk({name:N,lines:[t('ctYes',tnm(C.cls))],act:{label:t('ctGo'),fn:()=>{C.tut=7;saveDB();SFX.portal();transition(()=>{setZone('town',{x:0,z:6,face:Math.PI},false,C.cls);banner(t('tutDone'));});}}});}
-function npcExtra(id){if(id==='chat')return true;if(id==='master'){masterTalk();return true;}if(id==='guide'){guideTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}return false;}
+function npcExtra(id){if(id==='chat')return true;if(id==='master'){masterTalk();return true;}if(id==='guide'){guideTalk();return true;}if(id==='labgate'){labGateTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}return false;}
 function tutTick(){if(!C||C.tut>=7||S.state!=='play'||!zone)return;
   if(C.tut===0){const k=readInput();if(k.m>.1)S.tutD=(S.tutD||0)+S.dtl*6;if(S.tutD>=8)tutNext();}
   else if(C.tut===1&&C.tutT)tutNext();
@@ -3277,6 +3331,7 @@ function updatePlay(dt){
 
 function usePortal(PP){
   const to=PP.to,from=zone.id==='town'?'town:'+zone.cls:zone.id;SFX.portal();
+  if(zone.lab){transition(()=>{setZone('meadow',{x:LABG[0]-Math.sin(LABG[2])*-5,z:LABG[1]+4.5,face:Math.PI*.75});});return;}
   if(zone.exam){EX.on=false;transition(()=>{setZone('town',guildIn(C.cls),true,C.cls);banner(t('examLeave'));});return;}
   transition(()=>{if(to.indexOf('town:')===0){const c=to.slice(5),a=TPOS[(TLINK[c].find(l=>l.to===from)||TLINK[c][0]).side].in;setZone('town',{x:a[0],z:a[1],face:a[2]},false,c);}
     else{const sd=Object.keys(LINKS[to]).find(k=>LINKS[to][k]===from),a=SIDE[sd].in;setZone(to,{x:a[0],z:a[1],face:a[2]});}});
@@ -3363,7 +3418,7 @@ const EXW=[['emberling','toad','emberling','toad'],['scorpion','mosquito','salam
 let advSel='';
 function masterTalk(){
   const cls=zone.cls,nm=MST[cls];
-  if(level()<10){openTalk({name:nm,lines:[t('mHi'),t('mLow')],act:{label:t('mDemoGo'),fn:()=>startDemo(null)}});return;}
+  if(level()<10){openTalk({name:nm,lines:[t('mHi'),t(cls==='mage'?'mStoryM':'mStory'),t('mLow')],act:{label:t('mDemoGo'),fn:()=>startDemo(null)}});return;}
   advSel='';openAdv();
 }
 function openAdv(){if(mode!=='play'||paused||S.state!=='play')return;paused=true;S.defDown=false;S.blocking=false;renderAdv();show('adv',true);}
@@ -3807,6 +3862,19 @@ $('#shopClose').addEventListener('click',()=>{SFX.click();endFit();show('shop',f
 $('#misClose').addEventListener('click',()=>{SFX.click();show('mis',false);paused=false;saveDB();});
 
 /* ---------- Pause menu / language ---------- */
+/* ---------- Story intro ---------- */
+const STORY=[['#bfe8ff','#ffe9b8','🏰🌈🌳'],['#d8e4ff','#f0dcff','👩‍🔬🧪👨‍🔬'],['#e6c8ff','#8a6ad0','😠🧪🟣'],['#c8f0c0','#a58bd8','🟢🦀🍄🌱'],['#6a5a8a','#2c2548','🔒🏭'],['#ffe9b8','#bfe8ff','⚔️🧪🏹']];
+let storyI=0,storyOn=false,storyBack=null,storySeen=true;try{storySeen=localStorage.getItem('ezventure.story')==='1';}catch(e){}
+function renderStory(){const d=STORY[storyI],last=storyI===STORY.length-1;$('#story').style.background='linear-gradient('+d[0]+','+d[1]+')';
+  $('#stArt').innerHTML=Array.from(d[2].match(/\p{Extended_Pictographic}(?:‍\p{Extended_Pictographic})*️?/gu)||[]).map(e=>'<span>'+e+'</span>').join('');
+  $('#stTxt').textContent=t('st'+(storyI+1));$('#stDots').innerHTML=STORY.map((_,i)=>'<i class="'+(i===storyI?'on':'')+'"></i>').join('');
+  $('#stNext').textContent=last?t('stGo'):t('stNext');$('#stSkip').textContent=t('stSkip');$('#stSkip').hidden=last;}
+function openStory(back){storyOn=true;storyBack=back||null;storyI=0;renderStory();$('#story').classList.add('show');}
+function closeStory(){if(!storyOn)return;storyOn=false;$('#story').classList.remove('show');storySeen=true;try{localStorage.setItem('ezventure.story','1');}catch(e){}const b=storyBack;storyBack=null;if(b)b();}
+$('#stNext').addEventListener('click',()=>{ac();SFX.click();if(storyI>=STORY.length-1)closeStory();else{storyI++;renderStory();}});
+$('#stSkip').addEventListener('click',()=>{ac();SFX.click();closeStory();});
+$('#pStory').addEventListener('click',()=>{SFX.click();show('pause',false);openStory(()=>{paused=false;});});
+
 function buildSw(el){el.innerHTML='';[['id','ID'],['en','EN']].forEach(a=>{const b=document.createElement('button');b.textContent=a[1];b.className=LANG===a[0]?'on':'';b.addEventListener('click',()=>{ac();SFX.click();setLang(a[0]);});el.appendChild(b);});}
 function setLang(l){LANG=l;LANG_SET=true;try{localStorage.setItem('ezventure.lang',l);}catch(e){}applyLang();}
 function renderPause(){$('#pCoop').innerHTML=ic('coop',24)+' '+t('coopT')+(coopOn()?' · '+t('coopConnected'):'');$('#pSnd').innerHTML=ic(muted?'sndOff':'sndOn',24)+' '+t(muted?'sndOff':'sndOn');}
@@ -3856,7 +3924,7 @@ $('#mCine').addEventListener('click',()=>{SFX.click();C.cs=0;saveDB();show('menu
 let delT=null;$('#mDel').addEventListener('click',e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm='1';b.textContent=t('sure');clearTimeout(delT);delT=setTimeout(()=>{b.dataset.arm='';b.textContent=t('delHero');},3000);return;}DB.slots[curSlot]=null;saveDB();show('menu',false);showTitle();});
 let ioFrom='title';
 function openIo(from){ioFrom=from;$('#ioText').value=encodeDB();$('#ioMsg').textContent='';show('io',true);if(from==='menu')show('menu',false);}
-$('#playBtn').addEventListener('click',()=>{ac();SFX.start();$('#playBtn').hidden=true;$('#slotsWrap').hidden=false;});$('#btnBack').addEventListener('click',()=>{SFX.click();$('#playBtn').hidden=false;$('#slotsWrap').hidden=true;});
+$('#playBtn').addEventListener('click',()=>{ac();SFX.start();$('#playBtn').hidden=true;$('#slotsWrap').hidden=false;if(!storySeen)openStory();});$('#btnBack').addEventListener('click',()=>{SFX.click();$('#playBtn').hidden=false;$('#slotsWrap').hidden=true;});
 $('#btnCode').addEventListener('click',()=>{ac();openIo('title');});$('#mCode').addEventListener('click',()=>openIo('menu'));
 $('#ioClose').addEventListener('click',()=>{show('io',false);if(ioFrom==='menu')show('menu',true);});
 $('#ioCopy').addEventListener('click',()=>{const ta=$('#ioText');ta.focus();ta.select();const m=$('#ioMsg');try{navigator.clipboard.writeText(ta.value).then(()=>{m.textContent=t('copied');},()=>{m.textContent=t('copyManual');});}catch(e){m.textContent=t('copyManual');}});
