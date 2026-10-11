@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-164818"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-171802"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -736,6 +736,52 @@ window.EZ=(function(){
     MON.rwolf=V('icewolf',{name:'Blizzard Wolf',icon:'🌨️',tint:'#6fa8ff',wx:'rain',lvl:12,aggro:8});
     MON.rwyrm=V('whelp',{name:'Storm Wyrm',icon:'⚡',tint:'#4a7ae0',wx:'rain',lvl:13,aggro:8});
     MON.stormdrake=V('dragon',{name:'Storm Drake',icon:'🌩️',tint:'#3a5ac8',wx:'rain',lvl:15,xp:800,aggro:11});})();
+
+  /* tier 16-25 fields (aurora, sky: Lv16-20 / crystal, comet: Lv21-25): same bodies as older monsters, tinted. xp values are final (pre-divided by the 1.95 balance multiplier) */
+  (function(){const V=(like,o)=>Object.assign({},MON[like],{like},o),X=n=>Math.round(n/1.95);
+    const A=(id,like,name,icon,tint,at,lvl,xp,o)=>{MON[id]=V(like,Object.assign({name,icon,tint,at,lvl,xp:X(xp)},o||{}));};
+    /* Aurora Fields */
+    A('aubun','bunny','Aurora Bunny','🐰','#7affd8','aurora',16,60);
+    A('polarfox','fox','Polar Fox','🦊','#bfe8ff','aurora',17,66);
+    A('prismbee','bee','Prism Bee','🐝','#ff9ad8','aurora',17,66,{aggro:8});
+    A('iglogolem','golem','Igloo Golem','🧊','#dff4ff','aurora',19,260);
+    A('aufly','firefly','Aurora Firefly','✨','#a8ffe8','aurora',16,58);
+    A('auwolf','icewolf','Aurora Wolf','🐺','#a8ffe8','aurora',18,72);
+    A('prismbat','frostbat','Prism Bat','🦇','#d8a8ff','aurora',17,66);
+    A('aurwisp','wisp','Prism Storm Wisp','🌈','#6aa8ff','aurora',18,74,{wx:'rain',aggro:8});
+    A('aurking','king','Aurora King','👑','#7affc8','aurora',20,900,{rs:150,aggro:11});
+    /* Cloud Isles */
+    A('puffcloud','ghost','Puff Cloud','☁️','#ffffff','sky',16,60);
+    A('thunderchick','bat','Spark Bird','🐤','#ffe27a','sky',17,66);
+    A('rainbee','bee','Rainbow Bee','🌈','#ff8ad8','sky',17,66,{aggro:8});
+    A('cloudsnail','snail','Cloud Snail','🐌','#bfe0ff','sky',18,70);
+    A('skyowl','owl','Sky Owl','🦉','#9ad8ff','sky',19,270);
+    A('starfall','firefly','Falling Star','⭐','#ffe27a','sky',17,66);
+    A('moonbat','bat','Moon Bat','🦇','#c8c8ff','sky',18,72);
+    A('cloudghost','ghost','Night Cloud','🌫️','#9a9aff','sky',19,76);
+    A('stormcloud','wisp','Thunder Cloud','⛈️','#6a6aff','sky',19,78,{wx:'rain',aggro:8});
+    A('skyking','king','Cloud King','👑','#ffffff','sky',20,950,{rs:150,aggro:11});
+    /* Rainbow Crystal Cave */
+    A('gempal','pebble','Gem Pal','💎','#7ae8ff','crystal',21,100);
+    A('gembeetle','beetle','Gem Beetle','🪲','#ff7ad8','crystal',22,108);
+    A('gemmole','mole','Gem Mole','⛏️','#c8a8ff','crystal',22,108);
+    A('crystalgolem','golem','Crystal Golem','🔷','#7ae8ff','crystal',24,420);
+    A('glowcrab','crab','Glow Crab','🦀','#a8ffe8','crystal',22,108);
+    A('crystalbat','bat','Crystal Bat','🦇','#a8a8ff','crystal',23,114);
+    A('cavefly','firefly','Cave Firefly','✨','#7affd8','crystal',21,100);
+    A('dripjelly','jelly','Cave Drip Jelly','💧','#7ab8ff','crystal',23,118,{wx:'rain',aggro:8});
+    A('gemtitan','obsidian','Gem Titan','💠','#ff9ae0','crystal',25,1400,{rs:150,aggro:11});
+    /* Comet Summit */
+    A('starbee','bee','Star Bee','🐝','#ffe27a','comet',21,100,{aggro:8});
+    A('cometbun','bunny','Comet Bunny','🐰','#c8a8ff','comet',22,108);
+    A('cometpup','pup','Comet Pup','🐺','#7a8aff','comet',23,114);
+    A('satbot','cogbot','Satellite Bot','🛰️','#c9d1dc','comet',24,120);
+    A('moonyeti','yeti','Moon Yeti','🦍','#c8d8ff','comet',24,430);
+    A('meteorpal','pebble','Little Meteor','☄️','#ff8a4a','comet',21,100);
+    A('starlight','ghost','Starlight','🌟','#ffe27a','comet',22,108);
+    A('cometbat','firebat','Comet Bat','🦇','#7a8aff','comet',23,114);
+    A('meteorrain','emberling','Meteor Shower Sprite','🌠','#ffb06a','comet',24,120,{wx:'rain',aggro:8});
+    A('cometdrake','dragon','Comet Dragon','🐉','#7a8aff','comet',25,1500,{rs:150,aggro:11});})();
   /* balance: monster HP is tied to the strongest basic hit a hero with a level-appropriate weapon can land,
      so even the best weapon needs >=5 basic attacks on a same-level monster (bosses far more). Numbers are guesses: tune after play. */
   (function(){const M=[1,1.12,1.26,1.42,1.62,1.85,2.12,2.45,2.85,3.3],PA={warrior:1.3,ranger:1.6,mage:1.06},tier=L=>Math.min(9,Math.round((L-1)*.6)),
@@ -743,7 +789,10 @@ window.EZ=(function(){
       A=L=>.05*(100+30*L)*(35+3*L)/30,fitH=L=>40*Math.pow(1.25,L-1),fitA=L=>6+(L-1)*2.4;
     for(const k in MON){const d=MON[k],L=d.lvl,cl=(v,a,b)=>Math.min(b,Math.max(a,v)),j=cl(d.hp/fitH(L),1,1.3),ja=cl(d.atk/fitA(L),.85,1.2),boss=d.rs>=300;
       const ez=L<=5?.75:L<=10?.9:1,ezh=L<=5?.85:1;d.hp=Math.round(5.2*top(L)*ezh*(d.big?(boss?7:4.5):j)/5)*5;d.atk=Math.max(1,Math.round(A(L)*ez*(d.big?(boss?1.6:1.35):ja)));d.xp=Math.round(d.xp*(L>=11?1.5:L>=6?1.6:1)*1.3);}})();
-  const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5},{t:'emberling',n:6},{t:'scorpion',n:5},{t:'salamander',n:5},{t:'firebat',n:5},{t:'obsidian',n:2},{t:'toad',n:6},{t:'mosquito',n:5},{t:'croc',n:4},{t:'wisp',n:5},{t:'treant',n:2},{t:'icewolf',n:5},{t:'snowman',n:5},{t:'frostbat',n:5},{t:'yeti',n:2},{t:'whelp',n:5},{t:'boneknight',n:4},{t:'wraith',n:4},{t:'dragon',n:1},{t:'pillbug',n:6},{t:'syrupbun',n:5},{t:'minthopper',n:5},{t:'glowmoth',n:5},{t:'drowsybun',n:4},{t:'lotusbud',n:5},{t:'lotusfrog',n:5},{t:'dragonfly',n:4},{t:'glowfrog',n:4},{t:'turtle',n:1},{t:'sawbug',n:6},{t:'sawdustbun',n:5},{t:'stumpling',n:5},{t:'woodmoth',n:5},{t:'mossstump',n:4},{t:'bolter',n:5},{t:'quarrymole',n:5},{t:'cogbot',n:4},{t:'anvilcrab',n:4},{t:'sawtitan',n:1},{t:'shootling',n:6},{t:'bambunny',n:5},{t:'bamboomoth',n:5},{t:'cricket',n:5},{t:'dummy',n:4},{t:'rockfist',n:5},{t:'creekcrab',n:5},{t:'dojofrog',n:4},{t:'irondummy',n:4},{t:'dummytitan',n:1}];
+  /* tier 16-25: elites a bit softer, bosses clearly stronger than any elite (and than the Lv15 dragon) */
+  (function(){['iglogolem','skyowl','crystalgolem','moonyeti'].forEach(k=>{const d=MON[k];d.hp=Math.round(d.hp*.62/5)*5;d.atk=Math.round(d.atk*.9);});
+    [['aurking',1.35],['skyking',1.4],['gemtitan',1.3],['cometdrake',1.35]].forEach(([k,m])=>{const d=MON[k];d.hp=Math.round(d.hp*m/5)*5;});})();
+  const QUESTS=[{t:'jelly',n:5},{t:'bunny',n:4},{t:'bee',n:3},{t:'jelly',n:8},{t:'king',n:1},{t:'bunny',n:6},{t:'bee',n:5},{t:'jelly',n:12},{t:'bunny',n:10},{t:'pebble',n:6},{t:'sprout',n:6},{t:'bat',n:5},{t:'beetle',n:5},{t:'shroom',n:6},{t:'ghost',n:5},{t:'golem',n:2},{t:'frog',n:4},{t:'owl',n:2},{t:'moth',n:5},{t:'pup',n:4},{t:'crab',n:5},{t:'mole',n:4},{t:'firefly',n:6},{t:'fox',n:4},{t:'snail',n:5},{t:'emberling',n:6},{t:'scorpion',n:5},{t:'salamander',n:5},{t:'firebat',n:5},{t:'obsidian',n:2},{t:'toad',n:6},{t:'mosquito',n:5},{t:'croc',n:4},{t:'wisp',n:5},{t:'treant',n:2},{t:'icewolf',n:5},{t:'snowman',n:5},{t:'frostbat',n:5},{t:'yeti',n:2},{t:'whelp',n:5},{t:'boneknight',n:4},{t:'wraith',n:4},{t:'dragon',n:1},{t:'pillbug',n:6},{t:'syrupbun',n:5},{t:'minthopper',n:5},{t:'glowmoth',n:5},{t:'drowsybun',n:4},{t:'lotusbud',n:5},{t:'lotusfrog',n:5},{t:'dragonfly',n:4},{t:'glowfrog',n:4},{t:'turtle',n:1},{t:'sawbug',n:6},{t:'sawdustbun',n:5},{t:'stumpling',n:5},{t:'woodmoth',n:5},{t:'mossstump',n:4},{t:'bolter',n:5},{t:'quarrymole',n:5},{t:'cogbot',n:4},{t:'anvilcrab',n:4},{t:'sawtitan',n:1},{t:'shootling',n:6},{t:'bambunny',n:5},{t:'bamboomoth',n:5},{t:'cricket',n:5},{t:'dummy',n:4},{t:'rockfist',n:5},{t:'creekcrab',n:5},{t:'dojofrog',n:4},{t:'irondummy',n:4},{t:'dummytitan',n:1},{t:'aubun',n:5},{t:'polarfox',n:5},{t:'prismbee',n:5},{t:'aufly',n:5},{t:'auwolf',n:4},{t:'prismbat',n:4},{t:'aurwisp',n:4},{t:'iglogolem',n:2},{t:'aurking',n:1},{t:'puffcloud',n:5},{t:'thunderchick',n:5},{t:'rainbee',n:5},{t:'cloudsnail',n:4},{t:'starfall',n:5},{t:'moonbat',n:4},{t:'cloudghost',n:4},{t:'stormcloud',n:4},{t:'skyowl',n:2},{t:'skyking',n:1},{t:'gempal',n:5},{t:'gembeetle',n:5},{t:'gemmole',n:4},{t:'glowcrab',n:4},{t:'crystalbat',n:4},{t:'cavefly',n:5},{t:'dripjelly',n:4},{t:'crystalgolem',n:2},{t:'gemtitan',n:1},{t:'starbee',n:5},{t:'cometbun',n:5},{t:'cometpup',n:4},{t:'satbot',n:4},{t:'meteorpal',n:5},{t:'starlight',n:4},{t:'cometbat',n:4},{t:'meteorrain',n:4},{t:'moonyeti',n:2},{t:'cometdrake',n:1}];
 
   function lvOf(xp){for(let L=MAXLV;L>=1;L--)if(xp>=TOTAL[L])return L;return 1;}
   function progress(xp){const L=lvOf(xp);if(L>=MAXLV)return 1;return (xp-TOTAL[L])/NEED[L+1];}
@@ -888,7 +937,11 @@ id:{
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Pendekar',cls_mage:'Ilmuwan',cls_ranger:'Pemanah',role_warrior:'Pelindung',role_mage:'Sains',role_ranger:'Panah',
  town_warrior:'Benteng Besi',town_mage:'Menara Bintang',town_ranger:'Pondok Daun',
- z_stone:'Bukit Batu',z_stoneSub:'Perbukitan berbatu · Lv 1-5',z_glade:'Hutan Jamur',z_gladeSub:'Hutan penuh jamur · Lv 1-5',z_vale:'Lembah Bintang',z_valeSub:'Lembah berkilau · Lv 1-5',z_crater:'Kawah Bara',z_craterSub:'Kawah gunung berapi · Lv 6-10',z_bog:'Rawa Berkabut',z_bogSub:'Rawa lembap penuh kabut · Lv 6-10',z_frost:'Puncak Beku',z_frostSub:'Dataran salju abadi · Lv 11-15',z_dragon:'Sarang Naga',z_dragonSub:'Sarang naga purba · Lv 11-15',poi_volcano:'Gunung Berapi',poi_lava:'Danau Lava',poi_swamptree:'Pohon Rawa Tua',poi_bogpond:'Telaga Rawa',poi_icepeak:'Menara Es',poi_frozen:'Danau Beku',poi_skull:'Tengkorak Naga',poi_hoard:'Timbunan Harta',poi_ruins:'Reruntuhan batu',poi_bigtree:'Pohon raksasa',poi_giant:'Jamur raksasa',poi_stars:'Lingkaran bintang',
+ z_stone:'Bukit Batu',z_aurora:'Padang Aurora',z_auroraSub:'Cahaya warna-warni di langit · Lv 16-20',z_sky:'Pulau Awan',z_skySub:'Pulau melayang di atas awan · Lv 16-20',z_crystal:'Gua Kristal Pelangi',z_crystalSub:'Gua berkilau penuh permata · Lv 21-25',z_comet:'Puncak Komet',z_cometSub:'Puncak gunung tempat komet lewat · Lv 21-25',poi_auroracrystal:'Kristal Aurora',poi_rainbow:'Lengkung Pelangi',poi_gemhall:'Kristal Raksasa',poi_obelisk:'Tugu Bintang',misTab3:'Lv 16–20',misTab4:'Lv 21–25',
+ mon_aubun:'Kelinci Aurora',mon_polarfox:'Rubah Kutub',mon_prismbee:'Lebah Prisma',mon_iglogolem:'Golem Iglo',mon_aufly:'Kunang Aurora',mon_auwolf:'Serigala Aurora',mon_prismbat:'Kelelawar Prisma',mon_aurwisp:'Wisp Badai Prisma',mon_aurking:'Raja Aurora',
+ mon_puffcloud:'Awan Mungil',mon_thunderchick:'Burung Kilat',mon_rainbee:'Lebah Pelangi',mon_cloudsnail:'Siput Awan',mon_skyowl:'Burung Hantu Langit',mon_starfall:'Bintang Jatuh',mon_moonbat:'Kelelawar Bulan',mon_cloudghost:'Awan Malam',mon_stormcloud:'Awan Petir',mon_skyking:'Raja Awan',
+ mon_gempal:'Kristal Kecil',mon_gembeetle:'Kumbang Permata',mon_gemmole:'Tikus Permata',mon_crystalgolem:'Golem Kristal',mon_glowcrab:'Kepiting Cahaya',mon_crystalbat:'Kelelawar Kristal',mon_cavefly:'Kunang Gua',mon_dripjelly:'Jeli Tetes Gua',mon_gemtitan:'Raksasa Permata',
+ mon_starbee:'Lebah Bintang',mon_cometbun:'Kelinci Komet',mon_cometpup:'Serigala Komet',mon_satbot:'Robot Satelit',mon_moonyeti:'Yeti Bulan',mon_meteorpal:'Meteor Kecil',mon_starlight:'Cahaya Bintang',mon_cometbat:'Kelelawar Komet',mon_meteorrain:'Peri Hujan Meteor',mon_cometdrake:'Naga Komet',z_stoneSub:'Perbukitan berbatu · Lv 1-5',z_glade:'Hutan Jamur',z_gladeSub:'Hutan penuh jamur · Lv 1-5',z_vale:'Lembah Bintang',z_valeSub:'Lembah berkilau · Lv 1-5',z_crater:'Kawah Bara',z_craterSub:'Kawah gunung berapi · Lv 6-10',z_bog:'Rawa Berkabut',z_bogSub:'Rawa lembap penuh kabut · Lv 6-10',z_frost:'Puncak Beku',z_frostSub:'Dataran salju abadi · Lv 11-15',z_dragon:'Sarang Naga',z_dragonSub:'Sarang naga purba · Lv 11-15',poi_volcano:'Gunung Berapi',poi_lava:'Danau Lava',poi_swamptree:'Pohon Rawa Tua',poi_bogpond:'Telaga Rawa',poi_icepeak:'Menara Es',poi_frozen:'Danau Beku',poi_skull:'Tengkorak Naga',poi_hoard:'Timbunan Harta',poi_ruins:'Reruntuhan batu',poi_bigtree:'Pohon raksasa',poi_giant:'Jamur raksasa',poi_stars:'Lingkaran bintang',
  mon_pebble:'Kerikil Kecil',mon_beetle:'Kumbang Baja',mon_golem:'Golem Batu',mon_emberling:'Bara Kecil',mon_scorpion:'Kalajengking Abu',mon_salamander:'Salamander Lava',mon_firebat:'Kelelawar Api',mon_obsidian:'Golem Obsidian',mon_toad:'Kodok Rawa',mon_mosquito:'Nyamuk Rawa',mon_croc:'Buaya Lumpur',mon_wisp:'Arwah Rawa',mon_treant:'Treant Rawa',mon_icewolf:'Serigala Es',mon_snowman:'Manusia Salju Galak',mon_frostbat:'Kelelawar Beku',mon_yeti:'Yeti',mon_whelp:'Anak Naga',mon_boneknight:'Ksatria Tulang',mon_wraith:'Hantu Kelam',mon_dragon:'Naga Purba',mon_sprout:'Tunas Lincah',mon_shroom:'Jamur Bandel',mon_frog:'Katak Hutan',mon_bat:'Kelelawar Malam',mon_ghost:'Hantu Mungil',mon_owl:'Burung Hantu',
  mon_moth:'Ngengat Bulan',mon_pup:'Anak Serigala Bayangan',mon_crab:'Kepiting Cahaya',mon_mole:'Tikus Penggali',mon_firefly:'Kunang-kunang',mon_fox:'Rubah Bulan',mon_snail:'Siput Mimpi',mon_jelly:'Jeli Hijau',mon_bunny:'Kelinci Mochi',mon_bee:'Lebah Madu',mon_king:'Raja Jeli',
  sk_slash:'Tebasan Kuat',sk_bash:'Benturan Perisai',sk_roar:'Raungan Berani',sk_fire:'Bola Api',sk_ice:'Ledakan Es',sk_meteor:'Hujan Meteor',sk_tri:'Panah Tiga',sk_heal:'Angin Penyembuh',sk_rain:'Hujan Panah',sk_wall:'Dinding Besi',sk_rally:'Panji Semangat',sk_cleave:'Tebasan Bulan',sk_quake:'Hantaman Gempa',sk_flurry:'Tembakan Beruntun',sk_bolt:'Baut Tembus',sk_snare:'Jaring Jebakan',sk_siege:'Peluru Meriam',sk_wind:'Badai Angin',sk_dark:'Bola Kegelapan',sk_light:'Cahaya Suci',sk_grav:'Lubang Gravitasi',
@@ -918,7 +971,11 @@ en:{
  langPick:'Pilih bahasa · Choose language',
  cls_warrior:'Warrior',cls_mage:'Scientist',cls_ranger:'Ranger',role_warrior:'Tank',role_mage:'Science',role_ranger:'Arrows',
  town_warrior:'Ironhold',town_mage:'Starspire',town_ranger:'Leafhaven',
- z_stone:'Stony Hills',z_stoneSub:'Rocky hills · Lv 1-5',z_glade:'Mushroom Glade',z_gladeSub:'A forest full of mushrooms · Lv 1-5',z_vale:'Starfall Vale',z_valeSub:'A glittering valley · Lv 1-5',z_crater:'Ember Crater',z_craterSub:'Volcanic crater · Lv 6-10',z_bog:'Misty Bog',z_bogSub:'A damp, foggy swamp · Lv 6-10',z_frost:'Frostpeak',z_frostSub:'Eternal snowfields · Lv 11-15',z_dragon:"Dragon's Roost",z_dragonSub:'Ancient dragon lair · Lv 11-15',poi_volcano:'Volcano',poi_lava:'Lava Lake',poi_swamptree:'Ancient Swamp Tree',poi_bogpond:'Murky Pond',poi_icepeak:'Ice Spire',poi_frozen:'Frozen Lake',poi_skull:'Dragon Skull',poi_hoard:'Treasure Hoard',poi_ruins:'Stone ruins',poi_bigtree:'Giant tree',poi_giant:'Giant mushrooms',poi_stars:'Star circle',
+ z_stone:'Stony Hills',z_aurora:'Aurora Fields',z_auroraSub:'Colorful lights in the sky · Lv 16-20',z_sky:'Cloud Isles',z_skySub:'Floating islands above the clouds · Lv 16-20',z_crystal:'Rainbow Crystal Cave',z_crystalSub:'A sparkling cave full of gems · Lv 21-25',z_comet:'Comet Summit',z_cometSub:'A peak where comets fly by · Lv 21-25',poi_auroracrystal:'Aurora Crystal',poi_rainbow:'Rainbow Arch',poi_gemhall:'Giant Crystal',poi_obelisk:'Star Obelisk',misTab3:'Lv 16–20',misTab4:'Lv 21–25',
+ mon_aubun:'Aurora Bunny',mon_polarfox:'Polar Fox',mon_prismbee:'Prism Bee',mon_iglogolem:'Igloo Golem',mon_aufly:'Aurora Firefly',mon_auwolf:'Aurora Wolf',mon_prismbat:'Prism Bat',mon_aurwisp:'Prism Storm Wisp',mon_aurking:'Aurora King',
+ mon_puffcloud:'Puff Cloud',mon_thunderchick:'Spark Bird',mon_rainbee:'Rainbow Bee',mon_cloudsnail:'Cloud Snail',mon_skyowl:'Sky Owl',mon_starfall:'Falling Star',mon_moonbat:'Moon Bat',mon_cloudghost:'Night Cloud',mon_stormcloud:'Thunder Cloud',mon_skyking:'Cloud King',
+ mon_gempal:'Gem Pal',mon_gembeetle:'Gem Beetle',mon_gemmole:'Gem Mole',mon_crystalgolem:'Crystal Golem',mon_glowcrab:'Glow Crab',mon_crystalbat:'Crystal Bat',mon_cavefly:'Cave Firefly',mon_dripjelly:'Cave Drip Jelly',mon_gemtitan:'Gem Titan',
+ mon_starbee:'Star Bee',mon_cometbun:'Comet Bunny',mon_cometpup:'Comet Pup',mon_satbot:'Satellite Bot',mon_moonyeti:'Moon Yeti',mon_meteorpal:'Little Meteor',mon_starlight:'Starlight',mon_cometbat:'Comet Bat',mon_meteorrain:'Meteor Shower Sprite',mon_cometdrake:'Comet Dragon',z_stoneSub:'Rocky hills · Lv 1-5',z_glade:'Mushroom Glade',z_gladeSub:'A forest full of mushrooms · Lv 1-5',z_vale:'Starfall Vale',z_valeSub:'A glittering valley · Lv 1-5',z_crater:'Ember Crater',z_craterSub:'Volcanic crater · Lv 6-10',z_bog:'Misty Bog',z_bogSub:'A damp, foggy swamp · Lv 6-10',z_frost:'Frostpeak',z_frostSub:'Eternal snowfields · Lv 11-15',z_dragon:"Dragon's Roost",z_dragonSub:'Ancient dragon lair · Lv 11-15',poi_volcano:'Volcano',poi_lava:'Lava Lake',poi_swamptree:'Ancient Swamp Tree',poi_bogpond:'Murky Pond',poi_icepeak:'Ice Spire',poi_frozen:'Frozen Lake',poi_skull:'Dragon Skull',poi_hoard:'Treasure Hoard',poi_ruins:'Stone ruins',poi_bigtree:'Giant tree',poi_giant:'Giant mushrooms',poi_stars:'Star circle',
  mon_pebble:'Pebble Pal',mon_beetle:'Steel Beetle',mon_golem:'Rock Golem',mon_emberling:'Emberling',mon_scorpion:'Cinder Scorpion',mon_salamander:'Lava Salamander',mon_firebat:'Fire Bat',mon_obsidian:'Obsidian Golem',mon_toad:'Bog Toad',mon_mosquito:'Marsh Skeeter',mon_croc:'Mud Croc',mon_wisp:'Marsh Wisp',mon_treant:'Swamp Treant',mon_icewolf:'Ice Wolf',mon_snowman:'Grumpy Snowman',mon_frostbat:'Frost Bat',mon_yeti:'Yeti',mon_whelp:'Dragon Whelp',mon_boneknight:'Bone Knight',mon_wraith:'Dread Wraith',mon_dragon:'Elder Dragon',mon_sprout:'Hop Sprout',mon_shroom:'Cheeky Shroom',mon_frog:'Forest Frog',mon_bat:'Night Bat',mon_ghost:'Tiny Ghost',mon_owl:'Wise Owl',
  mon_moth:'Lunar Moth',mon_pup:'Shadow Pup',mon_crab:'Glow Crab',mon_mole:'Digger Mole',mon_firefly:'Firefly',mon_fox:'Moon Fox',mon_snail:'Dream Snail',mon_jelly:'Green Jelly',mon_bunny:'Mochi Bunny',mon_bee:'Honey Bee',mon_king:'King Jelly',
  sk_slash:'Mighty Slash',sk_bash:'Shield Bash',sk_roar:'Brave Roar',sk_fire:'Fireball',sk_ice:'Ice Blast',sk_meteor:'Meteor Rain',sk_tri:'Triple Shot',sk_heal:'Healing Wind',sk_rain:'Arrow Rain',sk_wall:'Iron Wall',sk_rally:'Rallying Banner',sk_cleave:'Crescent Cleave',sk_quake:'Quake Smash',sk_flurry:'Rapid Volley',sk_bolt:'Piercing Bolt',sk_snare:'Snare Net',sk_siege:'Cannon Shot',sk_wind:'Wind Storm',sk_dark:'Dark Orbs',sk_light:'Holy Light',sk_grav:'Gravity Well',
@@ -1210,6 +1267,18 @@ TRACKS.field_frost=mkTrack({bpm:100,leadType:'sine',leadVol:.07,lp:6000,drums:0,
 TRACKS.field_dragon=mkTrack({bpm:112,leadType:'square',leadVol:.035,lp:3200,drums:2,stab:true,bass:'bounce',tr:0,
   chords:['Dm','Dm','Am','Am','F','G','Dm','Dm'],
   mel:['D6 _ D6 F6 A6 _ F6 D6','D6 _ F6 A6 D7 _ A6 F6','E6 _ E6 A6 C7 _ A6 E6','E6 _ A6 C7 E7 _ C7 A6','F6 _ F6 A6 C7 _ A6 F6','G6 _ G6 B6 D7 _ B6 G6','D6 _ F6 A6 D7 _ F7 _','E7 _ D7 _ A6 _ . .']});
+TRACKS.field_aurora=mkTrack({bpm:92,leadType:'sine',leadVol:.07,lp:5600,drums:0,arp:true,bass:'long',tr:0,
+  chords:['Em','C','G','D','Em','C','D','Em'],
+  mel:['E6 _ _ G6 _ B6 _ _','C6 _ _ E6 _ G6 _ _','D6 _ _ G6 _ B6 _ _','D6 _ _ F#6 _ A6 _ .','B6 _ _ G6 _ E6 _ _','G6 _ _ E6 _ C6 _ .','A6 _ _ F#6 _ D6 _ .','E6 _ G6 _ B6 _ . .']});
+TRACKS.field_sky=mkTrack({bpm:112,leadType:'triangle',leadVol:.075,lp:4600,drums:1,stab:true,bass:'bounce',tr:0,
+  chords:['C','G','Am','F','C','G','F','C'],
+  mel:['C6 _ E6 G6 C7 _ G6 E6','B5 _ D6 G6 B6 _ G6 D6','A5 _ C6 E6 A6 _ E6 C6','A5 _ C6 F6 A6 _ F6 C6','E6 _ G6 C7 E7 _ C7 G6','D6 _ G6 B6 D7 _ B6 G6','F6 _ A6 C7 F7 _ C7 A6','E7 _ C7 _ G6 _ . .']});
+TRACKS.field_crystal=mkTrack({bpm:80,leadType:'sine',leadVol:.07,lp:6200,drums:0,arp:true,bass:'long',tr:0,
+  chords:['Am','F','C','G','Am','F','G','Am'],
+  mel:['A6 _ _ E7 _ C7 _ _','F6 _ _ C7 _ A6 _ _','E6 _ _ C7 _ G6 _ _','D6 _ _ B6 _ G6 _ .','A6 _ _ C7 _ E7 _ _','A6 _ _ F6 _ C7 _ .','B6 _ _ G6 _ D7 _ .','C7 _ A6 _ E6 _ . .']});
+TRACKS.field_comet=mkTrack({bpm:126,leadType:'square',leadVol:.034,lp:3400,drums:2,stab:true,bass:'bounce',tr:0,
+  chords:['Em','C','G','D','Em','C','D','Em'],
+  mel:['E6 _ G6 B6 E7 _ B6 G6','C6 _ E6 G6 C7 _ G6 E6','D6 _ G6 B6 D7 _ B6 G6','D6 _ F#6 A6 D7 _ A6 F#6','E7 _ B6 G6 B6 _ E7 _','C7 _ G6 E6 G6 _ C7 _','D7 _ A6 F#6 A6 _ D7 _','E7 _ B6 _ G6 _ . .']});
 TRACKS.story_1=mkTrack({bpm:100,leadType:'triangle',leadVol:.07,lp:4500,drums:1,bass:'bounce',tr:0,chords:['C','G','Am','F','C','G','F','G'],
   mel:['E6 _ G6 _ E6 _ D6 _','D6 _ B5 _ G5 _ B5 _','C6 _ E6 _ A5 _ C6 _','A5 _ C6 _ F6 _ E6 _','E6 _ G6 _ C7 _ G6 _','D6 _ G6 _ B6 _ A6 G6','F6 _ A6 _ C7 _ A6 F6','G6 _ B6 _ D7 _ . .']});
 TRACKS.story_2=mkTrack({bpm:84,leadType:'sine',leadVol:.08,lp:4000,drums:0,arp:true,bass:'long',tr:0,chords:['Am','F','C','G','Am','F','G','C'],
@@ -1276,7 +1345,7 @@ function sanitize0(o){
     look:(()=>{const g=li(L.g,2),h=li(L.hs,12);return {hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g,hs:HSG[g].indexOf(h)>=0?h:(g?2:0)};})(),gch:o.gch?1:0,
     slots:Array.isArray(o.slots)&&o.slots.length===2?[li(o.slots[0],3),li(o.slots[1],3)]:[0,1],
     qs:(Array.isArray(o.qs)?o.qs:[]).filter((x,k,a)=>x&&typeof x==='object'&&a.findIndex(y=>y&&(y.i|0)===(x.i|0))===k).slice(0,3).map(x=>({i:clamp(x.i|0,0,E.QUESTS.length-1),p:Math.max(0,x.p|0)})),
-    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,7),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),pets:[...new Set((Array.isArray(o.pets)?o.pets:[]).map(i=>i|0).filter(i=>i>=1&&i<=18))],pet:0,hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),intro:o.intro===undefined?127:li(o.intro,128),cs:o.cs===undefined?0:li(o.cs,64),adv:(E.ADV[o.adv]&&E.ADV[o.adv].cls===o.cls)?o.adv:'',tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo|town:(warrior|mage|ranger|doctor|wood|mart))$/.test(o.zone)?o.zone:'town'};
+    qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,7),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),pets:[...new Set((Array.isArray(o.pets)?o.pets:[]).map(i=>i|0).filter(i=>i>=1&&i<=18))],pet:0,hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),intro:o.intro===undefined?127:li(o.intro,128),cs:o.cs===undefined?0:li(o.cs,64),adv:(E.ADV[o.adv]&&E.ADV[o.adv].cls===o.cls)?o.adv:'',tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo|aurora|sky|crystal|comet|town:(warrior|mage|ranger|doctor|wood|mart))$/.test(o.zone)?o.zone:'town'};
 }
 function encodeDB(){return 'EZV1:'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,slots:DB.slots}))));}
 function decodeDB(s){s=String(s||'').trim();if(s.indexOf('EZV1:')!==0)throw new Error('format');const j=JSON.parse(decodeURIComponent(escape(atob(s.slice(5)))));if(!j||!Array.isArray(j.slots))throw new Error('format');return j.slots.map(sanitize);}
@@ -2769,10 +2838,10 @@ function buildMeadow(){
 /* ---------- World graph: towns and fields ---------- */
 const SIDE={W:{p:[-24.4*FS,0],in:[-20.5*FS,0,Math.PI/2]},E:{p:[24.4*FS,0],in:[20.5*FS,0,-Math.PI/2]},N:{p:[0,-24.4*FS],in:[0,-20.5*FS,0]},S:{p:[0,24.4*FS],in:[0,20.5*FS,Math.PI]}};
 const LINKS={meadow:{W:'stone',N:'vale',E:'glade',S:'camp'},stone:{W:'town:warrior',E:'meadow',S:'timber'},glade:{W:'meadow',E:'town:ranger',S:'bog'},vale:{N:'town:mage',S:'meadow'},
-  crater:{S:'town:warrior',N:'dragon'},camp:{N:'meadow',S:'town:doctor',W:'timber',E:'bog'},dragon:{S:'crater'},bog:{N:'glade',S:'bamboo',W:'camp'},frost:{S:'town:mage'},mint:{N:'town:doctor',S:'lotus',E:'town:mart'},lotus:{N:'mint',E:'dojo'},timber:{N:'stone',S:'town:wood',E:'camp'},quarry:{N:'town:wood'},bamboo:{N:'bog',S:'town:mart',W:'town:doctor'},dojo:{N:'town:mart',W:'lotus'}};
+  crater:{S:'town:warrior',N:'dragon'},aurora:{S:'frost',N:'crystal'},sky:{S:'dragon',N:'comet'},crystal:{S:'aurora'},comet:{S:'sky'},camp:{N:'meadow',S:'town:doctor',W:'timber',E:'bog'},dragon:{S:'crater',N:'sky'},bog:{N:'glade',S:'bamboo',W:'camp'},frost:{S:'town:mage',N:'aurora'},mint:{N:'town:doctor',S:'lotus',E:'town:mart'},lotus:{N:'mint',E:'dojo'},timber:{N:'stone',S:'town:wood',E:'camp'},quarry:{N:'town:wood'},bamboo:{N:'bog',S:'town:mart',W:'town:doctor'},dojo:{N:'town:mart',W:'lotus'}};
 const TLINK={warrior:[{side:'E',to:'stone'},{side:'N',to:'crater'}],mage:[{side:'S',to:'vale'},{side:'N',to:'frost'}],ranger:[{side:'W',to:'glade'}],doctor:[{side:'N',to:'camp'},{side:'S',to:'mint'},{side:'W',to:'town:wood'},{side:'E',to:'bamboo'}],wood:[{side:'N',to:'timber'},{side:'S',to:'quarry'},{side:'E',to:'town:doctor'}],mart:[{side:'N',to:'bamboo'},{side:'S',to:'dojo'},{side:'W',to:'mint'}]};
 const TPOS={N:{p:[0,-16.2*FS],in:[0,-12.2*FS,0]},E:{p:[16.2*FS,0],in:[12.2*FS,0,-Math.PI/2]},S:{p:[0,16.2*FS],in:[0,12.2*FS,Math.PI]},W:{p:[-16.2*FS,0],in:[-12.2*FS,0,Math.PI/2]}};
-const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a',camp:'#7ae8a0','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a','town:doctor':'#3fe0b0','town:wood':'#e0a860','town:mart':'#5ab0e8',bamboo:'#8ad07a',dojo:'#7ac8e8',timber:'#7ac04a',quarry:'#c8a078',mint:'#7affc8',lotus:'#ff9ad0',crater:'#ff5a2a',bog:'#7ac04a',frost:'#8ad8ff',dragon:'#e04a5a'};
+const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a',camp:'#7ae8a0','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a','town:doctor':'#3fe0b0','town:wood':'#e0a860','town:mart':'#5ab0e8',bamboo:'#8ad07a',dojo:'#7ac8e8',timber:'#7ac04a',quarry:'#c8a078',mint:'#7affc8',lotus:'#ff9ad0',crater:'#ff5a2a',bog:'#7ac04a',frost:'#8ad8ff',dragon:'#e04a5a',aurora:'#7affc8',sky:'#bfe8ff',crystal:'#ff9ae0',comet:'#ffe27a'};
 const FIELDS={
   meadow:{day:[['jelly',7],['bunny',5],['bee',4]],boss:['king',30],rain:[['rjelly',6]],rboss:['stormking',40],dry:['bee','moth'],night:[['moth',6],['pup',6],['jelly',3]]},
   stone:{rain:[['rbeetle',5]],dry:['crab'],day:[['pebble',7],['beetle',5],['golem',2]],night:[['crab',6],['mole',5],['beetle',3],['golem',2]]},
@@ -2788,6 +2857,10 @@ const FIELDS={
   quarry:{rain:[['rbolter',5]],dry:['lampbot'],day:[['bolter',6],['quarrymole',5],['cogbot',4],['anvilcrab',3]],boss:['sawtitan',45],night:[['lampbot',5],['quarrymole',5],['anvilcrab',4],['bolter',2]]},
   lotus:{rain:[['rlotusfrog',5]],dry:['lotusfrog'],day:[['lotusbud',6],['lotusfrog',5],['dragonfly',4]],boss:['turtle',45],night:[['glowfrog',6],['lotusbud',4],['glowmoth',3]]},
   camp:{rain:[],dry:[],day:[['jelly',4]],night:[['jelly',4]]},
+  aurora:{rain:[['aurwisp',5]],dry:['prismbee'],day:[['aubun',6],['polarfox',5],['prismbee',4],['iglogolem',2]],boss:['aurking',45],night:[['aufly',6],['auwolf',5],['prismbat',4],['iglogolem',2]]},
+  sky:{rain:[['stormcloud',5]],dry:['rainbee'],day:[['puffcloud',6],['thunderchick',5],['rainbee',4],['cloudsnail',3],['skyowl',2]],boss:['skyking',45],night:[['starfall',6],['moonbat',5],['cloudghost',4],['skyowl',2]]},
+  crystal:{rain:[['dripjelly',5]],dry:['crystalbat'],day:[['gempal',6],['gembeetle',5],['gemmole',4],['crystalgolem',2]],boss:['gemtitan',45],night:[['glowcrab',5],['crystalbat',5],['cavefly',5],['crystalgolem',2]]},
+  comet:{rain:[['meteorrain',5]],dry:['starbee'],day:[['starbee',5],['cometbun',5],['cometpup',4],['satbot',3],['moonyeti',2]],boss:['cometdrake',45],night:[['meteorpal',5],['starlight',5],['cometbat',4],['moonyeti',2]]},
   dragon:{rain:[['rwyrm',5]],rboss:['stormdrake',60],dry:['wraith'],day:[['whelp',6],['boneknight',5]],boss:['dragon',45],night:[['wraith',6],['boneknight',5],['whelp',3]]}
 };
 /* day / night: shared wall clock, so every player is always in the same phase */
@@ -2862,6 +2935,10 @@ const FTHEME={
   dojo:{sky:'#d8ecff',top:'#78b8f0',seed:49,g:['#8ec8a0','#9cd4ae','#80b894'],path:['#c8c0a8','#b8b098'],hill:['#4a8a78','#3f7a6a'],snow:'#9ad8c0',mid:'#5a9a88',side:'#7a8a8a',map:{bg:'#4a8a78',ground:'#8ec8a0',path:'#c8c0a8'},ring:(z,x,zz,s)=>bambooClump(z,x,zz,s*1.0)},
   timber:{sky:'#e8f2cc',top:'#78b8e0',seed:39,g:['#6fb450','#7cc05a','#5fa448'],path:['#c8a46c','#b8945c'],hill:['#3f7a3a','#356a32'],snow:'#8abf7a',mid:'#58803c',side:'#6a4a2a',map:{bg:'#3f7a3a',ground:'#6fb450',path:'#c8a46c'},ring:(z,x,zz,s)=>pine(z,x,zz,s*1.15,['#3f7a3a','#357030','#4a8a44'])},
   quarry:{sky:'#f0dcc0',top:'#8aa0c0',seed:43,g:['#a89a82','#9a8c74','#b6a98f'],path:['#7a6a52','#6a5a44'],hill:['#7a7a86','#6a6a76'],snow:'#9a9aa6',mid:'#8a8a96',side:'#6a5a48',map:{bg:'#6a6a76',ground:'#a89a82',path:'#7a6a52'},ring:(z,x,zz,s)=>rockv(z,x,zz,s*1.7)},
+  aurora:{sky:'#3a5a9a',top:'#16255c',seed:53,g:['#4fae9a','#43a08c','#5dc0a8'],path:['#d8f0ff','#c4e4f8'],hill:['#2f6a8a','#285a78'],snow:'#bff0ff',mid:'#3f8aa8',side:'#2a5a78',map:{bg:'#2f6a8a',ground:'#4fae9a',path:'#c4e4f8'},ring:(z,x,zz,s)=>pine(z,x,zz,s,['#2f9a8a','#38aa98','#268a7a'])},
+  sky:{sky:'#bfe6ff',top:'#4a9aff',seed:55,g:['#e6f2ff','#d6e8fb','#f6faff'],path:['#ffe9a8','#ffd98a'],hill:['#bcd6f2','#a9c6e6'],snow:'#ffffff',mid:'#9cbbe0',side:'#8aa6cc',map:{bg:'#9cbbe0',ground:'#e6f2ff',path:'#ffd98a'},ring:(z,x,zz,s)=>cloudPuff(z,x,zz,s*1.6)},
+  crystal:{sky:'#3a2a6a',top:'#140a2e',seed:57,g:['#5a4a7a','#4f3f6c','#675588'],path:['#b8a0e8','#a88ad8'],hill:['#3a2c5c','#2e2248'],snow:'#7a68a8',mid:'#4a3a70',side:'#2e2248',map:{bg:'#3a2c5c',ground:'#5a4a7a',path:'#a88ad8'},ring:(z,x,zz,s)=>crystal(z,x,zz,s*1.3,['#7ae8ff','#ff9ae0','#c8a8ff'][(Math.abs(Math.round(x*3+zz))%3)],['#38b8e8','#ff3ad0','#7a55ff'][(Math.abs(Math.round(x*3+zz))%3)])},
+  comet:{sky:'#2a2f7a',top:'#070a2a',seed:59,g:['#7a86b8','#6c78aa','#8894c6'],path:['#ffe9a0','#f4d880'],hill:['#4a5488','#3e4676'],snow:'#a8b4e8',mid:'#5a64a0',side:'#363e6e',map:{bg:'#4a5488',ground:'#7a86b8',path:'#f4d880'},ring:(z,x,zz,s)=>basalt(z,x,zz,s*1.4,['#4a5488','#3e4676','#5a64a0'])},
   dragon:{sky:'#6a3a5a',top:'#2a1a4a',seed:33,g:['#6a5a6a','#5a4a5a','#756575'],path:['#d8b878','#c8a868'],hill:['#3a2a45','#2e2038'],snow:'#5a4a66',mid:'#46385a',side:'#2e2038',map:{bg:'#3a2a45',ground:'#6a5a6a',path:'#c8a868'},ring:(z,x,zz,s)=>basalt(z,x,zz,s*1.5,['#4a3a55','#3a2a45','#5a4a66'])}
 };
 const fieldH=(x,zz)=>meadowH(x,zz,{pond:{x:999,z:999,r:0}});
@@ -2962,6 +3039,23 @@ function dojoHall(z,x,zz){const b=z.b;b.at(x,0,zz,.15);b.box(0,.3,0,10,.6,7,'#a8
 function makiwara(z,x,zz){const b=z.b;b.at(x,0,zz,x);b.box(0,1.0,0,.34,2.0,.34,'#8a5a32');b.box(0,1.3,.24,.5,.9,.16,'#d9b87a');b.box(0,1.3,.34,.4,.7,.08,'#c8a064');b.box(0,.1,0,1,.2,1,'#8d867a');z.cols.push({x,z:zz,r:.7});}
 function punchBag(z,x,zz){const b=z.b;b.at(x,0,zz,0);b.box(-1.2,2.6,0,.2,.2,.2,'#6a7484');b.box(0,3.3,0,2.4,.2,.2,'#6b4423');b.box(-1.1,3.3,0,.2,.8,.2,'#6b4423');b.box(1.1,3.3,0,.2,.8,.2,'#6b4423');b.box(0,2.6,0,.04,1.4,.04,'#444');b.box(0,1.6,0,.7,1.4,.7,'#c0302c');b.box(0,2.1,0,.74,.16,.74,'#6a7484');b.box(0,1.1,0,.74,.16,.74,'#6a7484');z.cols.push({x,z:zz,r:.8});}
 function steppingStones(z,x0,z0,x1,z1,n){const b=z.b;b.at(0,0,0,0);for(let i=0;i<n;i++){const u=i/(n-1),px=x0+(x1-x0)*u,pz=z0+(z1-z0)*u;b.box(px,.12,pz,1.1,.24,1.0,i%2?'#9aa0aa':'#aab0ba');}}
+/* ---------- Tier 16-25 field scenery ---------- */
+function cloudPuff(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x*2);
+  b.box(0,.6*s,0,2.6*s,1.2*s,2*s,'#ffffff');b.box(-.9*s,.9*s,.2*s,1.6*s,1.2*s,1.5*s,'#f4f8ff');b.box(.9*s,.85*s,-.1*s,1.7*s,1.1*s,1.5*s,'#ffffff');b.box(0,1.45*s,0,1.6*s,.8*s,1.4*s,'#f8fbff');z.cols.push({x,z:zz,r:1.3*s});}
+function rainbowArch(z,x,zz,s){const b=z.b,C=['#ff5a5a','#ffa03a','#ffe04a','#5ad86a','#4aa8ff','#a06aff'];b.at(x,gy(z,x,zz),zz,0);
+  C.forEach((c,k)=>{const R=(5.2-k*.55)*s;for(let i=0;i<=14;i++){const a=i/14*Math.PI;b.box(Math.cos(a)*R,Math.sin(a)*R*.95+.3,0,.62*s,.62*s,.5*s,c);}});
+  b.box(0,.12,0,12.5*s,.24,3.2*s,'#f6faff');
+  z.cols.push({x:x+5.2*s,z:zz,r:.9*s},{x:x-5.2*s,z:zz,r:.9*s},{x:x+4.2*s,z:zz,r:.8*s},{x:x-4.2*s,z:zz,r:.8*s});}
+function auroraRibbons(z){const cols=['#7affc8','#a88aff','#6ad8ff'],rib=[];
+  cols.forEach((c,k)=>{const seg=[];for(let i=0;i<12;i++)seg.push(vb(z.group,6.5,2.4+k*.6,.2,c,-34+i*6.2,24+k*3,-33-k*2,{own:true,opacity:.32,emissive:c}));rib.push(seg);});
+  z.anim.push((dt,t)=>{rib.forEach((seg,k)=>seg.forEach((m,i)=>{m.position.y=24+k*3+Math.sin(t*.9+i*.55+k)*2.4;m.material.opacity=.22+.14*Math.sin(t*1.3+i*.7+k*2);}));});}
+function stalag(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x*3);b.box(0,2.2*s,0,1.3*s,4.4*s,1.3*s,'#4a3a6a');b.box(0,4.9*s,0,.9*s,1.1*s,.9*s,'#5a4a7a');b.box(0,5.7*s,0,.4*s,.6*s,.4*s,'#c8a8ff');z.cols.push({x,z:zz,r:.9*s});}
+function starObelisk(z,x,zz){const b=z.b;b.at(x,0,zz,0);b.box(0,.4,0,5,.8,5,'#6a74a8');b.box(0,1.2,0,3.8,.8,3.8,'#7a86b8');b.box(0,5.6,0,1.8,8.4,1.8,'#a8b4e8');b.box(0,10.2,0,1.3,1.2,1.3,'#c8d4ff');
+  const st=vb(z.group,1.3,1.3,1.3,'#ffe27a',x,12.2,zz,{own:true,emissive:'#ffcc40'});st.rotation.set(.78,.3,.78);z.cols.push({x,z:zz,r:2.6});
+  z.anim.push((dt,t)=>{st.rotation.y=t*1.2;st.position.y=12.2+Math.sin(t*2)*.3;st.material.emissiveIntensity=.7+.3*Math.sin(t*3);});}
+function meteorRock(z,x,zz,s){const b=z.b;b.at(x,gy(z,x,zz),zz,x*2);b.box(0,.7*s,0,1.7*s,1.4*s,1.5*s,'#5a5470');b.box(.2*s,1.5*s,0,1.0*s,.8*s,.9*s,'#6a6486');b.box(.5*s,.5*s,.76*s,.22*s,.9*s,.06*s,'#ff8a2a');b.box(-.4*s,1.1*s,.76*s,.5*s,.12*s,.06*s,'#ff8a2a');z.cols.push({x,z:zz,r:1.1*s});}
+function cometStreak(z){const head=vb(z.group,.9,.9,.9,'#fff2a0',0,0,0,{own:true,emissive:'#ffd84a'}),tail=[];for(let i=0;i<8;i++)tail.push(vb(z.group,.7-i*.07,.7-i*.07,.7-i*.07,'#ffd84a',0,0,0,{own:true,opacity:.6-i*.06,emissive:'#ffb02a'}));
+  z.anim.push((dt,t)=>{const u=(t*.07)%1,x=-40+u*80,y=34-u*10,zz=-30;head.position.set(x,y,zz);tail.forEach((m,i)=>m.position.set(x-(i+1)*1.4,y+(i+1)*.4,zz));});}
 function buildField(id){
   const T=FTHEME[id],z=newZone(id,26*FS,T.sky,T.top);z.field=true;const r=seeded(T.seed),b=z.b;
   const lk=LINKS[id],sides=Object.keys(lk),horiz=(!!lk.W||!!lk.E)&&!/^(camp|timber|bog|bamboo|mint|lotus|dojo)$/.test(id);
@@ -3123,6 +3217,49 @@ function buildField(id){
     campfire(z,13,-10);tent(z,16,-11,-.6,'#6a7484','#fff4d8');
     z.pois.push({x:-9,z:-12,i:'sawmill',tf:()=>t('poi_crane')},{x:14,z:-10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
     driftBits(z,22,['#c8c0b8','#ffd9a0','#ffb070'],12);
+  }
+  if(id==='aurora'){
+    used.push([10,-12,6]);
+    auroraRibbons(z);crystal(z,10,-12,3.2,'#7affc8','#38e8a8');
+    const lk2=spot(4.6);if(lk2){iceLake(z,lk2[0],lk2[1],4.2);z.pois.push({x:lk2[0],z:lk2[1],i:'pond',tf:()=>t('poi_frozen')});}
+    for(let i=0;i<27;i++){const p=spot(1.8);if(p){pine(z,p[0],p[1],1+r()*.6,['#2f9a8a','#38aa98','#268a7a']);z.cols.push({x:p[0],z:p[1],r:.9});}}
+    for(let i=0;i<14;i++){const p=spot(1.8);if(p)crystal(z,p[0],p[1],.8+r()*.8,['#7affc8','#a88aff','#6ad8ff'][i%3],['#38e8a8','#7a55ff','#38b8e8'][i%3]);}
+    for(let i=0;i<20;i++){const p=spot(1.4);if(p)snowDrift(z,p[0],p[1],.8+r()*.8);}
+    campfire(z,-12,10);tent(z,-15,11,.5,'#3a9a8a','#ffffff');crate(z,-10,12,1);
+    z.pois.push({x:10,z:-12,i:'tower',tf:()=>t('poi_auroracrystal')},{x:-13,z:10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
+    sparkleField(z,50,'#9affd8',44,6,101);sparkleField(z,30,'#c8a8ff',44,6,103);driftBits(z,30,['#ffffff','#bff0ff'],10);
+  }
+  if(id==='sky'){
+    used.push([9,-11,8]);
+    rainbowArch(z,9,-11,1.5);
+    for(let i=0;i<22;i++){const p=spot(2.4);if(p)cloudPuff(z,p[0],p[1],1+r()*.9);}
+    for(let i=0;i<14;i++){const p=spot(1.8);if(p)crystal(z,p[0],p[1],.7+r()*.6,['#ffe27a','#ff9ad8','#7ae8ff'][i%3],['#ffc040','#ff3ad0','#38b8e8'][i%3]);}
+    for(let i=0,n=0;i<600&&n<160;i++){const x=(r()-.5)*62,zz=(r()-.5)*62;if(pthD(x,zz)<1.8||nearP(x,zz))continue;flower(z,x,zz,['#ffffff','#ffd0e8','#ffe27a','#bfe8ff'][i%4]);n++;}
+    campfire(z,-11,12);tent(z,-14.5,13,.5,'#4a9aff','#ffffff');crate(z,-9,14,1);chest(z,-11.5,15.5,.4);
+    z.pois.push({x:9,z:-11,i:'castle',tf:()=>t('poi_rainbow')},{x:-12,z:12.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
+    sparkleField(z,40,'#ffffff',44,6,105);butterflies(z,8,6,38);driftBits(z,26,['#ffffff','#ffd0e8','#bfe8ff'],14);
+  }
+  if(id==='crystal'){
+    used.push([-9,-12,7]);
+    crystal(z,-9,-12,3.6,'#ff9ae0','#ff3ad0');
+    for(let i=0;i<16;i++){const p=spot(1.8);if(p)stalag(z,p[0],p[1],.8+r()*.7);}
+    for(let i=0;i<22;i++){const p=spot(1.7);if(p)crystal(z,p[0],p[1],.8+r()*1.0,['#7ae8ff','#ff9ae0','#c8a8ff','#a8ffe8'][i%4],['#38b8e8','#ff3ad0','#7a55ff','#38e8b8'][i%4]);}
+    for(let i=0;i<14;i++){const p=spot(1.5);if(p)rockv(z,p[0],p[1],.8+r()*1.0);}
+    for(let i=0;i<100;i++){const x=(r()-.5)*62,zz=(r()-.5)*62;b.at(x,0,zz,r()*6);b.box(0,.12,0,.3+r()*.3,.24,.3+r()*.3,r()<.5?'#6a5a8a':'#8a78b0');}
+    campfire(z,13,-10);tent(z,16,-11,-.6,'#7a55ff','#fff4d8');
+    z.pois.push({x:-9,z:-12,i:'rune',tf:()=>t('poi_gemhall')},{x:14,z:-10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
+    sparkleField(z,60,'#c8f0ff',44,5,107);sparkleField(z,30,'#ff9ae0',44,5,109);driftBits(z,16,['#c8a8ff','#7ae8ff'],15);
+  }
+  if(id==='comet'){
+    used.push([9,-11,6],[-10,-10,6]);
+    cometStreak(z);starObelisk(z,9,-11);starCircle(z,-10,-10);
+    for(let i=0;i<16;i++){const p=spot(1.8);if(p)meteorRock(z,p[0],p[1],.8+r()*.9);}
+    for(let i=0;i<10;i++){const p=spot(1.7);if(p)crystal(z,p[0],p[1],.7+r()*.7,'#ffe27a','#ffc040');}
+    for(let i=0;i<14;i++){const p=spot(1.7);if(p)basalt(z,p[0],p[1],.8+r()*.8,['#4a5488','#3e4676','#5a64a0']);}
+    for(let i=0;i<100;i++){const x=(r()-.5)*62,zz=(r()-.5)*62;b.at(x,0,zz,r()*6);b.box(0,.12,0,.3+r()*.3,.24,.3+r()*.3,r()<.5?'#5a64a0':'#a8b4e8');}
+    campfire(z,13,10);tent(z,16,11,-.6,'#4a5ac8','#fff4d8');crate(z,11,12,1);
+    z.pois.push({x:9,z:-11,i:'tower',tf:()=>t('poi_obelisk')},{x:-10,z:-10,i:'rune',tf:()=>t('poi_stars')},{x:14,z:10.5,i:'tent',tf:()=>t('camp'),sf:()=>t('campS'),mini:true});
+    sparkleField(z,70,'#fff2a0',46,8,111);sparkleField(z,30,'#a8b4ff',46,8,113);driftBits(z,20,['#ffe27a','#a8b4ff'],16);
   }
   if(id==='dragon'){
     used.push([-10,-12,7],[11,8,5]);const DC=['#4a3a55','#3a2a45','#5a4a66'];
@@ -4595,7 +4732,7 @@ function startPlay(slot){
   show('start',false);show('create',false);mode='play';paused=false;
   makeHero(C.cls,C.look);
   const zs=C.zone||'town',m=/^town:(warrior|mage|ranger|doctor|wood|mart)$/.exec(zs);
-  if(zs==='camp')setZone('camp',{x:0,z:14,face:Math.PI});else if(/^(meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo)$/.test(zs)){const a=SIDE[Object.keys(LINKS[zs])[0]].in;setZone(zs,{x:a[0],z:a[1],face:a[2]});}else setZone('town',{x:0,z:6,face:Math.PI},false,m?m[1]:C.cls);
+  if(zs==='camp')setZone('camp',{x:0,z:14,face:Math.PI});else if(/^(meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo|aurora|sky|crystal|comet)$/.test(zs)){const a=SIDE[Object.keys(LINKS[zs])[0]].in;setZone(zs,{x:a[0],z:a[1],face:a[2]});}else setZone('town',{x:0,z:6,face:Math.PI},false,m?m[1]:C.cls);
   els.atk._ic=null;$('#bAtk').innerHTML=atkIcon();Object.keys(hCache).forEach(k=>delete hCache[k]);
   $('#hud').hidden=false;$('#ctl').hidden=false;refreshRings();saveDB();ac();
 }
@@ -4781,6 +4918,10 @@ function drawWorld(cv){
     if(id==='lotus'){g.fillStyle='#4ab8d8';g.beginPath();g.ellipse(b.cx,b.cy,w*.3,w*.22,0,0,6.283);g.fill();g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=1.5;g.stroke();spots(k,ki,6,(x,y,i)=>{const a=i*1.1;const px=b.cx+Math.cos(a)*w*.17,py=b.cy+Math.sin(a)*w*.1;dot(px,py,w*.04,'#3f9a58');dot(px,py,w*.02,'#ff9ad0');});return;}
     if(id==='bamboo'){spots(k,ki,7,(x,y,i)=>{for(let q=0;q<3;q++){g.fillStyle=q%2?'#5ab04a':'#7cc46a';g.fillRect(x+q*w*.022,y-w*.1,w*.016,w*.14);g.fillStyle='#3f8a3a';g.fillRect(x+q*w*.022,y-w*.04,w*.016,w*.012);}g.fillStyle='#8ad07a';g.fillRect(x-w*.01,y-w*.12,w*.07,w*.015);});return;}
     if(id==='dojo'){g.fillStyle='#8a8f98';g.fillRect(b.cx+w*.12,b.y+w*.1,w*.26,w*.2);g.fillStyle='#9ae0ff';g.fillRect(b.cx+w*.18,b.y+w*.1,w*.14,w*.22);g.fillStyle='#6ac0e8';g.beginPath();g.ellipse(b.cx+w*.25,b.cy+w*.12,w*.2,w*.1,0,0,6.283);g.fill();spots(k,ki,4,(x,y)=>{g.fillStyle='#5ab04a';g.fillRect(x,y-w*.08,w*.018,w*.12);});spots(k,ki+3,3,(x,y)=>rock(x,y,w*.045,'#9aa0aa'));return;}
+    if(id==='aurora'){spots(k,ki,5,(x,y)=>pine(x,y,w*.07,'#3a9a8a'));g.fillStyle='rgba(120,255,200,.5)';g.fillRect(b.x+w*.1,b.y+w*.12,w*.8,w*.07);g.fillStyle='rgba(190,140,255,.45)';g.fillRect(b.x+w*.1,b.y+w*.21,w*.8,w*.05);return;}
+    if(id==='sky'){spots(k,ki,6,(x,y)=>{dot(x,y,w*.06,'#ffffff');dot(x+w*.05,y+w*.012,w*.045,'#eef6ff');dot(x-w*.05,y+w*.016,w*.04,'#ffffff');});return;}
+    if(id==='crystal'){spots(k,ki,6,(x,y,i)=>{g.fillStyle=['#7ae8ff','#ff9ae0','#c8a8ff'][i%3];g.beginPath();g.moveTo(x,y-w*.1);g.lineTo(x+w*.045,y);g.lineTo(x,y+w*.04);g.lineTo(x-w*.045,y);g.closePath();g.fill();});return;}
+    if(id==='comet'){spots(k,ki,8,(x,y)=>dot(x,y,w*.018,'#ffe27a'));g.strokeStyle='#ffd04a';g.lineWidth=w*.03;g.lineCap='round';g.beginPath();g.moveTo(b.cx-w*.25,b.cy-w*.2);g.lineTo(b.cx+w*.2,b.cy+w*.1);g.stroke();dot(b.cx+w*.2,b.cy+w*.1,w*.05,'#fff2a0');return;}
     if(id==='dragon'){spots(k,ki,6,(x,y)=>rock(x,y,w*.06,'#4a3a58'));g.fillStyle='#e04a5a';g.beginPath();g.moveTo(b.cx-w*.2,b.cy+w*.05);g.quadraticCurveTo(b.cx,b.cy-w*.25,b.cx+w*.2,b.cy+w*.05);g.quadraticCurveTo(b.cx,b.cy-w*.02,b.cx-w*.2,b.cy+w*.05);g.fill();return;}
     spots(k,ki,6,(x,y)=>tree(x,y,w*.07,'#4fae5e'));});
   /* labels, markers, hit areas */
@@ -5037,10 +5178,10 @@ function renderMissions(){
   const info=document.createElement('div');info.className='note';info.style.cssText='margin:0 0 8px;font-weight:800;opacity:1';
   info.innerHTML='<b>'+t('misSlots',C.qs.length)+'</b> · '+t('misReset',hh,mm)+(coopOn()?'<br>'+t('qShared'):'')+(town?'':'<br><span style="color:#c4243c">'+t('misTown')+'</span>');box.appendChild(info);
   const st=i=>C.qs.some(a=>a.i===i)?0:C.qx.indexOf(i)>=0?2:1;
-  const pc=(zone&&zone.id==='town'?zone.cls:C.cls),per=PERI[pc]||[],ql=i=>E.MON[E.QUESTS[i].t].lvl,tabOf=l=>l<=5?0:l<=10?1:2,isNear=i=>per.indexOf(E.MON[E.QUESTS[i].t].at||'meadow')>=0;
+  const pc=(zone&&zone.id==='town'?zone.cls:C.cls),per=PERI[pc]||[],ql=i=>E.MON[E.QUESTS[i].t].lvl,tabOf=l=>l<=5?0:l<=10?1:l<=15?2:l<=20?3:4,isNear=i=>per.indexOf(E.MON[E.QUESTS[i].t].at||'meadow')>=0;
   if(misTab<0)misTab=tabOf(level());
   const tb=document.createElement('div');tb.className='rowx';tb.style.cssText='margin:0 0 4px;flex-wrap:nowrap';
-  [0,1,2].forEach(k=>{const b=document.createElement('button');b.className='pill'+(misTab===k?' go':'');b.textContent=t('misTab'+k);b.style.cssText='flex:1;padding:8px 6px;font-size:15px';b.addEventListener('click',()=>{SFX.click();misTab=k;renderMissions();});tb.appendChild(b);});box.appendChild(tb);
+  [0,1,2,3,4].forEach(k=>{const b=document.createElement('button');b.className='pill'+(misTab===k?' go':'');b.textContent=t('misTab'+k);b.style.cssText='flex:1;padding:8px 2px;font-size:12.5px;min-width:0;white-space:nowrap';b.addEventListener('click',()=>{SFX.click();misTab=k;renderMissions();});tb.appendChild(b);});box.appendChild(tb);
   const lst=E.QUESTS.map((q,i)=>i).filter(i=>tabOf(ql(i))===misTab&&(misTab>0||isNear(i)||!E.MON[E.QUESTS[i].t].at));
   if(!lst.length){const e=document.createElement('div');e.className='note';e.textContent=t('misNoneTab');box.appendChild(e);}
   const soloOf=i=>{const m=E.MON[E.QUESTS[i].t],d=level()-m.lvl,big=!!m.big;const need=big?1:-1,mid=big?-1:-3;return d>=need?0:d>=mid?1:2;};
