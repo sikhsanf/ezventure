@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-183341"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-190157"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -1372,7 +1372,8 @@ const WPC={m:['#8a5a2b','#c9824a','#aeb7c4','#d5dbe6','#eef3fa','#ffd84a','#7ae8
  e:[null,null,null,null,'#6a7a90','#a07000','#38b8e8','#8a4cff','#ff3a10','#ffcc40']};
 function curPath(){return WPATHS[C.cls][C.eq.p|0];}
 function dual(){return C.cls==='mart'||(C.cls==='wood'&&curPath()==='sold');}
-function martKick(){return C&&C.cls==='mart'&&curPath()==='kick';}
+function martMix(){return !!C&&C.cls==='mart'&&!advOK();}
+function martKick(){return C&&C.cls==='mart'&&(S.mk!==undefined?S.mk:curPath()==='kick');}
 const ATKI={syr:'💉',mort:'🌿',ham:'🔨',sold:'🔧',fist:'👊',kick:'🦶'};
 function atkIcon(){const k=curPath();return (C.cls==='doctor'||C.cls==='wood'||C.cls==='mart')&&ATKI[k]?ATKI[k]:E.CLASSES[C.cls].icon;}
 const FXC={ham:0xffb050,sold:0xffe84a,fist:0xff9a3a,kick:0x7ad8ff};
@@ -1994,8 +1995,9 @@ function animHero(h,a,dt,T){
   if(a.atk>=0){
     const p=a.atk,big=a.big?1.2:1;
     if(mart){
-      const second=p>=.5,q=second?(p-.5)*2:p*2,rt=second?-1:1,b0={lL,lR,aL,aR,zL,zR};
-      if(wk==='kick'){
+      let mk=wk==='kick',second,q;if(a.mx){const ix=Math.min(3,Math.floor(p*4));q=p*4-ix;mk=ix>=2;second=ix%2===1;}else{second=p>=.5;q=second?(p-.5)*2:p*2;}
+      const rt=second?-1:1,b0={lL,lR,aL,aR,zL,zR};
+      if(mk){
         if(q<.28){const u=ease(q/.28);lR=lerp(lR,.55,u);aR=lerp(aR,-.5,u);aL=lerp(aL,-1.2,u);zR=lerp(zR,-.7,u);zL=lerp(zL,.6,u);lean=lerp(lean,-.12,u);}
         else if(q<.55){const u=eo((q-.28)/.27);lR=lerp(.55,-1.55,u);aR=-.5;aL=-1.2;zR=-.7;zL=.6;lean=lerp(-.12,-.3,u);by+=Math.sin(u*Math.PI)*.1;twist=lerp(0,.25,u);}
         else{const u=ease((q-.55)/.45);lR=lerp(-1.55,lR,u);aR=lerp(-.5,aR,u);aL=lerp(-1.2,aL,u);zR=lerp(-.7,zR,u);zL=lerp(.6,zL,u);lean=lerp(-.3,lean,u);twist=lerp(.25,0,u);}
@@ -2005,7 +2007,7 @@ function animHero(h,a,dt,T){
         else if(q<.52){const u=eo((q-.25)/.27);if(rt>0){aR=lerp(.35,-1.57,u);aL=-1.5;}else{aL=lerp(.35,-1.57,u);aR=-1.5;}twist=lerp(.45*rt,-.5*rt*big,u);lean=lerp(-.1,.32*big,u);lL=-.5;lR=.45;by+=Math.sin(u*Math.PI)*.08;}
         else{const u=ease((q-.52)/.48);if(rt>0){aR=lerp(-1.57,A0,u);aL=lerp(-1.5,A1,u);}else{aL=lerp(-1.57,A1,u);aR=lerp(-1.5,A0,u);}twist=lerp(-.5*rt*big,0,u);lean=lerp(.32*big,lean,u);lL=lerp(-.5,lL,u);lR=lerp(.45,lR,u);}
       }
-      if(wk==='kick'&&second){const k={lR,aR,aL,zR,zL};lL=k.lR;lR=b0.lL;aL=k.aR;aR=k.aL;zL=-k.zR;zR=-k.zL;twist=-twist;}
+      if(mk&&second){const k={lR,aR,aL,zR,zL};lL=k.lR;lR=b0.lL;aL=k.aR;aR=k.aL;zL=-k.zR;zR=-k.zL;twist=-twist;}
     }else if(mel){
       const ds=wk==='sold',second=ds&&p>=.5,q=ds?(second?(p-.5)*2:p*2):p;
       if(q<.28){const u=ease(q/.28);aR=lerp(-.45,-2.95,u);aL=lerp(-.3,.5,u);twist=lerp(0,-.6,u);lean=lerp(lean,-.2,u);}
@@ -2603,7 +2605,7 @@ function onPos(R,d){
   const f=v=>Number.isFinite(+v)?+v:0,now=performance.now();
   const nx=clamp(f(d.x),-45,45),nz=clamp(f(d.z),-45,45),zk=typeof d.zk==='string'?d.zk.slice(0,16):'';
   if(R.tt&&zk===R.zk&&!R.first){const dt=Math.max(.02,(now-R.tt)/1000);R.vx=clamp((nx-R.tx)/dt,-14,14);R.vz=clamp((nz-R.tz)/dt,-14,14);}else{R.vx=R.vz=0;}
-  R.tt=now;R.tx=nx;R.tz=nz;R.tf=f(d.f);R.mv=d.m?1:0;R.k=f(d.k);R.b=d.b?1:0;R.bl=d.bl?1:0;R.dg=d.dg===undefined?-1:f(d.dg);R.fa=d.fa?1:0;R.rs=d.rs?1:0;R.hp=clamp(f(d.h),0,99999);R.mhp=clamp(f(d.hm),1,99999);
+  R.tt=now;R.tx=nx;R.tz=nz;R.tf=f(d.f);R.mv=d.m?1:0;R.k=f(d.k);R.b=d.b?1:0;R.bl=d.bl?1:0;R.dg=d.dg===undefined?-1:f(d.dg);R.fa=d.fa?1:0;R.rs=d.rs?1:0;R.x4=d.x4?1:0;R.hp=clamp(f(d.h),0,99999);R.mhp=clamp(f(d.hm),1,99999);
   if(zk!==R.zk){R.zk=zk;R.first=true;R.vx=R.vz=0;renderCoop();}
   if(R.first){R.x=R.tx;R.z=R.tz;R.f=R.tf;R.first=false;}
 }
@@ -2663,7 +2665,7 @@ function coopTick(dt){
       const pr=profNow(),sg=pr?JSON.stringify(pr):'';
       if(pr&&sg!==coop.sig){coop.sig=sg;coopSend({t:'hello',s:coop.me,p:pr});}
       const on=!!coop.myZ;
-      coopSend({t:'pos',s:coop.me,zk:coop.myZ,x:on?+S.x.toFixed(2):0,z:on?+S.z.toFixed(2):0,f:+S.face.toFixed(2),m:S.moving&&S.dodgeT<=0?1:0,k:S.swing>0?+(1-S.swing/S.swingMax).toFixed(2):-1,b:S.big?1:0,bl:S.blocking?1:0,dg:S.dodgeT>0?+(1-S.dodgeT/.35).toFixed(2):-1,fa:S.state==='faint'?1:0,rs:S.rest?1:0,h:Math.round(S.hp),hm:S.maxHp});
+      coopSend({t:'pos',s:coop.me,zk:coop.myZ,x:on?+S.x.toFixed(2):0,z:on?+S.z.toFixed(2):0,f:+S.face.toFixed(2),m:S.moving&&S.dodgeT<=0?1:0,k:S.swing>0?+(1-S.swing/S.swingMax).toFixed(2):-1,b:S.big?1:0,bl:S.blocking?1:0,dg:S.dodgeT>0?+(1-S.dodgeT/.35).toFixed(2):-1,fa:S.state==='faint'?1:0,rs:S.rest?1:0,h:Math.round(S.hp),hm:S.maxHp,x4:martMix()?1:0});
     }
     // host -> each guest in my zone: monster snapshot
     if(coop.role==='host'&&coop.myZ&&zone.field){
@@ -2694,7 +2696,7 @@ function coopTick(dt){
       if(!Number.isFinite(R.f))R.f=R.tf;R.f+=angDiff(R.f,R.tf)*f;
       if(R.cs){R.cs.x=R.x;R.cs.z=R.z;R.cs.face=R.f;}
       const H2=R.H;H2.root.position.set(R.x,0,R.z);H2.root.rotation.y=R.f;
-      animHero(H2,{moving:!!R.mv&&R.dg<0,spd:E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.35,atk:R.k,big:!!R.b,dodge:R.dg,block:!!R.bl,hurt:0,faint:!!R.fa,cheer:0},dt,T);
+      animHero(H2,{mx:!!R.x4,moving:!!R.mv&&R.dg<0,spd:E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.35,atk:R.k,big:!!R.b,dodge:R.dg,block:!!R.bl,hurt:0,faint:!!R.fa,cheer:0},dt,T);
       if(R.P){const P=R.P;R.P.root.visible=vis;if(R.px==null||Math.hypot(R.x-R.px,R.z-R.pz)>14){R.px=R.x-Math.sin(R.f)*1.6;R.pz=R.z-Math.cos(R.f)*1.6;R.pf=R.f;}
         const dx=R.x-R.px,dz=R.z-R.pz,d=Math.hypot(dx,dz);let mv=false;
         if(d>2.1){const sp=Math.min(d-1.5,(E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.55+(d-2)*1.4)*dt);R.px+=dx/d*sp;R.pz+=dz/d*sp;mv=sp>.002;R.pf+=angDiff(R.pf,Math.atan2(dx,dz))*(1-Math.exp(-dt*9));}
@@ -4180,6 +4182,11 @@ function doAttack(){
   }else{
     SFX.swing();
     if(dual()){
+      if(martMix()){
+        S.swing=S.swingMax=dur*1.35;
+        const hit4=(i)=>{if(!zone||S.state!=='play')return;S.mk=i>=2;const n=arcHit(c.range,130,.25);strikeFx(S.mk?FXC.kick:FXC.fist,c.range,130,false);S.mk=undefined;SFX.swing();if(!n&&tg&&!tg.dead&&Math.hypot(tg.x-S.x,tg.z-S.z)<c.range+2.6)S.lunge=.07;};
+        for(let i=0;i<4;i++)after(dur*1.35*(i+.45)/4,()=>hit4(i));return;
+      }
       const hit=(k)=>{if(!zone||S.state!=='play')return;const n=arcHit(c.range,130,.5);strikeFx(FXC[curPath()],c.range,130,false);SFX.swing();if(!n&&tg&&!tg.dead&&Math.hypot(tg.x-S.x,tg.z-S.z)<c.range+2.6)S.lunge=.1;};
       after(dur*.26,()=>{hit(0);});after(dur*.76,()=>{hit(1);});return;
     }
@@ -4483,7 +4490,7 @@ function updatePlay(dt){
   // hero visuals
   H.root.position.set(S.x,0,S.z);H.root.rotation.y=S.face;
   const sp=S.swing>0?1-S.swing/S.swingMax:-1;
-  animHero(H,{moving:S.moving&&S.dodgeT<=0,spd:E.moveSpeed(C.cls,L)*1.35*(S.blocking?.5:1),atk:sp,big:S.big,dodge:S.dodgeT>0?1-S.dodgeT/.35:-1,block:S.blocking,hurt:S.hurtT>0?S.hurtT/.5:0,faint:S.state==='faint',cheer:S.cheer>0?1-S.cheer/S.cheerMax:0},dt,T);
+  animHero(H,{mx:martMix(),moving:S.moving&&S.dodgeT<=0,spd:E.moveSpeed(C.cls,L)*1.35*(S.blocking?.5:1),atk:sp,big:S.big,dodge:S.dodgeT>0?1-S.dodgeT/.35:-1,block:S.blocking,hurt:S.hurtT>0?S.hurtT/.5:0,faint:S.state==='faint',cheer:S.cheer>0?1-S.cheer/S.cheerMax:0},dt,T);
   updBubble(T);petTick(dt);
   {const pl=S.hp<=S.maxHp*.3;if(H._pale!==pl)applyPale(H,pl);H.model.scale.y=1;}
   if(S.state==='faint'||S.rest){H.pivot.rotation.x=lerp(H.pivot.rotation.x,-1.45,1-Math.exp(-dt*(S.rest?4:8)));H.pivot.position.y=lerp(H.pivot.position.y,.28,1-Math.exp(-dt*6));}else{H.pivot.position.y=lerp(H.pivot.position.y,.9,1-Math.exp(-dt*8));H.pivot.rotation.x=S.dodgeT>0?-(1-S.dodgeT/.35)*Math.PI*2:(Math.abs(H.pivot.rotation.x)>.02?lerp(H.pivot.rotation.x,0,1-Math.exp(-dt*7)):0);}
