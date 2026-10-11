@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-083549"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-085124"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -1815,7 +1815,7 @@ function loadPeer(ok,bad){
   const s=document.createElement('script');s.src=PEER_URL;s.onload=()=>window.Peer?ok():bad();s.onerror=bad;document.head.appendChild(s);
 }
 function mkR(slot,conn){return coop.Rs[slot]={slot,conn:conn||null,x:0,z:0,tx:0,tz:0,vx:0,vz:0,tt:0,f:0,tf:0,zk:'',mv:0,k:-1,b:0,bl:0,dg:-1,fa:0,H:null,key:'',tag:null,p:null,first:true,lm:0};}
-function dropR(R){if(R.H){scene.remove(R.H.root);disposeGroup(R.H.root);}if(R.tag)R.tag.remove();delete coop.Rs[R.slot];}
+function dropR(R){if(R.P){scene.remove(R.P.root);disposeGroup(R.P.root);}if(R.H){scene.remove(R.H.root);disposeGroup(R.H.root);}if(R.tag)R.tag.remove();delete coop.Rs[R.slot];}
 function dropAll(){coopList().forEach(dropR);}
 function coopStop(){
   const p=coop.peer,cs=coop.role==='host'?coopList().map(R=>R.conn):[coop.conn];
@@ -1927,11 +1927,11 @@ function guestMsg(d){
 function cleanProf(p){
   if(!p||['warrior','mage','ranger'].indexOf(p.c)<0)return null;
   const L=p.l||{},E2=p.e||{},ci=(v,n)=>clamp((+v)|0,0,n-1);
-  return {n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,12)},e:{w:ci(E2.w,10),a:ci(E2.a,7),p:ci(E2.p,2),h:ci(E2.h,21)},v:ci(p.v,E.MAXLV+1)||1};
+  return {n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,12)},e:{w:ci(E2.w,10),a:ci(E2.a,7),p:ci(E2.p,2),h:ci(E2.h,21)},pt:ci(p.pt,10),v:ci(p.v,E.MAXLV+1)||1};
 }
 function setRemote(R,p){
   p=cleanProf(p);if(!p)return false;
-  const key=JSON.stringify([p.c,p.l,p.e]);
+  const key=JSON.stringify([p.c,p.l,p.e]);if(R.pt!==p.pt){R.pt=p.pt;if(R.P){scene.remove(R.P.root);disposeGroup(R.P.root);R.P=null;}if(p.pt>0){R.P=petModel(p.pt);R.P.root.visible=false;scene.add(R.P.root);R.px=null;}}
   if(key!==R.key){R.key=key;if(R.H){scene.remove(R.H.root);disposeGroup(R.H.root);}R.H=buildHero(p.c,Object.assign({},p.l,{ew:p.e.w,ea:p.e.a,ep:p.e.p,eh:p.e.h}));scene.add(R.H.root);R.H.root.visible=false;}
   const fresh=!R.p;R.p=p;if(R.tag){R.tag.remove();R.tag=null;}
   if(fresh&&mode==='play')banner(t('coopFriendIn',p.n));
@@ -1986,7 +1986,7 @@ function coopWorld(dt){
   if(!zone.sync)for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);if(phaseTypes(zone.id).indexOf(q.type)>=0)spawnMon(q.type);}}
   zone.mons.slice().forEach(m=>updMon(m,dt));
 }
-function profNow(){return C?{n:C.name,c:C.cls,l:C.look,e:{w:C.eq.w,a:C.eq.a,p:C.eq.p,h:C.eq.h|0},v:level()}:null;}
+function profNow(){return C?{n:C.name,c:C.cls,l:C.look,e:{w:C.eq.w,a:C.eq.a,p:C.eq.p,h:C.eq.h|0},pt:C.pet|0,v:level()}:null;}
 function coopTick(dt){
   try{
     coop.myZ=zkey();
@@ -2023,6 +2023,7 @@ function coopTick(dt){
     }
     // friends' heroes
     for(const R of list){
+      if(R.P&&!(R.H&&R.p))R.P.root.visible=false;
       if(!R.H||!R.p)continue;
       const vis=!!(zone&&R.zk&&R.zk===coop.myZ);R.H.root.visible=vis;
       if(!vis)continue;
@@ -2031,6 +2032,10 @@ function coopTick(dt){
       R.f+=angDiff(R.f,R.tf)*f;
       const H2=R.H;H2.root.position.set(R.x,0,R.z);H2.root.rotation.y=R.f;
       animHero(H2,{moving:!!R.mv&&R.dg<0,spd:E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.35,atk:R.k,big:!!R.b,dodge:R.dg,block:!!R.bl,hurt:0,faint:!!R.fa,cheer:0},dt,T);
+      if(R.P){const P=R.P;R.P.root.visible=vis;if(R.px==null||Math.hypot(R.x-R.px,R.z-R.pz)>14){R.px=R.x-Math.sin(R.f)*1.6;R.pz=R.z-Math.cos(R.f)*1.6;R.pf=R.f;}
+        const dx=R.x-R.px,dz=R.z-R.pz,d=Math.hypot(dx,dz);let mv=false;
+        if(d>2.1){const sp=Math.min(d-1.5,(E.moveSpeed(R.p.c,Math.max(1,R.p.v))*1.55+(d-2)*1.4)*dt);R.px+=dx/d*sp;R.pz+=dz/d*sp;mv=sp>.002;R.pf+=angDiff(R.pf,Math.atan2(dx,dz))*(1-Math.exp(-dt*9));}
+        P.root.position.set(R.px,0,R.pz);P.root.rotation.y=R.pf;petAnim(P,mv,T);}
       H2.pivot.rotation.x=R.fa?lerp(H2.pivot.rotation.x,-1.45,1-Math.exp(-dt*8)):R.dg>=0?-R.dg*Math.PI*2:0;
     }
   }catch(e){console.error('coopTick',e);}
