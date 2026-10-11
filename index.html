@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-183137"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-183341"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -1355,7 +1355,7 @@ function sanitize0(o){
     qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,7),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),pets:[...new Set((Array.isArray(o.pets)?o.pets:[]).map(i=>i|0).filter(i=>i>=1&&i<=18))],pet:0,hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),intro:o.intro===undefined?127:li(o.intro,128),cs:o.cs===undefined?0:li(o.cs,64),adv:(E.ADV[o.adv]&&E.ADV[o.adv].cls===o.cls)?o.adv:'',tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo|aurora|sky|crystal|comet|town:(warrior|mage|ranger|doctor|wood|mart))$/.test(o.zone)?o.zone:'town'};
 }
 function encodeDB(){return 'EZV1:'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,slots:DB.slots}))));}
-function decodeDB(s){s=String(s||'');const k=s.lastIndexOf('EZV1:');if(k<0)throw new Error('format');let b=s.slice(k+5).replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+\/]/g,'');while(b.length%4)b+='=';const j=JSON.parse(decodeURIComponent(escape(atob(b))));if(!j||!Array.isArray(j.slots))throw new Error('format');return j.slots.map(sanitize);}
+function decodeDB(s){s=String(s||'');let k=-1,off=0;{const re=/ezv\s*[1il]\s*[:：]/gi;let mm;while((mm=re.exec(s)))k=mm.index,off=mm[0].length;}if(k<0){k=0;off=0;}let b=s.slice(k+off).replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+\/]/g,'');while(b.length%4)b+='=';const j=JSON.parse(decodeURIComponent(escape(atob(b))));if(!j||!Array.isArray(j.slots))throw new Error('format');return j.slots.map(sanitize);}
 
 /* ---------- Look tables ---------- */
 const HAIR=['#3b2a20','#e8b94a','#e0508a','#4a8fe0','#f3f0ea'];
@@ -5378,7 +5378,7 @@ $('#ioText').addEventListener('focus',e=>{const t=e.target;setTimeout(()=>{try{t
 $('#ioPaste').addEventListener('click',()=>{const m=$('#ioMsg');try{navigator.clipboard.readText().then(x=>{$('#ioText').value=x;m.textContent='';},()=>{m.textContent=t('pasteManual');});}catch(e){m.textContent=t('pasteManual');}});
 $('#ioLoad').addEventListener('click',()=>{
   const m=$('#ioMsg');let inc,n=0;
-  try{inc=decodeDB($('#ioText').value);}catch(e){m.textContent=t('badCode')+' ('+(e&&e.message||e)+', '+$('#ioText').value.length+', '+bld()+')';return;}
+  try{inc=decodeDB($('#ioText').value);}catch(e){const v=$('#ioText').value;m.textContent=t('badCode')+' ('+(e&&e.message||e)+', '+v.length+', ['+JSON.stringify(v.slice(0,8))+'], '+bld()+')';return;}
   try{inc.forEach(ch=>{if(!ch)return;const free=DB.slots.findIndex(s=>!s);if(free>=0){DB.slots[free]=ch;n++;}});
     if(n){saveDB();m.textContent=t('loaded',n);try{buildSlots();}catch(e){}}else m.textContent=t('noSlot');
   }catch(e){m.textContent='Error: '+(e&&e.message||e);}
