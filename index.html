@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-182406"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-182719"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -500,7 +500,7 @@ body.story #app>*:not(#c):not(#story){visibility:hidden!important}
       <div class="phead"><h2 data-i="ioT"></h2><div class="acts"><button class="xbtn" data-for="ioClose" data-ia="aClose" data-ic="close"></button></div></div>
       <div class="pbody">
         <p class="note" data-i="ioNote" style="margin-top:0"></p>
-        <textarea id="ioText" spellcheck="false"></textarea>
+        <textarea id="ioText" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea>
         <p class="note" id="ioMsg"></p>
         <div class="rowx" style="margin-top:6px"><button class="pill" id="ioCopy" data-i="copy"></button><button class="pill" id="ioPaste" data-i="paste"></button></div>
       </div>
@@ -5365,18 +5365,23 @@ $('#mClose').addEventListener('click',()=>{SFX.click();show('menu',false);paused
 $('#mCine').addEventListener('click',()=>{SFX.click();C.cs=0;saveDB();show('menu',false);paused=false;if(zone&&zone.id==='town')startCine();else banner(t('cineNext'));});
 let delT=null;$('#mDel').addEventListener('click',e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm='1';b.textContent=t('sure');clearTimeout(delT);delT=setTimeout(()=>{b.dataset.arm='';b.textContent=t('delHero');},3000);return;}DB.slots[curSlot]=null;saveDB();show('menu',false);showTitle();});
 let ioFrom='title';
-function openIo(from){ioFrom=from;$('#ioText').value=encodeDB();$('#ioMsg').textContent='';show('io',true);if(from==='menu')show('menu',false);}
+function bld(){try{return document.querySelector('meta[name=ezv-build]').content;}catch(e){return '?';}}
+function unscroll(){const f=()=>{try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;$('#app').scrollTop=0;}catch(e){}};f();setTimeout(f,60);setTimeout(f,300);}
+document.addEventListener('focusout',unscroll);
+function openIo(from){ioFrom=from;$('#ioText').value=encodeDB();$('#ioMsg').textContent='build '+bld();show('io',true);if(from==='menu')show('menu',false);}
 $('#playBtn').addEventListener('click',()=>{ac();SFX.start();$('#playBtn').hidden=true;$('#slotsWrap').hidden=false;if(!storySeen)openStory();});$('#btnBack').addEventListener('click',()=>{SFX.click();$('#playBtn').hidden=false;$('#slotsWrap').hidden=true;});
 $('#btnCode').addEventListener('click',()=>{ac();openIo('title');});$('#mCode').addEventListener('click',()=>openIo('menu'));
-$('#ioClose').addEventListener('click',()=>{show('io',false);if(ioFrom==='menu')show('menu',true);});
+$('#ioClose').addEventListener('click',()=>{try{document.activeElement.blur();}catch(e){}unscroll();show('io',false);if(ioFrom==='menu')show('menu',true);});
 $('#ioCopy').addEventListener('click',()=>{const ta=$('#ioText');ta.focus();ta.select();const m=$('#ioMsg');try{navigator.clipboard.writeText(ta.value).then(()=>{m.textContent=t('copied');},()=>{m.textContent=t('copyManual');});}catch(e){m.textContent=t('copyManual');}});
 $('#ioText').addEventListener('focus',e=>{const t=e.target;setTimeout(()=>{try{t.setSelectionRange(0,t.value.length);}catch(_){}},30);});
 $('#ioPaste').addEventListener('click',()=>{const m=$('#ioMsg');try{navigator.clipboard.readText().then(x=>{$('#ioText').value=x;m.textContent='';},()=>{m.textContent=t('pasteManual');});}catch(e){m.textContent=t('pasteManual');}});
 $('#ioLoad').addEventListener('click',()=>{
-  const m=$('#ioMsg');
-  try{const inc=decodeDB($('#ioText').value);let n=0;inc.forEach((ch,i)=>{if(!ch)return;const free=DB.slots.findIndex(s=>!s);if(free>=0){DB.slots[free]=ch;n++;}});
-    if(n){saveDB();m.textContent=t('loaded',n);if(ioFrom==='title')showTitleKeepIo();}else m.textContent=t('noSlot');
-  }catch(e){m.textContent=t('badCode');}
+  const m=$('#ioMsg');let inc,n=0;
+  try{inc=decodeDB($('#ioText').value);}catch(e){m.textContent=t('badCode')+' ('+(e&&e.message||e)+', '+$('#ioText').value.length+', '+bld()+')';return;}
+  try{inc.forEach(ch=>{if(!ch)return;const free=DB.slots.findIndex(s=>!s);if(free>=0){DB.slots[free]=ch;n++;}});
+    if(n){saveDB();m.textContent=t('loaded',n);try{buildSlots();}catch(e){}}else m.textContent=t('noSlot');
+  }catch(e){m.textContent='Error: '+(e&&e.message||e);}
+  try{document.activeElement.blur();}catch(e){}unscroll();
 });
 function showTitleKeepIo(){const keep=$('#ioMsg').textContent;showTitle();openIo('title');$('#ioMsg').textContent=keep;}
 
