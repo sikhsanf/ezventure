@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-200803"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-201800"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -591,34 +591,34 @@ window.EZ=(function(){
   };
   const SKILLS={
     sword:[
-      {id:'bash',icon:'🛡️',lv:5,cd:7,kind:'arc',mult:1.3,range:3,arc:120,stun:1.5},
+      {id:'bash',icon:'🛡️',lv:5,cd:7,kind:'charge',mult:1.3,radius:3,range:7,delay:.3,stun:1.5,color:0x7ad8ff},
       {id:'wall',icon:'🏰',lv:10,cd:20,kind:'ward',dur:5,mul:.3,taunt:9,team:9},
       {id:'rally',icon:'🚩',lv:15,cd:32,kind:'heal',pct:.4,ward:3,mul:.4,team:9}
     ],
     great:[
-      {id:'cleave',icon:'🌙',lv:5,cd:6,kind:'arc',mult:2.6,range:3.8,arc:200},
-      {id:'roar',icon:'📣',lv:10,cd:24,kind:'buff',dmg:1.35,dur:8,team:9},
-      {id:'quake',icon:'🌋',lv:15,cd:22,kind:'aoe',mult:4.2,radius:5,center:'self',stun:1.3,color:0xc8903a}
+      {id:'cleave',icon:'🌙',lv:5,cd:8,kind:'arc',mult:2.6,range:3.8,arc:200},
+      {id:'roar',icon:'📣',lv:10,cd:26,kind:'buff',dmg:1.35,dur:8,team:9},
+      {id:'quake',icon:'🌋',lv:15,cd:30,kind:'leap',late:1,mult:4.2,radius:5,range:8,delay:.5,stun:1.3,color:0xc8903a}
     ],
     bow:[
-      {id:'tri',icon:'🏹',lv:5,cd:4,kind:'proj',mult:.7,count:3,spread:.28,color:0xffe27a},
-      {id:'flurry',icon:'💨',lv:10,cd:9,kind:'proj',mult:.6,count:1,volley:7,gap:.08,color:0xfff2a0},
-      {id:'rain',icon:'🌧️',lv:15,cd:20,kind:'aoe',mult:1,waves:4,radius:5.5,center:'target',range:8,color:0xfff2a0}
+      {id:'tri',icon:'🏹',lv:5,cd:3,kind:'proj',mult:.7,count:3,spread:.28,color:0xffe27a},
+      {id:'flurry',icon:'💨',lv:10,cd:6,kind:'proj',mult:.6,count:1,volley:7,gap:.08,back:6,color:0xfff2a0},
+      {id:'rain',icon:'🌧️',lv:15,cd:13,kind:'aoe',mult:1,waves:4,radius:5.5,center:'target',range:8,color:0xfff2a0}
     ],
     xbow:[
-      {id:'bolt',icon:'🎯',lv:5,cd:7,kind:'proj',mult:3.4,count:1,speed:24,color:0xffb04a},
-      {id:'snare',icon:'🕸️',lv:10,cd:13,kind:'aoe',mult:1.8,radius:3.8,slow:4,center:'target',range:8,color:0xd8d8e8},
-      {id:'siege',icon:'💣',lv:15,cd:26,kind:'aoe',mult:6.5,radius:4.2,center:'target',range:9,delay:.6,stun:1,color:0xff8a2a}
+      {id:'bolt',icon:'🎯',lv:5,cd:4.5,kind:'proj',mult:3.4,count:1,speed:24,color:0xffb04a},
+      {id:'snare',icon:'🕸️',lv:10,cd:9,kind:'aoe',mult:1.8,radius:3.8,slow:4,center:'target',range:8,back:5,color:0xd8d8e8},
+      {id:'siege',icon:'💣',lv:15,cd:17,kind:'aoe',mult:6.5,radius:4.2,center:'target',range:9,delay:.6,stun:1,color:0xff8a2a}
     ],
     staff:[
-      {id:'fire',icon:'🔥',lv:5,cd:5,kind:'proj',mult:2.5,count:1,big:true,color:0xff7a2a},
-      {id:'ice',icon:'❄️',lv:10,cd:10,kind:'aoe',mult:2,radius:4.6,slow:3.5,center:'self',color:0x7fd8ff},
-      {id:'wind',icon:'🌪️',lv:15,cd:22,kind:'aoe',mult:1.3,waves:5,radius:5,center:'target',range:9,noDrop:1,color:0xb6ffd8}
+      {id:'fire',icon:'🔥',lv:5,cd:6,kind:'proj',mult:2.5,count:1,big:true,color:0xff7a2a},
+      {id:'ice',icon:'❄️',lv:10,cd:14,kind:'aoe',mult:2,radius:4.6,slow:3.5,center:'self',back:5,color:0x7fd8ff},
+      {id:'wind',icon:'🌪️',lv:15,cd:30,kind:'aoe',mult:1.3,waves:5,radius:5,center:'target',range:9,noDrop:1,color:0xb6ffd8}
     ],
     book:[
-      {id:'dark',icon:'🟣',lv:5,cd:6,kind:'proj',mult:1,count:3,spread:.32,big:true,color:0x7a3aff},
-      {id:'light',icon:'✨',lv:10,cd:15,kind:'aoe',mult:1.8,radius:5,center:'self',heal:.2,color:0xfff3a0,team:6},
-      {id:'grav',icon:'🌀',lv:15,cd:26,kind:'aoe',mult:4.5,radius:6,center:'target',range:9,delay:.6,pull:1,stun:2,color:0x5a3aa8}
+      {id:'dark',icon:'🟣',lv:5,cd:7,kind:'proj',mult:1,count:3,spread:.32,big:true,color:0x7a3aff},
+      {id:'light',icon:'✨',lv:10,cd:20,kind:'aoe',mult:1.8,radius:5,center:'self',heal:.2,color:0xfff3a0,team:6},
+      {id:'grav',icon:'🌀',lv:15,cd:34,kind:'aoe',mult:4.5,radius:6,center:'target',range:9,delay:.6,pull:1,stun:2,color:0x5a3aa8}
     ],
     syr:[
       {id:'dose',icon:'💉',lv:5,cd:5,kind:'proj',mult:2.2,count:1,big:true,sh:.05,color:0x7affc8},
@@ -631,24 +631,24 @@ window.EZ=(function(){
       {id:'vine',icon:'🌱',lv:15,cd:26,kind:'aoe',mult:4.4,radius:5.5,center:'target',range:9,delay:.6,pull:1,stun:1.8,heal:.1,color:0x4aa860}
     ],
     ham:[
-      {id:'smash',icon:'🔨',lv:5,cd:7,kind:'arc',mult:2.1,range:3.3,arc:140,stun:1.2},
+      {id:'smash',icon:'🔨',lv:5,cd:9,kind:'arc',mult:2.1,range:3.3,arc:140,stun:1.2},
       {id:'scaffold',icon:'🪜',lv:10,cd:20,kind:'ward',dur:5,mul:.35,taunt:9,team:9},
-      {id:'timber',icon:'🌲',lv:15,cd:24,kind:'aoe',mult:4.0,radius:5.2,center:'target',range:8,delay:.6,stun:1.5,color:0xc8903a}
+      {id:'timber',icon:'🌲',lv:15,cd:32,kind:'aoe',mult:4.0,radius:5.2,center:'target',range:8,delay:.6,stun:1.5,color:0xc8903a}
     ],
     sold:[
-      {id:'sawspin',icon:'🪚',lv:5,cd:5,kind:'arc',mult:1.5,range:3.2,arc:220},
+      {id:'sawspin',icon:'🪚',lv:5,cd:5,kind:'charge',thru:1,mult:1.5,radius:2.2,range:6,delay:.4,color:0xffe27a},
       {id:'spark',icon:'✨',lv:10,cd:11,kind:'aoe',mult:1.8,radius:4.2,center:'self',slow:2.5,color:0xffa03a},
       {id:'autobuild',icon:'🤖',lv:15,cd:26,kind:'aoe',mult:1.2,waves:4,radius:5.5,center:'self',color:0x7ae8ff}
     ],
     fist:[
-      {id:'combo',icon:'👊',lv:5,cd:6,kind:'arc',mult:2.0,range:3.0,arc:120},
-      {id:'focus',icon:'🧘',lv:10,cd:22,kind:'buff',m:1.45,dur:8,team:6},
-      {id:'dragonfist',icon:'🐉',lv:15,cd:24,kind:'aoe',mult:4.2,radius:4.6,center:'self',stun:1.5,color:0xff8a3a}
+      {id:'combo',icon:'👊',lv:5,cd:3.5,kind:'charge',mult:2.0,radius:2.8,range:6,delay:.25,color:0xff9a3a},
+      {id:'focus',icon:'🧘',lv:10,cd:16,kind:'buff',m:1.45,dur:8,team:6},
+      {id:'dragonfist',icon:'🐉',lv:15,cd:14,kind:'aoe',mult:4.2,radius:4.6,center:'self',stun:1.5,color:0xff8a3a}
     ],
     kick:[
-      {id:'spinkick',icon:'🌀',lv:5,cd:5,kind:'arc',mult:1.5,range:3.1,arc:230},
-      {id:'flykick',icon:'🦶',lv:10,cd:11,kind:'charge',mult:2.5,radius:3,range:8,delay:.3,stun:1.2,color:0x7ae8ff},
-      {id:'whirlwind',icon:'🌪️',lv:15,cd:26,kind:'aoe',mult:1.2,waves:4,radius:5.2,center:'self',color:0xbfe8ff}
+      {id:'spinkick',icon:'🌀',lv:5,cd:3,kind:'arc',mult:1.5,range:3.1,arc:230},
+      {id:'flykick',icon:'🦶',lv:10,cd:6,kind:'charge',mult:2.5,radius:3,range:8,delay:.3,stun:1.2,color:0x7ae8ff},
+      {id:'whirlwind',icon:'🌪️',lv:15,cd:15,kind:'aoe',mult:1.2,waves:4,radius:5.2,center:'self',color:0xbfe8ff}
     ]
   };
   const MON={
@@ -821,49 +821,49 @@ window.EZ=(function(){
       {id:'smite',icon:'🔆',lv:12,cd:8,kind:'arc',mult:3.2,range:3.4,arc:150,stun:1.5,sh:.08},
       {id:'bastion',icon:'🏯',lv:15,cd:30,kind:'heal',pct:.5,ward:5,mul:.3,taunt:9,team:9}]},
     amuk:{cls:'warrior',path:'great',icon:'🔥',skills:[
-      {id:'spin',icon:'🌀',lv:10,cd:7,kind:'arc',mult:3.4,range:4.2,arc:360},
-      {id:'fury',icon:'😤',lv:12,cd:24,kind:'buff',dur:9,m:1.55,team:9},
-      {id:'quake2',icon:'🌋',lv:15,cd:22,kind:'aoe',mult:5,radius:6,center:'self',stun:1.5,rage:.9,color:0xff8a3a}]},
+      {id:'spin',icon:'🌀',lv:10,cd:12,kind:'charge',thru:1,mult:3.4,radius:2.4,range:7,delay:.45,color:0xff8a3a},
+      {id:'fury',icon:'😤',lv:12,cd:28,kind:'buff',dur:9,m:1.55,team:9},
+      {id:'quake2',icon:'🌋',lv:15,cd:32,kind:'leap',late:1,mult:5,radius:6,range:8,delay:.5,stun:1.5,rage:.9,color:0xff8a3a}]},
     kimia:{cls:'mage',path:'staff',icon:'⚗️',skills:[
-      {id:'colorboom',icon:'🎆',lv:10,cd:8,kind:'aoe',mult:1.7,radius:4.4,center:'target',range:9,waves:3,color:0xff7ad8},
-      {id:'potion',icon:'🧪',lv:12,cd:20,kind:'heal',pct:.45,ward:4,mul:.5,team:10},
-      {id:'bubble',icon:'🫧',lv:15,cd:26,kind:'aoe',mult:5.2,radius:5,center:'target',range:9,delay:.6,pull:1,stun:2.4,color:0x8ee8ff}]},
+      {id:'colorboom',icon:'🎆',lv:10,cd:14,kind:'aoe',mult:1.7,radius:4.4,center:'target',range:9,waves:3,back:4,color:0xff7ad8},
+      {id:'potion',icon:'🧪',lv:12,cd:24,kind:'heal',pct:.45,ward:4,mul:.5,team:10},
+      {id:'bubble',icon:'🫧',lv:15,cd:34,kind:'aoe',mult:5.2,radius:5,center:'target',range:9,delay:.6,pull:1,stun:2.4,color:0x8ee8ff}]},
     listrik:{cls:'mage',path:'book',icon:'⚡',skills:[
-      {id:'zap',icon:'⚡',lv:10,cd:6,kind:'proj',mult:1.4,count:3,spread:.34,big:true,color:0x7ad8ff},
-      {id:'magnet',icon:'🧲',lv:12,cd:14,kind:'aoe',mult:1.8,radius:6,center:'self',pull:1,slow:3,color:0xffd84a},
-      {id:'superbolt',icon:'🌩️',lv:15,cd:24,kind:'aoe',mult:2.2,radius:5.5,center:'target',range:9,waves:3,stun:.8,color:0xfff27a}]},
+      {id:'zap',icon:'⚡',lv:10,cd:9,kind:'proj',mult:1.4,count:3,spread:.34,big:true,color:0x7ad8ff},
+      {id:'magnet',icon:'🧲',lv:12,cd:18,kind:'aoe',mult:1.8,radius:6,center:'self',pull:1,slow:3,color:0xffd84a},
+      {id:'superbolt',icon:'🌩️',lv:15,cd:32,kind:'aoe',mult:2.2,radius:5.5,center:'target',range:9,waves:3,stun:.8,color:0xfff27a}]},
     jitu:{cls:'ranger',path:'xbow',icon:'🎯',skills:[
-      {id:'aim',icon:'🎯',lv:10,cd:8,kind:'proj',mult:5.2,count:1,speed:28,color:0xff5a3a},
-      {id:'thorn',icon:'🌵',lv:12,cd:14,kind:'aoe',mult:2.4,radius:4.6,center:'target',range:9,slow:5,color:0x9acb5a},
-      {id:'megabomb',icon:'💥',lv:15,cd:28,kind:'aoe',mult:8,radius:5.2,center:'target',range:9,delay:.7,stun:1.2,color:0xff8a2a}]},
+      {id:'aim',icon:'🎯',lv:10,cd:5,kind:'proj',mult:5.2,count:1,speed:28,color:0xff5a3a},
+      {id:'thorn',icon:'🌵',lv:12,cd:9,kind:'aoe',mult:2.4,radius:4.6,center:'target',range:9,slow:5,color:0x9acb5a},
+      {id:'megabomb',icon:'💥',lv:15,cd:18,kind:'aoe',mult:8,radius:5.2,center:'target',range:9,delay:.7,stun:1.2,color:0xff8a2a}]},
     angin:{cls:'ranger',path:'bow',icon:'🍃',skills:[
-      {id:'lightning',icon:'🌟',lv:10,cd:9,kind:'proj',mult:.62,count:1,volley:10,gap:.06,color:0xfff2a0},
-      {id:'breeze',icon:'🍃',lv:12,cd:12,kind:'dash',haste:5,team:7},
-      {id:'stormrain',icon:'🌧️',lv:15,cd:22,kind:'aoe',mult:1.15,waves:6,radius:6,center:'target',range:9,color:0xbff0ff}]},
+      {id:'lightning',icon:'🌟',lv:10,cd:6,kind:'proj',mult:.62,count:1,volley:10,gap:.06,color:0xfff2a0},
+      {id:'breeze',icon:'🍃',lv:12,cd:8,kind:'dash',haste:5,team:7},
+      {id:'stormrain',icon:'🌧️',lv:15,cd:14,kind:'aoe',mult:1.15,waves:6,radius:6,center:'target',range:9,color:0xbff0ff}]},
     spesialis:{cls:'doctor',path:'syr',icon:'🩻',skills:[
       {id:'anesth',icon:'😴',lv:10,cd:9,kind:'aoe',mult:2.4,radius:2.6,center:'target',range:8,stun:2.5,color:0xb58cff},
-      {id:'surgery',icon:'✂️',lv:12,cd:7,kind:'arc',mult:3.8,range:3.6,arc:160,sh:.08},
+      {id:'surgery',icon:'✂️',lv:12,cd:7,kind:'charge',mult:3.8,radius:3,range:7,delay:.3,sh:.08,color:0x9ad8ff},
       {id:'icu',icon:'🏥',lv:15,cd:28,kind:'heal',pct:.6,ward:5,mul:.3,team:10,taunt:8}]},
     herbal:{cls:'doctor',path:'mort',icon:'🌿',skills:[
       {id:'warmtea',icon:'🍵',lv:10,cd:14,kind:'heal',pct:.3,ward:6,mul:.6,team:10},
       {id:'garden',icon:'🌼',lv:12,cd:18,kind:'aoe',mult:.95,waves:4,radius:6,center:'self',heal:.1,team:7,color:0x7dff9a},
       {id:'liferoot',icon:'🌳',lv:15,cd:30,kind:'aoe',mult:3.2,radius:6.5,center:'self',heal:.5,team:10,stun:1.5,color:0xffd84a}]},
     ironsmith:{cls:'wood',path:'ham',icon:'⚒️',skills:[
-      {id:'anvil',icon:'🔨',lv:10,cd:10,kind:'aoe',mult:2.8,radius:3,center:'target',range:7,delay:.5,stun:2,color:0xff9a3a},
-      {id:'forgearc',icon:'🔥',lv:12,cd:8,kind:'arc',mult:4.2,range:3.6,arc:180},
-      {id:'ironwall',icon:'🛡️',lv:15,cd:28,kind:'ward',dur:6,mul:.25,taunt:9,team:10}]},
+      {id:'anvil',icon:'🔨',lv:10,cd:16,kind:'aoe',mult:2.8,radius:3,center:'target',range:7,delay:.5,stun:2,color:0xff9a3a},
+      {id:'forgearc',icon:'🔥',lv:12,cd:13,kind:'arc',mult:4.2,range:3.6,arc:180},
+      {id:'ironwall',icon:'🛡️',lv:15,cd:32,kind:'ward',dur:6,mul:.25,taunt:9,team:10}]},
     robot:{cls:'wood',path:'sold',icon:'🤖',skills:[
-      {id:'drone',icon:'🛸',lv:10,cd:11,kind:'aoe',mult:1.1,waves:5,radius:5,center:'target',range:9,color:0x7ae8ff},
+      {id:'drone',icon:'🛸',lv:10,cd:15,kind:'aoe',mult:1.1,waves:5,radius:5,center:'target',range:9,color:0x7ae8ff},
       {id:'turbo',icon:'⚡',lv:12,cd:20,kind:'buff',dmg:1.4,dur:8,team:9},
-      {id:'megabot',icon:'🦾',lv:15,cd:30,kind:'aoe',mult:5.0,radius:6,center:'target',range:9,delay:.7,stun:1.6,color:0xffd84a}]},
+      {id:'megabot',icon:'🦾',lv:15,cd:34,kind:'aoe',mult:5.0,radius:6,center:'target',range:9,delay:.7,stun:1.6,color:0xffd84a}]},
     puncher:{cls:'mart',path:'fist',icon:'🥊',skills:[
-      {id:'ironfist',icon:'🥊',lv:10,cd:10,kind:'aoe',mult:3.0,radius:3,center:'target',range:7,delay:.5,stun:2,color:0xff6a3a},
-      {id:'palm',icon:'💪',lv:12,cd:8,kind:'arc',mult:4.3,range:3.6,arc:130},
-      {id:'qiwall',icon:'🛡️',lv:15,cd:28,kind:'ward',dur:6,mul:.25,taunt:9,team:10}]},
+      {id:'ironfist',icon:'🥊',lv:10,cd:6,kind:'aoe',mult:3.0,radius:3,center:'target',range:7,delay:.5,stun:2,color:0xff6a3a},
+      {id:'palm',icon:'💪',lv:12,cd:4,kind:'arc',mult:4.3,range:3.6,arc:130},
+      {id:'qiwall',icon:'🛡️',lv:15,cd:20,kind:'ward',dur:6,mul:.25,taunt:9,team:10}]},
     kicker:{cls:'mart',path:'kick',icon:'👟',skills:[
-      {id:'flykick',icon:'🦶',lv:10,cd:10,kind:'charge',mult:2.7,radius:3.2,range:9,delay:.3,stun:1.4,color:0x7ae8ff},
-      {id:'dropkick',icon:'🪓',lv:12,cd:13,kind:'aoe',mult:3.3,radius:3.4,center:'target',range:9,delay:.5,stun:1.6,color:0x7ae8ff},
-      {id:'rapid',icon:'🌀',lv:15,cd:28,kind:'aoe',mult:1.4,waves:7,radius:5,center:'self',color:0xffffff}]}
+      {id:'flykick',icon:'🦶',lv:10,cd:5.5,kind:'charge',mult:2.7,radius:3.2,range:9,delay:.3,stun:1.4,color:0x7ae8ff},
+      {id:'dropkick',icon:'🪓',lv:12,cd:7,kind:'leap',mult:3.3,radius:3.4,range:9,delay:.5,stun:1.6,color:0x7ae8ff},
+      {id:'rapid',icon:'🌀',lv:15,cd:16,kind:'aoe',mult:1.4,waves:7,radius:5,center:'self',color:0xffffff}]}
   };
   const ADV_OF={warrior:['ksatria','amuk'],mage:['kimia','listrik'],ranger:['jitu','angin'],doctor:['spesialis','herbal'],wood:['ironsmith','robot'],mart:['puncher','kicker']};
   function unlocked(path,L){return SKILLS[path].map((s,i)=>s.lv<=L?i:-1).filter(i=>i>=0);}
@@ -942,7 +942,7 @@ id:{
  ctr_warrior:'Air Mancur',ctr_mage:'Lingkaran Energi',ctr_ranger:'Api Unggun Besar',camp:'Kemah api unggun',campS:'Tempat istirahat',windmill:'Kincir angin',pond:'Kolam',mush:'Kebun jamur',
  questDone:'Misi selesai!',faint:'Zzz…',err:'Grafik 3D tidak bisa dimuat. Game ini butuh internet sekali untuk memuat Three.js dan perangkat yang mendukung WebGL.',
  camT:'Kamera',camFixed:'Tetap',camRot:'Bisa diputar',orT:'Layar HP',orAuto:'Otomatis',orLand:'Landscape',orPort:'Portrait',orNote:'Untuk mengunci arah layar, aplikasi akan masuk layar penuh.',orFail:'Gagal mengunci layar. Putar HP kamu secara manual ya.',camNote:'Kamera tetap paling mudah untuk anak kecil. Mode diputar menambah tombol putar kamera (Z / C di keyboard).',aRotL:'Putar kiri',aRotR:'Putar kanan',
- petN0:'☀️ aktif siang',petN1:'🌙 aktif malam',petN2:'☀️🌙 siang & malam',examReady:'Kamu sudah Lv 10! Temui Ketua di Markas untuk ujian naik kelas 🎓',examReadyChip:'Siap ujian naik kelas! Temui Ketua di Markas',storyBtn:'📖 Cerita dunia',storyPlay:'📖 Putar cerita',stSkip:'Lewati',stNext:'Lanjut',stGo:'Mulai petualangan!',st1:'Di dunia Terra, semua rakyat hidup bahagia dan damai. Ada ksatria, ilmuwan, pemburu, dan banyak teman lainnya.',st2:'Prof. Nova dan Prof. Zarko dulu sahabat ilmuwan. Bersama-sama mereka membuat banyak penemuan hebat.',st3:'Tapi Prof. Zarko jadi serakah. Dia ingin menguasai seluruh dunia! Dia membuat Zat Mutan ungu dan menyebarkannya lewat balon dan pipa.',st4:'Hewan dan tanaman yang terkena zat itu bermutasi jadi monster. Mereka bukan jahat, mereka cuma bingung dan berubah.',st5:'Prof. Zarko bersembunyi di markas rahasia. Pintunya dikunci rapat oleh sistem pintarnya, dan belum ada yang bisa membukanya.',st6:'Sekarang dunia butuh pahlawan! Berlatih, naik level, ajak teman, dan cari cara membuka pintu itu bersama-sama.',labGateN:'Pintu Rahasia',labGateSub:'🔒 Terkunci',labG1:'Wow, pintu baja raksasa! Ada cahaya ungu aneh di sekelilingnya.',labG2:'Ini pintu ke markas rahasia Prof. Zarko. Sistemnya canggih sekali, pintunya terkunci rapat.',labG3:'Belum ada yang bisa membukanya… Jadi lebih kuat dulu, lalu cari cara membukanya!',labT:'Markas Prof. Zarko',labSub:'Laboratorium rahasia',mStory:'Hati-hati ya! Prof. Zarko menyebar Zat Mutan sampai hewan dan tanaman berubah jadi monster. Markas rahasianya masih terkunci.',mStoryM:'Prof. Zarko itu sahabat lamaku. Aku sedih melihat dia berubah. Tolong bantu hentikan dia, ya! Markasnya masih terkunci rapat.',keysSw:'⌨️ Petunjuk tombol',menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopRecon:'Menyambung ulang…',coopBack:'Tersambung lagi! 🎉',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',bonus:'Bonus naik kelas',bHp:'HP',bAtk:'Serangan',bDef:'Tahan serangan',bCd:'Skill lebih cepat',bIvl:'Serang lebih cepat',bSpd:'Lari',bCrit:'Kritikal',sndOn:'Efek suara: nyala',sndOff:'Efek suara: mati',musOn:'Musik: nyala',musOff:'Musik: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
+ petN0:'☀️ aktif siang',petN1:'🌙 aktif malam',petN2:'☀️🌙 siang & malam',examReady:'Kamu sudah Lv 10! Temui Ketua di Markas untuk ujian naik kelas 🎓',examReadyChip:'Siap ujian naik kelas! Temui Ketua di Markas',storyBtn:'📖 Cerita dunia',storyPlay:'📖 Putar cerita',stSkip:'Lewati',stNext:'Lanjut',stGo:'Mulai petualangan!',st1:'Di dunia Terra, semua rakyat hidup bahagia dan damai. Ada ksatria, ilmuwan, pemburu, dan banyak teman lainnya.',st2:'Prof. Nova dan Prof. Zarko dulu sahabat ilmuwan. Bersama-sama mereka membuat banyak penemuan hebat.',st3:'Tapi Prof. Zarko jadi serakah. Dia ingin menguasai seluruh dunia! Dia membuat Zat Mutan ungu dan menyebarkannya lewat balon dan pipa.',st4:'Hewan dan tanaman yang terkena zat itu bermutasi jadi monster. Mereka bukan jahat, mereka cuma bingung dan berubah.',st5:'Prof. Zarko bersembunyi di markas rahasia. Pintunya dikunci rapat oleh sistem pintarnya, dan belum ada yang bisa membukanya.',st6:'Sekarang dunia butuh pahlawan! Berlatih, naik level, ajak teman, dan cari cara membuka pintu itu bersama-sama.',labGateN:'Pintu Rahasia',labGateSub:'🔒 Terkunci',labG1:'Wow, pintu baja raksasa! Ada cahaya ungu aneh di sekelilingnya.',labG2:'Ini pintu ke markas rahasia Prof. Zarko. Sistemnya canggih sekali, pintunya terkunci rapat.',labG3:'Belum ada yang bisa membukanya… Jadi lebih kuat dulu, lalu cari cara membukanya!',labT:'Markas Prof. Zarko',labSub:'Laboratorium rahasia',mStory:'Hati-hati ya! Prof. Zarko menyebar Zat Mutan sampai hewan dan tanaman berubah jadi monster. Markas rahasianya masih terkunci.',mStoryM:'Prof. Zarko itu sahabat lamaku. Aku sedih melihat dia berubah. Tolong bantu hentikan dia, ya! Markasnya masih terkunci rapat.',keysSw:'⌨️ Petunjuk tombol',menuT:'Menu',resume:'Lanjut main',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Main bareng teman di perangkat lain (sampai 3 pemain)! Satu orang buat room, yang lain masukin kodenya.',coopCreate:'Buat room',coopJoin:'Gabung room',coopGo:'Gabung',coopHostWait:'Kasih kode ini ke temanmu, lalu tunggu dia gabung.',coopCloseRoom:'Tutup room',coopConnected:'Terhubung',coopGoto:'Susul teman',coopLeave:'Putuskan',coopCancel:'Batal',coopJoining:'Menyambung…',coopNoRoom:'Room tidak ketemu. Cek kodenya, atau minta teman buat room lagi.',coopNet:'Koneksi gagal. Coba lagi ya (beberapa jaringan memblokir koneksi langsung).',coopFull:'Room sudah penuh (maksimal 3 pemain).',coopNoLib:'Layanan co-op tidak bisa dimuat. Cek internetmu.',coopFriendIn:n=>n+' bergabung! 🎉',coopFriendOut:'Teman keluar',coopRecon:'Menyambung ulang…',coopBack:'Tersambung lagi! 🎉',coopWhere:'Lokasi',coopFriendMenu:'Di layar menu',coopSame:'Kalian di tempat yang sama! Monster dilawan bareng.',coopOk:'Oke',coopSlots:(n,m)=>'Pemain '+n+'/'+m,coopInvite:c=>'Kode room untuk teman lain: <b>'+c+'</b>',chooseHero:'Pilih karakter',titleScr:'Layar awal',bonus:'Bonus naik kelas',bHp:'HP',bAtk:'Serangan',bDef:'Tahan serangan',bCd:'Skill lebih cepat',bIvl:'Serang lebih cepat',bSpd:'Lari',bCrit:'Kritikal',balTogether:'Naik balon bareng teman! 🎈',sndOn:'Efek suara: nyala',sndOff:'Efek suara: mati',musOn:'Musik: nyala',musOff:'Musik: mati',langL:'Bahasa',parentHold:'Pengaturan orang tua (tahan 1,5 detik)',
  aProf:'Profil karakter',aMis:'Pusat misi',aMenu:'Menu',aMap:'Peta',aAtk:'Serang',aDef:'Bertahan',aUse:'Bicara',aClose:'Tutup',
  keys:'<b>WASD</b>gerak<b>J</b>serang<b>K</b>bertahan<b>U</b><b>I</b><b>O</b>skill<b>E</b>bicara<b>M</b>peta<b>P</b>profil<b>Q</b>misi<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -976,7 +976,7 @@ en:{
  ctr_warrior:'Fountain',ctr_mage:'Energy Circle',ctr_ranger:'Great Campfire',camp:'Campfire camp',campS:'A place to rest',windmill:'Windmill',pond:'Pond',mush:'Mushroom patch',
  questDone:'Quest complete!',faint:'Zzz…',err:'The 3D graphics could not load. This game needs internet once to load Three.js and a device that supports WebGL.',
  camT:'Camera',camFixed:'Fixed',camRot:'Rotatable',orT:'Phone screen',orAuto:'Auto',orLand:'Landscape',orPort:'Portrait',orNote:'To lock the orientation the app goes fullscreen.',orFail:"Couldn't lock the screen. Please rotate your phone manually.",camNote:'A fixed camera is easiest for little kids. Rotatable mode adds camera rotate buttons (Z / C on a keyboard).',aRotL:'Rotate left',aRotR:'Rotate right',
- petN0:'☀️ active by day',petN1:'🌙 active at night',petN2:'☀️🌙 day & night',examReady:'You reached Lv 10! Visit the Guild Master at the Guildhall for your class promotion exam 🎓',examReadyChip:'Ready for the promotion exam! Visit the Guild Master',storyBtn:'📖 World story',storyPlay:'📖 Play story',stSkip:'Skip',stNext:'Next',stGo:'Start the adventure!',st1:'In the world of Terra, everyone lives happily and in peace. Knights, scientists, rangers, and many more friends.',st2:'Prof. Nova and Prof. Zarko were once best friends and scientists. Together they made many great inventions.',st3:'But Prof. Zarko became greedy. He wants to rule the whole world! He made a purple Mutant Goo and spread it with balloons and pipes.',st4:'Animals and plants touched by the goo mutated into monsters. They are not evil, just confused and changed.',st5:'Prof. Zarko hides in a secret lab. His smart system locked the door tight, and nobody can open it yet.',st6:'Now the world needs heroes! Train, level up, bring friends, and find a way to open that door together.',labGateN:'Secret Door',labGateSub:'🔒 Locked',labG1:'Wow, a giant steel door! Strange purple light glows around it.',labG2:'This is the door to Prof. Zarko\'s secret lab. His system is so advanced that the door is locked tight.',labG3:'Nobody can open it yet… Get stronger first, then find a way in!',labT:'Prof. Zarko\'s Lab',labSub:'Secret laboratory',mStory:'Be careful! Prof. Zarko spread Mutant Goo and turned animals and plants into monsters. His secret lab is still locked.',mStoryM:'Prof. Zarko is my old friend. It makes me sad to see him change. Please help stop him! His lab is locked tight.',keysSw:'⌨️ Key hints',menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopRecon:'Reconnecting…',coopBack:'Reconnected! 🎉',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',bonus:'Promotion bonus',bHp:'HP',bAtk:'Attack',bDef:'Damage resist',bCd:'Faster skills',bIvl:'Faster attacks',bSpd:'Speed',bCrit:'Crit',sndOn:'Sound effects: on',sndOff:'Sound effects: off',musOn:'Music: on',musOff:'Music: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
+ petN0:'☀️ active by day',petN1:'🌙 active at night',petN2:'☀️🌙 day & night',examReady:'You reached Lv 10! Visit the Guild Master at the Guildhall for your class promotion exam 🎓',examReadyChip:'Ready for the promotion exam! Visit the Guild Master',storyBtn:'📖 World story',storyPlay:'📖 Play story',stSkip:'Skip',stNext:'Next',stGo:'Start the adventure!',st1:'In the world of Terra, everyone lives happily and in peace. Knights, scientists, rangers, and many more friends.',st2:'Prof. Nova and Prof. Zarko were once best friends and scientists. Together they made many great inventions.',st3:'But Prof. Zarko became greedy. He wants to rule the whole world! He made a purple Mutant Goo and spread it with balloons and pipes.',st4:'Animals and plants touched by the goo mutated into monsters. They are not evil, just confused and changed.',st5:'Prof. Zarko hides in a secret lab. His smart system locked the door tight, and nobody can open it yet.',st6:'Now the world needs heroes! Train, level up, bring friends, and find a way to open that door together.',labGateN:'Secret Door',labGateSub:'🔒 Locked',labG1:'Wow, a giant steel door! Strange purple light glows around it.',labG2:'This is the door to Prof. Zarko\'s secret lab. His system is so advanced that the door is locked tight.',labG3:'Nobody can open it yet… Get stronger first, then find a way in!',labT:'Prof. Zarko\'s Lab',labSub:'Secret laboratory',mStory:'Be careful! Prof. Zarko spread Mutant Goo and turned animals and plants into monsters. His secret lab is still locked.',mStoryM:'Prof. Zarko is my old friend. It makes me sad to see him change. Please help stop him! His lab is locked tight.',keysSw:'⌨️ Key hints',menuT:'Menu',resume:'Resume',coopT:'Co-op',aCoop:'Co-op',coopIntro:'Play together on other devices (up to 3 players)! One person makes a room, the others type in the code.',coopCreate:'Create room',coopJoin:'Join room',coopGo:'Join',coopHostWait:'Give this code to your friend, then wait for them to join.',coopCloseRoom:'Close room',coopConnected:'Connected',coopGoto:'Join friend',coopLeave:'Disconnect',coopCancel:'Cancel',coopJoining:'Connecting…',coopNoRoom:"Room not found. Check the code, or ask your friend to create a new room.",coopNet:'Connection failed. Try again (some networks block direct connections).',coopFull:'The room is full (3 players max).',coopNoLib:"Couldn't load the co-op service. Check your internet.",coopFriendIn:n=>n+' joined! 🎉',coopFriendOut:'Friend left',coopRecon:'Reconnecting…',coopBack:'Reconnected! 🎉',coopWhere:'Location',coopFriendMenu:'On the menu screen',coopSame:"You're in the same place! Fight monsters together.",coopOk:'OK',coopSlots:(n,m)=>'Players '+n+'/'+m,coopInvite:c=>'Room code for another friend: <b>'+c+'</b>',chooseHero:'Choose hero',titleScr:'Title screen',bonus:'Promotion bonus',bHp:'HP',bAtk:'Attack',bDef:'Damage resist',bCd:'Faster skills',bIvl:'Faster attacks',bSpd:'Speed',bCrit:'Crit',balTogether:'Riding the balloon together! 🎈',sndOn:'Sound effects: on',sndOff:'Sound effects: off',musOn:'Music: on',musOff:'Music: off',langL:'Language',parentHold:'Parent settings (hold 1.5 seconds)',
  aProf:'Hero profile',aMis:'Mission center',aMenu:'Menu',aMap:'Map',aAtk:'Attack',aDef:'Defend',aUse:'Talk',aClose:'Close',
  keys:'<b>WASD</b>move<b>J</b>attack<b>K</b>defend<b>U</b><b>I</b><b>O</b>skills<b>E</b>talk<b>M</b>map<b>P</b>profile<b>Q</b>missions<b>Esc</b>menu',
  langPick:'Pilih bahasa · Choose language',
@@ -2502,6 +2502,7 @@ function hostMsg(R,d){
     case 'need':R.lm=0;break;
     case 'hit':onHit(R,d);break;
     case 'sv':if(R.p){onSv(R,d);const o2=Object.assign({},d,{s:R.slot});coopList().forEach(o=>{if(o!==R)rawSend(o.conn,o2);});}break;
+    case 'bal':if(R.p){onBal(d);const o2=Object.assign({},d,{s:R.slot});coopList().forEach(o=>{if(o!==R)rawSend(o.conn,o2);});}break;
     case 'buf':onBuf(d);if(R.p){const o2=Object.assign({},d,{s:R.slot});coopList().forEach(o=>{if(o!==R)rawSend(o.conn,o2);});}break;
     case 'bye':hostLost(R);break;
     case 'qs':if(Array.isArray(d.q)){setSharedQs(d.q);coopList().forEach(o=>{if(o!==R)rawSend(o.conn,{t:'qs',q:d.q});});}break;
@@ -2591,6 +2592,7 @@ function guestMsg(d){
     case 'mons':onMons(d);break;
     case 'kill':onKill(d);break;
     case 'sv':{const R=coop.Rs[sl];if(R&&sl!==coop.me)onSv(R,d);break;}
+    case 'bal':{if(sl!==coop.me)onBal(d);break;}
     case 'buf':if(sl!==coop.me)onBuf(d);break;
     case 'hurt':if(zone&&zone.sync&&!paused&&!trans&&S.state==='play'&&mode==='play')hurt(clamp((+d.a)||1,1,999),clamp((+d.l)||0,0,30));break;
     case 'pg':break;
@@ -3700,12 +3702,21 @@ function makeBalloon(parent,x,zz,col){
   return {g,fl,x,z:zz,y0:.45};
 }
 const BAL={ph:'',t:0,dest:'',sx:0,sz:0,sw:0,landed:0};
-function startBalloon(dest){
+function startBalloon(dest,fromPeer){
   if(CINE.on||!zone||S.state!=='play')return;
+  if(!fromPeer&&coopOn()){try{coopSend({t:'bal',s:coop.me,zk:zkey(),dest,x:+S.x.toFixed(1),z:+S.z.toFixed(1)});}catch(e){}}
   if((zone.id==='town'||zone.id==='camp')&&zone.bal){
     CINE.on=true;CINE.kind='balloon';CINE.t=0;CINE.dur=99;CINE.pc=null;CINE.after=null;document.body.classList.add('cine','bal');joy.x=0;joy.z=0;S.defDown=false;S.blocking=false;S.rest=false;
     Object.assign(BAL,{ph:'up',dest,sw:0,landed:0,sx:S.x,sz:S.z});SFX.portal();
   }else transition(()=>{setZone('town',{x:0,z:6,face:Math.PI},true,dest);startBalloonLand();});
+}
+function onBal(d){
+  try{
+    if(!d||mode!=='play'||!zone||CINE.on||trans||paused||S.state!=='play'||d.zk!==zkey())return;
+    const dest=String(d.dest);if(!E.CLASSES[dest])return;
+    if(Math.hypot((+d.x||0)-S.x,(+d.z||0)-S.z)>16)return;
+    banner(t('balTogether'));startBalloon(dest,true);
+  }catch(e){console.error('onBal',e);}
 }
 function startBalloonLand(){
   const z=zone;if(!z||!z.bal||z.id!=='town')return;
@@ -4302,14 +4313,21 @@ function useSkill(i){
   const nonAtk=sk.kind==='heal'||sk.kind==='buff'||sk.kind==='ward'||sk.kind==='dash',dur=cls==='warrior'||cls==='wood'?.5:.56;
   S.big=true;if(nonAtk){S.swing=0;S.cheer=S.cheerMax=.7;}else{S.swing=S.swingMax=dur;}
   const tg=nearestMon((sk.range||E.CLASSES[cls].range)+1.5);if(tg)aimAt(tg);
-  if(sk.kind==='charge'){
-    let cx,cz;if(tg&&!tg.dead){cx=tg.x;cz=tg.z;}else{cx=S.x+Math.sin(S.face)*5;cz=S.z+Math.cos(S.face)*5;}
+  if(sk.kind==='charge'||sk.kind==='leap'){
+    const leap=sk.kind==='leap';let cx,cz;if(tg&&!tg.dead){cx=tg.x;cz=tg.z;}else{cx=S.x+Math.sin(S.face)*5;cz=S.z+Math.cos(S.face)*5;}
     const dx=cx-S.x,dz=cz-S.z,d=Math.hypot(dx,dz)||1,T=sk.delay||.3;
-    S.face=Math.atan2(dx,dz);S.cdx=dx/d;S.cdz=dz/d;S.chgV=Math.max(0,d-1.5)/T;S.chgT=T;S.inv=Math.max(S.inv,T+.2);S.swing=S.swingMax=T+.3;S.lunge=0;S.dodgeT=0;
-    try{svSend(sk.id,cx,cz);const fv=SV[sk.id];if(fv)fv(cx,cz,sk,tg);}catch(e){console.error(e);}
-    after(T,()=>{if(!zone||S.state!=='play')return;const ix=S.x+Math.sin(S.face)*1.3,iz=S.z+Math.cos(S.face)*1.3;
-      ringFx(ix,iz,sk.radius,sk.color,.45);burst(ix,.6,iz,sk.color,20,sk.radius*1.1,4,1.2);SFX.hit();shake=Math.max(shake,.4);
-      for(const m of zone.mons){if(m.dead||m.spawnT<.5)continue;const mx=m.x-ix,mz=m.z-iz,md=Math.hypot(mx,mz);if(md<=sk.radius+m.d.r)hitMon(m,calcDmg(sk.mult),{dx:mx/(md||1),dz:mz/(md||1),stun:sk.stun});}});
+    const go=sk.thru?((tg&&!tg.dead)?d+1.8:5):Math.max(0,d-(leap?.8:1.5));
+    S.face=Math.atan2(dx,dz);S.cdx=dx/d;S.cdz=dz/d;S.chgV=go/T;S.chgT=T;S.inv=Math.max(S.inv,T+.25);S.swing=S.swingMax=T+.3;S.lunge=0;S.dodgeT=0;
+    if(leap){S.leapDur=T;S.leapT=T;}
+    S.chgSk=sk.thru?sk:null;S.chgSet=new Set();
+    try{svSend(sk.id,cx,cz);const fv=SV[sk.id];if(fv&&!sk.late)fv(cx,cz,sk,tg);}catch(e){console.error(e);}
+    after(T,()=>{if(!zone||S.state!=='play')return;
+      if(sk.thru){S.chgSk=null;ringFx(S.x,S.z,2.4,sk.color,.35);return;}
+      const ix=leap?S.x:S.x+Math.sin(S.face)*1.3,iz=leap?S.z:S.z+Math.cos(S.face)*1.3;
+      if(sk.late){try{const fv=SV[sk.id];if(fv)fv(ix,iz,sk,tg);}catch(e){console.error(e);}}
+      ringFx(ix,iz,sk.radius,sk.color,.45);burst(ix,.6,iz,sk.color,20,sk.radius*1.1,4,1.2);SFX.hit();shake=Math.max(shake,leap?.6:.4);
+      for(const m of zone.mons){if(m.dead||m.spawnT<.5)continue;const mx=m.x-ix,mz=m.z-iz,md=Math.hypot(mx,mz);if(md<=sk.radius+m.d.r)hitMon(m,calcDmg(sk.mult*(sk.rage?1+(1-S.hp/S.maxHp)*sk.rage:1)),{dx:mx/(md||1),dz:mz/(md||1),stun:sk.stun});}
+      if(sk.sh){const h=Math.round(S.maxHp*sk.sh);S.hp=Math.min(S.maxHp,S.hp+h);float('+'+h,S.x,2.6,S.z,'heal');}});
     teamBuf(sk);return;
   }
   const run=()=>{
@@ -4336,9 +4354,10 @@ function useSkill(i){
     else if(sk.kind==='dash'){const k=readInput();if(k.m>.2){S.ddx=k.x/k.m;S.ddz=k.z/k.m;}else{S.ddx=Math.sin(S.face);S.ddz=Math.cos(S.face);}S.face=Math.atan2(S.ddx,S.ddz);S.dodgeT=.35;S.inv=Math.max(S.inv,.9);S.hasteT=sk.haste;SFX.dodge();ringFx(S.x,S.z,2.4,0xbff0ff,.4);burst(S.x,.6,S.z,0xbff0ff,22,5,3);}
     else if(sk.kind==='buff'){S.buffT=sk.dur;S.buffM=sk.m||1.2;ringFx(S.x,S.z,7,0xff8a3a,.5);burst(S.x,1.2,S.z,0xff8a3a,22,5,5);shake=Math.max(shake,.3);for(const m of zone.mons)if(!m.dead&&m.state==='idle'&&Math.hypot(m.x-S.x,m.z-S.z)<9)m.state='chase';}
   };
-  after(nonAtk?dur*.25:dur*(sk.kind==='arc'?.35:sk.kind==='proj'?.58:.5),()=>{run();teamBuf(sk);});
+  after(nonAtk?dur*.25:dur*(sk.kind==='arc'?.35:sk.kind==='proj'?.58:.5),()=>{run();teamBuf(sk);if(sk.back&&zone&&S.state==='play')retreat(sk.back);});
 }
 
+function retreat(dist){S.cdx=-Math.sin(S.face);S.cdz=-Math.cos(S.face);S.chgV=dist/.26;S.chgT=.26;S.chgSk=null;S.inv=Math.max(S.inv,.45);burst(S.x,.5,S.z,0xdddddd,8,2,2);}
 /* co-op: friends' skills are shown on my screen too (visual only; damage is still handled by the host) */
 function skillById(id){for(const k in E.SKILLS){const a=E.SKILLS[k].find(q=>q.id===id);if(a)return a;}for(const k in E.ADV){const a=E.ADV[k].skills.find(q=>q.id===id);if(a)return a;}return null;}
 function svSend(id,cx,cz){if(!coopOn()||S.state!=='play')return;coopSend({t:'sv',s:coop.me,zk:zkey(),id,x:+S.x.toFixed(2),z:+S.z.toFixed(2),f:+S.face.toFixed(2),cx:+cx.toFixed(2),cz:+cz.toFixed(2)});}
@@ -4349,11 +4368,12 @@ function onSv(R,d){
     const f=v=>Number.isFinite(+v)?+v:0,cx=clamp(f(d.cx),-60,60),cz=clamp(f(d.cz),-60,60);
     if(!R.cs){R.cs={x:R.x,z:R.z,face:R.f,remote:true};R.sv=mkSV(R.cs);}
     R.cs.x=R.x;R.cs.z=R.z;R.cs.face=R.f;
-    let own=false;const fv=R.sv[sk.id];if(fv)own=!!fv(cx,cz,sk,null);
+    let own=false;const fv=R.sv[sk.id];if(fv){if(sk.late&&sk.kind==='leap')after(sk.delay||.5,()=>{R.cs.x=R.x;R.cs.z=R.z;R.cs.face=R.f;try{fv(cx,cz,sk,null);}catch(e){}});else own=!!fv(cx,cz,sk,null);}
     const col=sk.color||0xffffff,px=R.x,pz=R.z;
     if(sk.kind==='arc'){ringFx(px,pz,sk.range,0xffffff,.3);}
     else if(sk.kind==='proj'){const a=[px,1.2,pz],b=[px+Math.sin(R.f)*(sk.range||8),1.2,pz+Math.cos(R.f)*(sk.range||8)];vbeam(a,b,col,.1,.3);}
     else if(sk.kind==='aoe'){const waves=sk.waves||1,delay=sk.delay||0;for(let w=0;w<waves;w++)after(delay+w*.28,()=>{if(!zone)return;ringFx(cx,cz,sk.radius,col,.45);burst(cx,.6,cz,col,14,sk.radius*1.1,4,1.2);});}
+    else if(sk.kind==='charge'||sk.kind==='leap'){after(sk.delay||.3,()=>{if(zone)ringFx(R.x,R.z,sk.radius||3,col,.45);});}
     else{ringFx(px,pz,3,col||0x7dffa8,.5);}
   }catch(e){console.error('onSv',e);}
 }
@@ -4492,7 +4512,7 @@ function updatePlay(dt){
     S.sinceHurt=(S.sinceHurt||0)+dt;{const rg=petFx().rg;if(rg>0&&!S.rest&&S.hp>0&&S.hp<S.maxHp)S.hp=Math.min(S.maxHp,S.hp+S.maxHp*rg*dt);}if(!S.rest&&S.hp>0&&S.hp<S.maxHp&&S.sinceHurt>5)S.hp=Math.min(S.maxHp,S.hp+S.maxHp*.004*dt);
     S.blockT=Math.max(0,S.blockT-dt);S.blocking=(C.cls==='warrior'||C.cls==='wood')&&(S.defDown||S.blockT>0);
     let vx=0,vz=0;
-    if(S.chgT>0){S.chgT-=dt;vx=S.cdx*S.chgV;vz=S.cdz*S.chgV;}
+    if(S.chgT>0){S.chgT-=dt;vx=S.cdx*S.chgV;vz=S.cdz*S.chgV;if(S.chgSk&&zone.mons)for(const m of zone.mons){if(m.dead||m.spawnT<.5||S.chgSet.has(m))continue;const mx=m.x-S.x,mz=m.z-S.z,md=Math.hypot(mx,mz);if(md<=S.chgSk.radius+m.d.r){S.chgSet.add(m);hitMon(m,calcDmg(S.chgSk.mult),{dx:mx/(md||1),dz:mz/(md||1),stun:S.chgSk.stun});SFX.hit();}}}
     else if(S.dodgeT>0){S.dodgeT-=dt;vx=S.ddx*10.5;vz=S.ddz*10.5;}
     else{const k=readInput();let sp=E.moveSpeed(C.cls,L)*1.35*(S.hasteT>0?1.35:1)*(1+petFx().spd)*(1+advB().spd);if(S.blocking)sp*=.5;if(S.swing>0)sp*=.6;vx=k.x*sp;vz=k.z*sp;
       if(k.m>.05&&S.swing<=0)S.face+=angDiff(S.face,Math.atan2(k.x,k.z))*(1-Math.exp(-dt*18));}
@@ -4508,7 +4528,7 @@ function updatePlay(dt){
   if(!zone.sync)for(let i=zone.spawnQ.length-1;i>=0;i--){const q=zone.spawnQ[i];q.t-=dt;if(q.t<=0){zone.spawnQ.splice(i,1);if(phaseTypes(zone.id).indexOf(q.type)>=0)spawnMon(q.type);}}
   zone.mons.slice().forEach(m=>updMon(m,dt));
   // hero visuals
-  H.root.position.set(S.x,0,S.z);H.root.rotation.y=S.face;
+  if(S.leapT>0)S.leapT-=dt;H.root.position.set(S.x,S.leapT>0?Math.sin(Math.PI*(1-S.leapT/S.leapDur))*2.6:0,S.z);H.root.rotation.y=S.face;
   const sp=S.swing>0?1-S.swing/S.swingMax:-1;
   animHero(H,{mx:martN(),moving:S.moving&&S.dodgeT<=0,spd:E.moveSpeed(C.cls,L)*1.35*(S.blocking?.5:1),atk:sp,big:S.big,dodge:S.dodgeT>0?1-S.dodgeT/.35:-1,block:S.blocking,hurt:S.hurtT>0?S.hurtT/.5:0,faint:S.state==='faint',cheer:S.cheer>0?1-S.cheer/S.cheerMax:0},dt,T);
   updBubble(T);petTick(dt);
@@ -5450,7 +5470,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={onBal:(d)=>onBal(d),ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
