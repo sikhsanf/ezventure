@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-095059"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-095840"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -345,6 +345,7 @@ body.story #app>*:not(#c):not(#story){visibility:hidden!important}
 #stTxt{font:800 clamp(16px,3.6vh,24px)/1.35 var(--f-body);min-height:3.8em;display:flex;align-items:center}
 #stDots{display:flex;gap:6px;justify-content:center;margin:8px 0}#stDots i{width:10px;height:10px;border-radius:50%;background:#d9d2c0;border:2px solid var(--ink)}#stDots i.on{background:var(--sun)}
 .stBtns{display:flex;gap:10px;justify-content:space-between}
+#stNext{margin-left:auto}
 </style>
 
 <div id="app">
@@ -1750,7 +1751,34 @@ dragon(g,u,own){const body=grp(g,0,0,0);u.body=body;
   for(let i=0;i<5;i++)vb(body,.25,.45,.3,'#f0c070',0,3.35-i*.12,1.4-i*.9,glowM('#ff8a00'));}
 });
 function buildMonModel(type){
-  const dd=E.MON[type];if(dd&&dd.like){const g=buildMonModel(dd.like),tc=new THREE.Color(dd.tint);g.traverse(o=>{if(o.isMesh&&o.material&&o.material.color){o.material=o.material.clone();o.material.color.lerp(tc,.55);if(o.material.emissive&&o.material.emissive.getHex()===0)o.material.emissive.copy(tc).multiplyScalar(.12);}});return g;}
+  const g=buildMonModel1(type);if(!g.userData.mut)mutate(g,type);return g;}
+function mutate(g,type){
+  const u=g.userData;u.mut=1;let h=0;for(let i=0;i<type.length;i++)h=(h*31+type.charCodeAt(i))>>>0;
+  const rnd=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296;};
+  g.updateMatrixWorld(true);const bb=new THREE.Box3().setFromObject(g),sz=new THREE.Vector3(),c=new THREE.Vector3();bb.getSize(sz);bb.getCenter(c);
+  if(!isFinite(sz.x)||sz.y<=0)return;
+  const big=Math.max(sz.x,sz.y,sz.z),pal=['#b44cff','#8a2be2','#c77dff'],gr='#7dff3a';
+  const m=new THREE.Group();m.name='mut';g.add(m);
+  const k=Math.max(.12,big*.09),n=2+Math.min(3,Math.floor(big/1.4));
+  for(let i=0;i<n;i++){const a=rnd()*6.28,r=Math.min(sz.x,sz.z)*.3*rnd(),L=k*(1.4+rnd()*1.8),col=pal[i%3];
+    const cr=vb(m,k,L,k,col,c.x+Math.cos(a)*r,bb.max.y-L*.3+rnd()*k,c.z+Math.sin(a)*r,glowM(col));cr.rotation.set((rnd()-.5)*.8,rnd()*3,(rnd()-.5)*.8);cr.material.emissiveIntensity=.9;}
+  // sisi: kristal kecil
+  for(let i=0;i<2;i++){const sd=i?1:-1,col=pal[(i+1)%3];const cr=vb(m,k*.8,k*1.8,k*.8,col,c.x+sd*sz.x*.5,c.y+rnd()*sz.y*.2,c.z-sz.z*.1,glowM(col));cr.rotation.z=sd*-.7;}
+  // mata ketiga hijau menyala
+  const ey=bb.min.y+sz.y*.72,ez=bb.max.z;const e1=vb(m,k*1.1,k*1.1,k*.5,gr,c.x,ey,ez+.02,glowM(gr));vb(m,k*.45,k*.45,k*.3,'#101010',c.x,ey,ez+.2*k+.05);
+  // bercak racun
+  for(let i=0;i<3;i++){const sp=vb(m,k*.9,k*.9,k*.3,'#6bd62a',c.x+(rnd()-.5)*sz.x*.7,bb.min.y+sz.y*(.3+rnd()*.35),ez+.02,glowM('#6bd62a'));sp.material.emissiveIntensity=.4;}
+  // tetesan
+  for(let i=0;i<2;i++){vb(m,k*.4,k*1.1,k*.4,'#8cff4a',c.x+(i?1:-1)*sz.x*.25,bb.min.y+k*.5,ez-.05,glowM('#8cff4a'));}
+  // percikan ungu mengorbit
+  const sp=[];for(let i=0;i<3;i++){const q=vb(m,k*.5,k*.5,k*.5,'#d9a6ff',0,0,0,glowM('#c77dff'));q.userData.ph=i*2.094;sp.push(q);}
+  const R=big*.62;m.onBeforeRender=null;
+  sp[0].onBeforeRender=function(){const T=performance.now()/700;sp.forEach(q=>{const a=T+q.userData.ph;q.position.set(c.x+Math.cos(a)*R,c.y+sz.y*.2+Math.sin(T*1.7+q.userData.ph)*sz.y*.25,c.z+Math.sin(a)*R);});};
+  // tint ungu tipis
+  const tc=new THREE.Color('#9a5cd0');g.traverse(o=>{if(o.isMesh&&!m.children.includes(o)&&o.material&&o.material.color){o.material=o.material.clone();o.material.color.lerp(tc,.18);}});
+}
+function buildMonModel1(type){
+  const dd=E.MON[type];if(dd&&dd.like){const g=buildMonModel1(dd.like),tc=new THREE.Color(dd.tint);g.traverse(o=>{if(o.isMesh&&o.material&&o.material.color){o.material=o.material.clone();o.material.color.lerp(tc,.55);if(o.material.emissive&&o.material.emissive.getHex()===0)o.material.emissive.copy(tc).multiplyScalar(.12);}});return g;}
   return buildMonModel0(type);}
 function buildMonModel0(type){
   const g=new THREE.Group(),own={own:true},u={};g.userData=u;
