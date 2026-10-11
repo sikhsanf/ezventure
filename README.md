@@ -29,7 +29,7 @@ Game petualangan RPG 3D bergaya voxel, **co-op sampai 3 pemain**, dibuat supaya 
 
 - **6 profesi** dengan kota, senjata, armor, dan skill sendiri.
 - **Kenaikan kelas di Lv 10** lewat ujian di markas, tiap profesi pecah jadi 2 jalur dengan skill dan visual berbeda.
-- **Dunia terbuka berpetak**: 6 kota, 15+ lapangan, peta dunia, portal antar-area, dan balon udara untuk perjalanan jauh.
+- **Dunia terbuka berpetak**: 6 kota, 19 lapangan (monster Lv 1–25), peta dunia, portal antar-area, dan balon udara untuk perjalanan jauh.
 - **Co-op online 3 pemain** lewat peer-to-peer (WebRTC), dengan reconnect otomatis kalau koneksi putus sebentar.
 - **Pet** per kota (jalan bareng, kasih bonus, dan menyerang monster agresif secara otomatis).
 - **Misi harian** di Pusat Misi, reset tiap tengah malam, dengan kartu berwarna menurut tingkat kesulitan.
@@ -70,6 +70,17 @@ Game petualangan RPG 3D bergaya voxel, **co-op sampai 3 pemain**, dibuat supaya 
 
 **Lapangan**: Kamp Pelatihan, Padang Surya, Bukit Batu, Hutan Jamur, Lembah Bintang, Kawah Bara, Rawa Berkabut, Puncak Beku, Sarang Naga, Padang Mint, Telaga Teratai, Rimba Papan, Tambang Serbuk, Jalur Bambu, Dojo Air Terjun.
 
+**Area tingkat tinggi (Lv 16–25)**, dirancang untuk main bareng karena batas level karakter masih Lv 15:
+
+| Area | Level monster | Akses |
+|---|---|---|
+| Padang Aurora | 16–20 | utara Puncak Beku |
+| Pulau Awan | 16–20 | utara Sarang Naga |
+| Gua Kristal Pelangi | 21–25 | utara Padang Aurora |
+| Puncak Komet | 21–25 | utara Pulau Awan |
+
+Tiap area punya monster siang/malam/hujan, monster elit, dan satu bos. Pusat Misi punya tab Lv 16–20 dan Lv 21–25.
+
 - Antar-area terhubung lewat **portal** (label menunjukkan tujuan) dan **peta dunia**.
 - **Balon udara** mengantar antar kota dengan animasi berangkat dan tiba.
 - Lab Prof. Zarko masih terkunci (cerita lanjutan).
@@ -80,7 +91,7 @@ Game petualangan RPG 3D bergaya voxel, **co-op sampai 3 pemain**, dibuat supaya 
 - **Serangan manual dengan soft-aim**: tidak ada auto-attack untuk karakter, bidikan dibantu otomatis.
 - **Equipment**: hanya senjata dan armor, dengan pratinjau 3D di toko dan profil.
 - **Pet**: tiap kota punya pet khas (kuda, domba, beruang, slime pelangi, kucing, robot mini, tupai, rusa, rubah, dan lainnya); satu pet aktif sekaligus. Pet punya bonus (lari lebih cepat, regen) dan **menyerang otomatis** monster agresif di dekat pemain dengan damage kecil yang mengikuti level. Sebagian pet aktif siang, sebagian malam.
-- **Misi**: maksimal 3 aktif, dibagi tab level (1–5, 6–10, 11–15). Hijau = mudah, kuning = normal, merah = sulit dikerjakan sendiri. Hadiah koin sudah dibesarkan 25%.
+- **Misi**: maksimal 3 aktif, dibagi tab level (1–5, 6–10, 11–15, 16–20, 21–25). Hijau = mudah, kuning = normal, merah = sulit dikerjakan sendiri. Hadiah koin sudah dibesarkan 25%.
 - **Waktu & cuaca**: siang/malam dan cerah/hujan acak mengubah monster yang muncul.
 - **Perjalanan**: portal, peta dunia, balon udara.
 - **Audio**: efek suara sintetis lewat Web Audio.
