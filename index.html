@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-132205"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-135433"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -1295,6 +1295,7 @@ const WPC={m:['#8a5a2b','#c9824a','#aeb7c4','#d5dbe6','#eef3fa','#ffd84a','#7ae8
  g:['#9a7bff','#4f7de0','#46a6ff','#ff3b4a','#ff7ae0','#7ae8ff','#ffd84a','#ff3ad0','#ffffff','#ff8a3a'],
  e:[null,null,null,null,'#6a7a90','#a07000','#38b8e8','#8a4cff','#ff3a10','#ffcc40']};
 function curPath(){return WPATHS[C.cls][C.eq.p|0];}
+function dual(){return C.cls==='mart'||(C.cls==='wood'&&curPath()==='sold');}
 function martKick(){return C&&C.cls==='mart'&&curPath()==='kick';}
 const ATKI={syr:'💉',mort:'🌿',ham:'🔨',sold:'🔧',fist:'👊',kick:'🦶'};
 function atkIcon(){const k=curPath();return (C.cls==='doctor'||C.cls==='wood'||C.cls==='mart')&&ATKI[k]?ATKI[k]:E.CLASSES[C.cls].icon;}
@@ -1917,21 +1918,24 @@ function animHero(h,a,dt,T){
   if(a.atk>=0){
     const p=a.atk,big=a.big?1.2:1;
     if(mart){
-      const rt=h.hand?-1:1;
+      const second=p>=.5,q=second?(p-.5)*2:p*2,rt=second?-1:1,b0={lL,lR,aL,aR,zL,zR};
       if(wk==='kick'){
-        if(p<.28){const u=ease(p/.28);lR=lerp(lR,.55,u);aR=lerp(aR,-.5,u);aL=lerp(aL,-1.2,u);zR=lerp(zR,-.7,u);zL=lerp(zL,.6,u);lean=lerp(lean,-.12,u);}
-        else if(p<.55){const u=eo((p-.28)/.27);lR=lerp(.55,-1.55,u);aR=-.5;aL=-1.2;zR=-.7;zL=.6;lean=lerp(-.12,-.3,u);by+=Math.sin(u*Math.PI)*.1;twist=lerp(0,.25,u);}
-        else{const u=ease((p-.55)/.45);lR=lerp(-1.55,lR,u);aR=lerp(-.5,aR,u);aL=lerp(-1.2,aL,u);zR=lerp(-.7,zR,u);zL=lerp(.6,zL,u);lean=lerp(-.3,lean,u);twist=lerp(.25,0,u);}
+        if(q<.28){const u=ease(q/.28);lR=lerp(lR,.55,u);aR=lerp(aR,-.5,u);aL=lerp(aL,-1.2,u);zR=lerp(zR,-.7,u);zL=lerp(zL,.6,u);lean=lerp(lean,-.12,u);}
+        else if(q<.55){const u=eo((q-.28)/.27);lR=lerp(.55,-1.55,u);aR=-.5;aL=-1.2;zR=-.7;zL=.6;lean=lerp(-.12,-.3,u);by+=Math.sin(u*Math.PI)*.1;twist=lerp(0,.25,u);}
+        else{const u=ease((q-.55)/.45);lR=lerp(-1.55,lR,u);aR=lerp(-.5,aR,u);aL=lerp(-1.2,aL,u);zR=lerp(-.7,zR,u);zL=lerp(.6,zL,u);lean=lerp(-.3,lean,u);twist=lerp(.25,0,u);}
       }else{
         const A0=-1.15,A1=-1.0;
-        if(p<.25){const u=ease(p/.25);if(rt>0){aR=lerp(A0,.35,u);aL=lerp(A1,-1.5,u);}else{aL=lerp(A1,.35,u);aR=lerp(A0,-1.5,u);}twist=lerp(0,.45*rt,u);lean=lerp(lean,-.1,u);}
-        else if(p<.52){const u=eo((p-.25)/.27);if(rt>0){aR=lerp(.35,-1.57,u);aL=-1.5;}else{aL=lerp(.35,-1.57,u);aR=-1.5;}twist=lerp(.45*rt,-.5*rt*big,u);lean=lerp(-.1,.32*big,u);lL=-.5;lR=.45;by+=Math.sin(u*Math.PI)*.08;}
-        else{const u=ease((p-.52)/.48);if(rt>0){aR=lerp(-1.57,A0,u);aL=lerp(-1.5,A1,u);}else{aL=lerp(-1.57,A1,u);aR=lerp(-1.5,A0,u);}twist=lerp(-.5*rt*big,0,u);lean=lerp(.32*big,lean,u);lL=lerp(-.5,lL,u);lR=lerp(.45,lR,u);}
+        if(q<.25){const u=ease(q/.25);if(rt>0){aR=lerp(A0,.35,u);aL=lerp(A1,-1.5,u);}else{aL=lerp(A1,.35,u);aR=lerp(A0,-1.5,u);}twist=lerp(0,.45*rt,u);lean=lerp(lean,-.1,u);}
+        else if(q<.52){const u=eo((q-.25)/.27);if(rt>0){aR=lerp(.35,-1.57,u);aL=-1.5;}else{aL=lerp(.35,-1.57,u);aR=-1.5;}twist=lerp(.45*rt,-.5*rt*big,u);lean=lerp(-.1,.32*big,u);lL=-.5;lR=.45;by+=Math.sin(u*Math.PI)*.08;}
+        else{const u=ease((q-.52)/.48);if(rt>0){aR=lerp(-1.57,A0,u);aL=lerp(-1.5,A1,u);}else{aL=lerp(-1.57,A1,u);aR=lerp(-1.5,A0,u);}twist=lerp(-.5*rt*big,0,u);lean=lerp(.32*big,lean,u);lL=lerp(-.5,lL,u);lR=lerp(.45,lR,u);}
       }
+      if(wk==='kick'&&second){const k={lR,aR,aL,zR,zL};lL=k.lR;lR=b0.lL;aL=k.aR;aR=k.aL;zL=-k.zR;zR=-k.zL;twist=-twist;}
     }else if(mel){
-      if(p<.28){const u=ease(p/.28);aR=lerp(-.45,-2.95,u);aL=lerp(-.3,.5,u);twist=lerp(0,-.6,u);lean=lerp(lean,-.2,u);}
-      else if(p<.55){const u=eo((p-.28)/.27);aR=lerp(-2.95,.05,u);aL=lerp(.5,-.9,u);twist=lerp(-.6,.7*big,u);lean=lerp(-.2,.38*big,u);by+=Math.sin(u*Math.PI)*.12;lL=-.7;lR=.5;}
-      else{const u=ease((p-.55)/.45);aR=lerp(.05,-.45,u);aL=lerp(-.9,-.3,u);twist=lerp(.7*big,0,u);lean=lerp(.38*big,lean,u);lL=lerp(-.7,lL,u);lR=lerp(.5,lR,u);}
+      const ds=wk==='sold',second=ds&&p>=.5,q=ds?(second?(p-.5)*2:p*2):p;
+      if(q<.28){const u=ease(q/.28);aR=lerp(-.45,-2.95,u);aL=lerp(-.3,.5,u);twist=lerp(0,-.6,u);lean=lerp(lean,-.2,u);}
+      else if(q<.55){const u=eo((q-.28)/.27);aR=lerp(-2.95,.05,u);aL=lerp(.5,-.9,u);twist=lerp(-.6,.7*big,u);lean=lerp(-.2,.38*big,u);by+=Math.sin(u*Math.PI)*.12;lL=-.7;lR=.5;}
+      else{const u=ease((q-.55)/.45);aR=lerp(.05,-.45,u);aL=lerp(-.9,-.3,u);twist=lerp(.7*big,0,u);lean=lerp(.38*big,lean,u);lL=lerp(-.7,lL,u);lR=lerp(.5,lR,u);}
+      if(second){const t0=aR;aR=aL;aL=t0;twist=-twist;}
     }else if(cls==='mage'||cls==='doctor'){
       if(p<.35){const u=ease(p/.35);aR=lerp(-.25,-1.9,u);aL=lerp(aL,-1.3,u);lean=lerp(lean,-.14,u);pitch=lerp(.15,-.4,u);glow=u*.8;twist=lerp(0,-.25,u);}
       else if(p<.62){const u=eo((p-.35)/.27);aR=lerp(-1.9,-1.45,u);aL=lerp(-1.3,-.7,u);lean=lerp(-.14,.3*big,u);pitch=lerp(-.4,1.35,u);glow=1;twist=lerp(-.25,.2,u);by+=Math.sin(u*Math.PI)*.1;}
@@ -4008,6 +4012,10 @@ function doAttack(){
     after(dur*(cst?.6:.58),()=>{if(!zone||S.state!=='play')return;fire(S.face,1,{color:cls==='mage'?0xb58cff:cls==='doctor'?0x7affc8:0xffe27a,arrow:cls==='ranger'||(cls==='doctor'&&curPath()==='syr'),range:c.range,speed:cls==='ranger'?19:cls==='doctor'?16:14,target:tg&&!tg.dead?tg:null});});
   }else{
     SFX.swing();
+    if(dual()){
+      const hit=(k)=>{if(!zone||S.state!=='play')return;const n=arcHit(c.range,130,.5);strikeFx(FXC[curPath()],c.range,130,false);SFX.swing();if(!n&&tg&&!tg.dead&&Math.hypot(tg.x-S.x,tg.z-S.z)<c.range+2.6)S.lunge=.1;};
+      after(dur*.26,()=>{hit(0);});after(dur*.76,()=>{hit(1);});return;
+    }
     after(dur*.34,()=>{if(!zone||S.state!=='play')return;const n=arcHit(c.range,130,1);if(cls==='mart'||cls==='wood')strikeFx(FXC[curPath()],c.range,130,false);else{slashFx(0xffffff,c.range,130,false);swingFx(0xffffff,c.range,130);}if(!n&&tg&&!tg.dead&&Math.hypot(tg.x-S.x,tg.z-S.z)<c.range+2.6)S.lunge=.14;});
   }
 }
