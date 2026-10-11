@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-195016"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261011-200803"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -647,7 +647,7 @@ window.EZ=(function(){
     ],
     kick:[
       {id:'spinkick',icon:'🌀',lv:5,cd:5,kind:'arc',mult:1.5,range:3.1,arc:230},
-      {id:'flykick',icon:'🦶',lv:10,cd:11,kind:'aoe',mult:2.5,radius:3,center:'target',range:8,delay:.4,stun:1.2,color:0x7ae8ff},
+      {id:'flykick',icon:'🦶',lv:10,cd:11,kind:'charge',mult:2.5,radius:3,range:8,delay:.3,stun:1.2,color:0x7ae8ff},
       {id:'whirlwind',icon:'🌪️',lv:15,cd:26,kind:'aoe',mult:1.2,waves:4,radius:5.2,center:'self',color:0xbfe8ff}
     ]
   };
@@ -861,7 +861,7 @@ window.EZ=(function(){
       {id:'palm',icon:'💪',lv:12,cd:8,kind:'arc',mult:4.3,range:3.6,arc:130},
       {id:'qiwall',icon:'🛡️',lv:15,cd:28,kind:'ward',dur:6,mul:.25,taunt:9,team:10}]},
     kicker:{cls:'mart',path:'kick',icon:'👟',skills:[
-      {id:'flykick',icon:'🦶',lv:10,cd:10,kind:'aoe',mult:2.7,radius:3.2,center:'target',range:9,delay:.4,stun:1.4,color:0x7ae8ff},
+      {id:'flykick',icon:'🦶',lv:10,cd:10,kind:'charge',mult:2.7,radius:3.2,range:9,delay:.3,stun:1.4,color:0x7ae8ff},
       {id:'dropkick',icon:'🪓',lv:12,cd:13,kind:'aoe',mult:3.3,radius:3.4,center:'target',range:9,delay:.5,stun:1.6,color:0x7ae8ff},
       {id:'rapid',icon:'🌀',lv:15,cd:28,kind:'aoe',mult:1.4,waves:7,radius:5,center:'self',color:0xffffff}]}
   };
@@ -4302,6 +4302,16 @@ function useSkill(i){
   const nonAtk=sk.kind==='heal'||sk.kind==='buff'||sk.kind==='ward'||sk.kind==='dash',dur=cls==='warrior'||cls==='wood'?.5:.56;
   S.big=true;if(nonAtk){S.swing=0;S.cheer=S.cheerMax=.7;}else{S.swing=S.swingMax=dur;}
   const tg=nearestMon((sk.range||E.CLASSES[cls].range)+1.5);if(tg)aimAt(tg);
+  if(sk.kind==='charge'){
+    let cx,cz;if(tg&&!tg.dead){cx=tg.x;cz=tg.z;}else{cx=S.x+Math.sin(S.face)*5;cz=S.z+Math.cos(S.face)*5;}
+    const dx=cx-S.x,dz=cz-S.z,d=Math.hypot(dx,dz)||1,T=sk.delay||.3;
+    S.face=Math.atan2(dx,dz);S.cdx=dx/d;S.cdz=dz/d;S.chgV=Math.max(0,d-1.5)/T;S.chgT=T;S.inv=Math.max(S.inv,T+.2);S.swing=S.swingMax=T+.3;S.lunge=0;S.dodgeT=0;
+    try{svSend(sk.id,cx,cz);const fv=SV[sk.id];if(fv)fv(cx,cz,sk,tg);}catch(e){console.error(e);}
+    after(T,()=>{if(!zone||S.state!=='play')return;const ix=S.x+Math.sin(S.face)*1.3,iz=S.z+Math.cos(S.face)*1.3;
+      ringFx(ix,iz,sk.radius,sk.color,.45);burst(ix,.6,iz,sk.color,20,sk.radius*1.1,4,1.2);SFX.hit();shake=Math.max(shake,.4);
+      for(const m of zone.mons){if(m.dead||m.spawnT<.5)continue;const mx=m.x-ix,mz=m.z-iz,md=Math.hypot(mx,mz);if(md<=sk.radius+m.d.r)hitMon(m,calcDmg(sk.mult),{dx:mx/(md||1),dz:mz/(md||1),stun:sk.stun});}});
+    teamBuf(sk);return;
+  }
   const run=()=>{
     if(!zone||S.state!=='play')return;
     let own=false;
@@ -4482,7 +4492,8 @@ function updatePlay(dt){
     S.sinceHurt=(S.sinceHurt||0)+dt;{const rg=petFx().rg;if(rg>0&&!S.rest&&S.hp>0&&S.hp<S.maxHp)S.hp=Math.min(S.maxHp,S.hp+S.maxHp*rg*dt);}if(!S.rest&&S.hp>0&&S.hp<S.maxHp&&S.sinceHurt>5)S.hp=Math.min(S.maxHp,S.hp+S.maxHp*.004*dt);
     S.blockT=Math.max(0,S.blockT-dt);S.blocking=(C.cls==='warrior'||C.cls==='wood')&&(S.defDown||S.blockT>0);
     let vx=0,vz=0;
-    if(S.dodgeT>0){S.dodgeT-=dt;vx=S.ddx*10.5;vz=S.ddz*10.5;}
+    if(S.chgT>0){S.chgT-=dt;vx=S.cdx*S.chgV;vz=S.cdz*S.chgV;}
+    else if(S.dodgeT>0){S.dodgeT-=dt;vx=S.ddx*10.5;vz=S.ddz*10.5;}
     else{const k=readInput();let sp=E.moveSpeed(C.cls,L)*1.35*(S.hasteT>0?1.35:1)*(1+petFx().spd)*(1+advB().spd);if(S.blocking)sp*=.5;if(S.swing>0)sp*=.6;vx=k.x*sp;vz=k.z*sp;
       if(k.m>.05&&S.swing<=0)S.face+=angDiff(S.face,Math.atan2(k.x,k.z))*(1-Math.exp(-dt*18));}
     if(S.rest){vx=0;vz=0;}
