@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-135433"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="ezv-build" content="20261011-135933"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -2767,11 +2767,11 @@ function buildMeadow(){
 }
 
 /* ---------- World graph: towns and fields ---------- */
-const SIDE={W:{p:[-24.4*FS,0],in:[-20.5*FS,0,Math.PI/2]},E:{p:[24.4*FS,0],in:[20.5*FS,0,-Math.PI/2]},N:{p:[0,-24.4*FS],in:[0,-20.5*FS,0]},S:{p:[0,24.4*FS],in:[0,15*FS,Math.PI]}};
+const SIDE={W:{p:[-24.4*FS,0],in:[-20.5*FS,0,Math.PI/2]},E:{p:[24.4*FS,0],in:[20.5*FS,0,-Math.PI/2]},N:{p:[0,-24.4*FS],in:[0,-20.5*FS,0]},S:{p:[0,24.4*FS],in:[0,20.5*FS,Math.PI]}};
 const LINKS={meadow:{W:'stone',N:'vale',E:'glade',S:'camp'},stone:{W:'town:warrior',E:'meadow',S:'timber'},glade:{W:'meadow',E:'town:ranger',S:'bog'},vale:{N:'town:mage',S:'meadow'},
   crater:{S:'town:warrior',N:'dragon'},camp:{N:'meadow',S:'town:doctor',W:'timber',E:'bog'},dragon:{S:'crater'},bog:{N:'glade',S:'bamboo',W:'camp'},frost:{S:'town:mage'},mint:{N:'town:doctor',S:'lotus',E:'town:mart'},lotus:{N:'mint',E:'dojo'},timber:{N:'stone',S:'town:wood',E:'camp'},quarry:{N:'town:wood'},bamboo:{N:'bog',S:'town:mart',W:'town:doctor'},dojo:{N:'town:mart',W:'lotus'}};
 const TLINK={warrior:[{side:'E',to:'stone'},{side:'N',to:'crater'}],mage:[{side:'S',to:'vale'},{side:'N',to:'frost'}],ranger:[{side:'W',to:'glade'}],doctor:[{side:'N',to:'camp'},{side:'S',to:'mint'},{side:'W',to:'town:wood'},{side:'E',to:'bamboo'}],wood:[{side:'N',to:'timber'},{side:'S',to:'quarry'},{side:'E',to:'town:doctor'}],mart:[{side:'N',to:'bamboo'},{side:'S',to:'dojo'},{side:'W',to:'mint'}]};
-const TPOS={N:{p:[0,-16.2*FS],in:[0,-12.2*FS,0]},E:{p:[16.2*FS,0],in:[12.2*FS,0,-Math.PI/2]},S:{p:[0,16.2*FS],in:[0,7.5*FS,Math.PI]},W:{p:[-16.2*FS,0],in:[-12.2*FS,0,Math.PI/2]}};
+const TPOS={N:{p:[0,-16.2*FS],in:[0,-12.2*FS,0]},E:{p:[16.2*FS,0],in:[12.2*FS,0,-Math.PI/2]},S:{p:[0,16.2*FS],in:[0,12.2*FS,Math.PI]},W:{p:[-16.2*FS,0],in:[-12.2*FS,0,Math.PI/2]}};
 const PCOL={stone:'#ff7a4a',vale:'#a07bff',glade:'#3fe08a',meadow:'#ffd84a',camp:'#7ae8a0','town:warrior':'#ff7a4a','town:mage':'#a07bff','town:ranger':'#3fe08a','town:doctor':'#3fe0b0','town:wood':'#e0a860','town:mart':'#5ab0e8',bamboo:'#8ad07a',dojo:'#7ac8e8',timber:'#7ac04a',quarry:'#c8a078',mint:'#7affc8',lotus:'#ff9ad0',crater:'#ff5a2a',bog:'#7ac04a',frost:'#8ad8ff',dragon:'#e04a5a'};
 const FIELDS={
   meadow:{day:[['jelly',7],['bunny',5],['bee',4]],boss:['king',30],rain:[['rjelly',6]],rboss:['stormking',40],dry:['bee','moth'],night:[['moth',6],['pup',6],['jelly',3]]},
@@ -4604,7 +4604,7 @@ function guideCalc(){const tg=navTarget(),cur=curNode();if(!tg||!cur)return null
 let gdTg=null,gdT=0;const guidePt=()=>gdTg;
 const guideG=new THREE.Group();guideG.visible=false;scene.add(guideG);
 const gTex=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');g.lineJoin='round';g.strokeStyle='#2b2350';g.lineWidth=10;g.fillStyle='#ffffff';g.beginPath();g.moveTo(32,5);g.lineTo(57,42);g.lineTo(32,31);g.lineTo(7,42);g.closePath();g.stroke();g.fill();return new THREE.CanvasTexture(c);})();
-const gArr=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.PlaneGeometry(1.1,1.1),new THREE.MeshBasicMaterial({map:gTex,transparent:true,depthWrite:false,fog:false}));m.rotation.order='YXZ';m.rotation.x=-Math.PI/2;m.renderOrder=5;guideG.add(m);gArr.push(m);}
+const gArr=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.PlaneGeometry(1.1,1.1),new THREE.MeshBasicMaterial({map:gTex,transparent:true,depthWrite:false,depthTest:false,fog:false}));m.rotation.order='YXZ';m.rotation.x=-Math.PI/2;m.renderOrder=5;guideG.add(m);gArr.push(m);}
 const gBeam=new THREE.Mesh(new THREE.CylinderGeometry(.55,.55,1,10,1,true),new THREE.MeshBasicMaterial({color:0xffd84a,transparent:true,opacity:.3,depthWrite:false,side:THREE.DoubleSide,fog:false}));guideG.add(gBeam);
 function guideTick(dt){
   const on=mode==='play'&&C&&zone&&!CINE.on&&!fitOn&&!trans&&S.state==='play'&&(zone.id==='town'||zone.field);
