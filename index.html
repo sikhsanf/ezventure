@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-192937"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-194530"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -4400,11 +4400,13 @@ function botsTick(dt){
     if(rec.left<=0){botLeave(B,'time');continue;}
     if(B.hurtT>0)B.hurtT-=dt;
     const cl=E.CLASSES[B.c],pa=BPASS(B.c),rng=cl.range,spd=E.moveSpeed(B.c,L)*1.08;
-    const live=zone.mons.filter(m=>!m.dead&&m.spawnT>=.5);
+    const live0=zone.mons.filter(m=>!m.dead&&m.spawnT>=.5);
+    // friends never start fights: only monsters we attacked (prov) or that are already coming at us (chase/windup/rest)
+    const live=live0.filter(m=>m.prov||m.state==='chase'||m.state==='windup'||m.state==='rest');
     const near=(r,from)=>{const f=from||B;return live.filter(m=>Math.hypot(m.x-f.x,m.z-f.z)<=r+m.d.r);};
     // target: nearest monster near the owner (leash 10)
     let tg=null,bd=1e9;for(const m of live){const od=Math.hypot(m.x-S.x,m.z-S.z);if(od>10.5)continue;const d=Math.hypot(m.x-B.x,m.z-B.z);if(d<bd){bd=d;tg=m;}}
-    botTalk(B,dt,tg,live,L);
+    botTalk(B,dt,tg,live0,L);
     if(!tg&&B.hp<B.mhp)B.hp=Math.min(B.mhp,B.hp+B.mhp*.03*dt);
     let mx=0,mz=0,moving=false;
     const od=Math.hypot(B.x-S.x,B.z-S.z);
