@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-191143"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-192325"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -296,6 +296,13 @@ input,textarea,select{font-size:max(16px,1em)}#ioText{font-size:16px!important;l
 #quest span{min-width:0}
 .fit #hud,.fit #ctl,.fit #joyArea,.fit #names{visibility:hidden!important}
 #shop .pfoot .pill{min-width:100px}
+#care{z-index:35;align-items:flex-end;justify-content:center;background:rgba(20,28,64,.28);padding:calc(var(--mg) + var(--st)) calc(var(--mg) + var(--sr)) calc(var(--mg) + var(--sb)) calc(var(--mg) + var(--sl))}
+#careCard{width:min(480px,100%);box-sizing:border-box;background:var(--paper);border:4px solid var(--ink);border-radius:var(--r-panel);box-shadow:0 8px 0 var(--ink);padding:14px 18px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;animation:pop .45s}
+#careIc{font-size:44px;line-height:1}#careTx{margin:0;font:700 17px/1.4 var(--f-body)}#careBtn{font-size:15px;min-height:42px;padding:8px 16px}
+#gateIn{width:100%;box-sizing:border-box;font:800 26px var(--f-display);text-align:center;padding:10px;border:3px solid var(--ink);border-radius:14px;background:#fff;color:var(--ink);margin-top:8px}
+.pRow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0 4px;font:800 16px var(--f-display)}.pRow:first-child{margin-top:0}
+#pLim{width:100%;margin:4px 0;accent-color:#5b8cff}.pHint{font:700 13px var(--f-body);opacity:.8;margin:2px 0}
+.scRow{display:flex;gap:8px;flex-wrap:wrap}.scRow .pill{padding:8px 14px;font-size:15px;min-height:44px}
 #thunder{position:absolute;inset:0;background:#eaf2ff;opacity:0;pointer-events:none;transition:opacity .45s ease-out}
 #cine{position:absolute;inset:0;z-index:30;display:none;touch-action:none}
 body.cine #cine{display:block}
@@ -504,6 +511,7 @@ body.story #app>*:not(#c):not(#story){visibility:hidden!important}
       <div class="pbody"><div class="menuBtns">
         <button class="pill" id="pCoop"></button>
         <button class="pill" id="pFriends"></button>
+        <button class="pill" id="pCare"></button>
         <button class="pill" id="pChars" data-i="chooseHero"></button>
         <button class="pill" id="pTitle" data-i="titleScr"></button>
         <button class="pill" id="pMus"></button>
@@ -588,6 +596,26 @@ body.story #app>*:not(#c):not(#story){visibility:hidden!important}
       <div class="phead"><h2><span class="hic" data-ic="mission"></span><span data-i="misT"></span></h2><div class="acts"><button class="mini" id="misMap" data-ia="aMap" data-ic="map"></button><button class="xbtn" id="misClose" data-ia="aClose" data-ic="close"></button></div></div>
       <div class="pbody"><p class="note" data-i="misNote" style="margin-top:0"></p><div id="misBody"></div></div>
       <div class="pfoot"><button class="pill go" data-for="misClose" data-i="close"></button></div>
+    </div></div>
+  <div class="ov" id="care"><div id="careCard"><div id="careIc"></div><p id="careTx"></p><button class="pill" id="careBtn"></button></div></div>
+  <div class="ov dlg top" id="gate"><div class="panel sm">
+      <div class="phead"><h2><span class="hic">🔒</span><span data-i="pCare"></span></h2><div class="acts"><button class="xbtn" id="gateX" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody"><p class="tk" id="gateQ" style="margin-top:0"></p><input id="gateIn" type="number" inputmode="numeric" pattern="[0-9]*" autocomplete="off"><p class="note" id="gateMsg" style="color:#c0392b;min-height:1.2em;margin:6px 0 0"></p></div>
+      <div class="pfoot"><button class="pill" id="gateNo" data-i="cancel"></button><button class="pill go" id="gateGo" data-i="gateGo"></button></div>
+    </div></div>
+  <div class="ov dlg top" id="parent"><div class="panel md">
+      <div class="phead"><h2><span class="hic">🔒</span><span data-i="parT"></span></h2><div class="acts"><button class="xbtn" id="parentX" data-ia="aClose" data-ic="close"></button></div></div>
+      <div class="pbody">
+        <div class="pRow"><span data-i="limT"></span><b id="pLimTxt"></b></div>
+        <input id="pLim" type="range" min="0" max="120" step="5" value="0">
+        <div class="pHint" id="pUse"></div>
+        <div class="pRow"><span data-i="sceneT"></span></div>
+        <div class="scRow" id="pModes"></div>
+        <div class="pRow"><span data-i="addT"></span></div>
+        <div class="scRow"><button class="pill" id="pPlus10" data-i="add10"></button><button class="pill" id="pPlus30" data-i="add30"></button></div>
+        <div class="scRow" style="margin-top:12px"><button class="pill" id="pReset" data-i="resetToday"></button><button class="pill" id="pPreview" data-i="previewSc"></button></div>
+      </div>
+      <div class="pfoot"><button class="pill go" id="parentOk" data-i="parDone"></button></div>
     </div></div>
   <div class="ov dlg" id="friends"><div class="panel md">
       <div class="phead"><h2><span class="hic">🤝</span><span data-i="friendsT"></span></h2><div class="acts"><button class="xbtn" id="friendsClose" data-ia="aClose" data-ic="close"></button></div></div>
@@ -925,6 +953,9 @@ window.EZ=(function(){
 const E=window.EZ, THREE=window.THREE;
 const $=s=>document.querySelector(s);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+/* parental controls: daily play limit; when time is up a natural disaster (storm / fog / snow) ends the session */
+const CARE={lim:0,day:'',used:0,bonus:0,mode:'acak',cur:'',warn:0,lock:false,pre:false,ui:false,k:0,sc:'storm',saveT:0,ans:0};
+const careFx=sc=>(mode==='play'&&zone&&zone.id!=='preview'&&CARE.sc===sc)?CARE.k:0;
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const lerp=(a,b,t)=>a+(b-a)*t;
 function seeded(seed){let a=seed|0;return function(){a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
@@ -1046,6 +1077,8 @@ let LANG='id',LANG_SET=false;
 try{const l=localStorage.getItem('ezventure.lang');if(l==='id'||l==='en'){LANG=l;LANG_SET=true;}else LANG=/^id/i.test(navigator.language||'')?'id':'en';}catch(e){}
 Object.assign(TX.id,{friendsT:'Sahabat Petualang',friendsNote:'Setiap kota punya satu sahabat yang berdiri di dekat rumahnya; ajak langsung lewat tombol interaksi. Diajak belum tentu mau, tergantung hoki! 🍀 Mereka ikut 7 hari 7 malam (waktu game), lalu pulang. Kalau pingsan, mereka langsung pulang dan harus diajak lagi.',friendLock:l=>'🔒 Sahabat berikutnya datang di Lv '+l,friendNone:'Belum ada sahabat yang ikut.',friendWith:'Bersamamu',friendTown:'Di kota ini',friendGoTown:'Di tiap kota ada satu sahabat yang berdiri di dekat rumahnya. Temui dan ajak ngobrol langsung (tombol interaksi), siang atau malam.',friendTag:'Sahabat',frChat:'Ngobrol',frTalk:['Kota ini nyaman banget ya. Aku suka jalan-jalan pas sore.','Kalau ketemu monster besar, jangan takut. Kita hadapi bareng-bareng!','Aku udah lama pengin berpetualang, tapi belum ada yang ngajak.','Jangan lupa istirahat dan makan ya, biar tenaganya penuh!','Katanya di luar sana banyak tempat seru. Kamu udah ke mana aja?','Kalau mau aku ikut, ajak aja ya. Aku bisa nemenin 7 hari 7 malam!'],frHi:n=>'Hai, aku '+n+'! Mau ngapain nih?',frAsk:'Mau ajak aku ikut? Aku nemenin kamu 7 hari 7 malam!',frYes:'Mau! Tunggu ya, aku siap-siap dulu! 🎒',frReady:'Siap! Ayo berangkat! ✨',frNo:'Hmm, aku lagi sibuk nih. Coba lagi nanti ya! 😅',frBusy2:n=>'Aku masih sibuk... coba lagi '+n+' detik lagi ya 😅',frLow:l=>'Aku belum bisa ikut sekarang. Temui aku lagi kalau kamu sudah Lv '+l+'! 🌟',friendHere:'Sudah bersamamu',friendInvite:'Ajak',friendFull:'Sahabatmu sudah penuh (maks 2).',friendBusy:n=>n+' lagi sibuk, coba lagi nanti 😅',friendNew:'Sahabat baru bisa diajak! Temui dia di kota 🤝',friendJoin:n=>n+' mau ikut! 🤝',friendBye:n=>n+' pulang dulu 👋',friendFaint:n=>n+' pingsan dan pulang dulu 😵',introBy:'Dipersembahkan oleh',introTap:'Ketuk layar untuk mulai 🔊',startAdv:'Mulai Petualangan',rotScr:'Putar layar',qShared:'Co-op: misi dibagi untuk semua pemain di room.',fxatk:p=>'⚔️ Serangan +'+p+'%',fxdef:p=>'🛡️ Damage diterima −'+p+'%',fxhp:p=>'❤️ Nyawa maks +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Koin +'+p+'%',tryOn:'Coba dulu',hgFit:'Ruang ganti: pilih untuk mencoba, lalu beli atau pakai.',wearing:'Dipakai'});
 Object.assign(TX.en,{friendsT:'Adventure Friends',friendsNote:'Every town has one friend standing by their house; invite them with the interact button. They might say no, it is down to luck! 🍀 They join for 7 days and 7 nights (game time), then go home. If they faint, they go home right away and you must invite them again.',friendLock:l=>'🔒 Next friend joins at Lv '+l,friendNone:'No friends with you yet.',friendWith:'With you',friendTown:'In this town',friendGoTown:'Every town has one friend standing near their house. Walk up and talk to them (interact button), day or night.',friendTag:'Friend',frChat:'Chat',frTalk:['This town is so cozy. I love a walk in the evening.','Big monsters? Do not be scared. We face them together!','I have wanted an adventure for ages, but nobody asked me yet.','Do not forget to rest and eat so your energy stays full!','They say there are fun places out there. Where have you been?','If you want me along, just ask. I can stay 7 days and 7 nights!'],frHi:n=>'Hi, I am '+n+'! What would you like to do?',frAsk:'Want me to come along? I will stay with you for 7 days and 7 nights!',frYes:'Yes! Wait here, I will get ready! 🎒',frReady:'Ready! Let us go! ✨',frNo:'Hmm, I am busy right now. Try again later! 😅',frBusy2:n=>'Still busy... try again in '+n+'s 😅',frLow:l=>'I cannot join yet. Find me again at Lv '+l+'! 🌟',friendHere:'Already with you',friendInvite:'Invite',friendFull:'Your friends slots are full (max 2).',friendBusy:n=>n+' is busy, try again later 😅',friendNew:'A new friend can be invited! Find them in a town 🤝',friendJoin:n=>n+' joined! 🤝',friendBye:n=>n+' went home 👋',friendFaint:n=>n+' fainted and went home 😵',introBy:'Presented by',introTap:'Tap the screen to start 🔊',startAdv:'Start Adventure',rotScr:'Rotate screen',qShared:'Co-op: missions are shared by everyone in the room.',fxatk:p=>'⚔️ Attack +'+p+'%',fxdef:p=>'🛡️ Damage taken −'+p+'%',fxhp:p=>'❤️ Max HP +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Coins +'+p+'%',tryOn:'Try on',hgFit:'Fitting room: tap to try on, then buy or wear.',wearing:'Wearing'});
+Object.assign(TX.id,{pCare:'Orang tua',cancel:'Batal',parT:'Pengaturan orang tua',gateGo:'Buka',gateQ:(a,b)=>'Soal untuk orang tua: '+a+' × '+b+' = ?',gateBad:'Jawaban belum tepat, coba lagi.',limT:'Batas main per hari',limOff:'Tanpa batas',limMin:m=>m+' menit',usedToday:(u,l)=>'Hari ini sudah main '+u+' menit · sisa '+l+' menit',usedOff:u=>'Hari ini sudah main '+u+' menit',sceneT:'Kalau waktu habis',scStorm:'Badai petir',scFog:'Kabut tebal',scSnow:'Badai salju',scAcak:'Acak',addT:'Tambah waktu hari ini',add10:'+10 menit',add30:'+30 menit',resetToday:'Atur ulang waktu hari ini',previewSc:'Lihat adegan waktu habis',parDone:'Selesai',warn1:'⏳ Sisa waktu main 10 menit',warn2_storm:'⛅ Awan mulai gelap... sepertinya akan ada badai',warn2_fog:'🌫️ Kabut mulai turun pelan-pelan...',warn2_snow:'❄️ Udara mulai dingin... salju akan turun',warn3:'⚠️ Sebentar lagi waktunya istirahat!',care_storm:n=>'Badai petir besar datang! Semua pahlawan harus berteduh. Istirahat dulu ya '+n+', besok kita berpetualang lagi!',care_fog:n=>'Kabut tebal turun, jalan tidak kelihatan sama sekali. Semua berhenti dulu ya '+n+'. Besok kabutnya sudah hilang!',care_snow:n=>'Badai salju datang! Dingin sekali, semua masuk rumah dan minum cokelat hangat. Sampai besok ya '+n+'!'});
+Object.assign(TX.en,{pCare:'Parents',cancel:'Cancel',parT:'Parent settings',gateGo:'Open',gateQ:(a,b)=>'Parent question: '+a+' × '+b+' = ?',gateBad:'Not quite, try again.',limT:'Daily play limit',limOff:'No limit',limMin:m=>m+' min',usedToday:(u,l)=>'Played '+u+' min today · '+l+' min left',usedOff:u=>'Played '+u+' min today',sceneT:'When time is up',scStorm:'Thunderstorm',scFog:'Thick fog',scSnow:'Snowstorm',scAcak:'Random',addT:'Add time for today',add10:'+10 min',add30:'+30 min',resetToday:'Reset today\'s time',previewSc:'Preview the time-up scene',parDone:'Done',warn1:'⏳ 10 minutes of play time left',warn2_storm:'⛅ Clouds are getting dark... a storm is coming',warn2_fog:'🌫️ Fog is slowly rolling in...',warn2_snow:'❄️ It is getting cold... snow is coming',warn3:'⚠️ Almost time for a rest!',care_storm:n=>'A big thunderstorm is here! All heroes must take shelter. Rest now '+n+', we adventure again tomorrow!',care_fog:n=>'Thick fog has rolled in and nobody can see the path. Everyone stops for now '+n+'. The fog will be gone tomorrow!',care_snow:n=>'A snowstorm is here! So cold, everyone goes inside for hot chocolate. See you tomorrow '+n+'!'});
 Object.assign(TX.id,{parentT:'Advance setting',parentHold:'Advance setting (tahan 1,5 detik)',lblHat:'Aksesoris',hgAtStyle:'Ganti di Butik',hgNote:'Coba dulu sebelum beli. Aksesoris yang sudah dibeli bisa diganti-ganti di Butik & Barber (gratis).',free:'Gratis',tNext:'Lanjut',tOk:'Oke',
  z_camp:'Kamp Pelatihan',z_campSub:'Latihan dasar petualang',nGuide:'Kak Rani',nGuideS:'Pemandu latihan',nQuarter:'Pak Gudang',nQuarterS:'Perlengkapan gratis',nCtele:'Pilot Balon',nCteleS:'Terbang ke kota',
  kitIntro:'Perlengkapan awal gratis untuk petualang baru. Ambil keduanya!',qmDone:'Perlengkapanmu sudah lengkap. Nanti beli yang lebih bagus di toko kota ya!',
@@ -1379,7 +1412,7 @@ function playStep(k,s,t,sd){
     if(battle>.5){noise(sfxBus,t+sd/2,.035,.05,8500,.8,'highpass');if(slot===3||slot===7)voice(sfxBus,150,t+sd/2,.12,'sine',.22,{slide:-100,att:.002});}
   }
 }
-function wantTrack(){if(OPEN.on&&!OPEN.fight)return '';if(storyOn)return 'story_'+(storyI+1);if(mode!=='play')return 'title';if(!zone)return '';return zone.lab?'field_dragon':zone.id==='meadow'?'meadow':zone.field?'field_'+zone.id:'town_'+(zone.cls||C.cls);}
+function wantTrack(){if(OPEN.on&&!OPEN.fight)return '';if(CARE.lock)return '';if(storyOn)return 'story_'+(storyI+1);if(mode!=='play')return 'title';if(!zone)return '';return zone.lab?'field_dragon':zone.id==='meadow'?'meadow':zone.field?'field_'+zone.id:'town_'+(zone.cls||C.cls);}
 function musicPump(){
   if(!AC||AC.state!=='running'||musOff||document.hidden){if(AC&&nextT<AC.currentTime)nextT=AC.currentTime+.05;return;}
   const w=wantTrack();if(w&&w!==trkName)setTrack(w);
@@ -2971,15 +3004,16 @@ function phaseTypes(id){const s=phaseList(id).map(q=>q[0]);bossList(id).forEach(
 function monPhase(type){let d=false,n=false;for(const k in FIELDS){const F=FIELDS[k];if(F.day.some(q=>q[0]===type)||(F.boss&&F.boss[0]===type))d=true;if(F.night.some(q=>q[0]===type))n=true;}return d&&n?'b':d?'d':'n';}
 const NIGHT_BG=new THREE.Color('#0c1233'),NIGHT_TINT=new THREE.Color('#3a4885'),HEMI_N=new THREE.Color('#7f8cff'),SUN_N=new THREE.Color('#8fa0ff');
 const RAIN_BG=new THREE.Color('#76879b'),RAIN_TINT=new THREE.Color('#9aa8b8');
-let darkNow=-1,rainNow=-1,prevNight=null;
+let darkNow=-1,rainNow=-1,prevNight=null,fxNow=-1;const FOG_BG=new THREE.Color('#d4dae0'),SNOW_BG=new THREE.Color('#c3d2e4'),FOG_TINT=new THREE.Color('#e9edf2');
 function applyDark(force){
   const d=(mode==='play'&&zone&&zone.id!=='preview')?TOD.dark:0;
   const r=(mode==='play'&&zone&&zone.id!=='preview')?WX.k:0;
-  if(!force&&Math.abs(d-darkNow)<.004&&Math.abs(r-rainNow)<.01)return;darkNow=d;rainNow=r;
+  const cf=careFx('fog'),cs=careFx('snow');
+  if(!force&&Math.abs(d-darkNow)<.004&&Math.abs(r-rainNow)<.01&&Math.abs(cf+cs-fxNow)<.01)return;darkNow=d;rainNow=r;fxNow=cf+cs;
   hemi.intensity=(.62-.25*d)*(1-.2*r);hemi.color.set(0xffffff).lerp(HEMI_N,d*.8);
   sun.intensity=(.55-.36*d)*(1-.6*r);sun.color.set(0xfff2d8).lerp(SUN_N,d);
-  if(zone&&scene.background){scene.background.set(zone.sky).lerp(NIGHT_BG,.82*d).lerp(RAIN_BG,.62*r*(1-.45*d));if(scene.fog){scene.fog.color.copy(scene.background);scene.fog.near=42-16*r;scene.fog.far=120-34*r;}}
-  if(zone&&zone.dome)zone.dome.material.color.set(0xffffff).lerp(NIGHT_TINT,d).lerp(RAIN_TINT,.6*r);
+  if(zone&&scene.background){scene.background.set(zone.sky).lerp(NIGHT_BG,.82*d).lerp(RAIN_BG,.62*r*(1-.45*d)).lerp(FOG_BG,.92*cf).lerp(SNOW_BG,.8*cs);if(scene.fog){scene.fog.color.copy(scene.background);scene.fog.near=Math.max(4,42-16*r-36*cf-22*cs);scene.fog.far=Math.max(26,120-34*r-90*cf-55*cs);}}
+  if(zone&&zone.dome)zone.dome.material.color.set(0xffffff).lerp(NIGHT_TINT,d).lerp(RAIN_TINT,.6*r).lerp(FOG_TINT,.7*Math.min(1,cf+cs));
 }
 function applyPhase(){
   if(!zone||!zone.field||zone.sync)return;
@@ -5036,17 +5070,80 @@ function rainSnd(){if(!AC||!master||!noiseBuf)return;if(!rainG){const src=AC.cre
   rainG.gain.setTargetAtTime(mode==='play'?WX.k*.05:0,AC.currentTime,.5);}
 function thunder(){const e=$('#thunder');e.style.transition='none';e.style.opacity='.75';setTimeout(()=>{e.style.transition='opacity .45s ease-out';e.style.opacity='0';},70);setTimeout(()=>{e.style.transition='none';e.style.opacity='.5';setTimeout(()=>{e.style.transition='opacity .6s ease-out';e.style.opacity='0';},60);},200);
   setTimeout(()=>{if(on())noise(sfxBus,AC.currentTime,1.8,.5,260,.8,'lowpass',70);},900);}
+const SN=720,snOff=new Float32Array(SN*3),snPos=new Float32Array(SN*3),snGeo=new THREE.BufferGeometry();
+for(let i=0;i<SN;i++){snOff[i*3]=(Math.random()-.5)*36;snOff[i*3+1]=Math.random()*18;snOff[i*3+2]=(Math.random()-.5)*36;}
+snGeo.setAttribute('position',new THREE.BufferAttribute(snPos,3));
+const snMat=new THREE.PointsMaterial({color:0xffffff,size:.5,transparent:true,opacity:.95,depthWrite:false}),snow=new THREE.Points(snGeo,snMat);snow.frustumCulled=false;snow.visible=false;scene.add(snow);
 function wxTick(dt){
   const tg=WX.rain?1:0;WX.k+=(tg-WX.k)*(1-Math.exp(-dt*.7));if(Math.abs(tg-WX.k)<.003)WX.k=tg;
+  {const sk=careFx('storm');if(sk>0)WX.k=Math.max(WX.k,sk);}
+  {const sk=careFx('snow'),sv=sk>.02&&zone&&zone.id!=='title';snow.visible=!!sv;
+   if(sv){snMat.opacity=.9*Math.min(1,sk*2);for(let i=0;i<SN;i++){let y=snOff[i*3+1]-dt*(2.4+(i%5)*.35);if(y<0){y+=18;snOff[i*3]=(Math.random()-.5)*36;snOff[i*3+2]=(Math.random()-.5)*36;}snOff[i*3+1]=y;snPos[i*3]=S.x+snOff[i*3]+Math.sin(T*.9+i)*.5;snPos[i*3+1]=y;snPos[i*3+2]=S.z+snOff[i*3+2];}snGeo.attributes.position.needsUpdate=true;}}
   const vis=WX.k>.02&&mode==='play'&&zone&&zone.id!=='preview'&&zone.id!=='title';
   rain.visible=!!vis;rainSnd();if(!vis)return;
   rnMat.opacity=.5*WX.k;const cx=S.x,cz=S.z;
   for(let i=0;i<RN;i++){let y=rnOff[i*3+1]-dt*24;if(y<0){y+=22;rnOff[i*3]=(Math.random()-.5)*40;rnOff[i*3+2]=(Math.random()-.5)*40;}rnOff[i*3+1]=y;
     const x=cx+rnOff[i*3],z=cz+rnOff[i*3+2],o=i*6;rnPos[o]=x;rnPos[o+1]=y;rnPos[o+2]=z;rnPos[o+3]=x+.1;rnPos[o+4]=y+.85;rnPos[o+5]=z+.05;}
   rnGeo.attributes.position.needsUpdate=true;
-  if(WX.k>.7&&!paused){WX.thT-=dt;if(WX.thT<=0){WX.thT=14+Math.random()*20;thunder();}}
+  if(WX.k>.7&&(!paused||CARE.lock)){WX.thT-=dt;if(WX.thT<=0){WX.thT=14+Math.random()*20;thunder();}}
 }
 
+
+/* ---------- Parental controls ---------- */
+const CARE_KEY='ez_care_v1';
+function careDay(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function careLoad(){try{const o=JSON.parse(localStorage.getItem(CARE_KEY)||'{}');CARE.lim=clamp(o.lim|0,0,120);CARE.mode=['storm','fog','snow','acak'].indexOf(o.mode)>=0?o.mode:'acak';if(o.day===careDay()){CARE.used=+o.used||0;CARE.bonus=+o.bonus||0;CARE.cur=o.cur||'';}}catch(e){}CARE.day=careDay();}
+function careSave(){try{localStorage.setItem(CARE_KEY,JSON.stringify({lim:CARE.lim,mode:CARE.mode,day:CARE.day,used:Math.round(CARE.used),bonus:CARE.bonus,cur:CARE.cur}));}catch(e){}}
+careLoad();
+function careLeft(){return CARE.lim>0?CARE.lim*60+CARE.bonus*60-CARE.used:Infinity;}
+function careScene(){if(CARE.mode!=='acak')return CARE.mode;if(!CARE.cur){CARE.cur=['storm','fog','snow'][(Math.random()*3)|0];careSave();}return CARE.cur;}
+const CARE_IC={storm:'⛈️',fog:'🌫️',snow:'❄️'};
+function careLock(pre){
+  if(mode!=='play'||!zone||!C||CARE.lock)return;
+  CARE.lock=true;CARE.pre=!!pre;CARE.k=1;CARE.sc=careScene();paused=true;S.defDown=false;S.blocking=false;
+  document.querySelectorAll('.ov.show').forEach(e=>{if(e.id!=='gate'&&e.id!=='parent')e.classList.remove('show');});
+  $('#careIc').textContent=CARE_IC[CARE.sc];$('#careTx').textContent=t('care_'+CARE.sc,C.name);$('#careBtn').innerHTML='🔒 '+t('pCare');
+  show('care',true);WX.thT=2;if(CARE.sc==='storm')thunder();else if(SFX.chime)SFX.chime();
+  if(pre)setTimeout(()=>{if(CARE.pre&&CARE.lock)careUnlock();},7500);
+}
+function careUnlock(){const l=careLeft();CARE.lock=false;CARE.pre=false;show('care',false);if(mode==='play')paused=false;CARE.k=0;CARE.warn=(l<=600?1:0)|(l<=300?2:0)|(l<=60?4:0);}
+function careTick(dt){
+  if(CARE.day!==careDay()){CARE.day=careDay();CARE.used=0;CARE.bonus=0;CARE.cur='';CARE.warn=0;careSave();}
+  const play=mode==='play'&&zone&&C&&zone.id!=='preview'&&zone.id!=='title'&&zone.id!=='intro'&&!CINE.on&&!storyOn;
+  if(CARE.lock){paused=true;CARE.k=1;if(!CARE.ui&&!CARE.pre&&careLeft()>0)careUnlock();return;}
+  if(!play){CARE.k=Math.max(0,CARE.k-dt*.5);return;}
+  if(!paused&&!CARE.ui)CARE.used+=dt;
+  const left=careLeft();CARE.sc=careScene();
+  if(CARE.lim>0){
+    const tot=CARE.lim*60+CARE.bonus*60,ramp=Math.min(300,tot*.4);
+    CARE.k=left<ramp?clamp(1-left/ramp,0,1):0;
+    if(left<=600&&!(CARE.warn&1)){CARE.warn|=1;if(tot>900)banner(t('warn1'));}
+    if(left<=ramp&&!(CARE.warn&2)){CARE.warn|=2;banner(t('warn2_'+CARE.sc));}
+    if(left<=60&&!(CARE.warn&4)){CARE.warn|=4;banner(t('warn3'));}
+    if(left<=0)careLock(false);
+  }else CARE.k=0;
+  CARE.saveT+=dt;if(CARE.saveT>15){CARE.saveT=0;careSave();}
+}
+function gateOpen(){CARE.ui=true;const a=12+((Math.random()*8)|0),b=3+((Math.random()*7)|0);CARE.ans=a*b;$('#gateQ').textContent=t('gateQ',a,b);$('#gateIn').value='';$('#gateMsg').textContent='';show('gate',true);setTimeout(()=>{try{$('#gateIn').focus();}catch(e){}},120);}
+function gateClose(){show('gate',false);if(!$('#parent').classList.contains('show'))CARE.ui=false;}
+function gateTry(){const v=parseInt($('#gateIn').value,10);SFX.click();if(v===CARE.ans){show('gate',false);renderParent();show('parent',true);}else{$('#gateMsg').textContent=t('gateBad');$('#gateIn').value='';}}
+function parentClose(){show('parent',false);CARE.ui=false;careSave();}
+function renderParent(){
+  $('#pLim').value=CARE.lim;$('#pLimTxt').textContent=CARE.lim?t('limMin',CARE.lim):t('limOff');
+  const u=Math.floor(CARE.used/60);$('#pUse').textContent=CARE.lim?t('usedToday',u,Math.max(0,Math.ceil(careLeft()/60))):t('usedOff',u);
+  const box=$('#pModes');box.innerHTML='';
+  [['storm','scStorm'],['fog','scFog'],['snow','scSnow'],['acak','scAcak']].forEach(q=>{const b=document.createElement('button');b.className='pill'+(CARE.mode===q[0]?' go':'');b.textContent=CARE_IC[q[0]]?CARE_IC[q[0]]+' '+t(q[1]):'🎲 '+t(q[1]);b.addEventListener('click',()=>{SFX.click();CARE.mode=q[0];CARE.cur='';careSave();renderParent();});box.appendChild(b);});
+}
+$('#pCare').addEventListener('click',()=>{ac();SFX.click();gateOpen();});
+$('#careBtn').addEventListener('click',()=>{ac();SFX.click();gateOpen();});
+$('#gateX').addEventListener('click',()=>{SFX.click();gateClose();});$('#gateNo').addEventListener('click',()=>{SFX.click();gateClose();});$('#gateGo').addEventListener('click',gateTry);
+$('#gateIn').addEventListener('keydown',e=>{if(e.key==='Enter')gateTry();});
+$('#parentX').addEventListener('click',()=>{SFX.click();parentClose();});$('#parentOk').addEventListener('click',()=>{SFX.click();parentClose();});
+$('#pLim').addEventListener('input',e=>{CARE.lim=clamp(+e.target.value|0,0,120);careSave();renderParent();});
+$('#pPlus10').addEventListener('click',()=>{SFX.click();CARE.bonus+=10;careSave();renderParent();});
+$('#pPlus30').addEventListener('click',()=>{SFX.click();CARE.bonus+=30;careSave();renderParent();});
+$('#pReset').addEventListener('click',()=>{SFX.click();CARE.used=0;CARE.bonus=0;CARE.warn=0;careSave();renderParent();});
+$('#pPreview').addEventListener('click',()=>{SFX.click();parentClose();show('pause',false);careLock(true);});
 
 /* ---------- guild master, path choice, promotion exam ---------- */
 const EX={on:false,target:'',k:0,n:12,wave:0,t:2.2,done:false};
@@ -5158,7 +5255,7 @@ $('#cineSkip').addEventListener('click',()=>{if(CINE.kind==='balloon')return;SFX
 $('#cine').addEventListener('pointerdown',e=>{e.stopPropagation();});
 function tick(dt){
   if(hitStop>0){hitStop-=dt;dt*=.1;}
-  T+=dt;coopTick(dt);todTick();
+  T+=dt;coopTick(dt);todTick();careTick(dt);
   if(zone){zone.t+=dt;zone.anim.forEach(f=>f(dt,zone.t));}
   if(mode==='play'&&!paused&&C&&zone){updatePlay(dt);hud();}
   else if(mode==='play'&&paused&&C&&zone&&coopWorldOn())coopWorld(dt);
@@ -5794,7 +5891,7 @@ $('#pStory').addEventListener('click',()=>{SFX.click();show('pause',false);openS
 
 function buildSw(el){el.innerHTML='';[['id','ID'],['en','EN']].forEach(a=>{const b=document.createElement('button');b.textContent=a[1];b.className=LANG===a[0]?'on':'';b.addEventListener('click',()=>{ac();SFX.click();setLang(a[0]);});el.appendChild(b);});}
 function setLang(l){LANG=l;LANG_SET=true;try{localStorage.setItem('ezventure.lang',l);}catch(e){}applyLang();}
-function renderPause(){$('#pFriends').innerHTML='🤝 '+t('friendsT');$('#pCoop').innerHTML=ic('coop',24)+' '+t('coopT')+(coopOn()?' · '+t('coopConnected'):'');$('#pSnd').innerHTML=ic(muted?'sndOff':'sndOn',24)+' '+t(muted?'sndOff':'sndOn');$('#pMus').innerHTML=ic(musOff?'musOff':'musOn',24)+' '+t(musOff?'musOff':'musOn');}
+function renderPause(){$('#pFriends').innerHTML='🤝 '+t('friendsT');$('#pCare').innerHTML='🔒 '+t('pCare');$('#pCoop').innerHTML=ic('coop',24)+' '+t('coopT')+(coopOn()?' · '+t('coopConnected'):'');$('#pSnd').innerHTML=ic(muted?'sndOff':'sndOn',24)+' '+t(muted?'sndOff':'sndOn');$('#pMus').innerHTML=ic(musOff?'musOff':'musOn',24)+' '+t(musOff?'musOff':'musOn');}
 function applyLang(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(e=>{e.innerHTML=t(e.dataset.i);});
@@ -5914,7 +6011,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();startIntro();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={bot:()=>({BOT,hurt:botHurt,say:botSay}),skipIntro:()=>{OPEN.on=false;OPEN.fight=false;document.body.classList.remove('intro');$('#intro').classList.remove('show');showTitle();},onBal:(d)=>onBal(d),ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={care:()=>({CARE,lock:careLock,unlock:careUnlock,gate:gateOpen}),bot:()=>({BOT,hurt:botHurt,say:botSay}),skipIntro:()=>{OPEN.on=false;OPEN.fight=false;document.body.classList.remove('intro');$('#intro').classList.remove('show');showTitle();},onBal:(d)=>onBal(d),ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
