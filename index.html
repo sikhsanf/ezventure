@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-190051"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-191143"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -391,6 +391,9 @@ body.bal #cineSkip{display:none}
   #map .pbody{padding:8px 8px 8px 0}
 }
 @media (max-width:640px) and (orientation:portrait){#map .panel{height:auto;max-height:92%}#map .pbody{height:calc(100vw - 8px);flex:none}}
+/* iOS 15 and older (e.g. iPhone 7 Plus) have no container query units: size the square map from the viewport instead */
+@supports not (width:1cqw){#mapBig{width:min(calc(var(--vh,1vh)*100 - 44px),calc(100vw - 210px));height:min(calc(var(--vh,1vh)*100 - 44px),calc(100vw - 210px));flex:none}}
+@supports not (width:1cqw){@media (orientation:portrait){#mapBig{width:calc(100vw - 44px);height:calc(100vw - 44px)}}}
 body.story #app>*:not(#c):not(#story){visibility:hidden!important}
 #playBtn[hidden]+#titleStory{display:none}
 #titleStory{margin-top:10px}
@@ -4285,7 +4288,6 @@ function botLeave(B,why){
 function botGone(i){const rec=C.bots[i],B=BOT[i];burst(B.x,1,B.z,0xffffff,18,4,4,1.2);SFX.start();banner(t(B.out==='faint'?'friendFaint':'friendBye',rec?rec.n:''));C.bots[i]=null;botDrop(i);saveDB();}
 /* ---- Friend NPC standing in each town (day & night); invite -> goes home, gets ready, comes back and joins ---- */
 const FSEED={warrior:101,mage:202,ranger:303,doctor:404,wood:505,mart:606};
-let FR=null;
 function friendJoined(c){return !!(C&&C.bots&&C.bots.some(r=>r&&r.c===c&&!r.wait));}
 function friendNpc(z,cls,L){
   const fixed=[L.style,L.shop,L.mis,L.lm,[0,0]].concat(z.npcs.filter(n=>n.id!=='chat').map(n=>[n.x,n.z]));
@@ -4301,7 +4303,7 @@ function friendNpc(z,cls,L){
   if(!best){const d=dors[3];best={ry:d.ry,dr:d.dr,x:d.dr[0]+Math.sin(d.ry)*3.6,y:d.dr[1]+Math.cos(d.ry)*3.6};}
   const ry=best.ry,door=best.dr,px=best.x,pz=best.y;
   const eq=botEq(Math.max(1,level()),0),H=buildHero(cls,Object.assign({},botLook(FSEED[cls]),{ew:eq.w,ea:eq.a,ep:eq.p,eh:0}));z.group.add(H.root);
-  const F=FR={zone:z,cls,x:px,z:pz,f:ry+Math.PI,st:'idle',t:0,H,door,px,pz,hidden:false,fx:0};
+  const F=z.friend={zone:z,cls,x:px,z:pz,f:ry+Math.PI,st:'idle',t:0,H,door,px,pz,hidden:false,fx:0};
   const mk=marker(z,px,pz,'#7ae0ff','#2ab0ff');
   z.npcs.push({id:'friend',get x(){return F.x;},get z(){return F.z;},r:3.8,closed:()=>F.hidden||F.st!=='idle'});
   z.tags.push({o:F,y:2.95,cls:'npc',name:BNAME[cls],sf:()=>t('friendTag'),R:14,hide:()=>F.hidden});
@@ -4337,7 +4339,7 @@ function friendTalk(){
 }
 function friendChat(){const c=zone.cls,N=BNAME[c],arr=TX[LANG].frTalk||TX.id.frTalk;openTalk({name:N,lines:[arr[(Math.random()*arr.length)|0]]});}
 function friendAsk(){
-  const F=FR,c=zone.cls,slot=C.bots.findIndex(x=>!x);if(!F||F.cls!==c||F.st!=='idle'||slot<0)return;
+  const F=zone.friend,c=zone.cls,slot=C.bots.findIndex(x=>!x);if(!F||F.cls!==c||F.st!=='idle'||slot<0)return;
   if(Math.random()<.5){C.bots[slot]={c,n:BNAME[c],p:Math.random()<.5?1:0,s:FSEED[c],left:BOTLEFT,wait:true};saveDB();F.st='go';F.t=0;SFX.level();sayBubble(F,t('frYes'),3.4,5200);banner(t('frYes'));}
   else{BOTCD[c]=performance.now()+30000;SFX.click();sayBubble(F,t('frNo'),3.4,5200);banner(t('frNo'));}
 }
@@ -4346,7 +4348,7 @@ function botsTick(dt){
   const L=level();
   for(let i=0;i<2;i++){
     const rec=C.bots[i],unl=L>=BOTUNL[i];let B=BOT[i];
-    if(rec&&rec.wait){if(FR&&FR.zone===zone&&FR.st!=='idle'&&FR.st!=='done'){if(B)botDrop(i);continue;}delete rec.wait;}
+    if(rec&&rec.wait){if(zone.friend&&zone.friend.st!=='idle'&&zone.friend.st!=='done'){if(B)botDrop(i);continue;}delete rec.wait;}
     if(!rec||!unl){if(B)botDrop(i);continue;}
     const eq=botEq(L,rec.p),key=rec.c+'|'+rec.s+'|'+eq.w+'|'+eq.a+'|'+eq.p;
     if(B&&B.key!==key){botDrop(i);B=null;}
