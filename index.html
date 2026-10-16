@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-175457"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-184231"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -963,6 +963,7 @@ IC.dojo='<path d="M2 28 L32 8 L62 28 Z" fill="#3a8ab0"/><rect x="8" y="28" width
 IC.fist='<rect x="14" y="16" width="34" height="30" rx="9" fill="#f4c89a"/><g stroke="#c8966a" stroke-width="2.5"><path d="M24 18v14M32 18v14M40 18v14"/></g><rect x="18" y="44" width="28" height="12" rx="3" fill="#e0453c"/><rect x="18" y="48" width="28" height="3" fill="#fff"/>';
 IC.sawmill='<circle cx="32" cy="32" r="20" fill="#c9d1dc"/><g fill="#aab4c4"><rect x="28" y="4" width="8" height="56" rx="2"/><rect x="4" y="28" width="56" height="8" rx="2"/><rect x="28" y="4" width="8" height="56" rx="2" transform="rotate(45 32 32)"/><rect x="28" y="4" width="8" height="56" rx="2" transform="rotate(-45 32 32)"/></g><circle cx="32" cy="32" r="9" fill="#c08a50"/>';
 IC.clinic='<rect x="8" y="8" width="48" height="48" rx="12" fill="#fff"/><path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z" fill="#e0453c"/>';
+IC.friend='<circle cx="32" cy="32" r="24" fill="#ffd84a"/><path d="M32 48 L16 32 a9 9 0 0 1 16-11 a9 9 0 0 1 16 11z" fill="#ff5d8f"/>';
 const icSvg=(n,wh)=>'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"'+(wh?' width="'+wh+'" height="'+wh+'"':' width="100%" height="100%"')+' stroke="#2b2350" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">'+(IC[n]||'')+'</svg>';
 const ic=(n,s)=>'<span class="ico" style="width:'+(s||24)+'px;height:'+(s||24)+'px">'+icSvg(n)+'</span>';
 IC.chat='<path d="M10 14 H54 Q58 14 58 18 V40 Q58 44 54 44 H30 L18 54 V44 H10 Q6 44 6 40 V18 Q6 14 10 14Z" fill="#ffffff"/><circle cx="20" cy="29" r="3.5" fill="#2b2350"/><circle cx="32" cy="29" r="3.5" fill="#2b2350"/><circle cx="44" cy="29" r="3.5" fill="#2b2350"/>';IC.guide=IC.chat;IC.quarter=IC.shop;IC.ctele=IC.chat;
@@ -1040,8 +1041,8 @@ en:{
 }};
 let LANG='id',LANG_SET=false;
 try{const l=localStorage.getItem('ezventure.lang');if(l==='id'||l==='en'){LANG=l;LANG_SET=true;}else LANG=/^id/i.test(navigator.language||'')?'id':'en';}catch(e){}
-Object.assign(TX.id,{friendsT:'Sahabat Petualang',friendsNote:'Setiap kota punya satu sahabat yang bisa kamu ajak. Diajak belum tentu mau, tergantung hoki! 🍀 Mereka ikut 7 hari 7 malam (waktu game), lalu pulang. Kalau pingsan, mereka langsung pulang dan harus diajak lagi.',friendLock:l=>'🔒 Sahabat berikutnya datang di Lv '+l,friendNone:'Belum ada sahabat yang ikut.',friendWith:'Bersamamu',friendTown:'Di kota ini',friendGoTown:'Kunjungi kota untuk mengajak sahabatnya.',friendHere:'Sudah bersamamu',friendInvite:'Ajak',friendFull:'Sahabatmu sudah penuh (maks 2).',friendBusy:n=>n+' lagi sibuk, coba lagi nanti 😅',friendNew:'Sahabat baru bisa diajak! Cari di kota → Menu → Sahabat 🤝',friendJoin:n=>n+' mau ikut! 🤝',friendBye:n=>n+' pulang dulu 👋',friendFaint:n=>n+' pingsan dan pulang dulu 😵',introBy:'Dipersembahkan oleh',introTap:'Ketuk layar untuk mulai 🔊',startAdv:'Mulai Petualangan',rotScr:'Putar layar',qShared:'Co-op: misi dibagi untuk semua pemain di room.',fxatk:p=>'⚔️ Serangan +'+p+'%',fxdef:p=>'🛡️ Damage diterima −'+p+'%',fxhp:p=>'❤️ Nyawa maks +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Koin +'+p+'%',tryOn:'Coba dulu',hgFit:'Ruang ganti: pilih untuk mencoba, lalu beli atau pakai.',wearing:'Dipakai'});
-Object.assign(TX.en,{friendsT:'Adventure Friends',friendsNote:'Every town has one friend you can invite. They might say no, it is down to luck! 🍀 They join for 7 days and 7 nights (game time), then go home. If they faint, they go home right away and you must invite them again.',friendLock:l=>'🔒 Next friend joins at Lv '+l,friendNone:'No friends with you yet.',friendWith:'With you',friendTown:'In this town',friendGoTown:'Visit a town to invite its friend.',friendHere:'Already with you',friendInvite:'Invite',friendFull:'Your friends slots are full (max 2).',friendBusy:n=>n+' is busy, try again later 😅',friendNew:'A new friend can be invited! Find them in a town → Menu → Friends 🤝',friendJoin:n=>n+' joined! 🤝',friendBye:n=>n+' went home 👋',friendFaint:n=>n+' fainted and went home 😵',introBy:'Presented by',introTap:'Tap the screen to start 🔊',startAdv:'Start Adventure',rotScr:'Rotate screen',qShared:'Co-op: missions are shared by everyone in the room.',fxatk:p=>'⚔️ Attack +'+p+'%',fxdef:p=>'🛡️ Damage taken −'+p+'%',fxhp:p=>'❤️ Max HP +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Coins +'+p+'%',tryOn:'Try on',hgFit:'Fitting room: tap to try on, then buy or wear.',wearing:'Wearing'});
+Object.assign(TX.id,{friendsT:'Sahabat Petualang',friendsNote:'Setiap kota punya satu sahabat yang berdiri di dekat rumahnya; ajak langsung lewat tombol interaksi. Diajak belum tentu mau, tergantung hoki! 🍀 Mereka ikut 7 hari 7 malam (waktu game), lalu pulang. Kalau pingsan, mereka langsung pulang dan harus diajak lagi.',friendLock:l=>'🔒 Sahabat berikutnya datang di Lv '+l,friendNone:'Belum ada sahabat yang ikut.',friendWith:'Bersamamu',friendTown:'Di kota ini',friendGoTown:'Di tiap kota ada satu sahabat yang berdiri di dekat rumahnya. Temui dan ajak ngobrol langsung (tombol interaksi), siang atau malam.',friendTag:'Sahabat',frHi:n=>'Hai, aku '+n+'! Lagi berpetualang ya? Seru banget!',frAsk:'Mau ajak aku ikut? Aku nemenin kamu 7 hari 7 malam!',frYes:'Mau! Tunggu ya, aku siap-siap dulu! 🎒',frReady:'Siap! Ayo berangkat! ✨',frNo:'Hmm, aku lagi sibuk nih. Coba lagi nanti ya! 😅',frBusy2:n=>'Aku masih sibuk... coba lagi '+n+' detik lagi ya 😅',frLow:l=>'Aku belum bisa ikut sekarang. Temui aku lagi kalau kamu sudah Lv '+l+'! 🌟',friendHere:'Sudah bersamamu',friendInvite:'Ajak',friendFull:'Sahabatmu sudah penuh (maks 2).',friendBusy:n=>n+' lagi sibuk, coba lagi nanti 😅',friendNew:'Sahabat baru bisa diajak! Temui dia di kota 🤝',friendJoin:n=>n+' mau ikut! 🤝',friendBye:n=>n+' pulang dulu 👋',friendFaint:n=>n+' pingsan dan pulang dulu 😵',introBy:'Dipersembahkan oleh',introTap:'Ketuk layar untuk mulai 🔊',startAdv:'Mulai Petualangan',rotScr:'Putar layar',qShared:'Co-op: misi dibagi untuk semua pemain di room.',fxatk:p=>'⚔️ Serangan +'+p+'%',fxdef:p=>'🛡️ Damage diterima −'+p+'%',fxhp:p=>'❤️ Nyawa maks +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Koin +'+p+'%',tryOn:'Coba dulu',hgFit:'Ruang ganti: pilih untuk mencoba, lalu beli atau pakai.',wearing:'Dipakai'});
+Object.assign(TX.en,{friendsT:'Adventure Friends',friendsNote:'Every town has one friend standing by their house; invite them with the interact button. They might say no, it is down to luck! 🍀 They join for 7 days and 7 nights (game time), then go home. If they faint, they go home right away and you must invite them again.',friendLock:l=>'🔒 Next friend joins at Lv '+l,friendNone:'No friends with you yet.',friendWith:'With you',friendTown:'In this town',friendGoTown:'Every town has one friend standing near their house. Walk up and talk to them (interact button), day or night.',friendTag:'Friend',frHi:n=>'Hi, I am '+n+'! Off on an adventure? So cool!',frAsk:'Want me to come along? I will stay with you for 7 days and 7 nights!',frYes:'Yes! Wait here, I will get ready! 🎒',frReady:'Ready! Let us go! ✨',frNo:'Hmm, I am busy right now. Try again later! 😅',frBusy2:n=>'Still busy... try again in '+n+'s 😅',frLow:l=>'I cannot join yet. Find me again at Lv '+l+'! 🌟',friendHere:'Already with you',friendInvite:'Invite',friendFull:'Your friends slots are full (max 2).',friendBusy:n=>n+' is busy, try again later 😅',friendNew:'A new friend can be invited! Find them in a town 🤝',friendJoin:n=>n+' joined! 🤝',friendBye:n=>n+' went home 👋',friendFaint:n=>n+' fainted and went home 😵',introBy:'Presented by',introTap:'Tap the screen to start 🔊',startAdv:'Start Adventure',rotScr:'Rotate screen',qShared:'Co-op: missions are shared by everyone in the room.',fxatk:p=>'⚔️ Attack +'+p+'%',fxdef:p=>'🛡️ Damage taken −'+p+'%',fxhp:p=>'❤️ Max HP +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Coins +'+p+'%',tryOn:'Try on',hgFit:'Fitting room: tap to try on, then buy or wear.',wearing:'Wearing'});
 Object.assign(TX.id,{parentT:'Advance setting',parentHold:'Advance setting (tahan 1,5 detik)',lblHat:'Aksesoris',hgAtStyle:'Ganti di Butik',hgNote:'Coba dulu sebelum beli. Aksesoris yang sudah dibeli bisa diganti-ganti di Butik & Barber (gratis).',free:'Gratis',tNext:'Lanjut',tOk:'Oke',
  z_camp:'Kamp Pelatihan',z_campSub:'Latihan dasar petualang',nGuide:'Kak Rani',nGuideS:'Pemandu latihan',nQuarter:'Pak Gudang',nQuarterS:'Perlengkapan gratis',nCtele:'Pilot Balon',nCteleS:'Terbang ke kota',
  kitIntro:'Perlengkapan awal gratis untuk petualang baru. Ambil keduanya!',qmDone:'Perlengkapanmu sudah lengkap. Nanti beli yang lebih bagus di toko kota ya!',
@@ -3654,7 +3655,7 @@ function buildTown(cls){
   z.anim.push((dt,t)=>{npc.root.visible=!TOD.night;mark.visible=!TOD.night;animHero(npc,{moving:false,spd:0,atk:-1,dodge:-1},dt,t);mark.position.y=3.6+Math.sin(t*3)*.18;mark.rotation.y=t*2;});
   z.tags.push({o:{x:nx,z:nz-.4},y:2.95,cls:'npc',name:N.style,sf:()=>TOD.night?t('closed'):t('nStyle'),dyn:()=>TOD.night?t('closed'):t('nStyle'),R:14});
   z.pois.push({x:nx,z:nz,i:'style',tf:()=>t('nStyle'),sf:()=>t('styleS'),mini:true});
-  townFolk(z,cls,L,N);townExtra(z,cls,N);buildGuild(z,cls);
+  townFolk(z,cls,L,N);townExtra(z,cls,N);buildGuild(z,cls);friendNpc(z,cls,L);
   TLINK[cls].forEach(tl=>{const tp=TPOS[tl.side].p;portalMesh(z,tp[0],tp[1],PCOL[tl.to],tl.to);
    z.pois.push({x:tp[0],z:tp[1],i:'portal',tf:()=>t('portalTo',destName(tl.to)),sf:()=>tl.to.indexOf('town:')===0?t('toTownSub'):t('z_'+tl.to+'Sub'),ml:()=>'\u2192 '+destName(tl.to),mini:true,portal:true});
    z.tags.push({o:{x:tp[0],z:tp[1]},y:5.6,cls:'port',nf:()=>t('portal'),sf:()=>'\u2192 '+destName(tl.to),R:18});});
@@ -4155,7 +4156,7 @@ const BOTUNL=[5,10],BOT=[null,null];
 const BPASS=c=>({warrior:{atk:1,ivl:1},mage:{atk:1.06,ivl:1},ranger:{atk:.85,ivl:.7},doctor:{atk:.92,ivl:.85},wood:{atk:1.25,ivl:1.12},mart:{atk:1.2,ivl:1.2}})[c];
 function botEq(L,p){return {w:Math.min(9,Math.round((L-1)*.6)),a:Math.min(6,Math.floor(L/3)),p:p|0,h:0};}
 function botLook(s){const r=seeded(s+11);const g=r()<.5?1:0;return {hair:(r()*5)|0,skin:(r()*5)|0,outfit:(r()*5)|0,hat:0,g,hs:g?2:0};}
-function botProfs(){if(!C||!C.bots)return [];const L=level();return C.bots.map(b=>b?{n:b.n,c:b.c,l:botLook(b.s),e:botEq(L,b.p),v:L}:null).filter(Boolean);}
+function botProfs(){if(!C||!C.bots)return [];const L=level();return C.bots.map(b=>b&&!b.wait?{n:b.n,c:b.c,l:botLook(b.s),e:botEq(L,b.p),v:L}:null).filter(Boolean);}
 function botPosList(){const o=[];BOT.forEach((B,i)=>{if(B&&B.H&&B.H.root.visible)o.push([i,+B.x.toFixed(2),+B.z.toFixed(2),+B.f.toFixed(2),B.mv?1:0,B.sw>0?+(1-B.sw/B.swM).toFixed(2):-1]);});return o;}
 function syncRBots(R,bt){
   bt=Array.isArray(bt)?bt:[];R.bots=R.bots||[];
@@ -4282,11 +4283,58 @@ function botLeave(B,why){
   if(why==='faint')SFX.faint();
 }
 function botGone(i){const rec=C.bots[i],B=BOT[i];burst(B.x,1,B.z,0xffffff,18,4,4,1.2);SFX.start();banner(t(B.out==='faint'?'friendFaint':'friendBye',rec?rec.n:''));C.bots[i]=null;botDrop(i);saveDB();}
+/* ---- Friend NPC standing in each town (day & night); invite -> goes home, gets ready, comes back and joins ---- */
+const FSEED={warrior:101,mage:202,ranger:303,doctor:404,wood:505,mart:606};
+let FR=null;
+function friendJoined(c){return !!(C&&C.bots&&C.bots.some(r=>r&&r.c===c&&!r.wait));}
+function friendNpc(z,cls,L){
+  const h=L.houses[3],ry=h[2],sn=Math.sin(ry),cs=Math.cos(ry),door=[h[0]+sn*2.9,h[1]+cs*2.9],px=door[0]+sn*3.6+cs*1.8,pz=door[1]+cs*3.6-sn*1.8;
+  const eq=botEq(Math.max(1,level()),0),H=buildHero(cls,Object.assign({},botLook(FSEED[cls]),{ew:eq.w,ea:eq.a,ep:eq.p,eh:0}));z.group.add(H.root);
+  const F=FR={zone:z,cls,x:px,z:pz,f:ry+Math.PI,st:'idle',t:0,H,door,px,pz,hidden:false,fx:0};
+  const mk=marker(z,px,pz,'#7ae0ff','#2ab0ff');
+  z.npcs.push({id:'friend',get x(){return F.x;},get z(){return F.z;},r:3.8,closed:()=>F.hidden||F.st!=='idle'});
+  z.tags.push({o:F,y:2.95,cls:'npc',name:BNAME[cls],sf:()=>t('friendTag'),R:14,hide:()=>F.hidden});
+  const walk=(tx,tz,sp,dt,tm)=>{const dx=tx-F.x,dz=tz-F.z,d=Math.hypot(dx,dz)||1;F.x+=dx/d*sp*dt;F.z+=dz/d*sp*dt;F.f+=angDiff(F.f,Math.atan2(dx,dz))*(1-Math.exp(-dt*9));animHero(H,{moving:true,spd:sp*2.7,atk:-1,dodge:-1,wave:0},dt,tm);return d;};
+  z.anim.push((dt,tm)=>{
+    const joined=friendJoined(cls);
+    if(joined){F.hidden=true;H.root.visible=false;mk.visible=false;if(F.st!=='idle'){F.st='done';}return;}
+    if(F.st==='done'){F.st='idle';F.x=px;F.z=pz;F.f=ry+Math.PI;}
+    F.t+=dt;
+    if(F.st==='idle'){
+      const dx=S.x-F.x,dz=S.z-F.z,d=Math.hypot(dx,dz),near=d<9&&S.state!=='faint';F.f+=angDiff(F.f,near?Math.atan2(dx,dz):ry+Math.PI)*(1-Math.exp(-dt*5));
+      animHero(H,{moving:false,spd:0,atk:-1,dodge:-1,wave:near&&d<7?1:0},dt,tm);F.hidden=false;
+    }else if(F.st==='go'){
+      if(walk(F.door[0],F.door[1],3.4,dt,tm)<.5){F.st='in';F.t=0;F.fx=0;burst(F.door[0],1.2,F.door[1],0xffffff,10,3,3);}
+    }else if(F.st==='in'){
+      F.hidden=true;H.root.visible=false;F.fx-=dt;if(F.fx<=0){F.fx=.5;burst(F.door[0],1.4+Math.random()*.8,F.door[1],[0xffd84a,0x7ae0ff,0xff8fc2][(Math.random()*3)|0],6,3,3,.9);SFX.click();}
+      if(F.t>=3.6){F.st='out';F.t=0;F.x=F.door[0];F.z=F.door[1];F.hidden=false;burst(F.x,1.2,F.z,0xffffff,14,4,4);SFX.start();sayBubble(F,t('frReady'),3.3,3200);}
+    }else if(F.st==='out'||F.st==='run'){
+      F.st='run';const d=walk(S.x,S.z,6.4,dt,tm);
+      if(d<2.4||F.t>22){burst(F.x,1,F.z,0xffffff,16,4,4,1.2);SFX.level();const rec=C.bots.find(r=>r&&r.c===cls&&r.wait);if(rec)delete rec.wait;saveDB();banner(t('friendJoin',BNAME[cls]));F.st='done';F.hidden=true;H.root.visible=false;sayClear(F);}
+    }
+    if(F.st!=='in'&&F.st!=='done')H.root.visible=true;
+    H.root.position.set(F.x,0,F.z);H.root.rotation.y=F.f;mk.visible=F.st==='idle';
+  });
+}
+const BOTCD={};
+function friendTalk(){
+  const c=zone.cls,N=BNAME[c],L=level(),act=C.bots.filter(Boolean),cd=Math.ceil(((BOTCD[c]||0)-performance.now())/1000);
+  if(L<BOTUNL[0]){openTalk({name:N,lines:[t('frLow',BOTUNL[0])]});return;}
+  if(act.length>=botSlots(L)){openTalk({name:N,lines:[act.length>=2?t('friendFull'):t('frLow',BOTUNL[1])]});return;}
+  if(cd>0){openTalk({name:N,lines:[t('frBusy2',cd)]});return;}
+  openTalk({name:N,lines:[t('frHi',N),t('frAsk')],act:{label:'🍀 '+t('friendInvite'),fn:friendAsk}});
+}
+function friendAsk(){
+  const F=FR,c=zone.cls,slot=C.bots.findIndex(x=>!x);if(!F||F.cls!==c||F.st!=='idle'||slot<0)return;
+  if(Math.random()<.5){C.bots[slot]={c,n:BNAME[c],p:Math.random()<.5?1:0,s:FSEED[c],left:BOTLEFT,wait:true};saveDB();F.st='go';F.t=0;SFX.level();sayBubble(F,t('frYes'),3.3,3400);}
+  else{BOTCD[c]=performance.now()+30000;SFX.click();sayBubble(F,t('frNo'),3.3,3600);}
+}
 function botsTick(dt){
   if(!C||!C.bots||!botsLive()){BOT.forEach(B=>{if(B&&B.H)B.H.root.visible=false;});return;}
   const L=level();
   for(let i=0;i<2;i++){
     const rec=C.bots[i],unl=L>=BOTUNL[i];let B=BOT[i];
+    if(rec&&rec.wait){if(FR&&FR.zone===zone&&FR.st!=='idle'&&FR.st!=='done'){if(B)botDrop(i);continue;}delete rec.wait;}
     if(!rec||!unl){if(B)botDrop(i);continue;}
     const eq=botEq(L,rec.p),key=rec.c+'|'+rec.s+'|'+eq.w+'|'+eq.a+'|'+eq.p;
     if(B&&B.key!==key){botDrop(i);B=null;}
@@ -4811,7 +4859,7 @@ function cteleTalk(){const N=t('nCtele');
   if(C.tut>=7){openTele();return;}
   if(C.tut<6){openTalk({name:N,lines:[t('ctNo')]});return;}
   openTalk({name:N,lines:[t('ctYes',tnm(C.cls))],act:{label:t('ctGo'),fn:()=>{C.tut=7;saveDB();startBalloon(C.cls);setTimeout(()=>{if(mode==='play')banner(t('tutDone'));},6800);}}});}
-function npcExtra(id){if(id==='chat')return true;if(id==='master'){masterTalk();return true;}if(id==='guide'){guideTalk();return true;}if(id==='labgate'){labGateTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}return false;}
+function npcExtra(id){if(id==='chat')return true;if(id==='master'){masterTalk();return true;}if(id==='guide'){guideTalk();return true;}if(id==='labgate'){labGateTalk();return true;}if(id==='quarter'){if(((C.kit|0)&3)===3){openTalk({name:t('nQuarter'),lines:[t('qmDone')]});}else openKit();return true;}if(id==='ctele'){cteleTalk();return true;}if(id==='friend'){friendTalk();return true;}return false;}
 function tutTick(){if(!C||C.tut>=7||S.state!=='play'||!zone)return;
   if(C.tut===0){const k=readInput();if(k.m>.1)S.tutD=(S.tutD||0)+S.dtl*6;if(S.tutD>=8)tutNext();}
   else if(C.tut===1&&C.tutT)tutNext();
@@ -5753,7 +5801,6 @@ $('#pClose').addEventListener('click',()=>{SFX.click();closePause();});
 $('#pCoop').addEventListener('click',()=>{ac();SFX.click();openCoop();});
 function openFriends(){if(mode!=='play'||!C||S.state!=='play'||trans||CINE.on)return;show('pause',false);paused=true;S.defDown=false;S.blocking=false;renderFriends();show('friends',true);}
 function closeFriends(){show('friends',false);paused=false;saveDB();}
-const BOTCD={};
 function botTime(left){const d=Math.floor(left/1200),h=Math.floor((left%1200)/50);return LANG==='en'?(d+'d '+h+'h left'):('Sisa '+d+' hari '+h+' jam');}
 function botSlots(L){return L>=BOTUNL[1]?2:L>=BOTUNL[0]?1:0;}
 function renderFriends(){
@@ -5764,18 +5811,7 @@ function renderFriends(){
   if(!act.length){const d=document.createElement('div');d.className='note';d.textContent=L<BOTUNL[0]?t('friendLock',BOTUNL[0]):t('friendNone');box.appendChild(d);}
   act.forEach(rec=>{const card=document.createElement('div');card.className='shopRow';card.innerHTML='<div class="si" style="font-size:30px">'+E.CLASSES[rec.c].icon+'</div><div class="st"><b>'+esc(rec.n)+'</b><small>'+cn(rec.c)+' · Lv '+L+'</small><small>⏳ '+botTime(rec.left)+'</small></div>';box.appendChild(card);});
   if(act.length<2&&L>=BOTUNL[0]&&botSlots(L)<=act.length){const d=document.createElement('div');d.className='note';d.textContent=t('friendLock',BOTUNL[1]);box.appendChild(d);}
-  head(t('friendTown'));
-  if(!zone||zone.id!=='town'){const d=document.createElement('div');d.className='note';d.textContent=t('friendGoTown');box.appendChild(d);return;}
-  const c=zone.cls,card=document.createElement('div');card.className='shopRow';
-  card.innerHTML='<div class="si" style="font-size:30px">'+E.CLASSES[c].icon+'</div><div class="st"><b>'+BNAME[c]+'</b><small>'+cn(c)+' · '+tnm(c)+'</small></div>';
-  const has=act.some(r=>r.c===c),full=act.length>=botSlots(L),cd=Math.ceil(((BOTCD[c]||0)-performance.now())/1000);
-  const b=mkb(has?t('friendHere'):cd>0?'⏳ '+cd+'s':'🍀 '+t('friendInvite'),'go',()=>{
-    const slot=C.bots.findIndex(x=>!x);if(slot<0)return;
-    if(Math.random()<.5){C.bots[slot]={c,n:BNAME[c],p:Math.random()<.5?1:0,s:(Math.random()*1000)|0,left:BOTLEFT};saveDB();banner(t('friendJoin',BNAME[c]));SFX.level();}
-    else{BOTCD[c]=performance.now()+30000;banner(t('friendBusy',BNAME[c]));SFX.click();}
-    renderFriends();},has||full||cd>0);
-  card.appendChild(b);box.appendChild(card);
-  if(full&&!has){const d=document.createElement('div');d.className='note';d.textContent=act.length>=2?t('friendFull'):t('friendLock',BOTUNL[1]);box.appendChild(d);}
+  head(t('friendTown'));const nd=document.createElement('div');nd.className='note';nd.textContent=t('friendGoTown');box.appendChild(nd);
 }
 $('#friendsClose').addEventListener('click',()=>{SFX.click();closeFriends();});
 $('#pFriends').addEventListener('click',()=>{ac();SFX.click();openFriends();});
