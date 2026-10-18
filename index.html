@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261016-194530"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261018-071025"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -232,6 +232,7 @@ input,textarea,select{font-size:max(16px,1em)}#ioText{font-size:16px!important;l
 #tapHint{font:800 clamp(12px,2.4vh,16px)/1 var(--f-display);color:#fff;background:rgba(43,35,80,.62);border:3px solid var(--ink);border-radius:999px;padding:6px 16px;animation:pbob 1.6s ease-in-out infinite}
 #profGrid{display:grid;grid-template-columns:minmax(150px,210px) 1fr;gap:14px;margin-top:8px}
 #profL{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border:3px solid var(--ink);border-radius:18px;background:linear-gradient(#bfe4ff,#fdf1cf);align-self:start}
+#profMood{margin:10px 0 2px}.moodH{font:700 13px var(--f-body);margin-bottom:4px}.moodRow{display:flex;flex-wrap:wrap;gap:6px}.moodB{width:38px;height:38px;border-radius:50%;border:3px solid var(--ink);background:var(--paper);font-size:20px;line-height:1;padding:0;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;box-shadow:0 3px 0 var(--ink)}.moodB.on{background:var(--sun);transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 #profCv{width:100%;aspect-ratio:3/4;max-height:40vh;display:block}
 #profName{font:800 22px/1 var(--f-display)}
 #profCls{font:800 13px var(--f-body);opacity:.8}
@@ -1079,6 +1080,8 @@ Object.assign(TX.id,{friendsT:'Sahabat Petualang',friendsNote:'Setiap kota punya
 Object.assign(TX.en,{friendsT:'Adventure Friends',friendsNote:'Every town has one friend standing by their house; invite them with the interact button. They might say no, it is down to luck! 🍀 They join for 7 days and 7 nights (game time), then go home. If they faint, they go home right away and you must invite them again.',friendLock:l=>'🔒 Next friend joins at Lv '+l,friendNone:'No friends with you yet.',friendWith:'With you',friendTown:'In this town',friendGoTown:'Every town has one friend standing near their house. Walk up and talk to them (interact button), day or night.',friendTag:'Friend',frChat:'Chat',frTalk:['This town is so cozy. I love a walk in the evening.','Big monsters? Do not be scared. We face them together!','I have wanted an adventure for ages, but nobody asked me yet.','Do not forget to rest and eat so your energy stays full!','They say there are fun places out there. Where have you been?','If you want me along, just ask. I can stay 7 days and 7 nights!'],frHi:n=>'Hi, I am '+n+'! What would you like to do?',frAsk:'Want me to come along? I will stay with you for 7 days and 7 nights!',frYes:'Yes! Wait here, I will get ready! 🎒',frReady:'Ready! Let us go! ✨',frNo:'Hmm, I am busy right now. Try again later! 😅',frBusy2:n=>'Still busy... try again in '+n+'s 😅',frLow:l=>'I cannot join yet. Find me again at Lv '+l+'! 🌟',friendHere:'Already with you',friendInvite:'Invite',friendFull:'Your friends slots are full (max 2).',friendBusy:n=>n+' is busy, try again later 😅',friendNew:'A new friend can be invited! Find them in a town 🤝',friendJoin:n=>n+' joined! 🤝',friendBye:n=>n+' went home 👋',friendFaint:n=>n+' fainted and went home 😵',introBy:'Presented by',introTap:'Tap the screen to start 🔊',startAdv:'Start Adventure',rotScr:'Rotate screen',qShared:'Co-op: missions are shared by everyone in the room.',fxatk:p=>'⚔️ Attack +'+p+'%',fxdef:p=>'🛡️ Damage taken −'+p+'%',fxhp:p=>'❤️ Max HP +'+p+'%',fxxp:p=>'⭐ XP +'+p+'%',fxcoin:p=>'🪙 Coins +'+p+'%',tryOn:'Try on',hgFit:'Fitting room: tap to try on, then buy or wear.',wearing:'Wearing'});
 Object.assign(TX.id,{pCare:'Orang tua',cancel:'Batal',parT:'Pengaturan orang tua',gateGo:'Buka',gateQ:(a,b)=>'Soal untuk orang tua: '+a+' × '+b+' = ?',gateBad:'Jawaban belum tepat, coba lagi.',limT:'Batas main per hari',limOff:'Tanpa batas',limMin:m=>m+' menit',usedToday:(u,l)=>'Hari ini sudah main '+u+' menit · sisa '+l+' menit',usedOff:u=>'Hari ini sudah main '+u+' menit',sceneT:'Kalau waktu habis',scStorm:'Badai petir',scFog:'Kabut tebal',scSnow:'Badai salju',scAcak:'Acak',addT:'Tambah waktu hari ini',add10:'+10 menit',add30:'+30 menit',resetToday:'Atur ulang waktu hari ini',previewSc:'Lihat adegan waktu habis',parDone:'Selesai',warn1:'⏳ Sisa waktu main 10 menit',warn2_storm:'⛅ Awan mulai gelap... sepertinya akan ada badai',warn2_fog:'🌫️ Kabut mulai turun pelan-pelan...',warn2_snow:'❄️ Udara mulai dingin... salju akan turun',warn3:'⚠️ Sebentar lagi waktunya istirahat!',care_storm:n=>'Badai petir besar datang! Semua pahlawan harus berteduh. Istirahat dulu ya '+n+', besok kita berpetualang lagi!',care_fog:n=>'Kabut tebal turun, jalan tidak kelihatan sama sekali. Semua berhenti dulu ya '+n+'. Besok kabutnya sudah hilang!',care_snow:n=>'Badai salju datang! Dingin sekali, semua masuk rumah dan minum cokelat hangat. Sampai besok ya '+n+'!'});
 Object.assign(TX.en,{pCare:'Parents',cancel:'Cancel',parT:'Parent settings',gateGo:'Open',gateQ:(a,b)=>'Parent question: '+a+' × '+b+' = ?',gateBad:'Not quite, try again.',limT:'Daily play limit',limOff:'No limit',limMin:m=>m+' min',usedToday:(u,l)=>'Played '+u+' min today · '+l+' min left',usedOff:u=>'Played '+u+' min today',sceneT:'When time is up',scStorm:'Thunderstorm',scFog:'Thick fog',scSnow:'Snowstorm',scAcak:'Random',addT:'Add time for today',add10:'+10 min',add30:'+30 min',resetToday:'Reset today\'s time',previewSc:'Preview the time-up scene',parDone:'Done',warn1:'⏳ 10 minutes of play time left',warn2_storm:'⛅ Clouds are getting dark... a storm is coming',warn2_fog:'🌫️ Fog is slowly rolling in...',warn2_snow:'❄️ It is getting cold... snow is coming',warn3:'⚠️ Almost time for a rest!',care_storm:n=>'A big thunderstorm is here! All heroes must take shelter. Rest now '+n+', we adventure again tomorrow!',care_fog:n=>'Thick fog has rolled in and nobody can see the path. Everyone stops for now '+n+'. The fog will be gone tomorrow!',care_snow:n=>'A snowstorm is here! So cold, everyone goes inside for hot chocolate. See you tomorrow '+n+'!'});
+Object.assign(TX.id,{moodT:'Mood',mood0:'Biasa',mood1:'Senang',mood2:'Semangat',mood3:'Santai',mood4:'Ngantuk',mood5:'Kaget',mood6:'Jahil',mood7:'Sedih'});
+Object.assign(TX.en,{moodT:'Mood',mood0:'Normal',mood1:'Happy',mood2:'Excited',mood3:'Chill',mood4:'Sleepy',mood5:'Surprised',mood6:'Cheeky',mood7:'Sad'});
 Object.assign(TX.id,{parentT:'Advance setting',parentHold:'Advance setting (tahan 1,5 detik)',lblHat:'Aksesoris',hgAtStyle:'Ganti di Butik',hgNote:'Coba dulu sebelum beli. Aksesoris yang sudah dibeli bisa diganti-ganti di Butik & Barber (gratis).',free:'Gratis',tNext:'Lanjut',tOk:'Oke',
  z_camp:'Kamp Pelatihan',z_campSub:'Latihan dasar petualang',nGuide:'Kak Rani',nGuideS:'Pemandu latihan',nQuarter:'Pak Gudang',nQuarterS:'Perlengkapan gratis',nCtele:'Pilot Balon',nCteleS:'Terbang ke kota',
  kitIntro:'Perlengkapan awal gratis untuk petualang baru. Ambil keduanya!',qmDone:'Perlengkapanmu sudah lengkap. Nanti beli yang lebih bagus di toko kota ya!',
@@ -1443,7 +1446,7 @@ function sanitize0(o){
   const L=o.look||{};const li=(v,n)=>clamp(v|0,0,n-1);
   const q=o.quest||{};
   return {name:String(o.name||'Hero').slice(0,12),cls:o.cls,xp:clamp(+o.xp||0,0,E.TOTAL[E.MAXLV]),coins:Math.max(0,+o.coins||0),
-    look:(()=>{const g=li(L.g,2),h=li(L.hs,12);return {hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g,hs:HSG[g].indexOf(h)>=0?h:(g?2:0)};})(),gch:o.gch?1:0,
+    look:(()=>{const g=li(L.g,2),h=li(L.hs,12);return {hair:li(L.hair,5),skin:li(L.skin,5),outfit:li(L.outfit,5),hat:0,g,hs:HSG[g].indexOf(h)>=0?h:(g?2:0),mood:li(L.mood,8)};})(),gch:o.gch?1:0,
     slots:Array.isArray(o.slots)&&o.slots.length===2?[li(o.slots[0],3),li(o.slots[1],3)]:[0,1],
     qs:(Array.isArray(o.qs)?o.qs:[]).filter((x,k,a)=>x&&typeof x==='object'&&a.findIndex(y=>y&&(y.i|0)===(x.i|0))===k).slice(0,3).map(x=>({i:clamp(x.i|0,0,E.QUESTS.length-1),p:Math.max(0,x.p|0)})),
     qx:(Array.isArray(o.qx)?o.qx:[]).map(i=>i|0).filter(i=>i>=0&&i<E.QUESTS.length),qday:/^\d{4}-\d{2}-\d{2}$/.test(o.qday)?o.qday:'',eq:(()=>{const e=o.eq||{},v2=(e.v|0)>=2;return {v:2,w:v2?li(e.w,10):[0,2,4,6][li(e.w,4)],a:li(e.a,7),p:v2?li(e.p,2):0,h:li(e.h,21)};})(),bots:cleanBots(o.bots),pets:[...new Set((Array.isArray(o.pets)?o.pets:[]).map(i=>i|0).filter(i=>i>=1&&i<=18))],pet:0,hg:[...new Set((Array.isArray(o.hg)?o.hg:[]).map(i=>i|0).filter(i=>i>=1&&i<=20))],qd:E.QUESTS.map((_,i)=>Math.max(0,((o.qd||[])[i])|0)),kit:o.kit===undefined?3:li(o.kit,4),intro:o.intro===undefined?127:li(o.intro,128),cs:o.cs===undefined?0:li(o.cs,64),adv:(E.ADV[o.adv]&&E.ADV[o.adv].cls===o.cls)?o.adv:'',tut:o.tut===undefined?7:li(o.tut,8),tutK:Math.max(0,o.tutK|0),tutT:o.tutT?1:0,zone:/^(camp|meadow|stone|glade|vale|crater|bog|frost|dragon|mint|lotus|timber|quarry|bamboo|dojo|aurora|sky|crystal|comet|town:(warrior|mage|ranger|doctor|wood|mart))$/.test(o.zone)?o.zone:'town'};
@@ -1712,6 +1715,25 @@ function hairStyle(h,c,s){
   else if(s===11){top();vb(h,.8,.4,.2,c,0,.55,-.32);sd(.55,.3,.5,-.08);vb(h,.5,.14,.14,c,-.1,.62,.37);vb(h,.3,.2,.14,c,.22,.56,.37);vb(h,.1,.1,.1,'#ff8fc2',.32,.7,.4);}
   else{top();vb(h,.8,.6,.2,c,0,.45,-.32);sd(.45,.4,.6,-.05);fr();}
 }
+/* face by mood: 0 normal, 1 happy, 2 excited, 3 relaxed, 4 sleepy, 5 surprised, 6 cheeky, 7 sad */
+function faceMood(head,m,fem){
+  const K='#1d1630',B='#ff9aa8',blush=(a)=>[-1,1].forEach(s=>vb(head,.15,.08,.04,B,s*.27,.2,.37,a?{}:undefined));
+  const brow=(dy,tilt)=>[-1,1].forEach(x=>{const b=vb(head,.17,fem?.045:.05,.05,fem?K:'#3a2a22',x*.17,(fem?.42:.47)+dy,.375);if(tilt)b.rotation.z=-x*tilt;});
+  const eyeN=(s,y,h)=>{vb(head,.12,h||.17,.04,K,s*.17,y||.33,.37);vb(head,.04,.05,.05,'#fff',s*.15,(y||.33)+.04,.38);};
+  const arc=s=>{vb(head,.06,.05,.04,K,s*.17,.37,.37);vb(head,.05,.05,.04,K,s*.17-.075,.33,.37);vb(head,.05,.05,.04,K,s*.17+.075,.33,.37);};
+  const line=(s,y)=>vb(head,.15,.04,.04,K,s*.17,y,.37);
+  const mouth=(w,h,y,col)=>vb(head,w,h,.04,col||(fem?'#e0607a':'#8a3a3a'),0,y,.37);
+  switch(m){
+  case 1:[-1,1].forEach(arc);blush(1);mouth(.2,.04,.15);[-1,1].forEach(s=>vb(head,.04,.04,.04,fem?'#e0607a':'#8a3a3a',s*.12,.18,.37));brow(.01);break;
+  case 2:[-1,1].forEach(s=>{eyeN(s,.34,.2);vb(head,.05,.06,.05,'#fff',s*.19,.31,.385);});blush(1);mouth(.16,.1,.14,'#7a2a3a');vb(head,.1,.04,.05,'#ff8fa0',0,.12,.375);brow(.05,.18);break;
+  case 3:[-1,1].forEach(s=>{vb(head,.13,.07,.04,K,s*.17,.31,.37);});blush(1);mouth(.14,.04,.16);[-1,1].forEach(s=>vb(head,.04,.04,.04,fem?'#e0607a':'#8a3a3a',s*.09,.18,.37));brow(-.01);break;
+  case 4:[-1,1].forEach(s=>line(s,.3));mouth(.07,.07,.15);brow(-.02,.22);vb(head,.06,.04,.05,'#9ad0ff',.3,.52,.37);vb(head,.08,.04,.05,'#9ad0ff',.34,.58,.37);break;
+  case 5:[-1,1].forEach(s=>{vb(head,.17,.22,.04,'#fff',s*.17,.34,.368);vb(head,.08,.11,.05,K,s*.17,.33,.375);});mouth(.1,.13,.13,'#7a2a3a');brow(.07);break;
+  case 6:eyeN(-1);line(1,.31);vb(head,.04,.05,.05,K,.24,.34,.375);blush(1);mouth(.2,.04,.16);vb(head,.04,.04,.04,fem?'#e0607a':'#8a3a3a',.12,.19,.37);vb(head,.09,.1,.05,'#ff8fa0',.06,.1,.375);brow(0);break;
+  case 7:[-1,1].forEach(s=>eyeN(s));vb(head,.05,.1,.05,'#7ad0ff',-.26,.22,.375);mouth(.1,.04,.14);[-1,1].forEach(s=>vb(head,.04,.04,.04,fem?'#e0607a':'#8a3a3a',s*.075,.12,.37));brow(.0,-.2);break;
+  default:[-1,1].forEach(s=>{eyeN(s);});blush(0);mouth(.12,.04,.17);brow(0);
+  }
+}
 function buildHero(cls,look){
   const root=new THREE.Group(),pivot=grp(root,0,.9,0),model=grp(pivot,0,-.9,0);
   root.add(blob(.75));
@@ -1750,10 +1772,7 @@ function buildHero(cls,look){
   const head=grp(model,0,1.17,0);
   vb(head,.72,.7,.72,skin,0,.35,0);
   hairStyle(head,hair,hsty);
-  [-1,1].forEach(s=>{vb(head,.12,.17,.04,'#1d1630',s*.17,.33,.37);vb(head,.04,.05,.05,'#fff',s*.15,.37,.38);vb(head,.15,.08,.04,'#ff9aa8',s*.27,.2,.37);});
-  vb(head,.12,.04,.04,'#8a3a3a',0,.17,.37);
-  if(fem){[-1,1].forEach(x=>vb(head,.17,.045,.05,'#1d1630',x*.17,.42,.375));vb(head,.14,.05,.05,'#e0607a',0,.17,.375);}
-  else{[-1,1].forEach(x=>vb(head,.17,.05,.05,'#3a2a22',x*.17,.47,.375));}
+  faceMood(head,look.mood|0,fem);
   if(cls==='mart'){vb(head,.76,.12,.76,'#f6f6fa',0,.57,0);vb(head,.2,.1,.05,'#3a7ae0',0,.57,.39);vb(head,.12,.3,.06,'#f6f6fa',.08,.46,-.4);vb(head,.1,.4,.06,'#3a7ae0',-.1,.4,-.42);}
   if(cls==='wood'){vb(head,.76,.1,.76,'#e0453c',0,.57,0);vb(head,.14,.16,.1,'#e0453c',.36,.55,-.2);vb(head,.12,.2,.08,'#e0453c',.4,.42,-.25);}
   // hats
@@ -2695,7 +2714,7 @@ function cleanProf(p){
   if(!p||Object.keys(E.CLASSES).indexOf(p.c)<0)return null;
   const L=p.l||{},E2=p.e||{},ci=(v,n)=>clamp((+v)|0,0,n-1);
   const bt=(Array.isArray(p.bt)?p.bt:[]).slice(0,2).map(b=>b&&typeof b==='object'&&E.CLASSES[b.c]&&b.l&&b.e?{n:String(b.n||'Bot').slice(0,12),c:b.c,l:{hair:ci(b.l.hair,HAIR.length),skin:ci(b.l.skin,SKIN.length),outfit:ci(b.l.outfit,OUTF.length),hat:0,g:ci(b.l.g,2),hs:ci(b.l.hs,12)},e:{w:ci(b.e.w,10),a:ci(b.e.a,7),p:ci(b.e.p,2),h:0},v:ci(b.v,E.MAXLV+1)||1}:null);
-  return {bt,n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,12)},e:{w:ci(E2.w,10),a:ci(E2.a,7),p:ci(E2.p,2),h:ci(E2.h,21)},pt:ci(p.pt,19),v:ci(p.v,E.MAXLV+1)||1};
+  return {bt,n:String(p.n||'Hero').slice(0,12),c:p.c,l:{hair:ci(L.hair,HAIR.length),skin:ci(L.skin,SKIN.length),outfit:ci(L.outfit,OUTF.length),hat:0,g:ci(L.g,2),hs:ci(L.hs,12),mood:ci(L.mood,8)},e:{w:ci(E2.w,10),a:ci(E2.a,7),p:ci(E2.p,2),h:ci(E2.h,21)},pt:ci(p.pt,19),v:ci(p.v,E.MAXLV+1)||1};
 }
 function setRemote(R,p){
   p=cleanProf(p);if(!p)return false;
@@ -5616,6 +5635,9 @@ function profTick(dt){
   animHero(h,{moving:false,spd:0,atk:-1,big:false,dodge:-1,hurt:0},dt,T);
   prof.r.render(prof.sc,prof.cam);
 }
+const MOODIC=['🙂','😊','🤩','😌','😴','😮','😜','😢'];
+function renderMood(){const box=$('#profMood');if(!box||!C)return;const cur=C.look.mood|0;box.innerHTML='<div class="moodH">'+t('moodT')+': <b>'+t('mood'+cur)+'</b></div>';
+  const row=document.createElement('div');row.className='moodRow';MOODIC.forEach((e,i)=>{const b=document.createElement('button');b.className='moodB'+(i===cur?' on':'');b.textContent=e;b.setAttribute('aria-label',t('mood'+i));b.addEventListener('click',()=>{SFX.click();if((C.look.mood|0)===i)return;C.look.mood=i;saveDB();makeHero(C.cls,C.look);profInit();renderMood();});row.appendChild(b);});box.appendChild(row);}
 function renderProf(){
   const L=level(),cl=E.CLASSES[C.cls],pr=E.progress(C.xp),sks=mySkills();
   $('#profName').textContent=C.name;$('#profCls').textContent=cl.icon+' '+(C.adv&&E.ADV[C.adv]?advName(C.adv):cn(C.cls))+' · '+t('role_'+C.cls);
@@ -5626,6 +5648,7 @@ function renderProf(){
   let h='<div style="display:flex;align-items:center;gap:10px"><div class="chip" style="background:var(--sun)">Lv '+L+'</div><div style="flex:1" class="pbar"><i style="width:'+Math.round(pr*100)+'%"></i></div></div>';
   h+='<div class="note" style="margin:3px 0 0">'+(L<E.MAXLV?t('starsTo',have,need,L+1):t('maxLv'))+'</div>';
   h+='<div class="pstats"><span class="chip">❤️ '+t('hp')+' '+mxHp(L)+'</span><span class="chip">⚔️ '+t('atk')+' '+atk+'</span><span class="chip">🛡️ '+t('takes')+' '+Math.round(armM(ATIER[C.eq.a].r)*100)+'%</span><span class="chip">'+ic('coin',18)+C.coins+'</span></div>';
+  h+='<div id="profMood"></div>';
   h+='<div class="pcols"><div><h3>'+t('gearH')+'</h3>';
   h+=row(thImg('w',C.cls,C.eq.w,C.eq.p|0,40),eqName('w',C.cls,C.eq.w,C.eq.p),t('weaponSub',WTIER[C.eq.w].m)+' · '+t('ps_'+WPATHS[C.cls][C.eq.p|0]));
   h+=row(thImg('a',C.cls,C.eq.a,C.eq.p|0,40),eqName('a',C.cls,C.eq.a),t('armorSub',Math.round(armM(ATIER[C.eq.a].r)*100)));
@@ -5637,6 +5660,7 @@ function renderProf(){
   [0,1,2].forEach(i=>{const sk=sks[i];h+=row(sk.icon,skn(sk),t('slotInfo',i+1,sk.lv>L,sk.lv,Math.round(E.skillCd(C.cls,L,sk))));});
   h+='<h3>'+t('activeQ')+' '+C.qs.length+'/3</h3>'+(C.qs.length?C.qs.map(a=>{const q=E.QUESTS[a.i],qm=E.MON[q.t];return row(qm.icon,t('defeat',q.n,mn(q.t)),t('progRew',Math.min(a.p,q.n),q.n)+ic('coin',14)+qReward(a.i).coins);}).join(''):row('📋',t('qNone'),t('misTown')))+'</div></div>';
   $('#profR').innerHTML=h;
+  renderMood();
   const gb=$('#pGen');if(gb)gb.onclick=()=>{if(!gb.dataset.arm){gb.dataset.arm='1';gb.textContent=t('gSure');clearTimeout(gb._t);gb._t=setTimeout(()=>{gb.dataset.arm='';gb.textContent=t('gChange');},3500);return;}
     C.look.g=C.look.g===1?0:1;C.look.hs=C.look.g?2:0;C.gch=1;saveDB();makeHero(C.cls,C.look);renderProf();profInit();};
 }
