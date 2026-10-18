@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261018-073754"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="ezv-build" content="20261018-080301"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2b2350"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ezventure"><style>html,body{margin:0;height:100%}[hidden]{display:none!important}</style></head><body>
 <title>Ezventure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
 <style>
@@ -5317,7 +5317,7 @@ function mqComplete(){
   MQQ.push(()=>{openTalk({name:mqSp(q.sp),lines:[t('mqd'+(n+1))],act:{label:t('mqOk'),fn:()=>{}}});});
 }
 function mqIntro(n){
-  const q=MQ[n];
+  const q=MQ[n];NAV.q=-1;NAV.dest=null;gdT=0;
   openTalk({name:mqSp(q.sp),lines:[t('mqi'+(n+1)),mqObj(n)],act:{label:t('mqOk'),fn:()=>{}}});
   mqEvent('zone',zone.id);
 }
@@ -5337,7 +5337,7 @@ function mqTick(dt){
 }
 function mqRecap(){
   if(mode!=='play'||!C||!C.mq||C.tut<7||paused||CINE.on||trans||S.state!=='play'||zone.exam)return;
-  const m=C.mq;
+  const m=C.mq;NAV.q=-1;NAV.dest=null;NAV.off=false;gdT=0;
   if(m.n>=20){openTalk({name:mqSp('M'),lines:[t('mqEnd')],act:{label:t('mqOk'),fn:()=>{}}});return;}
   const q=MQ[m.n],pr=mqProg(m.n);
   openTalk({name:mqSp(q.sp),lines:[t('mqt'+(m.n+1)),t('mqi'+(m.n+1)),mqObj(m.n)+' ('+pr[0]+'/'+pr[1]+')  ·  '+t('mqRec')+q.lv],act:{label:t('mqOk'),fn:()=>{}}});
@@ -5631,9 +5631,18 @@ function worldLayout(){if(WL)return WL;const ed=[];Object.keys(LINKS).forEach(f=
 function wRoute(a,b){if(a===b)return[a];const ad=wAdj(),prev={[a]:null},q=[a];while(q.length){const n=q.shift();if(n===b)break;(ad[n]||[]).forEach(m=>{if(!(m in prev)){prev[m]=n;q.push(m);}});}if(!(b in prev))return null;const r=[];for(let n=b;n!==null;n=prev[n])r.unshift(n);return r;}
 const curNode=()=>zone?(zone.id==='town'?'town:'+zone.cls:(FIELDS[zone.id]?zone.id:null)):null;
 const wName=n=>n.indexOf('town:')===0?tnm(n.slice(5)):t('z_'+n);
-function navTarget(){if(NAV.off)return null;if(NAV.dest)return{zone:NAV.dest};let a=NAV.q>=0?C.qs.find(x=>x.i===NAV.q):null;if(!a)a=C.qs.find(x=>x.p<E.QUESTS[x.i].n);if(!a)return null;const q=E.QUESTS[a.i];return{zone:E.MON[q.t].at||'meadow',mon:q.t,qi:a.i};}
+function mqNav(){
+  if(!C||!C.mq||C.tut<7||C.mq.n>=20||C.mq.s!==C.mq.n+1)return null;
+  const m=C.mq,q=MQ[m.n],cur=curNode();if(!cur)return null;
+  if(q.k==='talk'||q.k==='adv'){const id=q.k==='adv'?'master':q.a.find(a=>m.t.indexOf(a)<0);if(!id)return null;return{zone:id==='labgate'?'meadow':'town:'+C.cls,npc:id,mq:1};}
+  const zs=mqZs(q).filter(z=>q.k==='kill'||m.v.indexOf(z)<0);
+  if(q.k==='kill'&&zs.indexOf(cur)>=0)return{zone:cur,anyMon:1,mq:1};
+  let best=null,bl=1e9;zs.forEach(z=>{const r=wRoute(cur,z);if(r&&r.length<bl){bl=r.length;best=z;}});
+  return best?{zone:best,mq:1}:null;}
+function navTarget(){if(NAV.off)return null;if(NAV.dest)return{zone:NAV.dest};let a=NAV.q>=0?C.qs.find(x=>x.i===NAV.q):null;if(!a){const mt=mqNav();if(mt)return mt;a=C.qs.find(x=>x.p<E.QUESTS[x.i].n);}if(!a)return null;const q=E.QUESTS[a.i];return{zone:E.MON[q.t].at||'meadow',mon:q.t,qi:a.i};}
 function guideCalc(){const tg=navTarget(),cur=curNode();if(!tg||!cur)return null;
-  if(tg.zone===cur){if(!tg.mon)return null;let b=null,bd=1e9;for(const m of zone.mons){if(m.dead||m.type!==tg.mon)continue;const d=Math.hypot(m.x-S.x,m.z-S.z);if(d<bd){bd=d;b=m;}}return b?{x:b.x,z:b.z,mon:1}:null;}
+  if(tg.zone===cur){if(tg.npc){const n=zone.npcs&&zone.npcs.find(x=>x.id===tg.npc);return n?{x:n.x,z:n.z,npc:1}:null;}
+    if(!tg.mon&&!tg.anyMon)return null;let b=null,bd=1e9;for(const m of zone.mons||[]){if(m.dead||(tg.mon&&m.type!==tg.mon))continue;const d=Math.hypot(m.x-S.x,m.z-S.z);if(d<bd){bd=d;b=m;}}return b?{x:b.x,z:b.z,mon:1}:null;}
   const r=wRoute(cur,tg.zone);if(!r||r.length<2)return null;const nx=r[1];let p=null;
   if(cur.indexOf('town:')===0){const l=TLINK[cur.slice(5)].find(l=>l.to===nx);if(l)p=TPOS[l.side].p;}else{const sd=Object.keys(LINKS[cur]).find(k=>LINKS[cur][k]===nx);if(sd)p=SIDE[sd].p;}
   return p?{x:p[0],z:p[1],col:PCOL[nx]}:null;}
@@ -5732,7 +5741,7 @@ function drawWorld(cv){
 function fillWorldText(){
   $('#mapTitle').textContent=$('#mapTitle2').textContent=t('worldT');$('#mapSub').textContent=t('worldSub');$('#mapSw').textContent=t('mapLocalBtn');
   const cur=curNode(),tg=navTarget();let h='';
-  if(tg){const rt=cur?wRoute(cur,tg.zone):null;h+='<div class="lg"><span class="ic" style="font-size:22px">🚩</span><div>'+esc(wName(tg.zone))+'<small>'+esc(tg.mon?t('navMis',mn(tg.mon)):t('navDest'))+'</small></div></div>';
+  if(tg){const rt=cur?wRoute(cur,tg.zone):null;h+='<div class="lg"><span class="ic" style="font-size:22px">🚩</span><div>'+esc(wName(tg.zone))+'<small>'+esc(tg.mq?'⭐ '+t('mqChip'):tg.mon?t('navMis',mn(tg.mon)):t('navDest'))+'</small></div></div>';
     if(rt&&rt.length>1)h+='<div class="lg"><span class="ic" style="font-size:22px">🧭</span><div>'+esc(rt.map(wName).join(' → '))+'</div></div>';
     h+='<button class="pill" id="navClr" style="margin:6px 0">'+t('navOff')+'</button>';}
   else h+='<div class="lg"><span class="ic" style="font-size:22px">🧭</span><div>'+t(NAV.off?'navIsOff':'navNone')+'</div></div>';
@@ -5986,7 +5995,7 @@ function renderMissions(){
     else if(done){b.textContent=t('qDone');b.disabled=true;}
     else{b.textContent=C.qs.length>=3?t('qFull'):t('take');b.disabled=!town||C.qs.length>=3;}
     b.addEventListener('click',()=>{if(!town)return;SFX.click();if(a){C.qs.splice(C.qs.indexOf(a),1);}else{if(C.qs.length>=3||done)return;C.qs.push({i,p:0});}saveDB();shareQs();renderMissions();});
-    if(a){const pb=document.createElement('button');const mine=!NAV.off&&!NAV.dest&&((NAV.q===i)||(!C.qs.some(x=>x.i===NAV.q)&&C.qs.find(x=>x.p<E.QUESTS[x.i].n)===a));pb.className='pill'+(mine?' go':'');pb.textContent='📍';pb.style.cssText='padding:8px 11px;min-width:0';pb.setAttribute('aria-label',t('navPin'));pb.addEventListener('click',()=>{SFX.click();NAV.q=i;NAV.dest=null;NAV.off=false;gdT=0;banner('📍 '+t('navOn',t('z_'+(m.at||'meadow')),mn(q.t)));renderMissions();});el.appendChild(pb);}
+    if(a){const pb=document.createElement('button');const mine=!NAV.off&&!NAV.dest&&((NAV.q===i)||(!C.qs.some(x=>x.i===NAV.q)&&!mqNav()&&C.qs.find(x=>x.p<E.QUESTS[x.i].n)===a));pb.className='pill'+(mine?' go':'');pb.textContent='📍';pb.style.cssText='padding:8px 11px;min-width:0';pb.setAttribute('aria-label',t('navPin'));pb.addEventListener('click',()=>{SFX.click();NAV.q=i;NAV.dest=null;NAV.off=false;gdT=0;banner('📍 '+t('navOn',t('z_'+(m.at||'meadow')),mn(q.t)));renderMissions();});el.appendChild(pb);}
     el.appendChild(b);box.appendChild(el);});
 }
 $('#teleClose').addEventListener('click',()=>{SFX.click();closeTele();});
@@ -6201,7 +6210,7 @@ document.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* boot */
 logo();loadDB();setCamMode(CAMMODE);applyLang();showTitle();startIntro();if(!LANG_SET)show('langOv',true);requestAnimationFrame(frame);
-window.__ezv={mq:()=>({camera,S,MQ,MQQ,mqEvent,mqComplete,mqProg,mqTick,mqCineStart,mqSafe,mqRecap,CINE,MQC}),care:()=>({CARE,lock:careLock,unlock:careUnlock,gate:gateOpen}),bot:()=>({BOT,hurt:botHurt,say:botSay}),skipIntro:()=>{OPEN.on=false;OPEN.fight=false;document.body.classList.remove('intro');$('#intro').classList.remove('show');showTitle();},onBal:(d)=>onBal(d),ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
+window.__ezv={mq:()=>({guidePt,navTarget,curNode,camera,S,MQ,MQQ,mqEvent,mqComplete,mqProg,mqTick,mqCineStart,mqSafe,mqRecap,CINE,MQC}),care:()=>({CARE,lock:careLock,unlock:careUnlock,gate:gateOpen}),bot:()=>({BOT,hurt:botHurt,say:botSay}),skipIntro:()=>{OPEN.on=false;OPEN.fight=false;document.body.classList.remove('intro');$('#intro').classList.remove('show');showTitle();},onBal:(d)=>onBal(d),ranch:()=>openRanch(),sv:(sl,d)=>onSv(coop.Rs[sl],d),skid:()=>{const a=[];for(const k in E.SKILLS)E.SKILLS[k].forEach(q=>a.push(q.id));for(const k in E.ADV)E.ADV[k].skills.forEach(q=>a.push(q.id));return [...new Set(a)];},fake:(sl,pr,pos)=>{coop.st='on';coop.role='guest';coop.me=2;const R=coop.Rs[sl]||mkR(sl,null);const ok=setRemote(R,pr);onPos(R,pos);return [ok,!!R.H,R.zk,coop.myZ];},R:(sl)=>{const R=coop.Rs[sl];return R?{vis:R.H&&R.H.root.visible,zk:R.zk,my:coop.myZ,x:R.x,z:R.z}:null;},bal:(c)=>startBalloon(c),cal:()=>openCal(),mapW:()=>{openMap();setMapWorld(true);},nav:NAV,guide:()=>gdTg,rest:()=>startRest(),NAVq:()=>navTarget(),trk:()=>trkName,pfx:()=>JSON.stringify([petFx(),petSleeps(5),petSleeps(1),TOD.night]),gal2:(list)=>{list.forEach((o,i)=>{const h=buildHero(o[0],Object.assign({hair:1,skin:1,outfit:1,hat:0,g:o[3]|0,hs:2},{ea:o[1],ep:o[2],ew:o[4]===undefined?6:o[4]}));h.root.position.set(-9+i*2.2,0,0);h.root.rotation.y=0;scene.add(h.root);});},killAll:()=>zone.mons.forEach(m=>{if(!m.dead)killMon(m);}),guild:(c)=>GUILD[c],EX,masterTalk:()=>masterTalk(),openAdv:()=>{advSel='';openAdv();},startDemo:(f)=>startDemo(f),startExam:(id)=>startExam(id),examWave:()=>examWave(),onBuf:(d)=>onBuf(d),zk:()=>zkey(),useSk:(i)=>useSkill(i),skl:()=>mySkills().map(x=>x.id+':'+x.lv),cds:()=>S.cd.slice(),hp:()=>[S.hp,S.maxHp],wx:(v)=>{WX.force=v;},cine:()=>({on:CINE.on,t:CINE.t}),endCine:()=>endCine(),startCine:()=>startCine(),WX:()=>WX,sq:(l)=>setSharedQs(l),mx:()=>mxHp(level()),fx:hgFx,buyHg:(i)=>buyHg(i),openTele:()=>openTele(),tele:(c)=>{const cost=teleCost();if(C.coins<cost)return;C.coins-=cost;closeTele();transition(()=>setZone('town',{x:0,z:6,face:Math.PI},false,c));},go:(id,x,z,cls)=>setZone(id,{x:x||0,z:z||0,face:0},true,cls),gal:(types)=>{types.forEach((ty,i)=>{const m=buildMonModel(ty);m.position.set(-9+i*3.4,0,0);scene.add(m);});},sc:()=>scene,cam:()=>camera,openShop:(k)=>openShop(k),openMap:()=>openMap(),openMenu:()=>openMenu(),openPause:()=>openPause(),openMis:()=>openMissions(),buy:(p,i)=>buyWeapon(p,i),openCreate:(k,s)=>openCreate(k,s),setEq:(w,p)=>{C.eq.w=w;C.eq.p=p;makeHero(C.cls,C.look);},coop:()=>coop,makeHero:()=>makeHero(C.cls,C.look),H:()=>H,fx:()=>fxRoot.children.length,DB:()=>DB,S,C:()=>C,zone:()=>zone,state:()=>({mode,zone:zone&&zone.id,trans,paused})};
 })();
 </script>
 
